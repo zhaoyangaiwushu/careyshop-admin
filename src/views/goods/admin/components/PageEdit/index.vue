@@ -716,11 +716,9 @@
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane label="媒体设置" :name="tabList[2]">
+        <el-tab-pane label="媒体设置" name="photo">
           <el-form
             :model="currentForm"
-            :rules="rules.form_photo"
-            :ref="`form_${tabList[2]}`"
             label-width="80px">
             <el-form-item
               label="商品相册"
@@ -787,11 +785,11 @@
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane label="商品详情" :name="tabList[3]">
+        <el-tab-pane label="商品详情" :name="tabList[2]">
           <el-form
             :model="currentForm"
             :rules="rules.form_detail"
-            :ref="`form_${tabList[3]}`"
+            :ref="`form_${tabList[2]}`"
             label-width="80px">
             <el-form-item
               label="关键词"
@@ -823,11 +821,9 @@
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane label="积分结算" :name="tabList[4]">
+        <el-tab-pane label="积分结算" name="integral">
           <el-form
             :model="currentForm"
-            :rules="rules.form_integral"
-            :ref="`form_${tabList[4]}`"
             label-width="80px">
             <el-form-item
               label="结算方式"
@@ -974,9 +970,10 @@
 <script>
 import util from '@/utils/util'
 import { debounce } from 'lodash'
+import { mapActions } from 'vuex'
 import { getGoodsSpecList } from '@/api/goods/spec'
 import { getGoodsAttributeList } from '@/api/goods/attribute'
-import { getGoodsAttrConfig, getGoodsSpecConfig } from '@/api/goods/goods'
+import { addGoodsItem, getGoodsAttrConfig, getGoodsSpecConfig } from '@/api/goods/goods'
 
 export default {
   components: {
@@ -1013,7 +1010,7 @@ export default {
   data() {
     return {
       activeName: 'basic',
-      tabList: ['basic', 'type', 'photo', 'detail', 'integral'],
+      tabList: ['basic', 'type', 'detail'],
       stateMap: {
         create: '新增商品',
         update: '编辑商品'
@@ -1084,12 +1081,96 @@ export default {
               message: '长度不能大于 200 个字符',
               trigger: 'blur'
             }
+          ],
+          short_name: [
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ],
+          product_name: [
+            {
+              max: 100,
+              message: '长度不能大于 100 个字符',
+              trigger: 'blur'
+            }
+          ],
+          goods_category_id: [
+            {
+              required: true,
+              message: '至少选择一项',
+              trigger: 'change'
+            }
+          ],
+          goods_code: [
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ],
+          goods_spu: [
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ],
+          goods_sku: [
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ],
+          bar_code: [
+            {
+              max: 60,
+              message: '长度不能大于 60 个字符',
+              trigger: 'blur'
+            }
+          ],
+          unit: [
+            {
+              max: 10,
+              message: '长度不能大于 10 个字符',
+              trigger: 'blur'
+            }
           ]
         },
-        form_type: {},
-        form_photo: {},
-        form_detail: {},
-        form_integral: {}
+        form_type: {
+          goods_type_id: [
+            {
+              required: true,
+              message: '至少选择一项',
+              trigger: 'change'
+            }
+          ]
+        },
+        form_detail: {
+          keywords: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          description: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          content: [
+            {
+              required: true,
+              message: '详情描述不能为空',
+              trigger: 'blur'
+            }
+          ]
+        }
       },
       inputSpecValue: '',
       inputSpecVisible: false,
@@ -1150,6 +1231,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('careyshop/update', [
+      'updateData'
+    ]),
     // 确认新增或修改
     handleConfirm() {
       for (let val of this.tabList) {
@@ -1173,6 +1257,20 @@ export default {
     },
     // 新增商品
     handleCreate() {
+      addGoodsItem({ ...this.currentForm })
+        .then(res => {
+          this.updateData({
+            type: 'add',
+            name: 'goods-admin-list',
+            data: { ...res.data }
+          })
+
+          this.$message.success('操作成功')
+          this.$emit('close')
+        })
+      .finally(() => {
+        this.$emit('update:confirmLoading', false)
+      })
     },
     // 更新商品
     handleUpdate() {

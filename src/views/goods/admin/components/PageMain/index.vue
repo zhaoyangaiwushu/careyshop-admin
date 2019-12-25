@@ -439,6 +439,7 @@ import {
   getGoodsSpecList
 } from '@/api/goods/goods'
 import util from '@/utils/util'
+import { mapActions } from 'vuex'
 
 export default {
   props: {
@@ -550,10 +551,20 @@ export default {
       immediate: true
     }
   },
+  activated() {
+    this.updateChange({
+      name: 'goods-admin-list',
+      source: this.currentTableData,
+      key: 'goods_id'
+    })
+  },
   mounted() {
     this._validationAuth()
   },
   methods: {
+    ...mapActions('careyshop/update', [
+      'updateChange'
+    ]),
     // 验证权限
     _validationAuth() {
       this.auth.add = this.$has('/goods/admin/list/add')

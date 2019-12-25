@@ -716,9 +716,11 @@
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane label="媒体设置" name="photo">
+        <el-tab-pane label="媒体设置" :name="tabList[2]">
           <el-form
             :model="currentForm"
+            :rules="rules.form_photo"
+            :ref="`form_${tabList[2]}`"
             label-width="80px">
             <el-form-item
               label="商品相册"
@@ -785,11 +787,11 @@
           </el-form>
         </el-tab-pane>
 
-        <el-tab-pane label="商品详情" :name="tabList[2]">
+        <el-tab-pane label="商品详情" :name="tabList[3]">
           <el-form
             :model="currentForm"
             :rules="rules.form_detail"
-            :ref="`form_${tabList[2]}`"
+            :ref="`form_${tabList[3]}`"
             label-width="80px">
             <el-form-item
               label="关键词"
@@ -973,7 +975,7 @@ import { debounce } from 'lodash'
 import { mapActions } from 'vuex'
 import { getGoodsSpecList } from '@/api/goods/spec'
 import { getGoodsAttributeList } from '@/api/goods/attribute'
-import { addGoodsItem, getGoodsAttrConfig, getGoodsSpecConfig } from '@/api/goods/goods'
+import { addGoodsItem, setGoodsItem, getGoodsAttrConfig, getGoodsSpecConfig } from '@/api/goods/goods'
 
 export default {
   components: {
@@ -1010,7 +1012,7 @@ export default {
   data() {
     return {
       activeName: 'basic',
-      tabList: ['basic', 'type', 'detail'],
+      tabList: ['basic', 'type', 'photo', 'detail'],
       stateMap: {
         create: '新增商品',
         update: '编辑商品'
@@ -1148,6 +1150,15 @@ export default {
             }
           ]
         },
+        form_photo: {
+          attachment: [
+            {
+              required: true,
+              message: '商品相册不能为空',
+              trigger: 'blur'
+            }
+          ]
+        },
         form_detail: {
           keywords: [
             {
@@ -1262,18 +1273,33 @@ export default {
           this.updateData({
             type: 'add',
             name: 'goods-admin-list',
+            data: { ...res.data, sales_sum: 0 }
+          })
+
+          this.$message.success('操作成功')
+          this.$emit('close')
+        })
+        .finally(() => {
+          this.$emit('update:confirmLoading', false)
+        })
+    },
+    // 更新商品
+    handleUpdate() {
+      setGoodsItem({ ...this.currentForm })
+        .then(res => {
+          this.updateData({
+            type: 'set',
+            name: 'goods-admin-list',
+            srcId: res.data.goods_id,
             data: { ...res.data }
           })
 
           this.$message.success('操作成功')
           this.$emit('close')
         })
-      .finally(() => {
-        this.$emit('update:confirmLoading', false)
-      })
-    },
-    // 更新商品
-    handleUpdate() {
+        .finally(() => {
+          this.$emit('update:confirmLoading', false)
+        })
     },
     // 打开资源选择框
     handleStorage(callback, type = [], source = '') {
@@ -1815,7 +1841,7 @@ export default {
     color: $color-info;
     font-size: 12px;
     line-height: 2;
-    margin-bottom: -12px;
+    margin-bottom: -8px;
   }
   .empty-data {
     @extend %flex-center-row;

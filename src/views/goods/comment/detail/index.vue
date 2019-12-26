@@ -30,14 +30,14 @@ export default {
       // 表格数据
       table: this.getInitData(),
       // 表格缓存数据
-      tableBuffer: [],
+      tableBuffer: {},
       // 判断是否路由进入
       isSourceRoute: false
     }
   },
   mounted() {
     this.$nextTick(() => {
-      if (!this.isSourceRoute && !this.tableBuffer.length) {
+      if (!this.isSourceRoute && !Object.keys(this.tableBuffer).length) {
         this.switchData(this.goods_comment_id)
       }
     })

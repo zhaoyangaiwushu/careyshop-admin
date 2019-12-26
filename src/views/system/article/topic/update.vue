@@ -29,14 +29,14 @@ export default {
       // 表单数据
       formData: {},
       // 表单数据缓存
-      formBuffer: [],
+      formBuffer: {},
       // 判断是否路由进入
       isSourceRoute: false
     }
   },
   mounted() {
     this.$nextTick(() => {
-      if (!this.isSourceRoute && !this.formBuffer.length) {
+      if (!this.isSourceRoute && !Object.keys(this.formBuffer).length) {
         this.switchData(this.topic_id)
       }
     })

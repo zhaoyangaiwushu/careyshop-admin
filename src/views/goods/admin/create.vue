@@ -11,9 +11,7 @@
       @close="handleClose">
     </page-edit>
 
-    <template
-      ref="footer"
-      slot="footer">
+    <template ref="footer" slot="footer">
       <div style="margin: -10px 0;">
         <el-button
           type="primary"

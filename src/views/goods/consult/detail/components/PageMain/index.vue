@@ -134,7 +134,7 @@ export default {
   data() {
     return {
       form: {},
-      formBuffer: [],
+      formBuffer: {},
       rules: {
         content: [
           {
@@ -177,7 +177,7 @@ export default {
     'tableData.goods_consult_id': {
       handler(val) {
         if (val > 0) {
-          if (this.formBuffer.hasOwnProperty(val)) {
+          if (this.formBuffer[val]) {
             this.form = this.formBuffer[val] || {}
           } else {
             this.formBuffer[val] = { content: undefined }

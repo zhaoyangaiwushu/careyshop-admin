@@ -125,7 +125,7 @@ export default {
   data() {
     return {
       form: {},
-      formBuffer: [],
+      formBuffer: {},
       rules: {
         answer: [
           {
@@ -168,7 +168,7 @@ export default {
     'tableData.ask_id': {
       handler(val) {
         if (val > 0) {
-          if (this.formBuffer.hasOwnProperty(val)) {
+          if (this.formBuffer[val]) {
             this.form = this.formBuffer[val] || {}
           } else {
             this.formBuffer[val] = { answer: undefined }

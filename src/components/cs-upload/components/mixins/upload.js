@@ -8,6 +8,7 @@ export default {
       moduleName: '',
       replaceId: 0,
       updateToken: true,
+      tokenLoading: false,
       token: {},
       params: {},
       uploadUrl: '',
@@ -31,12 +32,12 @@ export default {
         this.updateToken = true
       }
 
-      // 是否需要更新
-      if (!this.updateToken) {
-        return
-      }
-
       return new Promise(resolve => {
+        // 是否需要更新
+        if (!this.updateToken) {
+          return resolve()
+        }
+
         this.params = {}
         if (this.replaceId) {
           replaceUploadItem(this.replaceId)
@@ -84,8 +85,7 @@ export default {
       this.$message.warning('当前模式或资源不支持预览')
     },
     // 上传文件之前的钩子
-    async handleBeforeUpload(file) {
-      await this.getToken()
+    handleBeforeUpload(file) {
       if (!this.token || !this.uploadUrl) {
         this.$message.error('上传组件初始化中或配置错误')
         return false

@@ -1,6 +1,7 @@
 <template>
   <div>
     <el-upload
+      v-loading="tokenLoading"
       :action="uploadUrl"
       :data="params"
       :file-list="fileList"
@@ -107,8 +108,13 @@ export default {
     }
   },
   mounted() {
-    this.getToken()
+    this.tokenLoading = true
+
     this.getDirectory()
+    this.getToken()
+      .then(() => {
+        this.tokenLoading = false
+      })
   }
 }
 </script>

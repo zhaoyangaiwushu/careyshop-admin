@@ -975,7 +975,13 @@ import { debounce } from 'lodash'
 import { mapActions } from 'vuex'
 import { getGoodsSpecList } from '@/api/goods/spec'
 import { getGoodsAttributeList } from '@/api/goods/attribute'
-import { addGoodsItem, setGoodsItem, getGoodsAttrConfig, getGoodsSpecConfig } from '@/api/goods/goods'
+import {
+  addGoodsItem,
+  setGoodsItem,
+  getGoodsItem,
+  getGoodsAttrConfig,
+  getGoodsSpecConfig
+} from '@/api/goods/goods'
 
 export default {
   components: {
@@ -1299,6 +1305,19 @@ export default {
         })
         .finally(() => {
           this.$emit('update:confirmLoading', false)
+        })
+    },
+    // 获取商品数据
+    handleGoodsData(goods_id) {
+      Promise.all([
+        getGoodsAttrConfig(goods_id),
+        getGoodsSpecConfig(goods_id, 1),
+        getGoodsItem(goods_id)
+      ])
+        .then(res => {
+        })
+        .finally(() => {
+          this.$emit('update:loading', false)
         })
     },
     // 打开资源选择框
@@ -1805,7 +1824,6 @@ export default {
 
       this.specTable = treeTable
       this.$set(this.currentForm, 'spec_combo', newCombo)
-      console.log(this.specTable, newCombo)
     }, 300)
   }
 }

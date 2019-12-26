@@ -90,7 +90,7 @@ export default {
       component: () => import('@/views/goods/admin/create')
     },
     {
-      path: 'admin/update/:goods_id',
+      path: 'admin/update',
       name: `${pre}admin-update`,
       props: true,
       meta: { ...meta, cache: true, title: '编辑商品' },

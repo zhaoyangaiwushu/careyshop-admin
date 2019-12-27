@@ -631,7 +631,7 @@
                     prop="price"
                     width="152">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit[scope.$index]['price']" class="cs-cp">
+                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['price']" class="cs-cp">
                         {{scope.row.price | getNumber}}
                       </div>
 
@@ -654,7 +654,7 @@
                     prop="store_qty"
                     width="152">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit[scope.$index]['store_qty']" class="cs-cp">
+                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['store_qty']" class="cs-cp">
                         {{scope.row.store_qty}}
                       </div>
 
@@ -676,7 +676,7 @@
                     prop="bar_code"
                     width="150">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit[scope.$index]['bar_code']" class="cs-cp">
+                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['bar_code']" class="cs-cp">
                         {{scope.row.bar_code}}
                       </div>
 
@@ -696,7 +696,7 @@
                     prop="goods_sku"
                     width="150">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit[scope.$index]['goods_sku']" class="cs-cp">
+                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['goods_sku']" class="cs-cp">
                         {{scope.row.goods_sku}}
                       </div>
 
@@ -1310,11 +1310,28 @@ export default {
     // 获取商品数据
     handleGoodsData(goods_id) {
       Promise.all([
+        getGoodsItem(goods_id),
         getGoodsAttrConfig(goods_id),
-        getGoodsSpecConfig(goods_id, 1),
-        getGoodsItem(goods_id)
+        getGoodsSpecConfig(goods_id, 1)
       ])
         .then(res => {
+          let currentForm = res[0].data || {}
+          currentForm['attr_config'] = res[1].data.attr_config || []
+          currentForm['spec_config'] = res[2].data.spec_config || []
+          currentForm['spec_combo'] = res[2].data.spec_combo || []
+
+          this.activeAttr = res[1].data.attr_key || []
+          this.activeSpec = res[2].data.spec_key || []
+          this.currentForm = currentForm
+          this.isNotTable = true
+
+          this.$nextTick(() => {
+            if (this.$refs.tinymce) {
+              this.$refs.tinymce.destroyTinymce()
+              this.$refs.tinymce.initTinymce()
+              this.$refs.tinymce.setContent(currentForm.content)
+            }
+          })
         })
         .finally(() => {
           this.$emit('update:loading', false)
@@ -1709,7 +1726,7 @@ export default {
       })
     },
     // 设置规格列表
-    _handleSpecItemData: debounce(async function(val) {
+    _handleSpecItemData: debounce(function(val) {
       // 索引 编辑状态 列合并 头部 组合
       let treeTable = { index: {}, edit: {}, column: [], header: [], compose: [] }
       val.forEach(value => {
@@ -1751,10 +1768,12 @@ export default {
       let combine = util.descartes(treeTable.compose)
 
       // 数据变动前保留之前的数据
-      this.currentForm.spec_combo.forEach(combo => {
-        let key = combo['key_name'].sort().join('_')
-        oldCombo[key] = combo
-      })
+      if (!this.isNotTable) {
+        this.currentForm.spec_combo.forEach(combo => {
+          let key = combo['key_name'].sort().join('_')
+          oldCombo[key] = combo
+        })
+      }
 
       // 开始处理列合并数据
       if (combine.length > 0) {
@@ -1787,30 +1806,33 @@ export default {
 
       // 将规格列表内部属性补齐
       combine.forEach((combo, index) => {
-        let temp
-        const isArrayOfCombo = Array.isArray(combo)
-        const key = isArrayOfCombo ? [...combo].sort().join('_') : combo
+        if (!this.isNotTable) {
+          let temp
+          const isArrayOfCombo = Array.isArray(combo)
+          const key = isArrayOfCombo ? [...combo].sort().join('_') : combo
 
-        if (oldCombo.hasOwnProperty(key)) {
-          temp = {
-            price: oldCombo[key].price,
-            store_qty: oldCombo[key].store_qty,
-            bar_code: oldCombo[key].bar_code,
-            goods_sku: oldCombo[key].goods_sku
+          if (oldCombo.hasOwnProperty(key)) {
+            temp = {
+              price: oldCombo[key].price,
+              store_qty: oldCombo[key].store_qty,
+              bar_code: oldCombo[key].bar_code,
+              goods_sku: oldCombo[key].goods_sku
+            }
+          } else {
+            temp = {
+              price: 0,
+              store_qty: 0,
+              bar_code: '',
+              goods_sku: ''
+            }
           }
-        } else {
-          temp = {
-            price: 0,
-            store_qty: 0,
-            bar_code: '',
-            goods_sku: ''
-          }
+
+          // 对结构进行补齐部分数据
+          temp.id = index
+          temp.key_name = isArrayOfCombo ? combo : [combo]
+          temp.key_value = getKeyValue([...temp.key_name])
+          newCombo.push(temp)
         }
-
-        // 对结构进行补齐部分数据
-        temp.id = index
-        temp.key_name = isArrayOfCombo ? combo : [combo]
-        temp.key_value = getKeyValue([...temp.key_name])
 
         treeTable.edit[index] = {
           price: false,
@@ -1818,12 +1840,14 @@ export default {
           bar_code: false,
           goods_sku: false
         }
-
-        newCombo.push(temp)
       })
 
       this.specTable = treeTable
-      this.$set(this.currentForm, 'spec_combo', newCombo)
+      if (!this.isNotTable) {
+        this.$set(this.currentForm, 'spec_combo', newCombo)
+      }
+
+      this.isNotTable = false
     }, 300)
   }
 }

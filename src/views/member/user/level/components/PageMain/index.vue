@@ -214,6 +214,7 @@ import {
   delUserLevelList,
   setUserLevelItem
 } from '@/api/user/level'
+import util from '@/utils/util'
 
 export default {
   components: {
@@ -354,7 +355,7 @@ export default {
       }
 
       if (response.data[0].type === 0) {
-        this.form.icon = document.location.protocol + '//' + response.data[0].url
+        this.form.icon = util.checkUrl(response.data[0].url)
       }
     },
     // 获取选择资源
@@ -365,7 +366,7 @@ export default {
 
       for (const value of files) {
         if (value.type === 0) {
-          this.form.icon = document.location.protocol + '//' + value.url
+          this.form.icon = util.checkUrl(value.url)
           break
         }
       }

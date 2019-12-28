@@ -6,7 +6,7 @@
     @close="close"
     class="player-dialog">
     <div v-if="dialogVisible" class="player">
-      <cs-video :src="dialogVideoUrl" :mime="dialogVideoMime" :poster="dialogVidePoster"/>
+      <cs-video :video-data="{url: dialogVideoUrl, mime: dialogVideoMime, cover: dialogVidePoster}"/>
     </div>
   </el-dialog>
 </template>
@@ -28,21 +28,11 @@ export default {
     }
   },
   methods: {
-    checkUrl(url) {
-      const blob = /^(blob)[^\s]+/
-      const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/
-
-      if (!blob.test(url) && !reg.test(url)) {
-        return document.location.protocol + '//' + url
-      }
-
-      return url
-    },
     show(url, mime, poster) {
       this.$nextTick(() => {
         this.dialogVideoMime = mime
-        this.dialogVideoUrl = this.checkUrl(url)
-        this.dialogVidePoster = poster ? util.getImageStyleUrl(poster) : ''
+        this.dialogVideoUrl = util.checkUrl(url)
+        this.dialogVidePoster = util.getImageStyleUrl(poster)
         this.dialogVisible = true
       })
     },

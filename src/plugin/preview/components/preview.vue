@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   name: 'preview',
   data() {
@@ -26,23 +28,13 @@ export default {
       if (Array.isArray(image)) {
         // eslint-disable-next-line no-unused-vars
         for (let item of image) {
-          result.push(this.checkUrl(item))
+          result.push(util.checkUrl(item))
         }
       } else {
-        result.push(this.checkUrl(image))
+        result.push(util.checkUrl(image))
       }
 
       return result
-    },
-    checkUrl(url) {
-      const blob = /^(blob)[^\s]+/
-      const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/
-
-      if (!blob.test(url) && !reg.test(url)) {
-        return document.location.protocol + '//' + url
-      }
-
-      return url
     },
     show(image) {
       this.$nextTick(() => {

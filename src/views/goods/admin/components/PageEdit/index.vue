@@ -11,6 +11,7 @@
       <el-tabs v-model="activeName">
         <el-tab-pane label="基础设置" :name="tabList[0]">
           <el-form
+            v-if="activeName === tabList[0] || confirmLoading"
             :model="currentForm"
             :rules="rules.form_basic"
             :ref="`form_${tabList[0]}`"
@@ -276,6 +277,7 @@
 
         <el-tab-pane label="规格属性" :name="tabList[1]">
           <el-form
+            v-if="activeName === tabList[1] || confirmLoading"
             :model="currentForm"
             :rules="rules.form_type"
             :ref="`form_${tabList[1]}`"
@@ -631,7 +633,7 @@
                     prop="price"
                     width="152">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['price']" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'price')" class="cs-cp">
                         {{scope.row.price | getNumber}}
                       </div>
 
@@ -654,7 +656,7 @@
                     prop="store_qty"
                     width="152">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['store_qty']" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'store_qty')" class="cs-cp">
                         {{scope.row.store_qty}}
                       </div>
 
@@ -676,7 +678,7 @@
                     prop="bar_code"
                     width="150">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['bar_code']" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'bar_code')" class="cs-cp">
                         {{scope.row.bar_code}}
                       </div>
 
@@ -696,7 +698,7 @@
                     prop="goods_sku"
                     width="150">
                     <template slot-scope="scope">
-                      <div v-if="!specTable.edit || !specTable.edit[scope.$index]['goods_sku']" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'goods_sku')" class="cs-cp">
                         {{scope.row.goods_sku}}
                       </div>
 
@@ -718,6 +720,7 @@
 
         <el-tab-pane label="媒体设置" :name="tabList[2]">
           <el-form
+            v-if="activeName === tabList[2] || confirmLoading"
             :model="currentForm"
             :rules="rules.form_photo"
             :ref="`form_${tabList[2]}`"
@@ -759,9 +762,7 @@
               <cs-video
                 ref="goodsVideo"
                 class="input-video"
-                :mime="currentForm.video.mime"
-                :src="currentForm.video.url"
-                :poster="currentForm.video.cover">
+                :video-data="currentForm.video">
               </cs-video>
 
               <el-button
@@ -825,6 +826,7 @@
 
         <el-tab-pane label="积分结算" name="integral">
           <el-form
+            v-if="activeName === 'integral' || confirmLoading"
             :model="currentForm"
             label-width="80px">
             <el-form-item
@@ -973,6 +975,9 @@
 import util from '@/utils/util'
 import { debounce } from 'lodash'
 import { mapActions } from 'vuex'
+import { getBrandSelect } from '@/api/goods/brand'
+import { getGoodsCategoryList } from '@/api/goods/category'
+import { getGoodsTypeSelect } from '@/api/goods/type'
 import { getGoodsSpecList } from '@/api/goods/spec'
 import { getGoodsAttributeList } from '@/api/goods/attribute'
 import {
@@ -1000,15 +1005,6 @@ export default {
     confirmLoading: {
       default: false
     },
-    catData: {
-      default: () => []
-    },
-    brandData: {
-      default: () => []
-    },
-    typeData: {
-      default: () => []
-    },
     state: {
       type: String,
       required: true,
@@ -1019,6 +1015,9 @@ export default {
     return {
       activeName: 'basic',
       tabList: ['basic', 'type', 'photo', 'detail'],
+      catData: [],
+      brandData: [],
+      typeData: [],
       stateMap: {
         create: '新增商品',
         update: '编辑商品'
@@ -1247,30 +1246,51 @@ export default {
       deep: true
     }
   },
+  mounted() {
+    Promise.all([
+      getBrandSelect({ order_field: 'phonetic' }),
+      getGoodsTypeSelect({ order_type: 'asc' }),
+      getGoodsCategoryList(null)
+    ])
+      .then(res => {
+        this.brandData = res[0].data || []
+        this.typeData = res[1].data || []
+        this.catData = util.formatDataToTree(res[2].data, 'goods_category_id')
+      })
+      .then(() => {
+        this.state === 'update' && this.handleGoodsData(this.$route.params.goods_id)
+      })
+      .finally(() => {
+        this.state === 'create' && this.$emit('update:loading', false)
+      })
+  },
   methods: {
     ...mapActions('careyshop/update', [
       'updateData'
     ]),
     // 确认新增或修改
     handleConfirm() {
-      for (let val of this.tabList) {
-        let isSuccess = true
-        this.$refs[`form_${val}`].validate(valid => {
-          if (!valid) {
-            isSuccess = false
-            return false
-          }
-        })
-
-        if (!isSuccess) {
-          this.activeName = val
-          this.$parent.scrollTo()
-          return
-        }
-      }
-
       this.$emit('update:confirmLoading', true)
-      this.state === 'create' ? this.handleCreate() : this.handleUpdate()
+      this.$nextTick(() => {
+        for (let val of this.tabList) {
+          let isSuccess = true
+          this.$refs[`form_${val}`].validate(valid => {
+            if (!valid) {
+              isSuccess = false
+              return false
+            }
+          })
+
+          if (!isSuccess) {
+            this.activeName = val
+            this.$parent.scrollTo()
+            this.$emit('update:confirmLoading', false)
+            return
+          }
+        }
+
+        this.state === 'create' ? this.handleCreate() : this.handleUpdate()
+      })
     },
     // 新增商品
     handleCreate() {
@@ -1322,8 +1342,10 @@ export default {
 
           this.activeAttr = res[1].data.attr_key || []
           this.activeSpec = res[2].data.spec_key || []
-          this.currentForm = currentForm
+
           this.isNotTable = true
+          this.oldTypeId = currentForm.goods_type_id
+          this.currentForm = currentForm
 
           this.$nextTick(() => {
             if (this.$refs.tinymce) {
@@ -1336,6 +1358,18 @@ export default {
         .finally(() => {
           this.$emit('update:loading', false)
         })
+    },
+    // 获取规格列表编辑状态
+    getEditState(key, type) {
+      if (!this.specTable.edit) {
+        return false
+      }
+
+      if (!this.specTable.edit.hasOwnProperty(key)) {
+        return false
+      }
+
+      return !this.specTable.edit[key][type]
     },
     // 打开资源选择框
     handleStorage(callback, type = [], source = '') {
@@ -1407,11 +1441,6 @@ export default {
             mime: value.mime,
             cover: value.cover
           }
-
-          this.$nextTick(() => {
-            this.$refs.goodsVideo.setSources(this.currentForm.video)
-          })
-
           break
         }
       }
@@ -1440,6 +1469,25 @@ export default {
     },
     // 切换商品属性
     selectGoodsType(value) {
+      if (this.state !== 'create' && this.oldTypeId === value) {
+        this.$confirm('检测到您选择了该商品的原模型，是否加载原数据？', '提示', {
+          confirmButtonText: '是',
+          cancelButtonText: '否',
+          type: 'warning'
+        })
+          .then(() => {
+            this.isNotTable = true
+            this.getGoodsSpenAttr(this.currentForm.goods_id, true)
+          })
+          .catch(() => {
+            this.getGoodsSpenAttr(value, false)
+          })
+      } else {
+        this.getGoodsSpenAttr(value, false)
+      }
+    },
+    // 获取商品规格与属性
+    getGoodsSpenAttr(value, isRestore) {
       this.$nextTick(() => {
         this.$refs.typeSelect.blur()
       })
@@ -1448,30 +1496,15 @@ export default {
       this.activeSpecMore = {}
 
       let request = []
-      let isReadOldData = false
-      if (this.state !== 'create' && this.currentForm.goods_category_id === value) {
-        this.$confirm('检测到您选择了该商品的原商品模型，是否加载原数据？', '提示', {
-          confirmButtonText: '是',
-          cancelButtonText: '否',
-          type: 'warning'
-        })
-          .then(() => {
-            isReadOldData = true
-          })
-          .catch(() => {
-            isReadOldData = false
-          })
-      }
-
-      if (!isReadOldData) {
+      if (!isRestore) {
         request = [
           getGoodsAttributeList(value),
           getGoodsSpecList(value)
         ]
       } else {
         request = [
-          getGoodsAttrConfig(this.currentForm.goods_id),
-          getGoodsSpecConfig(this.currentForm.goods_id, 1)
+          getGoodsAttrConfig(value),
+          getGoodsSpecConfig(value, 1)
         ]
       }
 
@@ -1832,6 +1865,10 @@ export default {
           temp.key_name = isArrayOfCombo ? combo : [combo]
           temp.key_value = getKeyValue([...temp.key_name])
           newCombo.push(temp)
+        }
+
+        if (this.isNotTable && this.currentForm.spec_combo) {
+          this.currentForm.spec_combo[index]['id'] = [index]
         }
 
         treeTable.edit[index] = {

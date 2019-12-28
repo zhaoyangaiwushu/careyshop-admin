@@ -3,11 +3,8 @@
     <page-edit
       ref="create"
       state="create"
-      :loading="loading"
+      :loading.sync="loading"
       :confirm-loading.sync="confirmLoading"
-      :cat-data="catData"
-      :brand-data="brandData"
-      :type-data="typeData"
       @close="handleClose">
     </page-edit>
 
@@ -29,11 +26,7 @@
 </template>
 
 <script>
-import util from '@/utils/util'
 import { mapActions } from 'vuex'
-import { getBrandSelect } from '@/api/goods/brand'
-import { getGoodsCategoryList } from '@/api/goods/category'
-import { getGoodsTypeSelect } from '@/api/goods/type'
 
 export default {
   name: 'goods-admin-create',
@@ -43,26 +36,8 @@ export default {
   data() {
     return {
       loading: true,
-      confirmLoading: false,
-      catData: [],
-      brandData: [],
-      typeData: []
+      confirmLoading: false
     }
-  },
-  mounted() {
-    Promise.all([
-      getBrandSelect({ order_field: 'phonetic' }),
-      getGoodsTypeSelect({ order_type: 'asc' }),
-      getGoodsCategoryList(null)
-    ])
-      .then(res => {
-        this.brandData = res[0].data || []
-        this.typeData = res[1].data || []
-        this.catData = util.formatDataToTree(res[2].data, 'goods_category_id')
-      })
-      .finally(() => {
-        this.loading = false
-      })
   },
   methods: {
     ...mapActions('careyshop/page', [

@@ -224,11 +224,15 @@ util.getDownloadUrl = (file, code) => {
  * @returns {string}
  */
 util.getImageStyleUrl = (url, style = '') => {
-  let data = process.env.VUE_APP_BASE_API
-  data += '/v1/storage/method/get.storage.thumb' + '?url=' + encodeURIComponent(url)
-  data += style
+  if (url) {
+    let data = process.env.VUE_APP_BASE_API
+    data += '/v1/storage/method/get.storage.thumb' + '?url=' + encodeURIComponent(url)
+    data += style
 
-  return data
+    return data
+  }
+
+  return ''
 }
 
 /**
@@ -339,6 +343,24 @@ util.descartes = (array) => {
 
     return res
   })
+}
+
+/**
+ * 验证URL地址
+ * @param url
+ * @returns {string|*}
+ */
+util.checkUrl = (url) => {
+  if (url) {
+    const blob = /^(blob)[^\s]+/
+    const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/
+
+    if (!blob.test(url) && !reg.test(url)) {
+      return document.location.protocol + '//' + url
+    }
+  }
+
+  return url
 }
 
 export default util

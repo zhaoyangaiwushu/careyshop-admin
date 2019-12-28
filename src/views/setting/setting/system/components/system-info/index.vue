@@ -434,13 +434,9 @@ export default {
         return
       }
 
-      this.form[source].value = ''
-      if (source === 'qrcode_logo') {
-        this.form[source].value += document.location.protocol
-        this.form[source].value += '//'
-      }
-
-      this.form[source].value += response.data[0].url
+      this.form[source].value = source === 'qrcode_logo'
+        ? util.checkUrl(response.data[0].url)
+        : response.data[0].url
     },
     // 获取选择资源
     _getStorageFileList(files, source) {
@@ -453,13 +449,10 @@ export default {
           continue
         }
 
-        this.form[source].value = ''
-        if (source === 'qrcode_logo') {
-          this.form[source].value += document.location.protocol
-          this.form[source].value += '//'
-        }
+        this.form[source].value = source === 'qrcode_logo'
+          ? util.checkUrl(value.url)
+          : value.url
 
-        this.form[source].value += value.url
         break
       }
     },

@@ -1,39 +1,34 @@
 <template>
   <cs-container :is-back-to-top="true" parent-path="goods-admin-list">
-    <page-edit
-      ref="update"
-      state="update"
-      :loading.sync="loading"
-      :confirm-loading.sync="confirmLoading"
-      :cat-data="catData"
-      :brand-data="brandData"
-      :type-data="typeData"
-      @close="handleClose">
-    </page-edit>
+    <template v-if="goods_id">
+      <page-edit
+        ref="update"
+        state="update"
+        :loading.sync="loading"
+        :confirm-loading.sync="confirmLoading"
+        @close="handleClose">
+      </page-edit>
 
-    <template ref="footer" slot="footer">
-      <div style="margin: -10px 0;">
-        <el-button
-          type="primary"
-          size="small"
-          :disabled="loading"
-          :loading="confirmLoading"
-          @click="handleConfirm">确定</el-button>
+      <template ref="footer" slot="footer">
+        <div style="margin: -10px 0;">
+          <el-button
+            type="primary"
+            size="small"
+            :disabled="loading"
+            :loading="confirmLoading"
+            @click="handleConfirm">确定</el-button>
 
-        <el-button
-          size="small"
-          @click="handleClose">取消</el-button>
-      </div>
+          <el-button
+            size="small"
+            @click="handleClose">取消</el-button>
+        </div>
+      </template>
     </template>
   </cs-container>
 </template>
 
 <script>
-import util from '@/utils/util'
 import { mapActions } from 'vuex'
-import { getBrandSelect } from '@/api/goods/brand'
-import { getGoodsCategoryList } from '@/api/goods/category'
-import { getGoodsTypeSelect } from '@/api/goods/type'
 
 export default {
   name: 'goods-admin-update',
@@ -43,30 +38,20 @@ export default {
   props: {
     goods_id: {
       type: [Number, String],
-      required: true
+      required: false
     }
   },
   data() {
     return {
       loading: true,
-      confirmLoading: false,
-      catData: [],
-      brandData: [],
-      typeData: []
+      confirmLoading: false
     }
   },
-  mounted() {
-    Promise.all([
-      getBrandSelect({ order_field: 'phonetic' }),
-      getGoodsTypeSelect({ order_type: 'asc' }),
-      getGoodsCategoryList(null)
-    ])
-      .then(res => {
-        this.brandData = res[0].data || []
-        this.typeData = res[1].data || []
-        this.catData = util.formatDataToTree(res[2].data, 'goods_category_id')
-        this.$refs.update.handleGoodsData(this.goods_id)
-      })
+  activated() {
+    if (!this.goods_id) {
+      this.$router.push({ name: 'index' })
+      this.handleClose()
+    }
   },
   methods: {
     ...mapActions('careyshop/page', [

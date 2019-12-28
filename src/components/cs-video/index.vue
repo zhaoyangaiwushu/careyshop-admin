@@ -8,31 +8,20 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+import { size } from 'lodash'
 import 'video.js/dist/lang/zh-CN'
 import 'video.js/dist/video-js.css'
 import 'vue-video-player/src/custom-theme.css'
-import util from '@/utils/util'
 
 export default {
   name: 'cs-video',
   props: {
-    // 视频海报
-    poster: {
-      type: String,
+    // 视频资源 url=路径 mime=类型 cover=海报
+    videoData: {
+      type: [Object, Array],
       required: false,
-      default: ''
-    },
-    // 播放路径
-    src: {
-      type: String,
-      required: false,
-      default: ''
-    },
-    // 播放类型
-    mime: {
-      type: String,
-      required: false,
-      default: ''
+      default: () => {}
     },
     // 是否自动播放
     autoplay: {
@@ -47,6 +36,14 @@ export default {
       default: false
     }
   },
+  watch: {
+    videoData: {
+      handler(val) {
+        this.setSources(val)
+      },
+      immediate: true
+    }
+  },
   data() {
     return {
       playerOptions: {
@@ -58,8 +55,8 @@ export default {
         language: 'zh-CN',
         aspectRatio: '16:9',
         fluid: true,
-        sources: this.src ? [{ type: this.mime, src: this.src }] : [],
-        poster: this.poster,
+        sources: [],
+        poster: this.videoData.cover,
         controlBar: {
           timeDivider: true,
           durationDisplay: true,
@@ -70,22 +67,14 @@ export default {
     }
   },
   methods: {
-    checkUrl(url) {
-      if (url) {
-        const blob = /^(blob)[^\s]+/
-        const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/
-
-        if (!blob.test(url) && !reg.test(url)) {
-          return document.location.protocol + '//' + url
-        }
-      }
-
-      return url
-    },
     // 更换视频源
     setSources(sources) {
-      this.playerOptions.poster = sources['cover'] ? util.getImageStyleUrl(sources['cover']) : ''
-      this.playerOptions.sources = [{ src: this.checkUrl(sources['url']), type: sources['mime'] }]
+      if (size(sources) === 0) {
+        return
+      }
+
+      this.playerOptions.poster = util.getImageStyleUrl(sources['cover'])
+      this.playerOptions.sources = [{ src: util.checkUrl(sources['url']), type: sources['mime'] }]
     },
     // 移除视频源
     delSources() {

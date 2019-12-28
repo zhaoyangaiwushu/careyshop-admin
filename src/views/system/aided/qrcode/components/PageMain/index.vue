@@ -267,6 +267,7 @@ import {
 } from '@/api/aided/qrcode'
 import { debounce } from 'lodash'
 import * as clipboard from 'clipboard-polyfill'
+import util from '@/utils/util'
 
 export default {
   components: {
@@ -451,7 +452,7 @@ export default {
       }
 
       if (response.data[0].type === 0) {
-        this.form.logo = document.location.protocol + '//' + response.data[0].url
+        this.form.logo = util.checkUrl(response.data[0].url)
       }
     },
     // 获取选择资源
@@ -462,7 +463,7 @@ export default {
 
       for (const value of files) {
         if (value.type === 0) {
-          this.form.logo = document.location.protocol + '//' + value.url
+          this.form.logo = util.checkUrl(value.url)
           break
         }
       }

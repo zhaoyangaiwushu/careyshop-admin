@@ -37,6 +37,9 @@
         prop="title"
         min-width="350"
         :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+          <span class="link" @click="handleView(scope.$index)">{{scope.row.title}}</span>
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -613,3 +616,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
+  }
+</style>

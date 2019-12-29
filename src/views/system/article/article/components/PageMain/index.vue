@@ -82,9 +82,9 @@
                 @click.native="$preview(scope.row.image)"
                 fit="fill"/>
             </div>
-            <i slot="reference" class="el-icon-picture"/>
+            <i slot="reference" class="el-icon-picture cs-pr-5"/>
           </el-popover>
-          {{scope.row.title}}
+          <span class="link" @click="handleView(scope.$index)">{{scope.row.title}}</span>
         </template>
       </el-table-column>
 
@@ -496,6 +496,11 @@ export default {
 </script>
 
 <style scoped>
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
+  }
   .popover-image {
     text-align: center;
     line-height: 0;

@@ -54,6 +54,9 @@
         sortable="custom"
         min-width="250"
         :show-overflow-tooltip="true">
+        <template slot-scope="scope">
+          <span class="link" @click="handleView(scope.row.topic_id)">{{scope.row.title}}</span>
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -338,3 +341,11 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
+  }
+</style>

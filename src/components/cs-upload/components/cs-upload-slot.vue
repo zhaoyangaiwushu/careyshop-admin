@@ -123,12 +123,10 @@ export default {
   methods: {
     handleOpen() {
       this.tokenLoading = true
-
       this.getDirectory()
-      this.getToken()
-        .then(() => {
-          this.tokenLoading = false
-        })
+      this.getToken().then(() => {
+        this.tokenLoading = false
+      })
     },
     handleClose() {
       // 替换资源后需要更换Token

@@ -389,7 +389,7 @@ export default {
     },
     // 资源上传成功后处理
     _getUploadFileList(files) {
-      let pos = 0
+      let pos = -1
       if (!this.uploadConfig.replace) {
         this.currentTableData.forEach((value, index) => {
           // 查找文件夹出现的位置
@@ -399,22 +399,19 @@ export default {
         })
       }
 
-      for (let key in files) {
-        if (!files.hasOwnProperty(key)) {
+      // eslint-disable-next-line no-unused-vars
+      for (const value of files) {
+        if (value.status !== 'success') {
           continue
         }
 
-        if (files[key].status !== 'success') {
-          continue
-        }
-
-        const response = files[key].response
+        const response = value.response
         if (!response || response.status !== 200) {
           continue
         }
 
         if (!this.uploadConfig.replace) {
-          this.currentTableData.splice(Number(pos + key), 0, response.data[0])
+          this.currentTableData.splice(pos + 1, 0, response.data[0])
         } else {
           this.$set(this.currentTableData, this.uploadConfig.replace, response.data[0])
         }

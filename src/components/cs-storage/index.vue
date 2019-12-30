@@ -63,9 +63,12 @@
           <dl>
             <dt>
               <div class="picture cs-m-5">
-                <el-checkbox v-if="item.type !== 2" :label="item.storage_id" class="check"/>
+                <el-checkbox v-if="item.type !== 2" :label="item.storage_id" class="check">
+                  {{getStorageIndex(item.storage_id)}}
+                </el-checkbox>
                 <el-image fit="fill" :src="item | getImageThumb" @click.native="handleOpen(index)" lazy/>
               </div>
+
               <el-tooltip placement="top" :enterable="false" :open-delay="300">
                 <div slot="content">
                   <span>名称：{{item.name}}</span><br/>
@@ -236,6 +239,10 @@ export default {
       this.page.current = 1
       this.form.storage_id = 0
       this.handleSubmit()
+    },
+    getStorageIndex(storage_id) {
+      let pos = this.checkList.indexOf(storage_id)
+      return pos !== -1 ? pos + 1 : ''
     }
   }
 }
@@ -311,8 +318,12 @@ export default {
     width: 78px;
     height: 80px;
     z-index: 9;
-    /deep/ .el-checkbox__label{
-      display: none;
+    /deep/ .el-checkbox__label {
+      padding-right: 10px;
+      line-height: 16px;
+      font-size: 12px;
+      float: right;
+      background: $color-bg;
     }
   }
   .el-image /deep/ .el-image__inner {

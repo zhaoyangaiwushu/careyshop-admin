@@ -64,7 +64,7 @@
             <dt>
               <div class="picture cs-m-5">
                 <el-checkbox v-if="item.type !== 2" :label="item.storage_id" class="check">
-                  {{getStorageIndex(item.storage_id)}}
+                  {{checkIndex[item.storage_id]}}
                 </el-checkbox>
                 <el-image fit="fill" :src="item | getImageThumb" @click.native="handleOpen(index)" lazy/>
               </div>
@@ -145,6 +145,7 @@ export default {
       loadingCollection: false,
       naviData: [],
       checkList: [],
+      checkIndex: {},
       currentTableData: [],
       isCheckDirectory: false,
       source: '',
@@ -169,6 +170,16 @@ export default {
           .then(res => {
             this.naviData = res.data || []
           })
+      }
+    },
+    checkList: {
+      handler(val) {
+        let checkIndex = {}
+        val.forEach((value, index) => {
+          checkIndex[value] = index + 1
+        })
+
+        this.checkIndex = { ...checkIndex }
       }
     }
   },
@@ -239,10 +250,6 @@ export default {
       this.page.current = 1
       this.form.storage_id = 0
       this.handleSubmit()
-    },
-    getStorageIndex(storage_id) {
-      let pos = this.checkList.indexOf(storage_id)
-      return pos !== -1 ? pos + 1 : ''
     }
   }
 }

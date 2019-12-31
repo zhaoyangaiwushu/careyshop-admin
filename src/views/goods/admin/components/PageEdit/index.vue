@@ -505,7 +505,7 @@
                           <div class="el-form-item__content attr-content">
                             <el-select
                               v-if="value.attr_input_type !== 0"
-                              v-model="value.result"
+                              v-model="value.attr_value"
                               :multiple-limit="inputType[value.attr_input_type].type"
                               :placeholder=inputType[value.attr_input_type].value
                               style="width: 100%;"
@@ -524,7 +524,7 @@
 
                             <div v-else>
                               <el-input
-                                v-model="value.result"
+                                v-model="value.attr_value"
                                 type="textarea"
                                 :placeholder=inputType[value.attr_input_type].value
                                 style="width: 90%;"
@@ -1528,7 +1528,7 @@ export default {
         return
       }
 
-      this.$set(data, 'result', data.attr_values[0])
+      this.$set(data, 'attr_value', data.attr_values[0])
     },
     showSpecInput() {
       this.inputSpecValue = ''

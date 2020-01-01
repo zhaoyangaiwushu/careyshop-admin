@@ -528,7 +528,7 @@ export default {
   .active {
     display: none;
   }
-  .action:hover .active{
+  .action:hover .active {
     display: inline;
   }
 </style>

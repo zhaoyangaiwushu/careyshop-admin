@@ -1897,7 +1897,7 @@ export default {
     content: "";
   }
   .clearfix:after {
-    clear: both
+    clear: both;
   }
   .brand-name {
     float: left;
@@ -1963,7 +1963,7 @@ export default {
   .active {
     display: none;
   }
-  .action:hover .active{
+  .action:hover .active {
     display: inline;
   }
   .spec-action {
@@ -1996,7 +1996,7 @@ export default {
   }
   .spec-check {
     width: 16px;
-    /deep/ .el-checkbox__label{
+    /deep/ .el-checkbox__label {
       display: none;
     }
   }

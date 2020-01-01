@@ -159,9 +159,9 @@ export default {
     content: "";
   }
   .clearfix:after {
-    clear: both
+    clear: both;
   }
-  .tac >>> .el-card{
+  .tac >>> .el-card {
     border-radius: 0;
   }
   .box-card {

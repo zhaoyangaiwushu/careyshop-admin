@@ -469,7 +469,7 @@ export default {
     content: "";
   }
   .clearfix:after {
-    clear: both
+    clear: both;
   }
   .box-card {
     border-radius: 0;

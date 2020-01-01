@@ -840,7 +840,7 @@ export default {
     margin-left: 3px;
     width: 30px;
     height: 30px;
-    /deep/ .el-checkbox__label{
+    /deep/ .el-checkbox__label {
       display: none;
     }
   }

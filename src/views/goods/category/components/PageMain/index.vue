@@ -812,7 +812,7 @@ export default {
   .active {
     display: none;
   }
-  .action:hover .active{
+  .action:hover .active {
     display: block;
   }
   .move-tree {
@@ -821,7 +821,7 @@ export default {
   }
   .status-tree {
     color: $color-text-placehoder;
-    text-decoration: line-through
+    text-decoration: line-through;
   }
   .box-card {
     border-radius: 0;

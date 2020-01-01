@@ -62,15 +62,14 @@ export default {
 
 <style lang="scss" scoped>
   @import '~@/assets/style/fixed/tinymce.scss';
-
   .box-card {
     border-radius: 0;
     border: 1px solid $color-border-1;
   }
-  .clearfix{
+  .clearfix {
     text-align: center;
   }
-  .clearfix span, a{
+  .clearfix span, a {
     color: $color-text-sub;
     font-size: 13px;
     margin-right: 15px;
@@ -81,6 +80,6 @@ export default {
     content: "";
   }
   .clearfix:after {
-    clear: both
+    clear: both;
   }
 </style>

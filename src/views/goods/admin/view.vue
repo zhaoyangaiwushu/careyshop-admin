@@ -6,45 +6,63 @@
         shadow="never"
         v-loading="loading">
         <div slot="header" class="clearfix">
-          {{goods_id}}
+          <el-row>
+            <el-col :span="9">
+              商品图片预留
+            </el-col>
+
+            <el-col :span="15">
+              商品信息预留
+            </el-col>
+          </el-row>
         </div>
 
         <el-tabs v-model="activeName">
           <el-tab-pane label="详情描述" name="content">
+            <div v-if="attrImportant.length" class="parameter cs-mb-15">
+              <ul class="parameter-list">
+                <li v-for="(value, key) in attrImportant" :key="key" :title="value.attr_value">
+                  <span>{{`${value.attr_name}：${value.attr_value}`}}</span>
+                </li>
+              </ul>
+              <p class="more-par cs-pr">
+                <el-button type="text" size="mini" @click="activeName='attr'">详细参数 >></el-button>
+              </p>
+            </div>
             <div class="mce-content-body" v-html="goodsData.content"></div>
           </el-tab-pane>
 
           <el-tab-pane label="商品属性" name="attr">
-            <el-collapse v-model="attrActive">
-              <form class="el-form el-form--label-right">
-                <el-collapse-item
-                  v-for="(value, index) in attrConfig"
-                  :key="index"
-                  :name="value.goods_attribute_id"
-                  :title="value.attr_name">
-                  <div
-                    v-for="item in value.get_attribute"
-                    :key="item.goods_attribute_id"
-                    class="el-form-item attr-form">
-                    <label class="el-form-item__label attr-label">
-                      <span :title="item.attr_name">{{item.attr_name}}</span>
-                    </label>
+            <el-table
+              :data="attrConfig"
+              row-key="goods_attribute_id"
+              :tree-props="{children: 'get_attribute'}"
+              :show-header="false"
+              default-expand-all>
+              <el-table-column
+                prop="attr_name"
+                width="160"
+                show-overflow-tooltip>
+                <template slot-scope="props">
+                  <span :class="{'attr-label': !props.row.is_parent}">{{props.row.attr_name}}</span>
+                </template>
+              </el-table-column>
 
-                    <div class="el-form-item__content attr-content">
-                      <div class="attr-description">
-                        <el-tooltip
-                          v-if="item.description"
-                          :content="item.description"
-                          placement="top">
-                          <i class="el-icon-warning-outline"/>
-                        </el-tooltip>
-                      </div>
-                      <span>{{item.attr_value}}</span>
-                    </div>
-                  </div>
-                </el-collapse-item>
-              </form>
-            </el-collapse>
+              <el-table-column
+                align="center"
+                width="35">
+                <template slot-scope="props">
+                  <el-tooltip
+                    v-if="props.row.description"
+                    :content="props.row.description"
+                    placement="top">
+                    <i class="el-icon-warning-outline"/>
+                  </el-tooltip>
+                </template>
+              </el-table-column>
+
+              <el-table-column prop="attr_value"/>
+            </el-table>
           </el-tab-pane>
         </el-tabs>
       </el-card>
@@ -53,8 +71,8 @@
 </template>
 
 <script>
-import { getGoodsAttrList, getGoodsItem, getGoodsSpecMenu } from '@/api/goods/goods'
 import { getGoodsAttributeData } from '@/api/goods/attribute'
+import { getGoodsAttrList, getGoodsItem, getGoodsSpecMenu } from '@/api/goods/goods'
 
 export default {
   props: {
@@ -76,7 +94,6 @@ export default {
       loading: true,
       activeName: 'content',
       goodsData: {},
-      attrActive: [],
       attrConfig: [],
       attrImportant: [],
       specCombo: [],
@@ -87,13 +104,17 @@ export default {
     resetGoodsData() {
       this.activeName = 'content'
       this.goodsData = {}
-      this.attrActive = []
+      this.goodsData = {}
       this.attrConfig = []
       this.attrImportant = []
       this.specCombo = []
       this.specConfig = []
     },
     getGoodsOtherInfo() {
+      /**
+       * get.goods.attr.config 是后台商品属性设置后读取参数所使用
+       * 而实际的前台是面对顾客的,所以应当使用以下方法进行显示
+       */
       Promise.all([
         getGoodsSpecMenu(this.goods_id),
         getGoodsAttrList(this.goods_id),
@@ -118,22 +139,24 @@ export default {
               let pos = this.attrConfig.push({
                 goods_attribute_id: parentData['goods_attribute_id'],
                 attr_name: parentData['attr_name'],
+                is_parent: true,
                 get_attribute: []
               })
 
               key[value.parent_id] = pos - 1
-              this.attrActive.push(value.parent_id)
             }
 
             const attrData = res[2].data[value.goods_attribute_id]
-            if (value.is_important) {
+            if (attrData['is_important'] === 1) {
               this.attrImportant.push({
+                goods_attribute_id: attrData['goods_attribute_id'],
                 attr_name: attrData['attr_name'],
                 attr_value: value.attr_value
               })
             }
 
             this.attrConfig[key[value.parent_id]].get_attribute.push({
+              goods_attribute_id: attrData['goods_attribute_id'],
               description: attrData['description'],
               attr_name: attrData['attr_name'],
               attr_value: value.attr_value
@@ -160,15 +183,14 @@ export default {
 
 <style lang="scss" scoped>
   @import '~@/assets/style/fixed/tinymce.scss';
-
   .box-card {
     border-radius: 0;
     border: 1px solid $color-border-1;
   }
-  .clearfix{
+  .clearfix {
     text-align: center;
   }
-  .clearfix span, a{
+  .clearfix span, a {
     color: $color-text-sub;
     font-size: 13px;
     margin-right: 15px;
@@ -179,24 +201,40 @@ export default {
     content: "";
   }
   .clearfix:after {
-    clear: both
-  }
-  .attr-form {
-    padding-left: 15px;
-    margin-bottom: 0;
+    clear: both;
   }
   .attr-label {
-    width: 140px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    color: $color-info;
+    color: $color-text-sub;
   }
-  .attr-description {
-    display: inline-block;
-    width: 24px;
-  }
-  .attr-content {
-    margin-left: 140px;
+  .parameter {
+    padding: 0 10px 10px;
+    border-bottom: 1px solid $color-border-3;
+    font-size: 13px;
+    color: $color-text-normal;
+    .more-par {
+      margin-top: -5px;
+      text-align: right;
+    }
+    .parameter-list {
+      padding: 15px 0 15px;
+    }
+    ul {
+      padding: 20px 0 15px;
+      overflow: hidden;
+      _zoom: 1;
+    }
+    ul li {
+      width: 20%;
+      padding-left: 42px;
+      float: left;
+      margin-bottom: 5px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    ul, li, p {
+      margin: 0;
+      padding: 0;
+    }
   }
 </style>

@@ -23,7 +23,7 @@
               <div class="summary-first">
                 <div class="summary-price-wrap cs-pt-10">
                   <div class="summary-price cs-pb-10">
-                    <div class="dt cs-pl-10">市场价</div>
+                    <div class="dt">市场价</div>
                     <div class="dd">
                       <span style="text-decoration: line-through;">
                         <span>￥</span>
@@ -32,7 +32,7 @@
                     </div>
                   </div>
                   <div class="summary-price price-bg cs-pb-10">
-                    <div class="dt cs-pl-10" style="line-height: 28px;">本店价</div>
+                    <div class="dt" style="line-height: 28px;">本店价</div>
                     <div class="dd">
                       <span class="price">
                         <span>￥</span>
@@ -42,13 +42,34 @@
                   </div>
                   <div class="summary-info">
                     <div class="content">
-                      <p>累计评价</p>
+                      <p>评价数</p>
                       <span>{{goodsData.comment_sum}}</span>
                     </div>
 
                     <div class="content">
                       <p>累计销量</p>
                       <span>{{goodsData.sales_sum}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div v-for="(value, key) in specConfig" :key="key" class="cs-pt-5">
+                <div style="display: inline-block;">
+                  <div class="dt">{{value.name}}</div>
+                  <div class="dd">
+                    <div
+                      class="goods-spec cs-cp"
+                      v-for="(item, index) in value.spec_item"
+                      :key="index">
+                      <template v-if="item.color">
+                        <span>色块</span>
+                      </template>
+
+                      <template v-if="item.image.length">
+                        <span>图片</span>
+                      </template>
+                      <span class="item-name">{{item.item_name}}</span>
                     </div>
                   </div>
                 </div>
@@ -137,6 +158,7 @@ export default {
   },
   data() {
     return {
+      checkboxGroup1: [],
       loading: true,
       activeName: 'content',
       goodsData: {},
@@ -267,6 +289,18 @@ export default {
     float: right;
     font-size: 14px;
     color: $color-text-sub;
+    .dt {
+      float: left;
+      padding-left: 10px;
+      line-height: 20px;
+    }
+    .dd {
+      margin-left: 80px;
+      .price {
+        color: $color-danger;
+        overflow: hidden;
+      }
+    }
     .goods-name {
       color: $color-text-normal;
       font-size: 16px;
@@ -284,17 +318,6 @@ export default {
         }
         .summary-price {
           position: relative;
-          .dt {
-            float: left;
-            line-height: 22px;
-          }
-          .dd {
-            margin-left: 70px;
-            .price {
-              color: $color-danger;
-              overflow: hidden;
-            }
-          }
         }
         .summary-info {
           position: absolute;
@@ -313,6 +336,21 @@ export default {
           }
         }
       }
+    }
+  }
+  .goods-spec {
+    @extend %flex-center-row;
+    float: left;
+    font-size: 12px;
+    height: 35px;
+    margin: 0 5px 5px 0;
+    border: 1px solid $color-border-1;
+    &.is-active, &:hover {
+      border-color: $color-primary;
+      color: $color-primary;
+    }
+    .item-name {
+      padding: 0 10px;
     }
   }
 </style>

@@ -5,14 +5,54 @@
         class="box-card"
         shadow="never"
         v-loading="loading">
-        <div slot="header" class="clearfix">
+        <div slot="header">
           <el-row>
             <el-col :span="9">
-              商品图片预留
+              <span>图片占位</span>
             </el-col>
 
-            <el-col :span="15">
-              商品信息预留
+            <el-col :span="15" class="itemInfo">
+              <div class="goods-name cs-pb-5">
+                <b>{{goodsData.name}}</b>
+              </div>
+
+              <div class="product-name">
+                <span>{{goodsData.product_name}}</span>
+              </div>
+
+              <div class="summary-first">
+                <div class="summary-price-wrap cs-pt-10">
+                  <div class="summary-price cs-pb-10">
+                    <div class="dt cs-pl-10">市场价</div>
+                    <div class="dd">
+                      <span style="text-decoration: line-through;">
+                        <span>￥</span>
+                        <span>{{goodsData.market_price | getNumber}}</span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="summary-price price-bg cs-pb-10">
+                    <div class="dt cs-pl-10" style="line-height: 28px;">本店价</div>
+                    <div class="dd">
+                      <span class="price">
+                        <span>￥</span>
+                        <span style="font-size: 22px;"><b>{{goodsData.shop_price | getNumber}}</b></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="summary-info">
+                    <div class="content">
+                      <p>累计评价</p>
+                      <span>{{goodsData.comment_sum}}</span>
+                    </div>
+
+                    <div class="content">
+                      <p>累计销量</p>
+                      <span>{{goodsData.sales_sum}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </el-col>
           </el-row>
         </div>
@@ -25,7 +65,7 @@
                   <span>{{`${value.attr_name}：${value.attr_value}`}}</span>
                 </li>
               </ul>
-              <p class="more-par cs-pr">
+              <p class="more-par cs-pr" style="margin: 0;">
                 <el-button type="text" size="mini" @click="activeName='attr'">详细参数 >></el-button>
               </p>
             </div>
@@ -71,6 +111,7 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 import { getGoodsAttributeData } from '@/api/goods/attribute'
 import { getGoodsAttrList, getGoodsItem, getGoodsSpecMenu } from '@/api/goods/goods'
 
@@ -79,6 +120,11 @@ export default {
     goods_id: {
       type: [String, Number],
       required: true
+    }
+  },
+  filters: {
+    getNumber(val) {
+      return util.getNumber(val)
     }
   },
   watch: {
@@ -103,7 +149,6 @@ export default {
   methods: {
     resetGoodsData() {
       this.activeName = 'content'
-      this.goodsData = {}
       this.goodsData = {}
       this.attrConfig = []
       this.attrImportant = []
@@ -187,22 +232,6 @@ export default {
     border-radius: 0;
     border: 1px solid $color-border-1;
   }
-  .clearfix {
-    text-align: center;
-  }
-  .clearfix span, a {
-    color: $color-text-sub;
-    font-size: 13px;
-    margin-right: 15px;
-  }
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both;
-  }
   .attr-label {
     color: $color-text-sub;
   }
@@ -219,6 +248,7 @@ export default {
       padding: 15px 0 15px;
     }
     ul {
+      margin: 0;
       padding: 20px 0 15px;
       overflow: hidden;
       _zoom: 1;
@@ -232,9 +262,57 @@ export default {
       text-overflow: ellipsis;
       overflow: hidden;
     }
-    ul, li, p {
-      margin: 0;
-      padding: 0;
+  }
+  .itemInfo {
+    float: right;
+    font-size: 14px;
+    color: $color-text-sub;
+    .goods-name {
+      color: $color-text-normal;
+      font-size: 16px;
+    }
+    .product-name {
+      color: $color-danger;
+    }
+    .summary-first {
+      position: relative;
+      padding: 5px 0;
+      .summary-price-wrap {
+        background: #f3f3f3;
+        .price-bg {
+          background: url('~@/assets/image/price-bg.png') 0 -12px repeat-x #efefef;
+        }
+        .summary-price {
+          position: relative;
+          .dt {
+            float: left;
+            line-height: 22px;
+          }
+          .dd {
+            margin-left: 70px;
+            .price {
+              color: $color-danger;
+              overflow: hidden;
+            }
+          }
+        }
+        .summary-info {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          .content {
+            text-align: center;
+            width: 100px;
+            float: left;
+            p {
+              margin: 5px 0;
+            }
+            span {
+              color: #005ea7;
+            }
+          }
+        }
+      }
     }
   }
 </style>

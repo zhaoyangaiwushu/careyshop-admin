@@ -819,7 +819,7 @@
                 ref="tinymce"
                 v-model="currentForm.content"
                 code="inside_content"
-                :height="450"/>
+                :height="500"/>
             </el-form-item>
           </el-form>
         </el-tab-pane>

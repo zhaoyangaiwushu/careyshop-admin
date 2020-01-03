@@ -143,6 +143,7 @@
 
 <script>
 import util from '@/utils/util'
+import { size } from 'lodash'
 import { getGoodsAttributeData } from '@/api/goods/attribute'
 import { getGoodsAttrList, getGoodsItem, getGoodsSpecMenu } from '@/api/goods/goods'
 
@@ -206,11 +207,11 @@ export default {
         getGoodsAttributeData(this.goodsData.goods_type_id, 1)
       ])
         .then(res => {
-          this.specCombo = res[0].data['spec_combo'] || {}
-          this.specConfig = res[0].data['spec_config'] || []
+          this.specCombo = res[0].data ? res[0].data['spec_combo'] : {}
+          this.specConfig = res[0].data ? res[0].data['spec_config'] : []
 
           // 规格项只有一列时通过库存设置禁用状态
-          if (this.specConfig.length === 1) {
+          if (size(this.specConfig) === 1) {
             this.specConfig[0].spec_item.forEach(item => {
               const spec = this.specCombo[item.spec_item_id]
               if (!spec || spec.store_qty <= 0) {
@@ -220,9 +221,9 @@ export default {
           }
 
           // 计算价格区间
-          if (Object.keys(this.specCombo).length) {
-            let highPrice = 0
+          if (size(this.specCombo) > 0) {
             let lowPrice = Number.MAX_SAFE_INTEGER
+            let highPrice = 0
 
             for (let combo in this.specCombo) {
               if (!this.specCombo.hasOwnProperty(combo)) {
@@ -240,7 +241,7 @@ export default {
           }
 
           let key = {}
-          for (let value of res[1].data) {
+          for (let value of res[1].data || []) {
             if (!value.attr_value) {
               continue
             }
@@ -305,15 +306,14 @@ export default {
       const newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : null
       this.$set(parentData, 'active', newId)
 
+      // 获取已选规格键名
       let activeList = []
-      this.specConfig.map(spec => {
-        if (spec.active) {
-          activeList.push(spec.active)
-        }
-      })
-
-      // 当前已选规格键名
+      this.specConfig.map(spec => { spec.active && activeList.push(spec.active) })
       const strActive = activeList.join('_')
+
+      // 筛选规格项
+      if (size(this.specConfig) > 1) {
+      }
 
       // 更新售价与库存
       if (this.specCombo.hasOwnProperty(strActive)) {

@@ -7,11 +7,11 @@
         v-loading="loading">
         <div slot="header">
           <el-row>
-            <el-col :span="9">
+            <el-col :span="10">
               <span>图片占位</span>
             </el-col>
 
-            <el-col :span="15" class="itemInfo">
+            <el-col :span="14" class="itemInfo">
               <div class="goods-name cs-pb-5">
                 <b>{{goodsData.name}}</b>
               </div>
@@ -22,7 +22,7 @@
 
               <div class="summary-first">
                 <div class="summary-price-wrap cs-pt-10">
-                  <div class="summary-price cs-pb-10">
+                  <div class="summary-price">
                     <div class="dt">市场价</div>
                     <div class="dd">
                       <span style="text-decoration: line-through;">
@@ -31,14 +31,18 @@
                       </span>
                     </div>
                   </div>
-                  <div class="summary-price price-bg cs-pb-10">
+                  <div class="summary-price">
                     <div class="dt" style="line-height: 28px;">本店价</div>
                     <div class="dd">
                       <span class="price">
                         <span>￥</span>
-                        <span style="font-size: 22px;"><b>{{goodsData.shop_price | getNumber}}</b></span>
+                        <span style="font-size: 22px;"><b>{{currentPrice}}</b></span>
                       </span>
                     </div>
+                  </div>
+                  <div class="summary-price price-bg">
+                    <div class="dt">总库存</div>
+                    <div class="dd"><span>{{currentStore}}</span></div>
                   </div>
                   <div class="summary-info">
                     <div class="content">
@@ -59,16 +63,22 @@
                   <div class="dt">{{value.name}}</div>
                   <div class="dd">
                     <div
-                      class="goods-spec cs-cp"
                       v-for="(item, index) in value.spec_item"
-                      :key="index">
+                      :key="index"
+                      class="goods-spec"
+                      :class="{'active': value.active === item.spec_item_id, 'disabled': item.disabled}"
+                      @click="selectSpec(key, index)">
                       <template v-if="item.color">
-                        <span>色块</span>
+                        <span class="item-info" :style="{'background-color': item.color}"/>
                       </template>
 
                       <template v-if="item.image.length">
-                        <span>图片</span>
+                        <el-image
+                          class="item-info"
+                          :src="item.image[0]['source'] | getPreviewUrl(36, 36)"
+                          fit="contain"/>
                       </template>
+
                       <span class="item-name">{{item.item_name}}</span>
                     </div>
                   </div>
@@ -146,6 +156,9 @@ export default {
   filters: {
     getNumber(val) {
       return util.getNumber(val)
+    },
+    getPreviewUrl(val, width, height) {
+      return util.getImageStyleUrl(val, `&size[]=${width}&size[]=${height}`)
     }
   },
   watch: {
@@ -158,23 +171,28 @@ export default {
   },
   data() {
     return {
-      checkboxGroup1: [],
       loading: true,
       activeName: 'content',
+      currentPrice: 0,
+      rangePrice: '',
+      currentStore: 0,
       goodsData: {},
       attrConfig: [],
       attrImportant: [],
-      specCombo: [],
+      specCombo: {},
       specConfig: []
     }
   },
   methods: {
     resetGoodsData() {
       this.activeName = 'content'
+      this.currentPrice = 0
+      this.rangePrice = ''
+      this.currentStore = 0
       this.goodsData = {}
       this.attrConfig = []
       this.attrImportant = []
-      this.specCombo = []
+      this.specCombo = {}
       this.specConfig = []
     },
     getGoodsOtherInfo() {
@@ -188,8 +206,38 @@ export default {
         getGoodsAttributeData(this.goodsData.goods_type_id, 1)
       ])
         .then(res => {
-          this.specCombo = res[0].data['spec_combo'] || []
+          this.specCombo = res[0].data['spec_combo'] || {}
           this.specConfig = res[0].data['spec_config'] || []
+
+          // 规格项只有一列时通过库存设置禁用状态
+          if (this.specConfig.length === 1) {
+            this.specConfig[0].spec_item.forEach(item => {
+              const spec = this.specCombo[item.spec_item_id]
+              if (!spec || spec.store_qty <= 0) {
+                item.disabled = true
+              }
+            })
+          }
+
+          // 计算价格区间
+          if (Object.keys(this.specCombo).length) {
+            let highPrice = 0
+            let lowPrice = Number.MAX_SAFE_INTEGER
+
+            for (let combo in this.specCombo) {
+              if (!this.specCombo.hasOwnProperty(combo)) {
+                continue
+              }
+
+              lowPrice = Math.min(lowPrice, this.specCombo[combo]['price'])
+              highPrice = Math.max(highPrice, this.specCombo[combo]['price'])
+            }
+
+            lowPrice = util.getNumber(lowPrice)
+            highPrice = util.getNumber(highPrice)
+            this.rangePrice = `${lowPrice} - ${highPrice}`
+            this.currentPrice = this.rangePrice
+          }
 
           let key = {}
           for (let value of res[1].data) {
@@ -238,11 +286,43 @@ export default {
       getGoodsItem(this.goods_id)
         .then(res => {
           this.goodsData = res.data || {}
+          this.currentPrice = util.getNumber(this.goodsData.shop_price)
+          this.currentStore = this.goodsData.store_qty
           this.getGoodsOtherInfo()
         })
         .finally(() => {
           this.loading = false
         })
+    },
+    selectSpec(parent, key) {
+      const parentData = this.specConfig[parent]
+      const itemData = this.specConfig[parent]['spec_item'][key]
+      if (itemData.disabled) {
+        return
+      }
+
+      // 设置选中状态
+      const newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : null
+      this.$set(parentData, 'active', newId)
+
+      let activeList = []
+      this.specConfig.map(spec => {
+        if (spec.active) {
+          activeList.push(spec.active)
+        }
+      })
+
+      // 当前已选规格键名
+      const strActive = activeList.join('_')
+
+      // 更新售价与库存
+      if (this.specCombo.hasOwnProperty(strActive)) {
+        this.currentStore = this.specCombo[strActive].store_qty
+        this.currentPrice = util.getNumber(this.specCombo[strActive].price)
+      } else {
+        this.currentStore = this.goodsData.store_qty
+        this.currentPrice = this.rangePrice
+      }
     }
   }
 }
@@ -318,6 +398,7 @@ export default {
         }
         .summary-price {
           position: relative;
+          padding-bottom: 10px;
         }
         .summary-info {
           position: absolute;
@@ -342,15 +423,31 @@ export default {
     @extend %flex-center-row;
     float: left;
     font-size: 12px;
-    height: 35px;
+    line-height: 38px;
     margin: 0 5px 5px 0;
     border: 1px solid $color-border-1;
-    &.is-active, &:hover {
-      border-color: $color-primary;
-      color: $color-primary;
+    &.active {
+      border-color: $color-danger;
+    }
+    &:hover {
+      @extend %unable-select;
+      border-color: $color-danger;
+    }
+    &.disabled {
+      cursor: not-allowed;
+      color: $color-text-placehoder;
+      border: 1px dashed $color-border-3;
+      .item-info {
+        opacity: 0.5;
+      }
     }
     .item-name {
       padding: 0 10px;
+    }
+    .item-info {
+      margin: 1px;
+      width: 36px;
+      height: 36px;
     }
   }
 </style>

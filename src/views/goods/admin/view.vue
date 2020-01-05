@@ -143,7 +143,7 @@
 
 <script>
 import util from '@/utils/util'
-import { size } from 'lodash'
+import { size, compact, difference, uniq } from 'lodash'
 import { getGoodsAttributeData } from '@/api/goods/attribute'
 import { getGoodsAttrList, getGoodsItem, getGoodsSpecMenu } from '@/api/goods/goods'
 
@@ -302,20 +302,95 @@ export default {
         return
       }
 
-      // 设置选中状态
-      const newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : null
-      this.$set(parentData, 'active', newId)
-
-      // 获取已选规格键名
+      // 选中状态设置,并获取已选规格键名
       let activeList = []
-      this.specConfig.map(spec => { spec.active && activeList.push(spec.active) })
-      const strActive = activeList.join('_')
+      let newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : null
+      this.$set(parentData, 'active', newId)
+      this.specConfig.forEach((spec, index) => {
+        if (spec.active) {
+          activeList[index] = spec.active
+        }
+      })
 
-      // 筛选规格项
+      // 去除空值后的选择列表
+      const oneActive = compact(activeList)
+
+      // 筛选规格项状态
       if (size(this.specConfig) > 1) {
+        let disabled = []
+
+        if (activeList.length) {
+          let outStock = []
+          let ampleStock = []
+
+          for (const combo in this.specCombo) {
+            if (!this.specCombo.hasOwnProperty(combo)) {
+              continue
+            }
+
+            let isContinue = true
+            const comboArray = combo.split('_')
+
+            for (let active in activeList) {
+              if (!activeList.hasOwnProperty(active)) {
+                continue
+              }
+
+              // 选项单选或多选时是否跳过的默认值
+              isContinue = oneActive.length === 1
+
+              if (oneActive.length === 1) {
+                // 选项单个时,组合列表中存在键名则通过
+                if (comboArray[active] === activeList[active].toString()) {
+                  isContinue = false
+                  break
+                }
+              } else {
+                // 选项多个时,只有键名全部匹配才通过
+                if (comboArray[active] !== activeList[active].toString()) {
+                  isContinue = true
+                  break
+                }
+              }
+            }
+
+            if (isContinue) {
+              continue
+            }
+
+            console.log(combo)
+
+            if (this.specCombo[combo].store_qty > 0) {
+              ampleStock = ampleStock.concat(combo.split('_'))
+            } else {
+              outStock = outStock.concat(combo.split('_'))
+            }
+          }
+
+          if (outStock.length) {
+            disabled = uniq(difference(outStock, ampleStock))
+          }
+        }
+
+        this.specConfig.forEach(value => {
+          for (let item of value.spec_item) {
+            if (value.active === item.spec_item_id) {
+              item.disabled = false
+              continue
+            }
+
+            if (disabled.indexOf(item.spec_item_id.toString()) === -1) {
+              item.disabled = false
+              continue
+            }
+
+            item.disabled = true
+          }
+        })
       }
 
       // 更新售价与库存
+      const strActive = oneActive.join('_')
       if (this.specCombo.hasOwnProperty(strActive)) {
         this.currentStore = this.specCombo[strActive].store_qty
         this.currentPrice = util.getNumber(this.specCombo[strActive].price)
@@ -427,6 +502,7 @@ export default {
     margin: 0 5px 5px 0;
     border: 1px solid $color-border-1;
     &.active {
+      color: $color-danger;
       border-color: $color-danger;
     }
     &:hover {

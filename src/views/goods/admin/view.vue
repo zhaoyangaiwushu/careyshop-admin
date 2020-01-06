@@ -304,7 +304,7 @@ export default {
 
       // 选中状态设置,并获取已选规格键名
       let activeList = []
-      let newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : null
+      let newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : 0
       this.$set(parentData, 'active', newId)
       this.specConfig.forEach((spec, index) => {
         if (spec.active) {
@@ -320,57 +320,28 @@ export default {
         let disabled = []
 
         if (activeList.length) {
-          let outStock = []
-          let ampleStock = []
+          activeList.forEach((active, index) => {
+            let outStock = []
+            let ampleStock = []
 
-          for (const combo in this.specCombo) {
-            if (!this.specCombo.hasOwnProperty(combo)) {
-              continue
-            }
-
-            let isContinue = true
-            const comboArray = combo.split('_')
-
-            for (let active in activeList) {
-              if (!activeList.hasOwnProperty(active)) {
-                continue
-              }
-
-              // 选项单选或多选时是否跳过的默认值
-              isContinue = oneActive.length === 1
-
-              if (oneActive.length === 1) {
-                // 选项单个时,组合列表中存在键名则通过
-                if (comboArray[active] === activeList[active].toString()) {
-                  isContinue = false
-                  break
-                }
-              } else {
-                // 选项多个时,只有键名全部匹配才通过
-                if (comboArray[active] !== activeList[active].toString()) {
-                  isContinue = true
-                  break
+            for (let combo in this.specCombo) {
+              let comboArray = combo.split('_')
+              if (comboArray[index] === active.toString()) {
+                if (this.specCombo[combo].store_qty > 0) {
+                  ampleStock = ampleStock.concat(comboArray)
+                } else {
+                  outStock = outStock.concat(comboArray)
                 }
               }
             }
 
-            if (isContinue) {
-              continue
+            if (outStock.length) {
+              disabled = disabled.concat(uniq(difference(outStock, ampleStock)))
             }
-
-            console.log(combo)
-
-            if (this.specCombo[combo].store_qty > 0) {
-              ampleStock = ampleStock.concat(combo.split('_'))
-            } else {
-              outStock = outStock.concat(combo.split('_'))
-            }
-          }
-
-          if (outStock.length) {
-            disabled = uniq(difference(outStock, ampleStock))
-          }
+          })
         }
+
+        console.log(disabled)
 
         this.specConfig.forEach(value => {
           for (let item of value.spec_item) {

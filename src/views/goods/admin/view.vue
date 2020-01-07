@@ -302,6 +302,11 @@ export default {
         return
       }
 
+      // 规格存在图集时进行处理
+      if (itemData.image.length > 0) {
+        // 预留
+      }
+
       // 选中状态设置,并获取已选规格键名
       let activeList = new Array(this.specConfig.length).fill(0)
       this.$set(parentData, 'active', parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : 0)

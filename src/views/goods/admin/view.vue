@@ -143,7 +143,7 @@
 
 <script>
 import util from '@/utils/util'
-import { size, compact, difference, uniq } from 'lodash'
+import { size, difference, uniq } from 'lodash'
 import { getGoodsAttributeData } from '@/api/goods/attribute'
 import { getGoodsAttrList, getGoodsItem, getGoodsSpecMenu } from '@/api/goods/goods'
 
@@ -303,46 +303,44 @@ export default {
       }
 
       // 选中状态设置,并获取已选规格键名
-      let activeList = []
-      let newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : 0
-      this.$set(parentData, 'active', newId)
+      let activeList = new Array(this.specConfig.length).fill(0)
+      this.$set(parentData, 'active', parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : 0)
       this.specConfig.forEach((spec, index) => {
         if (spec.active) {
-          activeList[index] = spec.active
+          activeList[index] = spec.active.toString()
         }
       })
 
-      // 去除空值后的选择列表
-      const oneActive = compact(activeList)
-
       // 筛选规格项状态
-      if (size(this.specConfig) > 1) {
+      if (this.specConfig.length > 1) {
+        // 将被禁用的选择项
         let disabled = []
 
-        if (activeList.length) {
-          activeList.forEach((active, index) => {
-            let outStock = []
-            let ampleStock = []
+        for (let active in activeList) {
+          if (!activeList.hasOwnProperty(active) || !activeList[active]) {
+            continue
+          }
 
-            for (let combo in this.specCombo) {
-              let comboArray = combo.split('_')
-              if (comboArray[index] === active.toString()) {
-                if (this.specCombo[combo].store_qty > 0) {
-                  ampleStock = ampleStock.concat(comboArray)
-                } else {
-                  outStock = outStock.concat(comboArray)
-                }
+          let outStock = []
+          let ampleStock = []
+
+          for (let combo in this.specCombo) {
+            let comboArray = combo.split('_')
+            if (comboArray[active] === activeList[active]) {
+              if (this.specCombo[combo].store_qty > 0) {
+                ampleStock = ampleStock.concat(comboArray)
+              } else {
+                outStock = outStock.concat(comboArray)
               }
             }
+          }
 
-            if (outStock.length) {
-              disabled = disabled.concat(uniq(difference(outStock, ampleStock)))
-            }
-          })
+          if (outStock.length) {
+            disabled = disabled.concat(difference(outStock, ampleStock))
+          }
         }
 
-        console.log(disabled)
-
+        disabled = uniq(disabled)
         this.specConfig.forEach(value => {
           for (let item of value.spec_item) {
             if (value.active === item.spec_item_id) {
@@ -361,7 +359,7 @@ export default {
       }
 
       // 更新售价与库存
-      const strActive = oneActive.join('_')
+      const strActive = activeList.join('_')
       if (this.specCombo.hasOwnProperty(strActive)) {
         this.currentStore = this.specCombo[strActive].store_qty
         this.currentPrice = util.getNumber(this.specCombo[strActive].price)

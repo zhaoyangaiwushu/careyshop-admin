@@ -6,9 +6,12 @@
         shadow="never"
         v-loading="loading">
         <div slot="header">
-          <el-row>
+          <el-row :gutter="20">
             <el-col :span="10">
-              <span>图片占位</span>
+              <page-media
+                ref="goodsMedia"
+                :image="goodsData.attachment"
+                :video="goodsData.video"/>
             </el-col>
 
             <el-col :span="14" class="itemInfo">
@@ -170,6 +173,9 @@ export default {
       immediate: true
     }
   },
+  components: {
+    'PageMedia': () => import('./components/PageMedia')
+  },
   data() {
     return {
       loading: true,
@@ -304,7 +310,9 @@ export default {
 
       // 规格存在图集时进行处理
       if (itemData.image.length > 0) {
-        // 预留
+        this.$nextTick(() => {
+          this.$refs.goodsMedia.unshiftImage(itemData.image)
+        })
       }
 
       // 选中状态设置,并获取已选规格键名

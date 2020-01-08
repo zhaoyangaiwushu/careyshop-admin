@@ -5,90 +5,89 @@
         class="box-card"
         shadow="never"
         v-loading="loading">
-        <div slot="header">
-          <el-row :gutter="20">
-            <el-col :span="10">
-              <page-media
-                ref="goodsMedia"
-                :image="goodsData.attachment"
-                :video="goodsData.video"/>
-            </el-col>
+        <div slot="header" class="clearfix">
+          <div class="gallery">
+            <page-media
+              ref="goodsMedia"
+              :image="goodsData.attachment"
+              :video="goodsData.video">
+            </page-media>
+          </div>
 
-            <el-col :span="14" class="itemInfo">
-              <div class="goods-name cs-pb-5">
-                <b>{{goodsData.name}}</b>
-              </div>
+          <div class="itemInfo">
+            <div class="goods-name cs-pb-5">
+              <b>{{goodsData.name}}</b>
+            </div>
 
-              <div class="product-name">
-                <span>{{goodsData.product_name}}</span>
-              </div>
+            <div class="product-name">
+              <span>{{goodsData.product_name}}</span>
+            </div>
 
-              <div class="summary-first">
-                <div class="summary-price-wrap cs-pt-10">
-                  <div class="summary-price">
-                    <div class="dt">市场价</div>
-                    <div class="dd">
-                      <span style="text-decoration: line-through;">
-                        <span>￥</span>
-                        <span>{{goodsData.market_price | getNumber}}</span>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="summary-price">
-                    <div class="dt" style="line-height: 28px;">本店价</div>
-                    <div class="dd">
-                      <span class="price">
-                        <span>￥</span>
-                        <span style="font-size: 22px;"><b>{{currentPrice}}</b></span>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="summary-price price-bg">
-                    <div class="dt">总库存</div>
-                    <div class="dd"><span>{{currentStore}}</span></div>
-                  </div>
-                  <div class="summary-info">
-                    <div class="content">
-                      <p>评价数</p>
-                      <span>{{goodsData.comment_sum}}</span>
-                    </div>
-
-                    <div class="content">
-                      <p>累计销量</p>
-                      <span>{{goodsData.sales_sum}}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div v-for="(value, key) in specConfig" :key="key" class="cs-pt-5">
-                <div style="display: inline-block;">
-                  <div class="dt">{{value.name}}</div>
+            <div class="summary-first">
+              <div class="summary-price-wrap cs-pt-10">
+                <div class="summary-price">
+                  <div class="dt">市场价</div>
                   <div class="dd">
-                    <div
-                      v-for="(item, index) in value.spec_item"
-                      :key="index"
-                      class="goods-spec"
-                      :class="{'active': value.active === item.spec_item_id, 'disabled': item.disabled}"
-                      @click="selectSpec(key, index)">
-                      <template v-if="item.color">
-                        <span class="item-info" :style="{'background-color': item.color}"/>
-                      </template>
+                    <span style="text-decoration: line-through;">
+                      <span>￥</span>
+                      <span>{{goodsData.market_price | getNumber}}</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="summary-price">
+                  <div class="dt" style="line-height: 28px;">本店价</div>
+                  <div class="dd">
+                    <span class="price">
+                      <span>￥</span>
+                      <span style="font-size: 22px;"><b>{{currentPrice}}</b></span>
+                    </span>
+                  </div>
+                </div>
+                <div class="summary-price price-bg">
+                  <div class="dt">总库存</div>
+                  <div class="dd"><span>{{currentStore}}</span></div>
+                </div>
+                <div class="summary-info">
+                  <div class="content">
+                    <p>评价数</p>
+                    <span>{{goodsData.comment_sum}}</span>
+                  </div>
 
-                      <template v-if="item.image.length">
-                        <el-image
-                          class="item-info"
-                          :src="item.image[0]['source'] | getPreviewUrl(36, 36)"
-                          fit="contain"/>
-                      </template>
-
-                      <span class="item-name">{{item.item_name}}</span>
-                    </div>
+                  <div class="content">
+                    <p>累计销量</p>
+                    <span>{{goodsData.sales_sum}}</span>
                   </div>
                 </div>
               </div>
-            </el-col>
-          </el-row>
+            </div>
+
+            <div v-for="(value, key) in specConfig" :key="key" class="cs-pt-5">
+              <div style="display: inline-block;">
+                <div class="dt">{{value.name}}</div>
+                <div class="dd">
+                  <div
+                    v-for="(item, index) in value.spec_item"
+                    :key="index"
+                    class="goods-spec"
+                    :class="{'active': value.active === item.spec_item_id, 'disabled': item.disabled}"
+                    @click="selectSpec(key, index)">
+                    <template v-if="item.color">
+                      <span class="item-info" :style="{'background-color': item.color}"/>
+                    </template>
+
+                    <template v-if="item.image.length">
+                      <el-image
+                        class="item-info"
+                        :src="item.image[0]['source'] | getPreviewUrl(36, 36)"
+                        fit="contain"/>
+                    </template>
+
+                    <span class="item-name">{{item.item_name}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <el-tabs v-model="activeName">
@@ -308,21 +307,22 @@ export default {
         return
       }
 
-      // 规格存在图集时进行处理
-      if (itemData.image.length > 0) {
-        this.$nextTick(() => {
-          this.$refs.goodsMedia.unshiftImage(itemData.image)
-        })
-      }
-
       // 选中状态设置,并获取已选规格键名
       let activeList = new Array(this.specConfig.length).fill(0)
-      this.$set(parentData, 'active', parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : 0)
+      let newId = parentData.active !== itemData.spec_item_id ? itemData.spec_item_id : 0
+      this.$set(parentData, 'active', newId)
       this.specConfig.forEach((spec, index) => {
         if (spec.active) {
           activeList[index] = spec.active.toString()
         }
       })
+
+      // 规格存在图集时进行处理
+      if (itemData.image.length > 0) {
+        this.$nextTick(() => {
+          this.$refs.goodsMedia.updateImage(newId ? itemData.image : [])
+        })
+      }
 
       // 筛选规格项状态
       if (this.specConfig.length > 1) {
@@ -391,6 +391,18 @@ export default {
     border-radius: 0;
     border: 1px solid $color-border-1;
   }
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  .clearfix:after {
+    clear: both
+  }
+  .gallery {
+    float: left;
+    width: 460px;
+  }
   .attr-label {
     color: $color-text-sub;
   }
@@ -423,7 +435,7 @@ export default {
     }
   }
   .itemInfo {
-    float: right;
+    margin-left: 480px;
     font-size: 14px;
     color: $color-text-sub;
     .dt {

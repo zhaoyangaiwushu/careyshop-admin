@@ -5,21 +5,26 @@
       <div>中图占位</div>
 
       <!-- 小图 -->
-      <div class="carousel">
-        <i class="el-icon-arrow-left arrow"/>
+      <div class="carousel" :style="{height: thumbHeight + 'px'}">
+        <i class="el-icon-arrow-left arrow" @click="clickPage('left')"/>
 
         <div class="show_box">
-          <ul class="picture_container">
+          <ul class="picture_container" :style="{left: middleLeft + 'px'}">
             <li
+              class="picture_item"
               v-for="(item, index) in imageList"
               :key="index"
-              class="picture_item">
-              <img :src="item | getPreviewUrl('goods_image_x80')" class="small_img" alt="">
+              :style="{
+                width: thumbWidth + 'px',
+                height: thumbHeight + 'px',
+                margin: `0 ${itemMargin / 2}px`
+              }">
+              <img class="small_img" :src="item | getPreviewUrl('goods_image_x80')" alt="">
             </li>
           </ul>
         </div>
 
-        <i class="el-icon-arrow-right arrow"/>
+        <i class="el-icon-arrow-right arrow" @click="clickPage('right')"/>
       </div>
     </div>
 
@@ -38,11 +43,41 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    },
+    video: {
+      type: [Object, Array],
+      required: false,
+      default: () => {}
+    },
+    width: {
+      type: Number,
+      default: 460
+    },
+    height: {
+      type: Number,
+      default: 460
+    },
+    thumbWidth: {
+      type: Number,
+      default: 60
+    },
+    thumbHeight: {
+      type: Number,
+      default: 60
+    },
+    zoom: {
+      type: Number,
+      default: 2
+    },
+    pageSize: {
+      type: Number,
+      default: 5
     }
   },
   data() {
     return {
-      imageList: []
+      imageList: [],
+      middleLeft: 0
     }
   },
   filters: {
@@ -59,15 +94,35 @@ export default {
   watch: {
     image: {
       handler(val) {
-        console.log(val)
         this.imageList = [...val]
       },
       immediate: true
     }
   },
+  computed: {
+    itemMargin() {
+      return (this.width - (this.thumbWidth * this.pageSize) - 50) / this.pageSize
+    }
+  },
   methods: {
-    // 插入图集到列表中(临时)
-    unshiftImage(imageList) {
+    // 插入图集到列表中
+    updateImage(imageList = []) {
+      this.imageList = imageList.length ? imageList.concat(this.image) : [...this.image]
+    },
+    // 左右缩略图翻页
+    clickPage(points) {
+      const step = (this.thumbWidth + this.itemMargin) * this.pageSize
+
+      if (points === 'right') {
+        let maxMove = -(this.thumbWidth + this.itemMargin) * this.imageList.length
+        if (-step + this.middleLeft > maxMove) {
+          this.middleLeft -= step
+        }
+      }
+
+      if (points === 'left' && this.middleLeft < 0) {
+        this.middleLeft += step
+      }
     }
   }
 }
@@ -88,8 +143,13 @@ export default {
         flex: 1;
         overflow: hidden;
         position: relative;
+        ul {
+          margin: 0;
+          padding: 0;
+        }
       }
       .arrow {
+        @extend %flex-center-row;
         font-size: 25px;
         font-weight: 700;
         flex-basis: 25px;
@@ -97,19 +157,18 @@ export default {
         color: $color-border-1;
       }
       .picture_container {
-        width: 200%;
         height: 100%;
         position: absolute;
         overflow: hidden;
         top: 0;
         left: 0;
         .picture_item {
-          height: 100%;
           float: left;
-          padding: 5px;
           box-sizing: border-box;
+          list-style: none;
+          border: 2px solid #ffffff;
           &:hover {
-            border: 2px solid $color-danger;
+            border-color: $color-danger;
           }
           img {
             width: 100%;

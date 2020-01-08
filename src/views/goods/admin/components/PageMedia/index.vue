@@ -5,21 +5,25 @@
       <div>中图占位</div>
 
       <!-- 小图 -->
-      <div class="carousel" :style="{height: thumbHeight + 'px'}">
+      <div class="carousel" :style="{width: middleWidth + 'px', height: thumbHeight + 'px'}">
         <i class="el-icon-arrow-left arrow" @click="clickPage('left')"/>
 
         <div class="show_box">
           <ul class="picture_container" :style="{left: middleLeft + 'px'}">
             <li
-              class="picture_item"
               v-for="(item, index) in imageList"
+              class="picture_item"
+              :class="{selected: imageIndex === index}"
               :key="index"
               :style="{
                 width: thumbWidth + 'px',
                 height: thumbHeight + 'px',
                 margin: `0 ${itemMargin / 2}px`
               }">
-              <img class="small_img" :src="item | getPreviewUrl('goods_image_x80')" alt="">
+              <el-image
+                :src="item | getPreviewUrl('goods_image_x80')"
+                fit="fill"
+                @mouseover="tabPicture(index)"/>
             </li>
           </ul>
         </div>
@@ -77,7 +81,8 @@ export default {
   data() {
     return {
       imageList: [],
-      middleLeft: 0
+      middleLeft: 0,
+      imageIndex: undefined
     }
   },
   filters: {
@@ -95,6 +100,7 @@ export default {
     image: {
       handler(val) {
         this.imageList = [...val]
+        this.resetData()
       },
       immediate: true
     }
@@ -102,12 +108,27 @@ export default {
   computed: {
     itemMargin() {
       return (this.width - (this.thumbWidth * this.pageSize) - 50) / this.pageSize
+    },
+    middleWidth() {
+      return (this.thumbWidth + this.itemMargin) * this.pageSize + 50 + 1
     }
   },
   methods: {
+    // 重置数据
+    resetData() {
+      this.middleLeft = 0
+      this.imageIndex = this.imageList.length ? 0 : undefined
+    },
     // 插入图集到列表中
     updateImage(imageList = []) {
       this.imageList = imageList.length ? imageList.concat(this.image) : [...this.image]
+      this.resetData()
+    },
+    // 切换图片
+    tabPicture(index) {
+      if (this.imageList.hasOwnProperty(index)) {
+        this.imageIndex = index
+      }
     },
     // 左右缩略图翻页
     clickPage(points) {
@@ -136,9 +157,8 @@ export default {
     width: 100%;
     height: 100%;
     .carousel {
-      width: 100%;
       margin-top: 20px;
-      display: -webkit-flex;
+      display: inline-flex;
       .show_box {
         flex: 1;
         overflow: hidden;
@@ -150,30 +170,26 @@ export default {
       }
       .arrow {
         @extend %flex-center-row;
+        @extend %unable-select;
         font-size: 25px;
         font-weight: 700;
         flex-basis: 25px;
-        cursor: pointer;
         color: $color-border-1;
       }
       .picture_container {
-        height: 100%;
         position: absolute;
         overflow: hidden;
         top: 0;
         left: 0;
         .picture_item {
+          @extend %flex-center-row;
           float: left;
           box-sizing: border-box;
           list-style: none;
           border: 2px solid #ffffff;
-          &:hover {
-            border-color: $color-danger;
-          }
-          img {
-            width: 100%;
-            height: 100%;
-          }
+        }
+        .selected {
+          border-color: $color-danger;
         }
       }
     }

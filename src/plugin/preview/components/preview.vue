@@ -53,6 +53,7 @@ export default {
 <style scoped>
   .image {
     text-align: center;
+    line-height: 0;
   }
   .image >>> img {
     vertical-align: middle;

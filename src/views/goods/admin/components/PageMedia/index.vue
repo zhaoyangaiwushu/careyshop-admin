@@ -2,10 +2,20 @@
   <div class="magnify">
     <!-- 左侧容器 -->
     <div class="left_contaner">
-      <div>中图占位</div>
+      <div class="middle_img">
+        <el-image
+          :src="currentImage | getPreviewUrl('goods_image_x480')"
+          :style="{width: width + 'px', height: height + 'px'}"
+          fit="contain">
+          <div slot="placeholder" class="image-slot">
+          </div>
+          <div slot="error" class="image-slot">
+          </div>
+        </el-image>
+      </div>
 
       <!-- 小图 -->
-      <div class="carousel" :style="{width: middleWidth + 'px', height: thumbHeight + 'px'}">
+      <div class="carousel" :style="{width: width + 'px', height: thumbHeight + 'px'}">
         <i class="el-icon-arrow-left arrow" @click="clickPage('left')"/>
 
         <div class="show_box">
@@ -13,7 +23,7 @@
             <li
               v-for="(item, index) in imageList"
               class="picture_item"
-              :class="{selected: imageIndex === index}"
+              :class="{selected: currentIndex === index}"
               :key="index"
               :style="{
                 width: thumbWidth + 'px',
@@ -22,8 +32,9 @@
               }">
               <el-image
                 :src="item | getPreviewUrl('goods_image_x80')"
-                fit="fill"
-                @mouseover="tabPicture(index)"/>
+                @mouseover="tabPicture(index)"
+                fit="contain">
+              </el-image>
             </li>
           </ul>
         </div>
@@ -40,6 +51,7 @@
 
 <script>
 import util from '@/utils/util'
+import { debounce } from 'lodash'
 
 export default {
   props: {
@@ -82,7 +94,8 @@ export default {
     return {
       imageList: [],
       middleLeft: 0,
-      imageIndex: undefined
+      currentImage: {},
+      currentIndex: undefined
     }
   },
   filters: {
@@ -107,17 +120,15 @@ export default {
   },
   computed: {
     itemMargin() {
-      return (this.width - (this.thumbWidth * this.pageSize) - 50) / this.pageSize
-    },
-    middleWidth() {
-      return (this.thumbWidth + this.itemMargin) * this.pageSize + 50 + 1
+      return (this.width - (this.thumbWidth * this.pageSize) - 51) / this.pageSize
     }
   },
   methods: {
     // 重置数据
     resetData() {
       this.middleLeft = 0
-      this.imageIndex = this.imageList.length ? 0 : undefined
+      this.currentIndex = undefined
+      this.currentImage = this.imageList[0]
     },
     // 插入图集到列表中
     updateImage(imageList = []) {
@@ -125,14 +136,15 @@ export default {
       this.resetData()
     },
     // 切换图片
-    tabPicture(index) {
+    tabPicture: debounce(function(index) {
       if (this.imageList.hasOwnProperty(index)) {
-        this.imageIndex = index
+        this.currentIndex = index
+        this.currentImage = this.imageList[index]
       }
-    },
+    }, 100),
     // 左右缩略图翻页
     clickPage(points) {
-      const step = (this.thumbWidth + this.itemMargin) * this.pageSize
+      const step = this.width - 51
 
       if (points === 'right') {
         let maxMove = -(this.thumbWidth + this.itemMargin) * this.imageList.length
@@ -182,7 +194,6 @@ export default {
         top: 0;
         left: 0;
         .picture_item {
-          @extend %flex-center-row;
           float: left;
           box-sizing: border-box;
           list-style: none;
@@ -192,6 +203,13 @@ export default {
           border-color: $color-danger;
         }
       }
+    }
+    .middle_img {
+      @extend %flex-center-col;
+      border: 1px solid $color-border-1;
+      box-sizing: border-box;
+      position: relative;
+      line-height: 0;
     }
   }
 </style>

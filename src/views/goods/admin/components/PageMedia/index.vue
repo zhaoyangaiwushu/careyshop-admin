@@ -263,8 +263,7 @@ export default {
         }
       }
       .video-box {
-        position: absolute;
-        bottom: 0;
+        text-align: center;
       }
     }
   }

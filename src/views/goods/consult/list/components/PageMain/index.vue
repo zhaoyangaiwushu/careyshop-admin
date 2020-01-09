@@ -50,7 +50,7 @@
 
                   <span
                     @click="openConsultDetail(scope.row.goods_consult_id)"
-                    :class="{title: auth.detail}"
+                    :class="{'title': auth.detail}"
                     :title="scope.row.content"
                     class="cs-pl-5">{{scope.row.content}}</span>
                 </p>

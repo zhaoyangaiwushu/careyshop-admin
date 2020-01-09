@@ -1,5 +1,5 @@
 <template>
-  <div class="cs-layout-header-aside-group" :style="styleLayoutMainGroup" :class="{grayMode: grayActive}">
+  <div class="cs-layout-header-aside-group" :style="styleLayoutMainGroup" :class="{'grayMode': grayActive}">
     <!-- 半透明遮罩 -->
     <div class="cs-layout-header-aside-mask"></div>
     <!-- 主体内容 -->
@@ -16,8 +16,8 @@
         </el-alert>
       </div>
       <!-- 顶栏 -->
-      <div class="cs-theme-header" :style="{opacity: this.searchActive ? 0.5 : 1}" flex-box="0" flex>
-        <div class="logo-group" :style="{width: asideCollapse ? asideWidthCollapse : asideWidth}" flex-box="0">
+      <div class="cs-theme-header" :style="{'opacity': this.searchActive ? 0.5 : 1}" flex-box="0" flex>
+        <div class="logo-group" :style="{'width': asideCollapse ? asideWidthCollapse : asideWidth}" flex-box="0">
           <a target="blank" href="//www.careyshop.cn/">
             <img v-if="asideCollapse" :src="`${$publicPath}image/theme/${themeActiveSetting.name}/logo/icon-only.png`" alt="">
             <img v-else :src="`${$publicPath}image/theme/${themeActiveSetting.name}/logo/all.png`" alt="">
@@ -46,8 +46,8 @@
           ref="aside"
           class="cs-theme-container-aside"
           :style="{
-            width: asideCollapse ? asideWidthCollapse : asideWidth,
-            opacity: this.searchActive ? 0.5 : 1
+            'width': asideCollapse ? asideWidthCollapse : asideWidth,
+            'opacity': this.searchActive ? 0.5 : 1
           }">
           <cs-menu-side/>
         </div>

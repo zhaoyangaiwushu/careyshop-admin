@@ -66,7 +66,7 @@
             <p>
               <span
                 @click="openCommentDetail(scope.row.goods_comment_id)"
-                :class="{link: auth.detail}">{{scope.row.content}}</span>
+                :class="{'link': auth.detail}">{{scope.row.content}}</span>
             </p>
             <div style="line-height: 0;">
               <el-image
@@ -85,7 +85,7 @@
             <p>
               <span
                 @click="openCommentDetail(scope.row.goods_comment_id)"
-                :class="{link: auth.detail}">{{scope.row.get_addition.content}}</span>
+                :class="{'link': auth.detail}">{{scope.row.get_addition.content}}</span>
             </p>
             <div style="line-height: 0;">
               <el-image

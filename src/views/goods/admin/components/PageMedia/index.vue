@@ -4,7 +4,7 @@
     <div class="left-contaner">
       <div
         :class="{'middle-img': true, 'video-bg': isVideoPlay}"
-        :style="{width: width + 'px', height: height + 'px'}">
+        :style="{'width': `${width}px`, 'height': `${height}px`}">
         <i
           v-if="!isVideoEmpty && !isVideoPlay"
           class="el-icon-video-play video-button play"
@@ -17,7 +17,7 @@
 
           <cs-video
             class="video-box"
-            :style="{width: width + 'px'}"
+            :style="{'width': `${width}px`}"
             :video-data="video"
             :autoplay="true">
           </cs-video>
@@ -29,36 +29,36 @@
           :style="{
             'width': 'auto',
             'height': 'auto',
-            'max-width': (width - 2) + 'px',
-            'max-height': (height - 2) + 'px'
+            'max-width': `${width - 2}px`,
+            'max-height': `${height - 2}px`
           }"
           alt="">
       </div>
 
       <!-- 缩略图集 -->
-      <div class="carousel" :style="{width: width + 'px', height: thumbHeight + 'px'}">
+      <div class="carousel" :style="{'width': `${width}px`, 'height': `${thumbHeight}px`}">
         <i class="el-icon-arrow-left arrow" @click="clickPage('left')"/>
 
         <div class="show-box">
-          <ul class="picture-container" :style="{left: middleLeft + 'px'}">
+          <ul class="picture-container" :style="{'left': `${middleLeft}px`}">
             <li
               v-for="(item, index) in imageList"
               class="picture-item"
-              :class="{selected: currentIndex === index}"
+              :class="{'selected': currentIndex === index}"
               :key="index"
               @mouseover="tabPicture(index)"
               :style="{
-                width: thumbWidth + 'px',
-                height: thumbHeight + 'px',
-                margin: `0 ${itemMargin / 2}px`
+                'width': `${thumbWidth}px`,
+                'height': `${thumbHeight}px`,
+                'margin': `0 ${itemMargin / 2}px`
               }">
               <img
                 :src="item | getPreviewUrl('goods_image_x80')"
                 :style="{
                   'width': 'auto',
                   'height': 'auto',
-                  'max-width': (thumbWidth - 4) + 'px',
-                  'max-height': (thumbHeight - 4) + 'px'
+                  'max-width': `${thumbWidth - 4}px`,
+                  'max-height': `${thumbHeight - 4}px`
                 }"
                 alt="">
             </li>

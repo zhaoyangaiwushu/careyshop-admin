@@ -3,18 +3,18 @@
     <!-- 左侧容器 -->
     <div class="left_contaner">
       <div class="middle_img">
-        <el-image
-          :src="currentImage | getPreviewUrl('goods_image_x480')"
-          :style="{width: width + 'px', height: height + 'px'}"
-          fit="contain">
-          <div slot="placeholder" class="image-slot">
-          </div>
-          <div slot="error" class="image-slot">
-          </div>
-        </el-image>
+<!--        <el-image-->
+<!--          :src="currentImage | getPreviewUrl('goods_image_x480')"-->
+<!--          :style="{width: width + 'px', height: height + 'px'}"-->
+<!--          fit="contain">-->
+<!--          <div slot="placeholder" class="image-slot">-->
+<!--          </div>-->
+<!--          <div slot="error" class="image-slot">-->
+<!--          </div>-->
+<!--        </el-image>-->
       </div>
 
-      <!-- 小图 -->
+      <!-- 缩略图集 -->
       <div class="carousel" :style="{width: width + 'px', height: thumbHeight + 'px'}">
         <i class="el-icon-arrow-left arrow" @click="clickPage('left')"/>
 
@@ -25,16 +25,21 @@
               class="picture_item"
               :class="{selected: currentIndex === index}"
               :key="index"
+              @mouseover="tabPicture(index)"
               :style="{
                 width: thumbWidth + 'px',
                 height: thumbHeight + 'px',
                 margin: `0 ${itemMargin / 2}px`
               }">
-              <el-image
+              <img
                 :src="item | getPreviewUrl('goods_image_x80')"
-                @mouseover="tabPicture(index)"
-                fit="contain">
-              </el-image>
+                :style="{
+                  'width': 'auto',
+                  'height': 'auto',
+                  'max-width': (thumbWidth - 4) + 'px',
+                  'max-height': (thumbHeight - 4) + 'px'
+                }"
+                alt=""/>
             </li>
           </ul>
         </div>
@@ -194,22 +199,16 @@ export default {
         top: 0;
         left: 0;
         .picture_item {
+          @extend %flex-center-row;
           float: left;
           box-sizing: border-box;
           list-style: none;
-          border: 2px solid #ffffff;
-        }
-        .selected {
-          border-color: $color-danger;
+          border: 2px solid #FFFFFF;
+          &.selected {
+            border-color: $color-danger;
+          }
         }
       }
-    }
-    .middle_img {
-      @extend %flex-center-col;
-      border: 1px solid $color-border-1;
-      box-sizing: border-box;
-      position: relative;
-      line-height: 0;
     }
   }
 </style>

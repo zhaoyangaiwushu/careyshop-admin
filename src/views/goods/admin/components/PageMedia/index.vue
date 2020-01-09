@@ -163,9 +163,9 @@ export default {
     // 重置数据
     resetData() {
       this.middleLeft = 0
+      this.isVideoPlay = false
       this.currentIndex = undefined
       this.currentImage = this.imageList[0]
-      this.isVideoPlay = false
     },
     // 插入图集到列表中
     updateImage(imageList = []) {

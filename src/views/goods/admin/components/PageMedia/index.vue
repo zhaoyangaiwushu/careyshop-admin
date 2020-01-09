@@ -17,7 +17,7 @@
 
           <cs-video
             class="video-box"
-            :style="{'width': `${width}px`}"
+            aspect-ratio="1:1"
             :video-data="video"
             :autoplay="true">
           </cs-video>
@@ -40,7 +40,7 @@
         <i class="el-icon-arrow-left arrow" @click="clickPage('left')"/>
 
         <div class="show-box">
-          <ul class="picture-container" :style="{'left': `${middleLeft}px`}">
+          <ul class="picture-container" :style="{'left': `${middleLeft}px`, 'width': `${middleWidth}px`}">
             <li
               v-for="(item, index) in imageList"
               class="picture-item"
@@ -152,6 +152,9 @@ export default {
     itemMargin() {
       return (this.width - (this.thumbWidth * this.pageSize) - 51) / this.pageSize
     },
+    middleWidth() {
+      return (this.thumbWidth + this.itemMargin) * this.imageList.length
+    },
     isVideoEmpty() {
       return isEmpty(this.video)
     }
@@ -226,7 +229,6 @@ export default {
         position: absolute;
         overflow: hidden;
         top: 0;
-        left: 0;
         .picture-item {
           @extend %flex-center-row;
           float: left;
@@ -241,17 +243,21 @@ export default {
     }
     .middle-img {
       @extend %flex-center-row;
-      border: 1px solid $color-border-1;
+      border: 1px solid $color-border-4;
       box-sizing: border-box;
       position: relative;
       overflow: hidden;
       &.video-bg {
-        background: #000000;
+        border-color: #FFFFFF;
+      }
+      .video-box {
+        width: 100%;
+        text-align: center;
       }
       .video-button {
         @extend %unable-select;
         font-size: 38px;
-        color: $color-text-normal;
+        color: $color-text-sub;
         position: absolute;
         &.play {
           bottom: 10px;
@@ -260,10 +266,8 @@ export default {
         &.stop {
           top: 10px;
           right: 10px;
+          z-index: 1;
         }
-      }
-      .video-box {
-        text-align: center;
       }
     }
   }

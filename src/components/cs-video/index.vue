@@ -34,6 +34,12 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    // 窗口比例
+    aspectRatio: {
+      type: String,
+      required: false,
+      default: '16:9'
     }
   },
   watch: {
@@ -53,7 +59,7 @@ export default {
         loop: false,
         preload: 'auto',
         language: 'zh-CN',
-        aspectRatio: '16:9',
+        aspectRatio: this.aspectRatio,
         fluid: true,
         sources: [],
         poster: this.videoData.cover,

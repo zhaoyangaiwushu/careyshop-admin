@@ -25,6 +25,7 @@
 
         <img
           v-show="!isVideoPlay"
+          alt=""
           :src="currentImage | getPreviewUrl('goods_image_x480')"
           :style="{
             'width': 'auto',
@@ -32,7 +33,14 @@
             'max-width': `${width - 2}px`,
             'max-height': `${height - 2}px`
           }"
-          alt="">
+          @mouseover="() => {}"
+          @mouseleave="() => {}">
+
+        <div
+          v-show="isShade"
+          class="shade"
+          @mouseover="() => {}"
+          @mousemove="() => {}"/>
       </div>
 
       <!-- 缩略图集 -->
@@ -46,13 +54,13 @@
               class="picture-item"
               :class="{'selected': currentIndex === index}"
               :key="index"
-              @mouseover="tabPicture(index)"
               :style="{
                 'width': `${thumbWidth}px`,
                 'height': `${thumbHeight}px`,
                 'margin': `0 ${itemMargin / 2}px`
               }">
               <img
+                alt=""
                 :src="item | getPreviewUrl('goods_image_x80')"
                 :style="{
                   'width': 'auto',
@@ -60,7 +68,7 @@
                   'max-width': `${thumbWidth - 4}px`,
                   'max-height': `${thumbHeight - 4}px`
                 }"
-                alt="">
+                @mouseover="tabPicture(index)">
             </li>
           </ul>
         </div>
@@ -70,7 +78,8 @@
     </div>
 
     <!-- 右侧大图容器 -->
-    <div class="right_contanier">
+    <div class="right_contanier" v-show="isBig">
+      <img :src="currentImage | getPreviewUrl('goods_image_x800')" class="big-img" alt="">
     </div>
   </div>
 </template>
@@ -125,7 +134,9 @@ export default {
       middleLeft: 0,
       currentImage: {},
       currentIndex: undefined,
-      isVideoPlay: false
+      isVideoPlay: false,
+      isBig: false,
+      isShade: false
     }
   },
   filters: {
@@ -163,6 +174,8 @@ export default {
     // 重置数据
     resetData() {
       this.middleLeft = 0
+      this.isBig = false
+      this.isShade = false
       this.isVideoPlay = false
       this.currentIndex = undefined
       this.currentImage = this.imageList[0]
@@ -174,6 +187,7 @@ export default {
     },
     // 切换图片
     tabPicture: debounce(function(index) {
+      console.log(index)
       if (this.imageList.hasOwnProperty(index)) {
         this.currentIndex = index
         this.currentImage = this.imageList[index]
@@ -269,6 +283,24 @@ export default {
           z-index: 1;
         }
       }
+    }
+    .right_contanier {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid $color-border-4;
+      top: 0;
+      .big-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+    .shade {
+      background-color: rgba(135,206,235, 0.5);
+      cursor: move;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
   }
 </style>

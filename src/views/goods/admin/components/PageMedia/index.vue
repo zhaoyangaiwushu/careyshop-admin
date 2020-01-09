@@ -4,7 +4,9 @@
     <div class="left-contaner">
       <div
         :class="{'middle-img': true, 'video-bg': isVideoPlay}"
-        :style="{'width': `${width}px`, 'height': `${height}px`}">
+        :style="{'width': `${width}px`, 'height': `${height}px`}"
+        @mouseover.prevent.stop="boxMouseOver"
+        @mouseleave="boxMouseLeave">
         <i
           v-if="!isVideoEmpty && !isVideoPlay"
           class="el-icon-video-play video-button play"
@@ -32,15 +34,14 @@
             'height': 'auto',
             'max-width': `${width - 2}px`,
             'max-height': `${height - 2}px`
-          }"
-          @mouseover="() => {}"
-          @mouseleave="() => {}">
+          }">
 
         <div
-          v-show="isShade"
+          v-show="!isVideoPlay && isShade"
           class="shade"
-          @mouseover="() => {}"
-          @mousemove="() => {}"/>
+          :style="shadeSize"
+          @mouseover.prevent.stop="() => {}"
+          @mousemove.prevent.stop="shadeMouseMove"/>
       </div>
 
       <!-- 缩略图集 -->
@@ -135,8 +136,14 @@ export default {
       currentImage: {},
       currentIndex: undefined,
       isVideoPlay: false,
+      isShade: false,
       isBig: false,
-      isShade: false
+      shade: {
+        width: 0,
+        height: 0,
+        left: 0,
+        top: 0
+      }
     }
   },
   filters: {
@@ -168,14 +175,26 @@ export default {
     },
     isVideoEmpty() {
       return isEmpty(this.video)
+    },
+    shadeSize() {
+      return {
+        width: `${this.shade.width}px`,
+        height: `${this.shade.height}px`,
+        left: `${this.shade.left}px`,
+        top: `${this.shade.top}px`
+      }
     }
+  },
+  mounted() {
+    this.shade.width = this.width / this.zoom
+    this.shade.height = this.height / this.zoom
   },
   methods: {
     // 重置数据
     resetData() {
       this.middleLeft = 0
-      this.isBig = false
       this.isShade = false
+      this.isBig = false
       this.isVideoPlay = false
       this.currentIndex = undefined
       this.currentImage = this.imageList[0]
@@ -187,7 +206,6 @@ export default {
     },
     // 切换图片
     tabPicture: debounce(function(index) {
-      console.log(index)
       if (this.imageList.hasOwnProperty(index)) {
         this.currentIndex = index
         this.currentImage = this.imageList[index]
@@ -207,6 +225,36 @@ export default {
       if (points === 'left' && this.middleLeft < 0) {
         this.middleLeft += step
       }
+    },
+    // 鼠标移入产品图片事件,显示阴影,显示大图
+    boxMouseOver(e) {
+      this.isShade = true
+      this.isBig = true
+
+      // 计算阴影的位置
+      let x = e.offsetX - this.shade.width / 2
+      let y = e.offsetY - this.shade.height / 2
+
+      let maxLeft = this.width - this.shade.width
+      let maxTop = this.height - this.shade.height
+
+      // 边界修正
+      x = x <= 0 ? 0 : x
+      x = x >= maxLeft ? maxLeft : x
+      y = y <= 0 ? 0 : y
+      y = y >= maxTop ? maxTop : y
+
+      this.shade.left = x
+      this.shade.top = y
+    },
+    // 鼠标移出隐藏阴影和大图
+    boxMouseLeave() {
+      this.isShade = false
+      this.isBig = false
+    },
+    // 鼠标在阴影移动
+    shadeMouseMove(e) {
+      // 待续
     }
   }
 }
@@ -273,6 +321,7 @@ export default {
         font-size: 38px;
         color: $color-text-sub;
         position: absolute;
+        z-index: 1;
         &.play {
           bottom: 10px;
           left: 10px;
@@ -280,7 +329,6 @@ export default {
         &.stop {
           top: 10px;
           right: 10px;
-          z-index: 1;
         }
       }
     }
@@ -296,8 +344,8 @@ export default {
       }
     }
     .shade {
-      background-color: rgba(135,206,235, 0.5);
       cursor: move;
+      background-color: rgba($color-primary, .3);
       position: absolute;
       top: 0;
       left: 0;

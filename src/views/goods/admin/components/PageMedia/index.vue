@@ -37,8 +37,8 @@
           }">
 
         <div
-          v-show="!isVideoPlay && isShade"
-          class="shade"
+          v-show="isShade"
+          :class="{shade, 'video-play': isVideoPlay}"
           :style="shadeSize"
           @mouseover.prevent.stop="() => {}"
           @mousemove.prevent.stop="shadeMouseMove"/>
@@ -79,8 +79,12 @@
     </div>
 
     <!-- 右侧大图容器 -->
-    <div class="right_contanier" v-show="isBig">
-      <img :src="currentImage | getPreviewUrl('goods_image_x800')" class="big-img" alt="">
+    <div v-show="!isVideoPlay && isBig" class="right-contanier" :style="rightContanier">
+      <img
+        :src="currentImage | getPreviewUrl('goods_image_x800')"
+        :style="bigImageSize"
+        class="big-img"
+        alt="">
     </div>
   </div>
 </template>
@@ -122,7 +126,7 @@ export default {
     },
     zoom: {
       type: Number,
-      default: 2
+      default: 1.48
     },
     pageSize: {
       type: Number,
@@ -131,6 +135,7 @@ export default {
   },
   data() {
     return {
+      imgObj: {},
       imageList: [],
       middleLeft: 0,
       currentImage: {},
@@ -139,8 +144,12 @@ export default {
       isShade: false,
       isBig: false,
       shade: {
-        width: 0,
-        height: 0,
+        width: this.width / this.zoom,
+        height: this.height / this.zoom,
+        left: 0,
+        top: 0
+      },
+      bigImage: {
         left: 0,
         top: 0
       }
@@ -167,6 +176,9 @@ export default {
     }
   },
   computed: {
+    boxHeight() {
+      return this.height + this.thumbHeight + 20
+    },
     itemMargin() {
       return (this.width - (this.thumbWidth * this.pageSize) - 51) / this.pageSize
     },
@@ -183,11 +195,22 @@ export default {
         left: `${this.shade.left}px`,
         top: `${this.shade.top}px`
       }
+    },
+    rightContanier() {
+      return {
+        width: `${this.boxHeight}px`,
+        height: `${this.boxHeight}px`,
+        left: `${this.width}px`
+      }
+    },
+    bigImageSize() {
+      return {
+        width: `${this.boxHeight * this.zoom}px`,
+        height: `${this.boxHeight * this.zoom}px`,
+        left: `${this.bigImage.left}px`,
+        top: `${this.bigImage.top}px`
+      }
     }
-  },
-  mounted() {
-    this.shade.width = this.width / this.zoom
-    this.shade.height = this.height / this.zoom
   },
   methods: {
     // 重置数据
@@ -226,26 +249,41 @@ export default {
         this.middleLeft += step
       }
     },
-    // 鼠标移入产品图片事件,显示阴影,显示大图
-    boxMouseOver(e) {
-      this.isShade = true
-      this.isBig = true
+    handMove(e) {
+      if (isEmpty(this.imgObj)) {
+        return
+      }
 
-      // 计算阴影的位置
-      let x = e.offsetX - this.shade.width / 2
-      let y = e.offsetY - this.shade.height / 2
+      let imgRectNow = this.imgObj.getBoundingClientRect()
+      let x = e.clientX - imgRectNow.left
+      let y = e.clientY - imgRectNow.top
 
+      // 阴影坐标居中
+      x -= this.shade.width / 2
+      y -= this.shade.height / 2
+
+      // 限制移动边界
       let maxLeft = this.width - this.shade.width
       let maxTop = this.height - this.shade.height
 
-      // 边界修正
       x = x <= 0 ? 0 : x
       x = x >= maxLeft ? maxLeft : x
       y = y <= 0 ? 0 : y
       y = y >= maxTop ? maxTop : y
 
+      // 重新定位
       this.shade.left = x
       this.shade.top = y
+    },
+    // 鼠标移入产品图片事件,显示阴影,显示大图
+    boxMouseOver(e) {
+      if (isEmpty(this.imgObj)) {
+        this.imgObj = this.$el.getElementsByClassName('middle-img')[0]
+      }
+
+      this.isShade = true
+      this.isBig = true
+      this.handMove(e)
     },
     // 鼠标移出隐藏阴影和大图
     boxMouseLeave() {
@@ -254,7 +292,15 @@ export default {
     },
     // 鼠标在阴影移动
     shadeMouseMove(e) {
-      // 待续
+      // 计算坐标及阴影
+      this.handMove(e)
+
+      // 计算出实时的大图的定位,首先计算出比例
+      const xRate = (this.boxHeight * this.zoom) / this.width
+      const yRate = (this.boxHeight * this.zoom) / this.height
+
+      this.bigImage.left = -this.shade.left * xRate
+      this.bigImage.top = -this.shade.top * yRate
     }
   }
 }
@@ -315,13 +361,14 @@ export default {
       .video-box {
         width: 100%;
         text-align: center;
+        z-index: 1;
       }
       .video-button {
         @extend %unable-select;
         font-size: 38px;
         color: $color-text-sub;
         position: absolute;
-        z-index: 1;
+        z-index: 2;
         &.play {
           bottom: 10px;
           left: 10px;
@@ -332,23 +379,26 @@ export default {
         }
       }
     }
-    .right_contanier {
-      position: absolute;
-      overflow: hidden;
-      border: 1px solid $color-border-4;
-      top: 0;
-      .big-img {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-    }
     .shade {
       cursor: move;
       background-color: rgba($color-primary, .3);
       position: absolute;
-      top: 0;
-      left: 0;
+      &.video-play {
+        cursor: auto;
+        background-color: transparent;
+      }
+    }
+  }
+  .right-contanier {
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid $color-border-4;
+    background: #FFFFFF;
+    margin-left: -1px;
+    z-index: 1;
+    top: 0;
+    .big-img {
+      position: absolute;
     }
   }
 </style>

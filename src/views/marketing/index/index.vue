@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  name: 'promotion-index',
+  name: 'marketing-index',
   components: {
     'PageNavi': () => import('@/layout/header-aside/components/header-navi')
   },
   data() {
     return {
-      root: '/promotion'
+      root: '/marketing'
     }
   }
 }

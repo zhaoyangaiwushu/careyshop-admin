@@ -2,7 +2,7 @@ import index from './modules/index'
 import system from './modules/system'
 import setting from './modules/setting'
 import member from './modules/member'
-import promotion from './modules/promotion'
+import marketing from './modules/marketing'
 import order from './modules/order'
 import goods from './modules/goods'
 
@@ -14,7 +14,7 @@ const frameIn = [
   system,
   setting,
   member,
-  promotion,
+  marketing,
   order,
   goods
 ]

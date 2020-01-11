@@ -15,6 +15,7 @@
         <template v-if="isVideoPlay">
           <i
             class="el-icon-circle-close video-button stop"
+            @mouseover.prevent.stop="shadeMouseMove"
             @click="isVideoPlay = false"/>
 
           <cs-video

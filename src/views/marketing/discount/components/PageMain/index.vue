@@ -49,7 +49,7 @@
         label="名称"
         prop="name"
         sortable="custom"
-        min-width="200">
+        min-width="180">
       </el-table-column>
 
       <el-table-column

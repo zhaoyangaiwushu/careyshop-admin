@@ -53,9 +53,9 @@
       </el-table-column>
 
       <el-table-column
-        label="方式"
+        label="折扣方式"
         prop="type"
-        width="140">
+        width="160">
         <template slot-scope="scope">
           {{typeMap[scope.row.type]}}
         </template>
@@ -266,6 +266,18 @@ export default {
         discount_goods: undefined
       },
       rules: {
+        name: [
+          {
+            required: true,
+            message: '名称不能为空',
+            trigger: 'blur'
+          },
+          {
+            max: 100,
+            message: '长度不能大于 100 个字符',
+            trigger: 'blur'
+          }
+        ]
       },
       dialogLoading: false,
       dialogFormVisible: false,

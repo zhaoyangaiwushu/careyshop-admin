@@ -15,8 +15,8 @@
 
     <page-footer
       slot="footer"
-      :current="page.current"
       :loading="loading"
+      :current="page.current"
       :size="page.size"
       :total="page.total"
       @change="handlePaginationChange"/>

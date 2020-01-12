@@ -52,7 +52,7 @@ export function getDiscountItem(discount_id) {
 
 /**
  * 批量删除商品折扣
- * @param {Number} discount_id
+ * @param {Array} discount_id
  * @returns
  */
 export function delDiscountList(discount_id) {

@@ -192,12 +192,14 @@
         </el-row>
 
         <el-form-item
-          label="折扣商品"
+          label="商品选择"
           prop="discount_goods">
-          <page-goods
-            v-model="form.discount_goods"
-            :type="form.type"/>
         </el-form-item>
+
+        <page-goods
+          v-model="form.discount_goods"
+          :type="form.type">
+        </page-goods>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
@@ -308,7 +310,7 @@ export default {
         discount_goods: [
           {
             required: true,
-            message: '折扣商品不能为空',
+            message: '商品选择不能为空',
             trigger: 'blur'
           }
         ]
@@ -468,7 +470,7 @@ export default {
         begin_time: undefined,
         end_time: undefined,
         status: 1,
-        discount_goods: {}
+        discount_goods: []
       }
 
       this.$nextTick(() => {
@@ -476,6 +478,22 @@ export default {
       })
 
       this.dialogStatus = 'create'
+      this.dialogLoading = false
+      this.dialogFormVisible = true
+    },
+    // 弹出编辑对话框
+    handleUpdate(index) {
+      this.currentIndex = index
+      this.form = {
+        ...this.currentTableData[index],
+        type: this.currentTableData[index].type.toString()
+      }
+
+      this.$nextTick(() => {
+        this.$refs.form.clearValidate()
+      })
+
+      this.dialogStatus = 'update'
       this.dialogLoading = false
       this.dialogFormVisible = true
     }

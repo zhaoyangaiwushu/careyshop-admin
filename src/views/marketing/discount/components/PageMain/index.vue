@@ -192,8 +192,11 @@
         </el-row>
 
         <el-form-item
-          label="商品选择"
+          label="折扣商品"
           prop="discount_goods">
+          <page-goods
+            v-model="form.discount_goods"
+            :type="form.type"/>
         </el-form-item>
       </el-form>
 
@@ -223,6 +226,9 @@
 import { delDiscountList, setDiscountStatus } from '@/api/marketing/discount'
 
 export default {
+  components: {
+    'PageGoods': () => import('../PageGoods')
+  },
   props: {
     loading: {
       default: false
@@ -275,6 +281,34 @@ export default {
           {
             max: 100,
             message: '长度不能大于 100 个字符',
+            trigger: 'blur'
+          }
+        ],
+        begin_time: [
+          {
+            required: true,
+            message: '开始日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        end_time: [
+          {
+            required: true,
+            message: '结束日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        type: [
+          {
+            required: true,
+            message: '至少选择一项',
+            trigger: 'change'
+          }
+        ],
+        discount_goods: [
+          {
+            required: true,
+            message: '折扣商品不能为空',
             trigger: 'blur'
           }
         ]
@@ -434,7 +468,7 @@ export default {
         begin_time: undefined,
         end_time: undefined,
         status: 1,
-        discount_goods: []
+        discount_goods: {}
       }
 
       this.$nextTick(() => {

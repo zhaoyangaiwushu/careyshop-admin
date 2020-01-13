@@ -91,6 +91,24 @@ export function delGoodsList(goods_id, is_delete) {
 }
 
 /**
+ * 获取指定编号商品的基础数据
+ * @param {Array} goods_id
+ * @returns
+ */
+export function getGoodsSelect(goods_id) {
+  return request({
+    url: '/v1/goods',
+    method: 'post',
+    params: {
+      method: 'get.goods.select'
+    },
+    data: {
+      goods_id
+    }
+  })
+}
+
+/**
  * 批量设置或关闭商品可积分抵扣
  * @param {Array} goods_id
  * @param {Number} is_integral

@@ -121,3 +121,21 @@ export function getDiscountGoodsInfo(goods_id) {
     }
   })
 }
+
+/**
+ * 根据编号获取折扣商品明细
+ * @param {Array} discount_id
+ * @returns
+ */
+export function getDiscountGoodsList(discount_id) {
+  return request({
+    url: '/v1/discount',
+    method: 'post',
+    params: {
+      method: 'get.discount.goods.list'
+    },
+    data: {
+      discount_id
+    }
+  })
+}

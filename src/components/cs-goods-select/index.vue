@@ -68,7 +68,7 @@
             :append-to-body="true"
             :show-close="true"
             :modal="false">
-            <cs-goods-view :goods_id="currentGoodsId"/>
+            <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
           </el-drawer>
         </template>
       </el-table-column>

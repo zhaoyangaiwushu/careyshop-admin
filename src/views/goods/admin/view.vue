@@ -523,6 +523,7 @@ export default {
       margin: 1px;
       width: 36px;
       height: 36px;
+      line-height: 16px;
     }
   }
 </style>

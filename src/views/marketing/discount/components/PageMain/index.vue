@@ -195,11 +195,12 @@
         <el-form-item
           label="商品选取"
           prop="discount_goods">
-          <el-button @click="handleSelectGoods">商品选取</el-button>
+          <el-button @click="$refs.goodsSelect.handleShowDlg()">商品选取</el-button>
 
           <cs-goods-select
             ref="goodsSelect"
-            @confirm="handleGoodsConfirm"/>
+            :check-list="form.discount_goods"
+            @confirm="(val) => {form.discount_goods = val}"/>
         </el-form-item>
 
         <page-goods
@@ -503,14 +504,6 @@ export default {
       this.dialogStatus = 'update'
       this.dialogLoading = false
       this.dialogFormVisible = true
-    },
-    handleSelectGoods() {
-      this.$nextTick(() => {
-        this.$refs.goodsSelect.handleShowDlg()
-      })
-    },
-    handleGoodsConfirm(val) {
-      console.log(val)
     }
   }
 }

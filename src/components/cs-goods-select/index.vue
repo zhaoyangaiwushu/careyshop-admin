@@ -54,12 +54,24 @@
 
       <el-table-column
         label="名称"
-        prop="name"
-        show-overflow-tooltip>
+        prop="name">
         <template slot-scope="scope">
-          <span class="link" @click="handleViewGoods(scope.row.goods_id)">
-            {{scope.row.name}}
-          </span>
+          <el-image
+            class="goods-image cs-cp"
+            @click="handleViewGoods(scope.row.goods_id)"
+            :src="scope.row.attachment | getPreviewUrl"
+            fit="contain"
+            lazy>
+          </el-image>
+
+          <div class="goods-info cs-ml-10">
+            <div
+              :title="scope.row.name"
+              @click="handleViewGoods(scope.row.goods_id)"
+              class="name">{{scope.row.name}}</div>
+
+            <p class="price">￥{{scope.row.shop_price|getNumber}}</p>
+          </div>
 
           <el-drawer
             class="view-goods"
@@ -120,6 +132,7 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 import { getGoodsAdminList, getGoodsSelect } from '@/api/goods/goods'
 
 export default {
@@ -159,6 +172,20 @@ export default {
         size: 10,
         total: 0
       }
+    }
+  },
+  filters: {
+    getPreviewUrl(val) {
+      if (Array.isArray(val) && val.length > 0) {
+        if (val[0]['source']) {
+          return util.getImageCodeUrl(val[0]['source'], 'goods_image_x80')
+        }
+      }
+
+      return ''
+    },
+    getNumber(val) {
+      return util.getNumber(val)
     }
   },
   methods: {
@@ -247,14 +274,33 @@ export default {
 }
 </script>
 
-<style scoped>
-  .link:hover {
-    cursor: pointer;
-    color: #409EFF;
-    text-decoration: underline;
-  }
-  .view-goods >>> .el-drawer__body {
+<style lang="scss" scoped>
+  .view-goods /deep/ .el-drawer__body {
     height: auto;
     overflow: auto;
+  }
+  .goods-image {
+    float: left;
+    width: 60px;
+    height: 60px;
+  }
+  .goods-info {
+    float: left;
+    width: 310px;
+    .name {
+      height: 36px;
+      line-height: 18px;
+      overflow: hidden;
+      &:hover {
+        cursor: pointer;
+        color: $color-primary;
+        text-decoration: underline;
+      }
+    }
+    .price {
+      margin: 0;
+      font-size: 12px;
+      color: $color-danger;
+    }
   }
 </style>

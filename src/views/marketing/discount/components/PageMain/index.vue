@@ -114,6 +114,7 @@
       :visible.sync="dialogFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
+      :destroy-on-close="true"
       width="760px">
       <el-form
         :model="form"
@@ -192,8 +193,13 @@
         </el-row>
 
         <el-form-item
-          label="商品选择"
+          label="商品选取"
           prop="discount_goods">
+          <el-button @click="handleSelectGoods">商品选取</el-button>
+
+          <cs-goods-select
+            ref="goodsSelect"
+            @confirm="handleGoodsConfirm"/>
         </el-form-item>
 
         <page-goods
@@ -229,7 +235,8 @@ import { delDiscountList, setDiscountStatus } from '@/api/marketing/discount'
 
 export default {
   components: {
-    'PageGoods': () => import('../PageGoods')
+    'PageGoods': () => import('../PageGoods'),
+    'csGoodsSelect': () => import('@/components/cs-goods-select')
   },
   props: {
     loading: {
@@ -310,7 +317,7 @@ export default {
         discount_goods: [
           {
             required: true,
-            message: '商品选择不能为空',
+            message: '商品选取不能为空',
             trigger: 'blur'
           }
         ]
@@ -496,6 +503,14 @@ export default {
       this.dialogStatus = 'update'
       this.dialogLoading = false
       this.dialogFormVisible = true
+    },
+    handleSelectGoods() {
+      this.$nextTick(() => {
+        this.$refs.goodsSelect.handleShowDlg()
+      })
+    },
+    handleGoodsConfirm(val) {
+      console.log(val)
     }
   }
 }

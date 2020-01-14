@@ -90,6 +90,7 @@
       :current="page.current"
       :size="page.size"
       :total="page.total"
+      :is-size="false"
       @change="handlePaginationChange"/>
 
     <!-- 确认,取消 -->

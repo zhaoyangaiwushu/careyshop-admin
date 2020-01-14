@@ -5,7 +5,7 @@
     :total="total"
     :page-sizes="sizes"
     :disabled="loading"
-    :layout="sizes.includes(size) ? layout : simple"
+    :layout="sizes.includes(size) && isSize ? layout : simple"
     style="margin: -10px -5px;"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange">
@@ -28,6 +28,9 @@ export default {
     },
     loading: {
       default: false
+    },
+    isSize: {
+      default: true
     }
   },
   data() {

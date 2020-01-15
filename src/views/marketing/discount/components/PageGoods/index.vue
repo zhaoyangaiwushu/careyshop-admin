@@ -99,12 +99,10 @@ export default {
     }
   },
   mounted() {
-    if (!this.couponData.length) {
-      getCouponSelect({ type: 3, status: 1, is_invalid: 1 })
-        .then(res => {
-          this.couponData = res.data || []
-        })
-    }
+    getCouponSelect({ type: 3, status: 1, is_invalid: 1 })
+      .then(res => {
+        this.couponData = res.data || []
+      })
   },
   methods: {
     remove(index) {

@@ -4,7 +4,7 @@
       label="商品名称"
       prop="name">
       <template slot-scope="scope">
-        <div class="text" :title="scope.row.name">{{scope.row.goods.name}}</div>
+        <div class="discount-text" :title="scope.row.name">{{scope.row.goods.name}}</div>
       </template>
     </el-table-column>
 
@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style scoped>
-  .text {
+  .discount-text {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap

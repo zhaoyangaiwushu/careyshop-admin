@@ -67,6 +67,22 @@ export function getCouponList(data) {
 }
 
 /**
+ * 获取优惠劵选择列表
+ * @param {Object} data
+ * @returns
+ */
+export function getCouponSelect(data) {
+  return request({
+    url: '/v1/coupon',
+    method: 'post',
+    params: {
+      method: 'get.coupon.select'
+    },
+    data
+  })
+}
+
+/**
  * 批量删除优惠劵
  * @param {Array} coupon_id
  * @returns

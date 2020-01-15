@@ -200,12 +200,13 @@
           <cs-goods-select
             ref="goodsSelect"
             :check-list="form.discount_goods"
-            @confirm="(val) => {form.discount_goods = val}"/>
+            @confirm="handleGoodsConfirm"/>
         </el-form-item>
 
         <page-goods
           v-model="form.discount_goods"
-          :type="form.type">
+          :type="form.type"
+          :type-map="typeMap">
         </page-goods>
       </el-form>
 
@@ -504,6 +505,21 @@ export default {
       this.dialogStatus = 'update'
       this.dialogLoading = false
       this.dialogFormVisible = true
+    },
+    // 商品选取确认事件
+    handleGoodsConfirm(val) {
+      let discount = []
+      val.forEach(value => {
+        discount.push({
+          goods_id: value.goods_id,
+          discount: undefined,
+          description: '',
+          goods: value
+        })
+      })
+
+      // 转换成折扣结构
+      this.form.discount_goods = discount
     }
   }
 }

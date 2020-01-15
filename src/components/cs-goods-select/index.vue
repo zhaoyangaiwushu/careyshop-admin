@@ -222,10 +222,10 @@ export default {
               })
             }
           })
-          .then(() => {
-            this.isCheck = true
-          })
       }
+
+      // 组件存在时只需处理一次
+      this.isCheck = true
     },
     handleSubmit(isRefresh = false) {
       if (isRefresh) {

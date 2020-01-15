@@ -1,8 +1,51 @@
 <template>
   <el-table
-    v-loading="loading"
-    :data="value"
+    :data="discountList"
     :highlight-current-row="true">
+    <el-table-column
+      label="商品名称"
+      prop="name">
+      <template slot-scope="scope">
+        <div class="goods-name" :title="scope.row.name">{{scope.row.goods.name}}</div>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      :label="typeMap[type] || '折扣方式'"
+      align="center"
+      width="150">
+      <template slot="header" slot-scope="scope">
+        <el-tooltip placement="top" :content="typeHelp[type]">
+          <i class="el-icon-warning-outline cs-mr-10" v-show="typeHelp[type]"/>
+        </el-tooltip>
+        <span>{{scope.column.label}}</span>
+      </template>
+
+      <template slot-scope="scope">
+        <el-input-number
+          v-model="scope.row.discount"
+          controls-position="right"
+          size="mini"
+          :precision="2"
+          :min="0">
+        </el-input-number>
+      </template>
+    </el-table-column>
+
+    <el-table-column
+      align="center"
+      width="80">
+      <template slot="header">
+        <el-button type="text">批处理</el-button>
+      </template>
+
+      <template slot-scope="scope">
+        <el-button
+          @click="remove(scope.$index)"
+          type="text"
+          size="small">删除</el-button>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
@@ -20,14 +63,44 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    // 折扣索引
+    typeMap: {
+      default: () => {}
+    }
+  },
+  computed: {
+    discountList: {
+      get() {
+        return this.value
+      },
+      set(value) {
+        this.$emit('input', value)
+      }
     }
   },
   data() {
     return {
-      loading: false
+      typeHelp: {
+        '0': '打折额度，比如65表示按6.5折结算',
+        '1': '减多少额度，比如65表示在原价的基础上减去65',
+        '2': '固定价格，比如65则按65的价格结算',
+        '3': '赠送优惠劵，订单完成后赠送指定的优惠劵给顾客'
+      }
     }
   },
   methods: {
+    remove(index) {
+      this.discountList.splice(index, 1)
+    }
   }
 }
 </script>
+
+<style scoped>
+  .goods-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+  }
+</style>

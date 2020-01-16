@@ -1347,6 +1347,15 @@ export default {
           this.oldTypeId = currentForm.goods_type_id
           this.currentForm = currentForm
 
+          // 处理el-select项不存在的bug
+          if (!this.brandData.find(item => item.brand_id === this.currentForm.brand_id)) {
+            this.currentForm.brand_id = undefined
+          }
+
+          if (!this.typeData.find(item => item.goods_type_id === this.currentForm.goods_type_id)) {
+            this.currentForm.goods_type_id = undefined
+          }
+
           this.$nextTick(() => {
             if (this.$refs.tinymce) {
               this.$refs.tinymce.destroyTinymce()

@@ -145,7 +145,7 @@
           <el-select
             v-model="form.type"
             placeholder="请选择"
-            style="width: 150px;"
+            style="width: 200px;"
             clearable
             value="">
             <el-option

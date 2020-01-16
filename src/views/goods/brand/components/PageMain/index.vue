@@ -609,7 +609,7 @@ export default {
             .then(res => {
               this.currentTableData.unshift({
                 ...res[0].data,
-                category_name: res[1].data.name
+                category_name: res[1].data ? res[1].data.name : ''
               })
 
               this.dialogFormVisible = false
@@ -650,7 +650,7 @@ export default {
                 {
                   ...this.currentTableData[this.currentIndex],
                   ...res[0].data,
-                  category_name: res[1].data.name
+                  category_name: res[1].data ? res[1].data.name : ''
                 })
 
               this.dialogFormVisible = false

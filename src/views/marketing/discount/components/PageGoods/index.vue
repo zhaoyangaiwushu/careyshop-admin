@@ -19,12 +19,21 @@
       </template>
 
       <template slot-scope="scope">
+        <el-select
+          v-if="type === '3'"
+          v-model="scope.row.discount"
+          placeholder="请选择">
+        </el-select>
+
         <el-input-number
+          v-else
           v-model="scope.row.discount"
           controls-position="right"
+          placeholder="请输入"
           size="mini"
-          :precision="2"
-          :min="0">
+          :max="type === '0' ? 100 : Number.MAX_SAFE_INTEGER"
+          :min="0"
+          :precision="2">
         </el-input-number>
       </template>
     </el-table-column>

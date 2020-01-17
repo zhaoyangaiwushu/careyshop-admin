@@ -483,12 +483,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.dialogStatus = 'create'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 弹出编辑对话框
     handleUpdate(index) {
@@ -499,12 +501,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.dialogStatus = 'update'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 商品选取确认事件
     handleGoodsConfirm(val) {

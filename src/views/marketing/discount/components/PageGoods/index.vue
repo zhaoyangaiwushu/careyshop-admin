@@ -1,5 +1,5 @@
 <template>
-  <el-table :data="discountList">
+  <el-table :data="discountList" v-loading="loading" ref="discountList">
     <el-table-column
       label="商品名称"
       prop="name">
@@ -21,8 +21,16 @@
       <template slot-scope="scope">
         <el-select
           v-if="type === '3'"
-          v-model="scope.row.discount"
-          placeholder="请选择">
+          :value="filterCoupon(scope.row.discount)"
+          @change="val => {scope.row.discount = val}"
+          placeholder="请选择"
+          size="mini">
+          <el-option
+            v-for="item in couponData"
+            :key="item.coupon_id"
+            :label="item.name"
+            :value="item.coupon_id">
+          </el-option>
         </el-select>
 
         <el-input-number
@@ -39,10 +47,51 @@
     </el-table-column>
 
     <el-table-column
+      :label="type"
       align="center"
       width="80">
-      <template slot="header">
-        <el-button type="text">批处理</el-button>
+      <template slot="header" slot-scope="scope">
+        <el-popover
+          v-model="batchVisible"
+          placement="top-end"
+          trigger="manual">
+          <el-select
+            v-if="type === '3'"
+            v-model="batchValue"
+            class="cs-mb-10"
+            :placeholder="`请选择${typeMap[scope.column.label]}`"
+            size="mini">
+            <el-option
+              v-for="item in couponData"
+              :key="item.coupon_id"
+              :label="item.name"
+              :value="item.coupon_id">
+            </el-option>
+          </el-select>
+
+          <el-input-number
+            v-else
+            v-model="batchValue"
+            :placeholder="`请输入${typeMap[scope.column.label]}`"
+            controls-position="right"
+            size="mini"
+            style="width: 150px; margin-bottom: 10px;"
+            :max="type === '0' ? 100 : Number.MAX_SAFE_INTEGER"
+            :min="0"
+            :precision="2">
+          </el-input-number>
+
+          <div class="cs-tr">
+            <el-button @click="batchVisible = false" size="mini" type="text">取消</el-button>
+            <el-button @click="batchDiscount" type="primary" size="mini">确定</el-button>
+          </div>
+
+          <el-button
+            :disabled="!type"
+            type="text"
+            slot="reference"
+            @click="handleBatch">批处理</el-button>
+        </el-popover>
       </template>
 
       <template slot-scope="scope">
@@ -95,6 +144,9 @@ export default {
         '2': '固定价格，比如65则按65的价格结算',
         '3': '赠送优惠劵，订单完成后赠送指定的优惠劵给顾客'
       },
+      loading: false,
+      batchValue: undefined,
+      batchVisible: false,
       couponData: []
     }
   },
@@ -108,14 +160,35 @@ export default {
     }
   },
   mounted() {
-    getCouponSelect({ type: 3, status: 1, is_invalid: 1 })
+    this.loading = true
+    getCouponSelect({ type: 3, status: 1, is_invalid: 0, is_shelf_life: 1 })
       .then(res => {
         this.couponData = res.data || []
+      })
+      .finally(() => {
+        this.loading = false
       })
   },
   methods: {
     remove(index) {
       this.discountList.splice(index, 1)
+    },
+    filterCoupon(val) {
+      if (!this.couponData.find(item => item.coupon_id === val)) {
+        return null
+      }
+
+      return val
+    },
+    handleBatch() {
+      this.batchValue = undefined
+      this.batchVisible = true
+    },
+    batchDiscount() {
+      this.batchVisible = false
+      this.discountList.forEach(value => {
+        value.discount = this.batchValue
+      })
     }
   }
 }

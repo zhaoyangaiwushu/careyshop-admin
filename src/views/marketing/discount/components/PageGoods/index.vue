@@ -3,11 +3,17 @@
     v-loading="loading"
     :data="discountList">
     <el-table-column
+      label="编号"
+      prop="goods_id"
+      min-width="15">
+    </el-table-column>
+
+    <el-table-column
       label="商品名称"
       prop="name">
       <template slot-scope="scope">
-        <div class="discount-text" :title="scope.row.name">
-          <span>{{scope.row.goods ? scope.row.goods.name : '-'}}</span>
+        <div class="discount-text" :title="scope.row.goods | filterGoodsName">
+          <span>{{scope.row.goods | filterGoodsName}}</span>
         </div>
       </template>
     </el-table-column>
@@ -168,6 +174,15 @@ export default {
           value.discount = undefined
         })
       }
+    }
+  },
+  filters: {
+    filterGoodsName(val) {
+      if (!val) {
+        return ''
+      }
+
+      return val['name']
     }
   },
   mounted() {

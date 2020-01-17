@@ -46,6 +46,13 @@
       <el-table-column type="selection" width="30"/>
 
       <el-table-column
+        label="编号"
+        prop="discount_id"
+        sortable="custom"
+        min-width="40">
+      </el-table-column>
+
+      <el-table-column
         label="名称"
         prop="name"
         sortable="custom"
@@ -235,7 +242,7 @@
 </template>
 
 <script>
-import { delDiscountList, setDiscountStatus } from '@/api/marketing/discount'
+import { addDiscountItem, delDiscountList, setDiscountItem, setDiscountStatus } from '@/api/marketing/discount'
 
 export default {
   components: {
@@ -529,10 +536,44 @@ export default {
     },
     // 请求创建
     create() {
-      console.log(this.form)
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          addDiscountItem({ ...this.form })
+            .then(res => {
+              this.currentTableData.unshift(res.data)
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
     },
     // 请求修改
     update() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          setDiscountItem({ ...this.form })
+            .then(res => {
+              this.$set(
+                this.currentTableData,
+                this.currentIndex,
+                {
+                  ...this.currentTableData[this.currentIndex],
+                  ...res.data
+                })
+
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
     }
   }
 }

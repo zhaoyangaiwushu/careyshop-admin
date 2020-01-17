@@ -20,7 +20,7 @@
       v-loading="loading"
       :data="currentTableData"
       @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="30"/>
+      <el-table-column align="center" type="selection" width="50"/>
 
       <el-table-column
         label="商品咨询"

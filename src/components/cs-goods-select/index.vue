@@ -48,8 +48,9 @@
       @selection-change="handleSelectionChange">
       <el-table-column
         :reserve-selection="true"
+        align="center"
         type="selection"
-        width="30">
+        width="50">
       </el-table-column>
 
       <el-table-column
@@ -286,7 +287,7 @@ export default {
   }
   .goods-info {
     float: left;
-    width: 310px;
+    width: 290px;
     .name {
       height: 36px;
       line-height: 18px;

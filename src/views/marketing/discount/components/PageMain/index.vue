@@ -3,7 +3,7 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item>
+      <el-form-item v-if="auth.add">
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
@@ -13,18 +13,20 @@
       <el-form-item>
         <el-button-group>
           <el-button
+            v-if="auth.enable"
             icon="el-icon-check"
             :disabled="loading"
             @click="handleStatus(null, 1, true)">启用</el-button>
 
           <el-button
+            v-if="auth.disable"
             icon="el-icon-close"
             :disabled="loading"
             @click="handleStatus(null, 0, true)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.del">
         <el-button
           icon="el-icon-delete"
           :disabled="loading"
@@ -90,8 +92,8 @@
           <el-tag
             size="mini"
             :type="statusMap[scope.row.status].type"
-            style="cursor: pointer;"
-            effect="light"
+            :style="auth.enable || auth.disable ? 'cursor: pointer;' : ''"
+            :effect="auth.enable || auth.disable ? 'light' : 'plain'"
             @click.native="handleStatus(scope.$index)">
             {{statusMap[scope.row.status].text}}
           </el-tag>
@@ -104,11 +106,13 @@
         min-width="100">
         <template slot-scope="scope">
           <el-button
+            v-if="auth.set"
             @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
           <el-button
+            v-if="auth.del"
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
@@ -262,7 +266,6 @@ export default {
   },
   data() {
     return {
-      auth: {},
       currentTableData: [],
       multipleSelection: [],
       statusMap: {
@@ -290,6 +293,13 @@ export default {
         end_time: undefined,
         status: undefined,
         discount_goods: undefined
+      },
+      auth: {
+        add: false,
+        set: false,
+        del: false,
+        enable: false,
+        disable: false
       },
       rules: {
         name: [
@@ -352,6 +362,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.add = this.$has('/marketing/marketing/discount/add')
+      this.auth.set = this.$has('/marketing/marketing/discount/set')
+      this.auth.del = this.$has('/marketing/marketing/discount/del')
+      this.auth.enable = this.$has('/marketing/marketing/discount/enable')
+      this.auth.disable = this.$has('/marketing/marketing/discount/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {
@@ -420,15 +435,15 @@ export default {
           return
         }
 
-        // // 禁用权限检测
-        // if (newStatus === 0 && !this.auth.disable) {
-        //   return
-        // }
-        //
-        // // 启用权限检测
-        // if (newStatus === 1 && !this.auth.enable) {
-        //   return
-        // }
+        // 禁用权限检测
+        if (newStatus === 0 && !this.auth.disable) {
+          return
+        }
+
+        // 启用权限检测
+        if (newStatus === 1 && !this.auth.enable) {
+          return
+        }
 
         this.$set(this.currentTableData, val, { ...oldData, status: 2 })
         setStatus(discount_id, newStatus, this)

@@ -4,7 +4,11 @@ import CsIcon from '@/components/cs-icon/index.vue'
 describe('cs-icon', () => {
   // 存在且是Vue组件实例
   it('is a vue instance', () => {
-    const wrapper = mount(CsIcon)
+    const wrapper = mount(CsIcon, {
+      propsData: {
+        name: 'font-awesome'
+      }
+    })
 
     expect(wrapper.exists()).toBeTruthy()
     expect(wrapper.isVueInstance()).toBeTruthy()

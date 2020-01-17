@@ -204,9 +204,11 @@
         </el-form-item>
 
         <page-goods
+          v-if="dialogFormVisible"
           v-model="form.discount_goods"
           :type="form.type"
-          :type-map="typeMap">
+          :type-map="typeMap"
+          :status="dialogStatus">
         </page-goods>
       </el-form>
 
@@ -219,13 +221,13 @@
           v-if="dialogStatus === 'create'"
           type="primary"
           :loading="dialogLoading"
-          @click="() => {}"
+          @click="create"
           size="small">确定</el-button>
 
         <el-button
           v-else type="primary"
           :loading="dialogLoading"
-          @click="() => {}"
+          @click="update"
           size="small">修改</el-button>
       </div>
     </el-dialog>
@@ -471,6 +473,21 @@ export default {
         .catch(() => {
         })
     },
+    // 商品选取确认事件
+    handleGoodsConfirm(val) {
+      let discount = []
+      val.forEach(value => {
+        discount.push({
+          goods_id: value.goods_id,
+          discount: undefined,
+          description: '',
+          goods: value
+        })
+      })
+
+      // 转换成折扣结构
+      this.form.discount_goods = discount
+    },
     // 弹出新建对话框
     handleCreate() {
       this.form = {
@@ -510,20 +527,12 @@ export default {
         this.dialogFormVisible = true
       })
     },
-    // 商品选取确认事件
-    handleGoodsConfirm(val) {
-      let discount = []
-      val.forEach(value => {
-        discount.push({
-          goods_id: value.goods_id,
-          discount: undefined,
-          description: '',
-          goods: value
-        })
-      })
-
-      // 转换成折扣结构
-      this.form.discount_goods = discount
+    // 请求创建
+    create() {
+      console.log(this.form)
+    },
+    // 请求修改
+    update() {
     }
   }
 }

@@ -1,10 +1,14 @@
 <template>
-  <el-table :data="discountList" v-loading="loading" ref="discountList">
+  <el-table
+    v-loading="loading"
+    :data="discountList">
     <el-table-column
       label="商品名称"
       prop="name">
       <template slot-scope="scope">
-        <div class="discount-text" :title="scope.row.name">{{scope.row.goods.name}}</div>
+        <div class="discount-text" :title="scope.row.name">
+          <span>{{scope.row.goods ? scope.row.goods.name : '-'}}</span>
+        </div>
       </template>
     </el-table-column>
 
@@ -106,6 +110,7 @@
 
 <script>
 import { getCouponSelect } from '@/api/marketing/coupon'
+import { getGoodsSelect } from '@/api/goods/goods'
 
 export default {
   props: {
@@ -120,6 +125,12 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    // 处理方式
+    status: {
+      type: String,
+      required: true,
+      default: ''
     },
     // 折扣索引
     typeMap: {
@@ -161,9 +172,28 @@ export default {
   },
   mounted() {
     this.loading = true
-    getCouponSelect({ type: 3, status: 1, is_invalid: 0, is_shelf_life: 1 })
+    let request = [getCouponSelect({ type: 3, status: 1, is_invalid: 0, is_shelf_life: 1 })]
+
+    if (this.value.length && this.status === 'update') {
+      let idList = []
+      this.value.forEach(item => {
+        idList.push(item.goods_id)
+      })
+
+      if (idList.length) {
+        request.push(getGoodsSelect(idList))
+      }
+    }
+
+    Promise.all(request)
       .then(res => {
-        this.couponData = res.data || []
+        this.couponData = res[0].data || []
+        if (res[1] && res[1].data) {
+          for (let value of this.discountList) {
+            let goodsData = res[1].data.find(item => item.goods_id === value.goods_id)
+            this.$set(value, 'goods', goodsData)
+          }
+        }
       })
       .finally(() => {
         this.loading = false

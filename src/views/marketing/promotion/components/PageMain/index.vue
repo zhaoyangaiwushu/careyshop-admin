@@ -15,12 +15,12 @@
           <el-button
             icon="el-icon-check"
             :disabled="loading"
-            @click="() => {}">启用</el-button>
+            @click="handleStatus(null, 1, true)">启用</el-button>
 
           <el-button
             icon="el-icon-close"
             :disabled="loading"
-            @click="() => {}">禁用</el-button>
+            @click="handleStatus(null, 0, true)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
@@ -28,7 +28,7 @@
         <el-button
           icon="el-icon-delete"
           :disabled="loading"
-          @click="() => {}">删除</el-button>
+          @click="handleDelete(null)">删除</el-button>
       </el-form-item>
 
       <cs-help
@@ -100,7 +100,7 @@
             type="text">编辑</el-button>
 
           <el-button
-            @click="() => {}"
+            @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
         </template>
@@ -110,6 +110,8 @@
 </template>
 
 <script>
+import { delPromotionList, setPromotionStatus } from '@/api/marketing/promotion'
+
 export default {
   props: {
     loading: {
@@ -155,8 +157,8 @@ export default {
         add: false,
         set: false,
         del: false,
-        enable: false,
-        disable: false
+        enable: true,
+        disable: true
       },
       rules: {
       },
@@ -214,6 +216,98 @@ export default {
       }
 
       this.$emit('sort', sort)
+    },
+    // 批量设置状态
+    handleStatus(val, status = 0, confirm = false) {
+      let promotion_id = this._getIdList(val)
+      if (promotion_id.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      function setStatus(promotion_id, status, vm) {
+        setPromotionStatus(promotion_id, status)
+          .then(() => {
+            vm.currentTableData.forEach((value, index) => {
+              if (promotion_id.indexOf(value.promotion_id) !== -1) {
+                vm.$set(vm.currentTableData, index, {
+                  ...value,
+                  status
+                })
+              }
+            })
+
+            vm.$message.success('操作成功')
+          })
+      }
+
+      if (!confirm) {
+        let oldData = this.currentTableData[val]
+        const newStatus = oldData.status ? 0 : 1
+
+        if (oldData.status > 1) {
+          return
+        }
+
+        // 禁用权限检测
+        if (newStatus === 0 && !this.auth.disable) {
+          return
+        }
+
+        // 启用权限检测
+        if (newStatus === 1 && !this.auth.enable) {
+          return
+        }
+
+        this.$set(this.currentTableData, val, { ...oldData, status: 2 })
+        setStatus(promotion_id, newStatus, this)
+        return
+      }
+
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          setStatus(promotion_id, status, this)
+        })
+        .catch(() => {
+        })
+    },
+    // 批量删除
+    handleDelete(val) {
+      let promotion_id = this._getIdList(val)
+      if (promotion_id.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          delPromotionList(promotion_id)
+            .then(() => {
+              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
+                if (promotion_id.indexOf(this.currentTableData[i].promotion_id) !== -1) {
+                  this.currentTableData.splice(i, 1)
+                }
+              }
+
+              if (this.currentTableData.length <= 0) {
+                this.$emit('refresh', true)
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
     }
   }
 }

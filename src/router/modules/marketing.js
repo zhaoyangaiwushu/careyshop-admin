@@ -17,6 +17,12 @@ export default {
       name: `${pre}marketing-discount`,
       meta: { ...meta, cache: true, title: '商品折扣' },
       component: () => import('@/views/marketing/discount')
+    },
+    {
+      path: 'marketing/promotion',
+      name: `${pre}marketing-promotion`,
+      meta: { ...meta, cache: true, title: '订单促销' },
+      component: () => import('@/views/marketing/promotion')
     }
   ])('marketing-')
 }

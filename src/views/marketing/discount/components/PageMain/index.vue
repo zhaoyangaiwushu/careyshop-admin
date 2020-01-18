@@ -246,7 +246,12 @@
 </template>
 
 <script>
-import { addDiscountItem, delDiscountList, setDiscountItem, setDiscountStatus } from '@/api/marketing/discount'
+import {
+  addDiscountItem,
+  delDiscountList,
+  setDiscountItem,
+  setDiscountStatus
+} from '@/api/marketing/discount'
 
 export default {
   components: {

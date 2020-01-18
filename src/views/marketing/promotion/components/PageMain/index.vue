@@ -7,7 +7,7 @@
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
-          @click="() => {}">新增促销</el-button>
+          @click="handleCreate">新增促销</el-button>
       </el-form-item>
 
       <el-form-item>
@@ -95,7 +95,7 @@
         min-width="100">
         <template slot-scope="scope">
           <el-button
-            @click="() => {}"
+            @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
@@ -106,11 +106,100 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      :title="textMap[dialogStatus]"
+      :visible.sync="dialogFormVisible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="620px">
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="form"
+        label-width="80px">
+        <el-form-item
+          label="名称"
+          prop="name">
+          <el-input
+            v-model="form.name"
+            placeholder="请输入促销名称"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="开始日期"
+              prop="begin_time">
+              <el-date-picker
+                v-model="form.begin_time"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择促销开始日期"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="结束日期"
+              prop="end_time">
+              <el-date-picker
+                v-model="form.end_time"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择促销结束日期"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item
+          label="状态"
+          prop="status">
+          <el-switch
+            v-model="form.status"
+            :active-value="1"
+            :inactive-value="0">
+          </el-switch>
+        </el-form-item>
+
+        <el-form-item
+          label="促销方式"
+          prop="promotion_item">
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="dialogFormVisible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          v-if="dialogStatus === 'create'"
+          type="primary"
+          :loading="dialogLoading"
+          @click="() => {}"
+          size="small">确定</el-button>
+
+        <el-button
+          v-else type="primary"
+          :loading="dialogLoading"
+          @click="() => {}"
+          size="small">修改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { delPromotionList, setPromotionStatus } from '@/api/marketing/promotion'
+import {
+  delPromotionList,
+  setPromotionStatus
+} from '@/api/marketing/promotion'
 
 export default {
   props: {
@@ -161,6 +250,39 @@ export default {
         disable: true
       },
       rules: {
+        name: [
+          {
+            required: true,
+            message: '名称不能为空',
+            trigger: 'blur'
+          },
+          {
+            max: 100,
+            message: '长度不能大于 100 个字符',
+            trigger: 'blur'
+          }
+        ],
+        begin_time: [
+          {
+            required: true,
+            message: '开始日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        end_time: [
+          {
+            required: true,
+            message: '结束日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        promotion_item: [
+          {
+            required: true,
+            message: '促销方式不能为空',
+            trigger: 'blur'
+          }
+        ]
       },
       dialogLoading: false,
       dialogFormVisible: false,
@@ -308,6 +430,29 @@ export default {
         })
         .catch(() => {
         })
+    },
+    // 弹出新建对话框
+    handleCreate() {
+      this.form = {
+        name: '',
+        begin_time: undefined,
+        end_time: undefined,
+        status: 1,
+        promotion_item: []
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
+    },
+    // 弹出编辑对话框
+    handleUpdate(index) {
     }
   }
 }

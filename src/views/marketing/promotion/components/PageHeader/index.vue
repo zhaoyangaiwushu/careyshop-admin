@@ -11,7 +11,6 @@
         prefix-icon="el-icon-search"
         placeholder="可输入促销名称"
         @keyup.enter.native="handleFormSubmit(true)"
-        style="width: 200px;"
         :clearable="true"/>
     </el-form-item>
 

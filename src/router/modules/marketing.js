@@ -23,6 +23,12 @@ export default {
       name: `${pre}marketing-promotion`,
       meta: { ...meta, cache: true, title: '订单促销' },
       component: () => import('@/views/marketing/promotion')
+    },
+    {
+      path: 'card/list',
+      name: `${pre}card-list`,
+      meta: { ...meta, cache: true, title: '购物卡' },
+      component: () => import('@/views/marketing/card')
     }
   ])('marketing-')
 }

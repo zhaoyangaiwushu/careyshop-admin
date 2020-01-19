@@ -112,6 +112,7 @@
       :visible.sync="dialogFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
+      @open="handleOpenDlg"
       width="620px">
       <el-form
         :model="form"
@@ -201,9 +202,10 @@
             <div
               v-for="(value, key) in item.settings"
               :key="key">
-              <span class="promotion-label">促销方式</span>
+              <span class="promotion-label">方案类型</span>
               <el-select
                 v-model="value.type"
+                @change="val => value.value = val !== '2' ? undefined : 0"
                 class="promotion-input"
                 placeholder="请选择"
                 value="">
@@ -213,6 +215,42 @@
                   :label="item"
                   :value="index"/>
               </el-select>
+
+              <el-select
+                v-if="value.type === '4'"
+                :value="filterCoupon(value.value)"
+                @change="val => {value.value = val}"
+                class="promotion-input"
+                placeholder="请选择">
+                <el-option
+                  v-for="item in couponData"
+                  :key="item.coupon_id"
+                  :label="item.name"
+                  :value="item.coupon_id">
+                </el-option>
+              </el-select>
+
+              <el-input-number
+                v-if="['0', '1', '3'].indexOf(value.type) !== -1"
+                v-model="value.value"
+                class="promotion-input"
+                controls-position="right"
+                placeholder="请输入"
+                :min="0"
+                :max="value.type === '1' ? 100 : Number.MAX_SAFE_INTEGER"
+                :precision="value.type !== '3' ? 2 : 0">
+              </el-input-number>
+
+              <div class="active">
+                <el-tooltip placement="top" :content="typeHelp[value.type]">
+                  <i class="el-icon-warning-outline cs-mr-10" v-show="typeHelp[value.type]"/>
+                </el-tooltip>
+
+                <el-button
+                  @click="item.settings.splice(key, 1)"
+                  type="text"
+                  size="small">删除</el-button>
+              </div>
             </div>
           </div>
 
@@ -231,13 +269,13 @@
           v-if="dialogStatus === 'create'"
           type="primary"
           :loading="dialogLoading"
-          @click="() => {}"
+          @click="create"
           size="small">确定</el-button>
 
         <el-button
           v-else type="primary"
           :loading="dialogLoading"
-          @click="() => {}"
+          @click="update"
           size="small">修改</el-button>
       </div>
     </el-dialog>
@@ -246,9 +284,11 @@
 
 <script>
 import {
-  delPromotionList,
+  addPromotionItem,
+  delPromotionList, setPromotionItem,
   setPromotionStatus
 } from '@/api/marketing/promotion'
+import { getCouponSelect } from '@/api/marketing/coupon'
 
 export default {
   props: {
@@ -284,6 +324,13 @@ export default {
         update: '编辑促销',
         create: '新增促销'
       },
+      typeHelp: {
+        '0': '满足限额后在订单结算金额的基础上减去指定金额',
+        '1': '满足限额后在订单结算金额的基础上再按折扣结算（80表示8折）',
+        '2': '满足限额后该笔订单免去运费',
+        '3': '满足限额后并且在订单完成后赠送指定积分',
+        '4': '满足限额后并且在订单完成后赠送指定的优惠劵'
+      },
       form: {
         name: undefined,
         begin_time: undefined,
@@ -295,8 +342,8 @@ export default {
         add: false,
         set: false,
         del: false,
-        enable: true,
-        disable: true
+        enable: false,
+        disable: false
       },
       rules: {
         name: [
@@ -335,7 +382,8 @@ export default {
       },
       dialogLoading: false,
       dialogFormVisible: false,
-      dialogStatus: ''
+      dialogStatus: '',
+      couponData: []
     }
   },
   watch: {
@@ -480,6 +528,23 @@ export default {
         .catch(() => {
         })
     },
+    // 打开对话框事件
+    handleOpenDlg() {
+      if (!this.couponData.length) {
+        getCouponSelect({ type: 3, status: 1, is_invalid: 0, is_shelf_life: 1 })
+          .then(res => {
+            this.couponData = res.data || []
+          })
+      }
+    },
+    // 过滤优惠劵空选项
+    filterCoupon(val) {
+      if (!this.couponData.find(item => item.coupon_id === val)) {
+        return null
+      }
+
+      return val
+    },
     // 弹出新建对话框
     handleCreate() {
       this.form = {
@@ -502,6 +567,59 @@ export default {
     },
     // 弹出编辑对话框
     handleUpdate(index) {
+      this.currentIndex = index
+      this.form = { ...this.currentTableData[index] }
+
+      this.$nextTick(() => {
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
+    },
+    // 请求创建
+    create() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          addPromotionItem({ ...this.form })
+            .then(res => {
+              this.currentTableData.unshift(res.data)
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
+    },
+    // 请求修改
+    update() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          setPromotionItem({ ...this.form })
+            .then(res => {
+              this.$set(
+                this.currentTableData,
+                this.currentIndex,
+                {
+                  ...this.currentTableData[this.currentIndex],
+                  ...res.data
+                })
+
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
     }
   }
 }
@@ -520,7 +638,7 @@ export default {
     display: inline-block;
   }
   .promotion-input {
-    width: 180px;
+    width: 175px;
     margin-right: 10px;
   }
 </style>

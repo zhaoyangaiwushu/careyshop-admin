@@ -179,14 +179,14 @@
             <span class="promotion-label">满多少金额</span>
             <el-input-number
               v-model="item.quota"
+              class="promotion-input"
               placeholder="请输入限额"
               controls-position="right"
-              style="width: 180px;"
               :min="0"
               :precision="2">
             </el-input-number>
 
-            <div class="active cs-pl-10">
+            <div class="active">
               <el-button
                 @click="item.settings.push({type: undefined, value: undefined})"
                 type="text"
@@ -204,8 +204,8 @@
               <span class="promotion-label">促销方式</span>
               <el-select
                 v-model="value.type"
+                class="promotion-input"
                 placeholder="请选择"
-                style="width: 180px;"
                 value="">
                 <el-option
                   v-for="(item, index) in typeMap"
@@ -518,5 +518,9 @@ export default {
     width: 80px;
     padding-bottom: 10px;
     display: inline-block;
+  }
+  .promotion-input {
+    width: 180px;
+    margin-right: 10px;
   }
 </style>

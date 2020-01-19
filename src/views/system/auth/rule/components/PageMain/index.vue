@@ -12,7 +12,7 @@
           @click="handleCreate('create')">新增顶层权限</el-button>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
           <el-button
             v-if="auth.enable"
@@ -34,6 +34,7 @@
             icon="el-icon-circle-plus-outline"
             :disabled="loading"
             @click="checkedNodes(true)">展开</el-button>
+
           <el-button
             icon="el-icon-remove-outline"
             :disabled="loading"
@@ -127,7 +128,7 @@
 
       <el-col :span="14">
         <el-card
-          v-if="auth.add || auth.set"
+          v-show="auth.add || auth.set"
           class="box-card"
           shadow="never">
           <div slot="header">

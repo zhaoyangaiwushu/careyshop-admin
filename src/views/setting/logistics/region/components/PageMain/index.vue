@@ -92,7 +92,7 @@
 
       <el-col :span="14">
         <el-card
-          v-if="auth.add || auth.set"
+          v-show="auth.add || auth.set"
           class="box-card"
           shadow="never">
           <div slot="header">

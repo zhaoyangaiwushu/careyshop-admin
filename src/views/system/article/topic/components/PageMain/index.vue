@@ -11,7 +11,7 @@
           @click="handleCreate">新增专题</el-button>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
           <el-button
             v-if="auth.enable"

@@ -30,7 +30,7 @@
         </el-radio-group>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
           <el-button
             v-if="auth.enable"
@@ -133,7 +133,7 @@
 
       <el-col :span="14">
         <el-card
-          v-if="auth.add || auth.set"
+          v-show="auth.add || auth.set"
           class="box-card"
           shadow="never">
           <div slot="header">

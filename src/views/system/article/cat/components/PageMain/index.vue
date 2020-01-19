@@ -17,6 +17,7 @@
             icon="el-icon-circle-plus-outline"
             :disabled="loading"
             @click="checkedNodes(true)">展开</el-button>
+
           <el-button
             icon="el-icon-remove-outline"
             :disabled="loading"
@@ -89,7 +90,7 @@
 
       <el-col :span="14">
         <el-card
-          v-if="auth.add || auth.set"
+          v-show="auth.add || auth.set"
           class="box-card"
           shadow="never">
 

@@ -4,7 +4,7 @@
       :inline="true"
       size="small">
 
-      <el-form-item>
+      <el-form-item v-if="auth.add || auth.upload">
         <el-button-group>
           <el-button
             v-if="auth.add"

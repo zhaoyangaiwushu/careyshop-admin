@@ -10,7 +10,7 @@
           @click="handleCreate">新增规格</el-button>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.index || auth.close">
         <el-button-group>
           <el-button
             v-if="auth.index"

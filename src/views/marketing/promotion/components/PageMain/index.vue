@@ -3,28 +3,30 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item>
+      <el-form-item v-if="auth.add">
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
           @click="handleCreate">新增促销</el-button>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
           <el-button
+            v-if="auth.enable"
             icon="el-icon-check"
             :disabled="loading"
             @click="handleStatus(null, 1, true)">启用</el-button>
 
           <el-button
+            v-if="auth.disable"
             icon="el-icon-close"
             :disabled="loading"
             @click="handleStatus(null, 0, true)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.del">
         <el-button
           icon="el-icon-delete"
           :disabled="loading"
@@ -95,11 +97,13 @@
         min-width="100">
         <template slot-scope="scope">
           <el-button
+            v-if="auth.set"
             @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
           <el-button
+            v-if="auth.del"
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
@@ -285,7 +289,8 @@
 <script>
 import {
   addPromotionItem,
-  delPromotionList, setPromotionItem,
+  delPromotionList,
+  setPromotionItem,
   setPromotionStatus
 } from '@/api/marketing/promotion'
 import { getCouponSelect } from '@/api/marketing/coupon'
@@ -400,6 +405,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.add = this.$has('/marketing/marketing/promotion/add')
+      this.auth.set = this.$has('/marketing/marketing/promotion/set')
+      this.auth.del = this.$has('/marketing/marketing/promotion/del')
+      this.auth.enable = this.$has('/marketing/marketing/promotion/enable')
+      this.auth.disable = this.$has('/marketing/marketing/promotion/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

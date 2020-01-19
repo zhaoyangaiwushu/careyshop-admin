@@ -168,8 +168,57 @@
         </el-form-item>
 
         <el-form-item
-          label="促销方式"
+          label="促销方案"
           prop="promotion_item">
+          <div
+            class="action cs-pb-10"
+            v-for="(item, index) in form.promotion_item"
+            :key="index">
+            <el-divider>促销方案</el-divider>
+
+            <span class="promotion-label">满多少金额</span>
+            <el-input-number
+              v-model="item.quota"
+              placeholder="请输入限额"
+              controls-position="right"
+              style="width: 180px;"
+              :min="0"
+              :precision="2">
+            </el-input-number>
+
+            <div class="active cs-pl-10">
+              <el-button
+                @click="item.settings.push({type: undefined, value: undefined})"
+                type="text"
+                size="small">新增配置</el-button>
+
+              <el-button
+                @click="form.promotion_item.splice(index, 1)"
+                type="text"
+                size="small">删除</el-button>
+            </div>
+
+            <div
+              v-for="(value, key) in item.settings"
+              :key="key">
+              <span class="promotion-label">促销方式</span>
+              <el-select
+                v-model="value.type"
+                placeholder="请选择"
+                style="width: 180px;"
+                value="">
+                <el-option
+                  v-for="(item, index) in typeMap"
+                  :key="index"
+                  :label="item"
+                  :value="index"/>
+              </el-select>
+            </div>
+          </div>
+
+          <el-button
+            @click="form.promotion_item.push({quota: undefined, settings: []})"
+            size="small">新增方案</el-button>
         </el-form-item>
       </el-form>
 
@@ -279,7 +328,7 @@ export default {
         promotion_item: [
           {
             required: true,
-            message: '促销方式不能为空',
+            message: '促销方案不能为空',
             trigger: 'blur'
           }
         ]
@@ -459,4 +508,15 @@ export default {
 </script>
 
 <style scoped>
+  .active {
+    display: none;
+  }
+  .action:hover .active {
+    display: inline-block;
+  }
+  .promotion-label {
+    width: 80px;
+    padding-bottom: 10px;
+    display: inline-block;
+  }
 </style>

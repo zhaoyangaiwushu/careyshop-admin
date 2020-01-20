@@ -243,7 +243,7 @@ export default {
       this.resetTemp()
       this.dialogVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     /**

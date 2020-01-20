@@ -1,135 +1,139 @@
 <template>
-  <el-dialog
-    title="商品选取"
-    :visible.sync="visible"
-    :append-to-body="true"
-    :close-on-click-modal="false"
-    @open="handleOpen"
-    width="760px">
+  <div class="goods-control" @click="handleShowDlg">
+    <slot name="control"/>
 
-    <!-- 搜索框开始 -->
-    <el-form :model="form" style="margin-top: -25px;" size="small" @submit.native.prevent>
-      <el-row :gutter="20">
-        <el-col :span="10">
-          <el-form-item>
-            <el-radio-group v-model="isSelection" @change="handleSubmit(true)">
-              <el-radio-button :label="false">全部</el-radio-button>
-              <el-radio-button :label="true">已选</el-radio-button>
-            </el-radio-group>
+    <el-dialog
+      title="商品选取"
+      :visible.sync="visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      @open="handleOpen"
+      width="760px">
 
-            <el-button-group class="cs-ml-10">
-              <el-button icon="el-icon-circle-close" @click="clearedSelection">清除</el-button>
-              <el-button icon="el-icon-refresh" @click="handleSubmit(true)">刷新</el-button>
-            </el-button-group>
-          </el-form-item>
-        </el-col>
+      <!-- 搜索框开始 -->
+      <el-form :model="form" style="margin-top: -25px;" size="small" @submit.native.prevent>
+        <el-row :gutter="20">
+          <el-col :span="10">
+            <el-form-item>
+              <el-radio-group v-model="isSelection" @change="handleSubmit(true)">
+                <el-radio-button :label="false">全部</el-radio-button>
+                <el-radio-button :label="true">已选</el-radio-button>
+              </el-radio-group>
 
-        <el-col :span="14">
-          <el-form-item prop="keywords">
-            <el-input
-              v-model="form.keywords"
-              placeholder="输入商品名称进行搜索"
-              @keyup.enter.native="handleSubmit(true)"
-              :clearable="true"
-              size="small">
-              <el-button slot="append" icon="el-icon-search" @click="handleSubmit(true)"/>
-            </el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
+              <el-button-group class="cs-ml-10">
+                <el-button icon="el-icon-circle-close" @click="clearedSelection">清除</el-button>
+                <el-button icon="el-icon-refresh" @click="handleSubmit(true)">刷新</el-button>
+              </el-button-group>
+            </el-form-item>
+          </el-col>
 
-    <!-- 资源列表开始 -->
-    <el-table
-      v-loading="loading"
-      ref="multipleTable"
-      :data="tableData"
-      row-key="goods_id"
-      @selection-change="handleSelectionChange">
-      <el-table-column
-        :reserve-selection="true"
-        align="center"
-        type="selection"
-        width="50">
-      </el-table-column>
+          <el-col :span="14">
+            <el-form-item prop="keywords">
+              <el-input
+                v-model="form.keywords"
+                placeholder="输入商品名称进行搜索"
+                @keyup.enter.native="handleSubmit(true)"
+                :clearable="true"
+                size="small">
+                <el-button slot="append" icon="el-icon-search" @click="handleSubmit(true)"/>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
 
-      <el-table-column
-        label="名称"
-        prop="name">
-        <template slot-scope="scope">
-          <el-image
-            class="goods-image cs-cp"
-            @click="handleViewGoods(scope.row.goods_id)"
-            :src="scope.row.attachment | getPreviewUrl"
-            fit="contain"
-            lazy>
-          </el-image>
+      <!-- 资源列表开始 -->
+      <el-table
+        v-loading="loading"
+        ref="multipleTable"
+        :data="tableData"
+        row-key="goods_id"
+        @selection-change="handleSelectionChange">
+        <el-table-column
+          :reserve-selection="true"
+          align="center"
+          type="selection"
+          width="50">
+        </el-table-column>
 
-          <div class="goods-info cs-ml-10">
-            <div
-              :title="scope.row.name"
+        <el-table-column
+          label="名称"
+          prop="name">
+          <template slot-scope="scope">
+            <el-image
+              class="goods-image cs-cp"
               @click="handleViewGoods(scope.row.goods_id)"
-              class="name">{{scope.row.name}}</div>
+              :src="scope.row.attachment | getPreviewUrl"
+              fit="contain"
+              lazy>
+            </el-image>
 
-            <p class="price">￥{{scope.row.shop_price|getNumber}}</p>
-          </div>
+            <div class="goods-info cs-ml-10">
+              <div
+                :title="scope.row.name"
+                @click="handleViewGoods(scope.row.goods_id)"
+                class="name">{{scope.row.name}}</div>
 
-          <el-drawer
-            class="view-goods"
-            size="100%"
-            :visible.sync="drawer"
-            :append-to-body="true"
-            :show-close="true"
-            :modal="false">
-            <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
-          </el-drawer>
-        </template>
-      </el-table-column>
+              <p class="price">￥{{scope.row.shop_price|getNumber}}</p>
+            </div>
 
-      <el-table-column
-        label="库存"
-        prop="store_qty"
-        width="100">
-      </el-table-column>
+            <el-drawer
+              class="view-goods"
+              size="100%"
+              :visible.sync="drawer"
+              :append-to-body="true"
+              :show-close="true"
+              :modal="false">
+              <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
+            </el-drawer>
+          </template>
+        </el-table-column>
 
-      <el-table-column
-        label="销量"
-        prop="sales_sum"
-        width="100">
-      </el-table-column>
+        <el-table-column
+          label="库存"
+          prop="store_qty"
+          width="100">
+        </el-table-column>
 
-      <el-table-column
-        label="状态"
-        prop="status"
-        align="center"
-        width="80">
-        <template slot-scope="scope">
-          <span>{{scope.row.status ? '出售中' : '已下架'}}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+        <el-table-column
+          label="销量"
+          prop="sales_sum"
+          width="100">
+        </el-table-column>
 
-    <!-- 翻页开始 -->
-    <page-footer
-      style="margin: 0; padding: 20px 0 0 0;"
-      :current="page.current"
-      :size="page.size"
-      :total="page.total"
-      :is-size="false"
-      @change="handlePaginationChange"/>
+        <el-table-column
+          label="状态"
+          prop="status"
+          align="center"
+          width="80">
+          <template slot-scope="scope">
+            <span>{{scope.row.status ? '出售中' : '已下架'}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
 
-    <!-- 确认,取消 -->
-    <div slot="footer" class="dialog-footer">
-      <el-button
-        @click="visible = false"
-        size="small">取消</el-button>
+      <!-- 翻页开始 -->
+      <page-footer
+        style="margin: 0; padding: 20px 0 0 0;"
+        :current="page.current"
+        :size="page.size"
+        :total="page.total"
+        :is-size="false"
+        @change="handlePaginationChange"/>
 
-      <el-button
-        type="primary"
-        @click="handleConfirm"
-        size="small">确定</el-button>
-    </div>
-  </el-dialog>
+      <!-- 确认,取消 -->
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          @click="handleConfirm"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -276,6 +280,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .goods-control {
+    width: auto;
+    display: inline;
+  }
   .view-goods /deep/ .el-drawer__body {
     height: auto;
     overflow: auto;

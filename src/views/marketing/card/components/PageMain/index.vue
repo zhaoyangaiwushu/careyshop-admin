@@ -221,7 +221,7 @@
           <cs-goods-category
             v-model="form.category"
             type="all">
-            <el-button size="small" slot="control">商品分类选取</el-button>
+            <el-button slot="control">商品分类选取</el-button>
           </cs-goods-category>
 
           <div class="help-block">
@@ -235,7 +235,7 @@
           <cs-goods-category
             v-model="form.exclude_category"
             type="all">
-            <el-button size="small" slot="control">商品分类选取</el-button>
+            <el-button slot="control">商品分类选取</el-button>
           </cs-goods-category>
 
           <div class="help-block">

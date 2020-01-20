@@ -206,12 +206,11 @@
         <el-form-item
           label="商品选取"
           prop="discount_goods">
-          <el-button @click="$refs.goodsSelect.handleShowDlg()">商品选取</el-button>
-
           <cs-goods-select
-            ref="goodsSelect"
             :check-list="form.discount_goods"
-            @confirm="handleGoodsConfirm"/>
+            @confirm="handleGoodsConfirm">
+            <el-button slot="control">商品选取</el-button>
+          </cs-goods-select>
         </el-form-item>
 
         <page-goods

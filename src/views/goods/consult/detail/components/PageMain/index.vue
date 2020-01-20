@@ -185,7 +185,9 @@ export default {
           }
 
           this.$nextTick(() => {
-            this.$refs.form.clearValidate()
+            if (this.$refs.form) {
+              this.$refs.form.clearValidate()
+            }
           })
         }
       }

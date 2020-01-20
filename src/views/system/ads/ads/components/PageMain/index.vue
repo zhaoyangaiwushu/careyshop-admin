@@ -789,15 +789,17 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.adsType = undefined
+        this.content = { image: [], code: '' }
+
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
       })
-
-      this.adsType = undefined
-      this.content = { image: [], code: '' }
-
-      this.dialogStatus = 'create'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
     },
     // 根据类型获取广告实际内容
     getFormContent() {
@@ -846,22 +848,24 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        // 初始化组件数据
+        this.content = { image: [], code: '' }
+
+        if (this.adsType === 0) {
+          const imageFile = Array.isArray(this.form.content) ? this.form.content : []
+          this.content.image = [...imageFile]
+        } else {
+          this.content.code = this.form.content.toString()
+        }
+
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
       })
-
-      // 初始化组件数据
-      this.content = { image: [], code: '' }
-
-      if (this.adsType === 0) {
-        const imageFile = Array.isArray(this.form.content) ? this.form.content : []
-        this.content.image = [...imageFile]
-      } else {
-        this.content.code = this.form.content.toString()
-      }
-
-      this.dialogStatus = 'update'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
     },
     // 请求编辑广告
     handleUpdate() {

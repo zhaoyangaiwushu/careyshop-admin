@@ -260,12 +260,14 @@ export default {
           }
 
           this.$nextTick(() => {
-            this.$refs.form.clearValidate()
-          })
+            if (this.$refs.form) {
+              this.$refs.form.clearValidate()
+            }
 
-          this.dialogStatus = 'create'
-          this.dialogLoading = false
-          this.dialogFormVisible = true
+            this.dialogStatus = 'create'
+            this.dialogLoading = false
+            this.dialogFormVisible = true
+          })
         })
         .catch(() => {
           this.dialogFormVisible = false
@@ -297,12 +299,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.dialogStatus = 'update'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 请求编辑
     update() {

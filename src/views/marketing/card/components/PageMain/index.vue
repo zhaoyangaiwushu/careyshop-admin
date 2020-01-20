@@ -3,28 +3,30 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item>
+      <el-form-item v-if="auth.add">
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
           @click="handleCreate">新增购物卡</el-button>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
           <el-button
+            v-if="auth.enable"
             icon="el-icon-check"
             :disabled="loading"
             @click="handleStatus(null, 1, true)">启用</el-button>
 
           <el-button
+            v-if="auth.disable"
             icon="el-icon-close"
             :disabled="loading"
             @click="handleStatus(null, 0, true)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.del">
         <el-button
           icon="el-icon-delete"
           :disabled="loading"
@@ -90,7 +92,7 @@
           <el-tooltip placement="top">
             <div slot="content">
               创建日期：{{scope.row.create_time}}<br/>
-              有效日期：{{scope.row.end_time}}
+              截止日期：{{scope.row.end_time || '不限日期'}}
             </div>
             <el-tag size="mini" effect="plain" type="info">详细</el-tag>
           </el-tooltip>
@@ -121,23 +123,153 @@
         min-width="100">
         <template slot-scope="scope">
           <el-button
+            v-if="auth.set"
             @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
           <el-button
+            v-if="auth.del"
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      :title="textMap[dialogStatus]"
+      :visible.sync="dialogFormVisible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="form"
+        label-width="80px">
+        <el-form-item
+          label="名称"
+          prop="name">
+          <el-input
+            v-model="form.name"
+            placeholder="请输入购物卡名称"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="描述"
+          prop="description">
+          <el-input
+            v-model="form.description"
+            type="textarea"
+            placeholder="可输入购物卡描述"
+            :autosize="{minRows: 3}"
+            maxlength="255"
+            show-word-limit/>
+        </el-form-item>
+
+        <el-row :gutter="20" v-if="dialogStatus === 'create'">
+          <el-col :span="12">
+            <el-form-item
+              label="面额"
+              prop="money">
+              <el-input-number
+                v-model="form.money"
+                placeholder="请输入面额"
+                controls-position="right"
+                style="width: 100%;"
+                :precision="2"
+                :min="0">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="发放数"
+              prop="give_num">
+              <el-input-number
+                v-model="form.give_num"
+                placeholder="请输入发放数"
+                controls-position="right"
+                style="width: 100%;"
+                :min="0">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item
+          v-if="dialogStatus === 'create'"
+          label="截止日期"
+          prop="end_time">
+          <el-date-picker
+            v-model="form.end_time"
+            type="datetime"
+            value-format="yyyy-MM-dd HH:mm:ss"
+            placeholder="可选择购物卡截止有效期">
+          </el-date-picker>
+          <div class="help-block">
+            <span>为空表示不限制截止日期</span>
+          </div>
+        </el-form-item>
+
+        <el-form-item
+          label="指定分类"
+          prop="category">
+          <el-button size="small">预留</el-button>
+          <div class="help-block">
+            <span>指定商品分类后，该购物卡只能购买分类范围内的商品</span>
+          </div>
+        </el-form-item>
+
+        <el-form-item
+          label="排除分类"
+          prop="exclude_category">
+          <el-button size="small">预留</el-button>
+          <div class="help-block">
+            <span>排除商品分类后，该购物卡不能购买分类范围内的商品</span>
+          </div>
+        </el-form-item>
+
+        <el-form-item
+          label="状态"
+          prop="status">
+          <el-switch
+            v-model="form.status"
+            :active-value="1"
+            :inactive-value="0">
+          </el-switch>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="dialogFormVisible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          v-if="dialogStatus === 'create'"
+          type="primary"
+          :loading="dialogLoading"
+          @click="create"
+          size="small">确定</el-button>
+
+        <el-button
+          v-else type="primary"
+          :loading="dialogLoading"
+          @click="update"
+          size="small">修改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import {
-  delCardList,
+  addCardItem,
+  delCardList, setCardItem,
   setCardStatus
 } from '@/api/marketing/card'
 import util from '@/utils/util'
@@ -180,8 +312,8 @@ export default {
         add: false,
         set: false,
         del: false,
-        enable: true,
-        disable: true
+        enable: false,
+        disable: false
       },
       form: {
         name: undefined,
@@ -194,6 +326,39 @@ export default {
         status: undefined
       },
       rules: {
+        name: [
+          {
+            required: true,
+            message: '名称不能为空',
+            trigger: 'blur'
+          },
+          {
+            max: 50,
+            message: '长度不能大于 50 个字符',
+            trigger: 'blur'
+          }
+        ],
+        description: [
+          {
+            max: 255,
+            message: '长度不能大于 255 个字符',
+            trigger: 'blur'
+          }
+        ],
+        money: [
+          {
+            required: true,
+            message: '面额不能为空',
+            trigger: 'blur'
+          }
+        ],
+        give_num: [
+          {
+            required: true,
+            message: '发放数不能为空',
+            trigger: 'blur'
+          }
+        ]
       }
     }
   },
@@ -216,6 +381,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.add = this.$has('/marketing/card/list/add')
+      this.auth.set = this.$has('/marketing/card/list/set')
+      this.auth.del = this.$has('/marketing/card/list/del')
+      this.auth.enable = this.$has('/marketing/card/list/enable')
+      this.auth.disable = this.$has('/marketing/card/list/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {
@@ -342,10 +512,96 @@ export default {
     },
     // 弹出新建对话框
     handleCreate() {
+      this.form = {
+        name: '',
+        description: '',
+        money: undefined,
+        category: [],
+        exclude_category: [],
+        give_num: undefined,
+        end_time: undefined,
+        status: 1
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 弹出编辑对话框
     handleUpdate(index) {
+      this.currentIndex = index
+      this.form = { ...this.currentTableData[index] }
+
+      this.$nextTick(() => {
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
+    },
+    // 请求创建
+    create() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          addCardItem({ ...this.form })
+            .then(res => {
+              this.currentTableData.unshift({
+                ...res.data,
+                active_num: 0
+              })
+
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
+    },
+    // 请求修改
+    update() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          setCardItem({ ...this.form })
+            .then(res => {
+              this.$set(
+                this.currentTableData,
+                this.currentIndex,
+                {
+                  ...this.currentTableData[this.currentIndex],
+                  ...res.data
+                })
+
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
     }
   }
 }
 </script>
+
+<style scoped>
+  .help-block {
+    color: #909399;
+    font-size: 12px;
+    line-height: 2;
+    margin-bottom: -8px;
+  }
+</style>

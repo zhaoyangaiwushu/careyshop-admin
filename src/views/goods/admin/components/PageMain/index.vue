@@ -850,13 +850,13 @@ export default {
         index: val
       }
 
+      this.dialogLoading = false
+      this.nameFormVisible = true
+
       this.$nextTick(() => {
         this.$refs.name.clearValidate()
         this.$refs.nameInput.select()
       })
-
-      this.dialogLoading = false
-      this.nameFormVisible = true
     },
     // 请求修改商品名称
     handleSetName() {
@@ -886,13 +886,13 @@ export default {
         index: val
       }
 
+      this.dialogLoading = false
+      this.productFormVisible = true
+
       this.$nextTick(() => {
         this.$refs.product.clearValidate()
         this.$refs.productInput.select()
       })
-
-      this.dialogLoading = false
-      this.productFormVisible = true
     },
     // 请求修改商品促销名
     handleSetProduct() {

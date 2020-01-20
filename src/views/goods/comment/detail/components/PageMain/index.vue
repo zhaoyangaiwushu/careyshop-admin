@@ -364,7 +364,9 @@ export default {
           }
 
           this.$nextTick(() => {
-            this.$refs.form.clearValidate()
+            if (this.$refs.form) {
+              this.$refs.form.clearValidate()
+            }
           })
         }
       }
@@ -432,7 +434,10 @@ export default {
       this.form.isShowReply = true
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
         const anchor = this.$el.querySelector('#reply-form')
         this.$parent.scrollTo(0, anchor.offsetTop)
       })

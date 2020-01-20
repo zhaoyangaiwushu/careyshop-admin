@@ -729,13 +729,15 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.content = { image: [], code: '' }
-      this.dialogStatus = 'create'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.content = { image: [], code: '' }
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 根据类型获取广告位置的实际内容
     getFormContent() {
@@ -779,22 +781,24 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        // 初始化组件数据
+        this.content = { image: [], code: '' }
+
+        if (this.form.type === '0') {
+          const imageFile = Array.isArray(this.form.content) ? this.form.content : []
+          this.content.image = [...imageFile]
+        } else {
+          this.content.code = this.form.content.toString()
+        }
+
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
       })
-
-      // 初始化组件数据
-      this.content = { image: [], code: '' }
-
-      if (this.form.type === '0') {
-        const imageFile = Array.isArray(this.form.content) ? this.form.content : []
-        this.content.image = [...imageFile]
-      } else {
-        this.content.code = this.form.content.toString()
-      }
-
-      this.dialogStatus = 'update'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
     },
     // 请求编辑位置
     handleUpdate() {

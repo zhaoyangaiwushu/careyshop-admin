@@ -1004,12 +1004,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.dialogStatus = 'create'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 创建或修改样式
     handleEdit(isCreate) {
@@ -1189,12 +1191,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.dialogStatus = 'update'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 更改上传模块
     setModule(val) {

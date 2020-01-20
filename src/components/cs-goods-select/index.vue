@@ -191,8 +191,8 @@ export default {
   },
   methods: {
     handlePaginationChange(val) {
+      this.page = val
       this.$nextTick(() => {
-        this.page = val
         this.handleSubmit()
       })
     },
@@ -215,13 +215,13 @@ export default {
 
         getGoodsSelect(idList)
           .then(res => {
-            if (res.data) {
-              this.$nextTick(() => {
+            this.$nextTick(() => {
+              if (res.data) {
                 res.data.forEach(value => {
                   this.$refs.multipleTable.toggleRowSelection(value, true)
                 })
-              })
-            }
+              }
+            })
           })
       }
 

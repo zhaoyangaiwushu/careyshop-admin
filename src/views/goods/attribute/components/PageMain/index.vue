@@ -742,12 +742,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.dialogStatus = !item ? 'create' : 'sonCreate'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.dialogStatus = !item ? 'create' : 'sonCreate'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 请求创建
     create() {
@@ -809,13 +811,15 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
 
-      this.currentData = val
-      this.dialogStatus = !val.parent_id ? 'update' : 'sonUpdate'
-      this.dialogLoading = false
-      this.dialogFormVisible = true
+        this.currentData = val
+        this.dialogStatus = !val.parent_id ? 'update' : 'sonUpdate'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     },
     // 请求编辑
     update() {

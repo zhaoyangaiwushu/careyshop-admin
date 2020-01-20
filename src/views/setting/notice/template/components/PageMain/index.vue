@@ -592,12 +592,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.smsForm.clearValidate()
-      })
+        if (this.$refs.smsForm) {
+          this.$refs.smsForm.clearValidate()
+        }
 
-      this.smsButton = false
-      this.smsVisible = true
-      this.smsLoading = true
+        this.smsButton = false
+        this.smsVisible = true
+        this.smsLoading = true
+      })
 
       getNoticeItem('sms')
         .then(res => {
@@ -645,12 +647,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.emailForm.clearValidate()
-      })
+        if (this.$refs.emailForm) {
+          this.$refs.emailForm.clearValidate()
+        }
 
-      this.emailButton = false
-      this.emailVisible = true
-      this.emailLoading = true
+        this.emailButton = false
+        this.emailVisible = true
+        this.emailLoading = true
+      })
 
       getNoticeItem('email')
         .then(res => {
@@ -760,12 +764,14 @@ export default {
       }
 
       this.$nextTick(() => {
-        this.$refs.tplForm.clearValidate()
-      })
+        if (this.$refs.tplForm) {
+          this.$refs.tplForm.clearValidate()
+        }
 
-      this.tplButton = false
-      this.tplVisible = true
-      this.tplLoading = false
+        this.tplButton = false
+        this.tplVisible = true
+        this.tplLoading = false
+      })
     },
     // 请求保存模板
     saveTplData() {

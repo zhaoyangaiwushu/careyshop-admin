@@ -26,14 +26,14 @@ CareyShop 整体的架构理念为前后端分离，这样更容易创建出私�
 
 [Github 仓库](https://github.com/dnyz520/careyshop "Github 仓库") |
 [码云仓库](https://gitee.com/careyshop/careyshop "码云仓库") |
-[Coding 仓库](https://git.dev.tencent.com/careyshop/careyshop.git "Coding 仓库") |
+[Coding 仓库](https://e.coding.net/careyshop/careyshop.git "Coding 仓库") |
 [Demo API 沙盒](https://demo.careyshop.cn/api "Demo API 沙盒")
 
 后台仓库
 
 [Github 仓库](https://github.com/dnyz520/careyshop-admin "Github 仓库") |
 [码云仓库](https://gitee.com/careyshop/careyshop-admin "码云仓库") |
-[Coding 仓库](https://git.dev.tencent.com/careyshop/careyshop-admin.git "Coding 仓库") |
+[Coding 仓库](https://e.coding.net/careyshop/careyshop-admin.git "Coding 仓库") |
 [Demo 预览地址](https://demo.careyshop.cn/admin "Demo 预览地址")
 
 ### 文档中心

@@ -218,7 +218,12 @@
         <el-form-item
           label="指定分类"
           prop="category">
-          <el-button size="small">预留</el-button>
+          <cs-goods-category
+            v-model="form.category"
+            type="all">
+            <el-button size="small" slot="control">商品分类选取</el-button>
+          </cs-goods-category>
+
           <div class="help-block">
             <span>指定商品分类后，该购物卡只能购买分类范围内的商品</span>
           </div>
@@ -227,7 +232,12 @@
         <el-form-item
           label="排除分类"
           prop="exclude_category">
-          <el-button size="small">预留</el-button>
+          <cs-goods-category
+            v-model="form.exclude_category"
+            type="all">
+            <el-button size="small" slot="control">商品分类选取</el-button>
+          </cs-goods-category>
+
           <div class="help-block">
             <span>排除商品分类后，该购物卡不能购买分类范围内的商品</span>
           </div>
@@ -275,6 +285,9 @@ import {
 import util from '@/utils/util'
 
 export default {
+  components: {
+    'csGoodsCategory': () => import('@/components/cs-goods-category')
+  },
   props: {
     loading: {
       default: false

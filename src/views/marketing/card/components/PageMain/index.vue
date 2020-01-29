@@ -120,8 +120,13 @@
       <el-table-column
         label="操作"
         align="center"
-        min-width="100">
+        min-width="120">
         <template slot-scope="scope">
+          <el-button
+            @click="handleDownloadXls(scope.row.card_id, scope.row.name)"
+            size="small"
+            type="text">导出</el-button>
+
           <el-button
             v-if="auth.set"
             @click="handleUpdate(scope.$index)"
@@ -283,6 +288,8 @@ import {
   setCardStatus
 } from '@/api/marketing/card'
 import util from '@/utils/util'
+import { tableExport } from '@careyshop/vue-table-export'
+import { getCardUseExport } from '@/api/marketing/card_use'
 
 export default {
   components: {
@@ -605,6 +612,56 @@ export default {
             })
         }
       })
+    },
+    // 导出购物卡
+    handleDownloadXls(id, name) {
+      getCardUseExport(id)
+        .then(res => {
+          let opts = {
+            columns: [
+              {
+                label: '编号',
+                prop: 'card_use_id'
+              },
+              {
+                label: '卡号',
+                prop: 'number'
+              },
+              {
+                label: '卡密',
+                prop: 'password'
+              },
+              {
+                label: '金额',
+                prop: 'money'
+              },
+              {
+                label: '是否激活',
+                prop: 'is_active'
+              },
+              {
+                label: '是否有效',
+                prop: 'is_invalid'
+              },
+              {
+                label: '备注',
+                prop: 'remark'
+              },
+              {
+                label: '激活时间',
+                prop: 'active_time'
+              }
+            ],
+            data: res.data,
+            fileName: name,
+            type: 'xls',
+            withBOM: false
+          }
+
+          // eslint-disable-next-line new-cap
+          let instance = new tableExport(opts)
+          instance.export()
+        })
     }
   }
 }

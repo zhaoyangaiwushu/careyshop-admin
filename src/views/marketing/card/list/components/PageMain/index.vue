@@ -58,14 +58,14 @@
             v-if="scope.row.description"
             :content="`描述：${scope.row.description}`"
             placement="top-start">
-            <i class="el-icon-tickets"/>
+            <i class="el-icon-tickets cs-pr-5"/>
           </el-tooltip>
-          {{scope.row.name}}
+          <span class="link" @click="handleUse(scope.row.card_id)">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
       <el-table-column
-        label="面额"
+        label="金额"
         sortable="custom"
         prop="money">
         <template slot-scope="scope">
@@ -178,11 +178,11 @@
         <el-row :gutter="20" v-if="dialogStatus === 'create'">
           <el-col :span="12">
             <el-form-item
-              label="面额"
+              label="金额"
               prop="money">
               <el-input-number
                 v-model="form.money"
-                placeholder="请输入面额"
+                placeholder="请输入金额"
                 controls-position="right"
                 style="width: 100%;"
                 :precision="2"
@@ -285,14 +285,15 @@
 <script>
 import {
   addCardItem,
-  delCardList, setCardItem,
+  delCardList,
+  setCardItem,
   setCardStatus
 } from '@/api/marketing/card'
 import util from '@/utils/util'
-import exportCard from '../mixins'
+import { getCardUseExport } from '@/api/marketing/card_use'
+import { tableExport } from '@careyshop/vue-table-export'
 
 export default {
-  mixins: [exportCard],
   components: {
     'csGoodsCategory': () => import('@/components/cs-goods-category')
   },
@@ -370,7 +371,7 @@ export default {
         money: [
           {
             required: true,
-            message: '面额不能为空',
+            message: '金额不能为空',
             trigger: 'blur'
           }
         ],
@@ -615,6 +616,68 @@ export default {
             })
         }
       })
+    },
+    // 查询购物卡使用明细
+    handleUse(key) {
+      this.$router.push({
+        name: 'marketing-card-use',
+        params: { card_id: key }
+      })
+    },
+    // 导出购物卡
+    handleExportCard(id, name) {
+      const columns = [
+        {
+          label: '编号',
+          prop: 'card_use_id'
+        },
+        {
+          label: '卡号',
+          prop: 'number'
+        },
+        {
+          label: '卡密',
+          prop: 'password'
+        },
+        {
+          label: '金额',
+          prop: 'money'
+        },
+        {
+          label: '是否激活',
+          prop: 'is_active'
+        },
+        {
+          label: '是否有效',
+          prop: 'is_invalid'
+        },
+        {
+          label: '备注',
+          prop: 'remark'
+        },
+        {
+          label: '激活时间',
+          prop: 'active_time'
+        }
+      ]
+
+      const replace = {
+        is_active: {
+          0: '否',
+          1: '是'
+        },
+        is_invalid: {
+          0: '无效',
+          1: '有效'
+        }
+      }
+
+      getCardUseExport(id)
+        .then(res => {
+          // eslint-disable-next-line new-cap
+          let instance = new tableExport(columns, res.data, replace, name)
+          instance.export()
+        })
     }
   }
 }
@@ -626,5 +689,10 @@ export default {
     font-size: 12px;
     line-height: 2;
     margin-bottom: -8px;
+  }
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
   }
 </style>

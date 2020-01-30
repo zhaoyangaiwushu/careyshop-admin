@@ -28,7 +28,14 @@ export default {
       path: 'card/list',
       name: `${pre}card-list`,
       meta: { ...meta, cache: true, title: '购物卡' },
-      component: () => import('@/views/marketing/card')
+      component: () => import('@/views/marketing/card/list')
+    },
+    {
+      path: 'card/use',
+      name: `${pre}card-use`,
+      props: true,
+      meta: { ...meta, title: '购物卡使用' },
+      component: () => import('@/views/marketing/card/use')
     }
   ])('marketing-')
 }

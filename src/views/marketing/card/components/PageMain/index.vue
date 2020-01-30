@@ -123,7 +123,8 @@
         min-width="120">
         <template slot-scope="scope">
           <el-button
-            @click="handleDownloadXls(scope.row.card_id, scope.row.name)"
+            v-if="auth.export"
+            @click="handleExportCard(scope.row.card_id, scope.row.name)"
             size="small"
             type="text">导出</el-button>
 
@@ -288,10 +289,10 @@ import {
   setCardStatus
 } from '@/api/marketing/card'
 import util from '@/utils/util'
-import { tableExport } from '@careyshop/vue-table-export'
-import { getCardUseExport } from '@/api/marketing/card_use'
+import exportCard from '../mixins'
 
 export default {
+  mixins: [exportCard],
   components: {
     'csGoodsCategory': () => import('@/components/cs-goods-category')
   },
@@ -332,6 +333,7 @@ export default {
         add: false,
         set: false,
         del: false,
+        export: false,
         enable: false,
         disable: false
       },
@@ -404,6 +406,7 @@ export default {
       this.auth.add = this.$has('/marketing/card/list/add')
       this.auth.set = this.$has('/marketing/card/list/set')
       this.auth.del = this.$has('/marketing/card/list/del')
+      this.auth.export = this.$has('/marketing/card/list/export')
       this.auth.enable = this.$has('/marketing/card/list/enable')
       this.auth.disable = this.$has('/marketing/card/list/disable')
     },
@@ -612,56 +615,6 @@ export default {
             })
         }
       })
-    },
-    // 导出购物卡
-    handleDownloadXls(id, name) {
-      getCardUseExport(id)
-        .then(res => {
-          let opts = {
-            columns: [
-              {
-                label: '编号',
-                prop: 'card_use_id'
-              },
-              {
-                label: '卡号',
-                prop: 'number'
-              },
-              {
-                label: '卡密',
-                prop: 'password'
-              },
-              {
-                label: '金额',
-                prop: 'money'
-              },
-              {
-                label: '是否激活',
-                prop: 'is_active'
-              },
-              {
-                label: '是否有效',
-                prop: 'is_invalid'
-              },
-              {
-                label: '备注',
-                prop: 'remark'
-              },
-              {
-                label: '激活时间',
-                prop: 'active_time'
-              }
-            ],
-            data: res.data,
-            fileName: name,
-            type: 'xls',
-            withBOM: false
-          }
-
-          // eslint-disable-next-line new-cap
-          let instance = new tableExport(opts)
-          instance.export()
-        })
     }
   }
 }

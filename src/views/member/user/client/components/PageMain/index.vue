@@ -45,7 +45,7 @@
       :highlight-current-row="true"
       @selection-change="handleSelectionChange"
       @sort-change="sortChange">
-      <el-table-column align="center" type="selection" width="50"/>
+      <el-table-column align="center" type="selection" width="55"/>
 
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -169,7 +169,7 @@
         label="手机号"
         prop="mobile"
         sortable="custom"
-        min-width="100">
+        min-width="105">
       </el-table-column>
 
       <el-table-column

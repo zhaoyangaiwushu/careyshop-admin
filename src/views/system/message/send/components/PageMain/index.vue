@@ -30,7 +30,7 @@
       :highlight-current-row="true"
       @selection-change="handleSelectionChange"
       @sort-change="sortChange">
-      <el-table-column align="center" type="selection" width="50"/>
+      <el-table-column align="center" type="selection" width="55"/>
 
       <el-table-column
         label="标题"

@@ -45,7 +45,7 @@
       :highlight-current-row="true"
       @selection-change="handleSelectionChange"
       @sort-change="sortChange">
-      <el-table-column align="center" type="selection" width="50"/>
+      <el-table-column align="center" type="selection" width="55"/>
 
       <el-table-column
         label="名称"
@@ -65,7 +65,7 @@
       </el-table-column>
 
       <el-table-column
-        label="金额"
+        label="面额"
         sortable="custom"
         prop="money">
         <template slot-scope="scope">
@@ -178,11 +178,11 @@
         <el-row :gutter="20" v-if="dialogStatus === 'create'">
           <el-col :span="12">
             <el-form-item
-              label="金额"
+              label="面额"
               prop="money">
               <el-input-number
                 v-model="form.money"
-                placeholder="请输入金额"
+                placeholder="请输入面额"
                 controls-position="right"
                 style="width: 100%;"
                 :precision="2"
@@ -371,7 +371,7 @@ export default {
         money: [
           {
             required: true,
-            message: '金额不能为空',
+            message: '面额不能为空',
             trigger: 'blur'
           }
         ],
@@ -640,12 +640,16 @@ export default {
           prop: 'password'
         },
         {
-          label: '金额',
+          label: '可用余额',
           prop: 'money'
         },
         {
           label: '是否激活',
           prop: 'is_active'
+        },
+        {
+          label: '激活时间',
+          prop: 'active_time'
         },
         {
           label: '是否有效',
@@ -654,21 +658,17 @@ export default {
         {
           label: '备注',
           prop: 'remark'
-        },
-        {
-          label: '激活时间',
-          prop: 'active_time'
         }
       ]
 
       const replace = {
         is_active: {
-          0: '否',
-          1: '是'
+          0: '待激活',
+          1: '已激活'
         },
         is_invalid: {
-          0: '无效',
-          1: '有效'
+          0: '禁用',
+          1: '启用'
         }
       }
 

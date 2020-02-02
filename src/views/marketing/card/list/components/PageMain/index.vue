@@ -60,7 +60,7 @@
             placement="top-start">
             <i class="el-icon-tickets cs-pr-5"/>
           </el-tooltip>
-          <span class="link" @click="handleUse(scope.row.card_id)">{{scope.row.name}}</span>
+          <span :class="{link: auth.use}" @click="handleUse(scope.row.card_id)">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
@@ -331,6 +331,7 @@ export default {
         }
       },
       auth: {
+        use: false,
         add: false,
         set: false,
         del: false,
@@ -404,6 +405,7 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.use = this.$has('/marketing/card/use/list')
       this.auth.add = this.$has('/marketing/card/list/add')
       this.auth.set = this.$has('/marketing/card/list/set')
       this.auth.del = this.$has('/marketing/card/list/del')
@@ -619,10 +621,12 @@ export default {
     },
     // 查询购物卡使用明细
     handleUse(key) {
-      this.$router.push({
-        name: 'marketing-card-use',
-        params: { card_id: key }
-      })
+      if (this.auth.use) {
+        this.$router.push({
+          name: 'marketing-card-use',
+          params: { card_id: key }
+        })
+      }
     },
     // 导出购物卡
     handleExportCard(id, name) {

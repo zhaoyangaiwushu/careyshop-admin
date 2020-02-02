@@ -16,13 +16,13 @@
             v-if="auth.enable"
             icon="el-icon-check"
             :disabled="loading"
-            @click="handleInvalid(null, 1)">启用</el-button>
+            @click="handleInvalid(null, 1, true)">启用</el-button>
 
           <el-button
             v-if="auth.disable"
             icon="el-icon-close"
             :disabled="loading"
-            @click="handleInvalid(null, 0)">禁用</el-button>
+            @click="handleInvalid(null, 0, true)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
@@ -107,11 +107,89 @@
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      title="购物卡信息"
+      :visible.sync="infoVisible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px"
+      ref="print">
+      <el-form
+        v-if="cardData"
+        label-width="90px"
+        label-position="left"
+        style="margin-top: -25px;">
+        <el-form-item label="名称：">
+          <span>{{cardData.name}}</span>
+        </el-form-item>
+
+        <el-form-item label="描述：">
+          <span>{{cardData.description || '-'}}</span>
+        </el-form-item>
+
+        <el-form-item label="面额：">
+          <span>{{cardData.money | getNumber}}</span>
+        </el-form-item>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="发放数：">
+              <span>{{cardData.give_num}}</span>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="激活数：">
+              <span>{{cardData.active_num}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="创建时间：">
+              <span>{{cardData.create_time}}</span>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item label="截止日期：">
+              <span>{{cardData.end_time || '不限日期'}}</span>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item label="状态：">
+          <el-tag
+            :type="invalidMap[cardData.status].type"
+            effect="plain"
+            size="small">
+            {{invalidMap[cardData.status].text}}
+          </el-tag>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer no-print">
+        <div style="float: left">
+          <el-button
+            icon="el-icon-printer"
+            @click="$print($refs.print)"
+            size="small">打印</el-button>
+        </div>
+
+        <el-button
+          type="primary"
+          @click="infoVisible = false"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import util from '@/utils/util'
+import { setCardUseInvalid } from '@/api/marketing/card_use'
 
 export default {
   props: {
@@ -127,12 +205,13 @@ export default {
   },
   data() {
     return {
+      infoVisible: false,
       currentTableData: [],
       multipleSelection: [],
       auth: {
-        info: true,
-        enable: true,
-        disable: true
+        info: false,
+        enable: false,
+        disable: false
       },
       activeMap: {
         0: {
@@ -179,30 +258,100 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.info = this.$has('/marketing/card/use/info')
+      this.auth.enable = this.$has('/marketing/card/use/enable')
+      this.auth.disable = this.$has('/marketing/card/use/disable')
+    },
+    // 获取列表中的编号
+    _getIdList(val) {
+      if (val === null) {
+        val = this.multipleSelection
+      }
+
+      let idList = []
+      if (Array.isArray(val)) {
+        val.forEach(value => {
+          idList.push(value.card_use_id)
+        })
+      } else {
+        idList.push(this.currentTableData[val].card_use_id)
+      }
+
+      return idList
+    },
+    // 选中数据项
+    handleSelectionChange(val) {
+      this.multipleSelection = val
     },
     // 显示购物卡信息
     handleInfo() {
-      let message = !this.cardData
-        ? '<p>查询全部购物卡时无法显示购物卡信息</p>'
-        : `
-        <p>名称：${this.cardData.name}</p>
-        <p>描述：${this.cardData.description}</p></br>
-        <p>面额：${util.getNumber(this.cardData.money)}</p>
-        <p>发放数：${this.cardData.give_num}</p>
-        <p>激活数：${this.cardData.active_num}</p>
-        <p>创建时间：${this.cardData.create_time}</p>
-        <p>截止日期：${this.cardData.end_time || '不限日期'}</p>
-        <p>状态：${this.invalidMap[this.cardData.status].text}</p>
-        `
+      if (!this.cardData) {
+        this.$message.info('查询全部购物卡时无法显示购物卡信息')
+        return
+      }
 
-      this.$notify({
-        title: '购物卡信息',
-        dangerouslyUseHTMLString: true,
-        message: message,
-        type: 'success',
-        position: 'bottom-right',
-        duration: 0
+      this.infoVisible = true
+    },
+    // 处理购物卡状态
+    handleInvalid(val, invalid = 0, batch = false) {
+      let card_use_id = this._getIdList(val)
+      if (card_use_id.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      function setInvalid(card_use_id, is_invalid, remark, vm) {
+        setCardUseInvalid({ card_use_id, is_invalid, remark })
+          .then(() => {
+            vm.currentTableData.forEach((value, index) => {
+              if (card_use_id.indexOf(value.card_use_id) !== -1) {
+                vm.$set(vm.currentTableData, index, {
+                  ...value,
+                  is_invalid,
+                  remark
+                })
+              }
+            })
+
+            vm.$message.success('操作成功')
+          })
+      }
+
+      if (!batch) {
+        let oldData = this.currentTableData[val]
+        invalid = oldData.is_invalid ? 0 : 1
+
+        if (oldData.is_invalid > 1) {
+          return
+        }
+
+        // 禁用权限检测
+        if (invalid === 0 && !this.auth.disable) {
+          return
+        }
+
+        // 启用权限检测
+        if (invalid === 1 && !this.auth.enable) {
+          return
+        }
+      }
+
+      const message = '请填写状态设置原因(备注)'
+      this.$prompt(message, '状态设置', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: message
       })
+        .then(({ value }) => {
+          if (!batch) {
+            this.$set(this.currentTableData[val], 'is_invalid', 2)
+          }
+
+          setInvalid(card_use_id, invalid, value, this)
+        })
+        .catch(() => {
+        })
     }
   }
 }

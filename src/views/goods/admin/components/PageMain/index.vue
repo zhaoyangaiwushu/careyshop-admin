@@ -185,7 +185,7 @@
                 <span class="goods-shop-price">{{scope.row.shop_price | getNumber}}</span>
                 <i v-if="tabPane !== 'delete' && auth.price"
                    class="el-icon-edit-outline goods-edit active"
-                   @click="setGoodsPriceOrStore(scope.$index)"/>
+                   @click="setGoodsPriceOrStore(scope.$index, 'price')"/>
               </div>
             </template>
           </el-table-column>
@@ -199,7 +199,7 @@
                 <span>{{scope.row.store_qty}}</span>
                 <i v-if="tabPane !== 'delete' && auth.store"
                    class="el-icon-edit-outline goods-edit active"
-                   @click="setGoodsPriceOrStore(scope.$index)"/>
+                   @click="setGoodsPriceOrStore(scope.$index, 'store')"/>
               </div>
             </template>
           </el-table-column>
@@ -352,7 +352,7 @@
     </el-dialog>
 
     <el-dialog
-      title="价格或库存修改"
+      :title="typeMap[type]"
       :visible.sync="sellFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
@@ -367,8 +367,11 @@
         </el-table-column>
 
         <el-table-column
+          v-if="type === 'price'"
           label="本店价"
-          prop="price">
+          align="center"
+          prop="price"
+          width="140">
           <template slot-scope="scope">
             <el-input-number
               v-model="scope.row.price"
@@ -381,34 +384,38 @@
           </template>
         </el-table-column>
 
-        <el-table-column
-          label="当前库存"
-          prop="store_qty"
-          width="120">
-        </el-table-column>
+        <template v-if="type === 'store'">
+          <el-table-column
+            label="当前库存"
+            prop="store_qty"
+            width="120">
+          </el-table-column>
 
-        <el-table-column
-          label="增加/减少"
-          prop="alter">
-          <template slot-scope="scope">
-            <el-input-number
-              v-model="scope.row.alter"
-              :disabled="!auth.store"
-              controls-position="right"
-              size="mini"
-              @change="countRealStore(scope.row)">
-            </el-input-number>
-          </template>
-        </el-table-column>
+          <el-table-column
+            label="实际库存"
+            prop="real_store"
+            width="120">
+            <template slot-scope="scope">
+              {{scope.row.real_store}}
+            </template>
+          </el-table-column>
 
-        <el-table-column
-          label="实际库存"
-          prop="real_store"
-          width="120">
-          <template slot-scope="scope">
-            {{scope.row.real_store}}
-          </template>
-        </el-table-column>
+          <el-table-column
+            label="增加/减少"
+            align="center"
+            prop="alter"
+            width="140">
+            <template slot-scope="scope">
+              <el-input-number
+                v-model="scope.row.alter"
+                :disabled="!auth.store"
+                controls-position="right"
+                size="mini"
+                @change="countRealStore(scope.row)">
+              </el-input-number>
+            </template>
+          </el-table-column>
+        </template>
       </el-table>
 
       <div slot="footer" class="dialog-footer">
@@ -525,6 +532,11 @@ export default {
             trigger: 'blur'
           }
         ]
+      },
+      type: '',
+      typeMap: {
+        price: '修改价格',
+        store: '修改库存'
       }
     }
   },
@@ -918,11 +930,12 @@ export default {
       value.real_store = value.store_qty + value.alter
     },
     // 修改商品价格或库存
-    setGoodsPriceOrStore(index) {
+    setGoodsPriceOrStore(index, type) {
       this.sellForm = []
       this.sellLoading = true
       this.sellFormVisible = true
       this.sellFormLoading = false
+      this.type = type
 
       let specCombo = []
       const data = this.currentTableData[index]
@@ -930,13 +943,17 @@ export default {
       getGoodsSpecList(data.goods_id)
         .then(res => {
           if (res.data) {
-            res.data.forEach(value => {
+            for (let key in res.data) {
+              if (!res.data.hasOwnProperty(key)) {
+                continue
+              }
+
               specCombo.push({
-                ...value,
+                ...res.data[key],
                 alter: 0,
-                real_store: value.store_qty
+                real_store: res.data[key]['store_qty']
               })
-            })
+            }
           } else {
             specCombo.push({
               key_value: '-',
@@ -976,7 +993,7 @@ export default {
         })
       }
 
-      this.sellLoading = true
+      this.sellFormLoading = true
       setGoodsItem(formData)
         .then(res => {
           this.$set(
@@ -992,7 +1009,7 @@ export default {
           this.$message.success('操作成功')
         })
         .catch(() => {
-          this.sellLoading = false
+          this.sellFormLoading = false
         })
     },
     // 新增商品

@@ -1231,6 +1231,7 @@ export default {
   }
   .table-expand {
     font-size: 0;
+    padding: 0 65px;
     /*height: 350px;*/
     /*overflow: auto;*/
   }

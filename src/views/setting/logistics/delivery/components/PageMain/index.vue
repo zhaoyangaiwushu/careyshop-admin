@@ -967,6 +967,7 @@ export default {
 <style scoped>
   .table-expand {
     font-size: 0;
+    padding: 0 65px;
   }
   .table-expand >>> label {
     width: 90px;

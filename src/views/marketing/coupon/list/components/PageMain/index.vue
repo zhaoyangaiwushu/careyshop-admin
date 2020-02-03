@@ -59,6 +59,16 @@
       @sort-change="sortChange">
       <el-table-column align="center" type="selection" width="55"/>
 
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="table-expand">
+            <el-form-item label="名称">
+              <span>{{props.row.name}}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+
       <el-table-column
         label="名称"
         prop="name"
@@ -183,5 +193,18 @@ export default {
     cursor: pointer;
     color: #409EFF;
     text-decoration: underline;
+  }
+  .table-expand {
+    font-size: 0;
+    padding: 0 65px;
+  }
+  .table-expand >>> label {
+    width: 90px;
+    color: #99a9bf;
+  }
+  .table-expand .el-form-item {
+    margin-right: 0;
+    margin-bottom: 0;
+    width: 50%;
   }
 </style>

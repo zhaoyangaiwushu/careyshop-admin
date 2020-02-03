@@ -36,6 +36,12 @@ export default {
       props: true,
       meta: { ...meta, title: '购物卡使用' },
       component: () => import('@/views/marketing/card/use')
+    },
+    {
+      path: 'coupon/list',
+      name: `${pre}coupon-list`,
+      meta: { ...meta, cache: true, title: '优惠劵' },
+      component: () => import('@/views/marketing/coupon/list')
     }
   ])('marketing-')
 }

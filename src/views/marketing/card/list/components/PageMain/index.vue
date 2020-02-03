@@ -51,7 +51,7 @@
         label="名称"
         prop="name"
         sortable="custom"
-        min-width="100"
+        min-width="200"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <el-tooltip

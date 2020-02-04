@@ -103,11 +103,21 @@
             </el-form-item>
 
             <el-form-item label="状态">
-              <span>{{props.row.status}}</span>
+              <el-tag
+                :type="statusMap[props.row.status].type"
+                effect="plain"
+                size="mini">
+                {{statusMap[props.row.status].text}}
+              </el-tag>
             </el-form-item>
 
             <el-form-item label="是否有效">
-              <span>{{props.row.is_invalid}}</span>
+              <el-tag
+                :type="invalidMap[props.row.is_invalid].type"
+                effect="plain"
+                size="mini">
+                {{invalidMap[props.row.is_invalid].text}}
+              </el-tag>
             </el-form-item>
 
             <el-divider/>
@@ -144,7 +154,7 @@
             placement="top-start">
             <i class="el-icon-tickets cs-pr-5"/>
           </el-tooltip>
-          <span :class="{link: true}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
+          <span :class="{link: auth.give}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
@@ -185,6 +195,16 @@
         prop="status"
         align="center"
         width="100">
+        <template slot-scope="scope">
+          <el-tag
+            size="mini"
+            :type="statusMap[scope.row.status].type"
+            :style="auth.enable || auth.disable ? 'cursor: pointer;' : ''"
+            :effect="auth.enable || auth.disable ? 'light' : 'plain'"
+            @click.native="handleStatus(scope.$index)">
+            {{statusMap[scope.row.status].text}}
+          </el-tag>
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -193,18 +213,35 @@
         prop="is_invalid"
         align="center"
         width="100">
+        <template slot-scope="scope">
+          <el-tag
+            size="mini"
+            :type="invalidMap[scope.row.is_invalid].type"
+            :style="auth.normal || auth.invalid ? 'cursor: pointer;' : ''"
+            :effect="auth.normal || auth.invalid ? 'light' : 'plain'"
+            @click.native="handleInvalid(scope.$index)">
+            {{invalidMap[scope.row.is_invalid].text}}
+          </el-tag>
+        </template>
       </el-table-column>
 
       <el-table-column
         label="操作"
         align="center"
         min-width="120">
+        <template slot-scope="scope">
+          <el-button
+            @click="handleDelete(scope.$index)"
+            size="small"
+            type="text">删除</el-button>
+        </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+import { delCouponList, setCouponInvalid, setCouponStatus } from '@/api/marketing/coupon'
 import util from '@/utils/util'
 
 export default {
@@ -224,6 +261,57 @@ export default {
   },
   data() {
     return {
+      currentTableData: [],
+      multipleSelection: [],
+      dialogLoading: false,
+      dialogFormVisible: false,
+      dialogStatus: '',
+      textMap: {
+        update: '编辑优惠劵',
+        create: '新增优惠劵'
+      },
+      statusMap: {
+        0: {
+          text: '禁用',
+          type: 'danger'
+        },
+        1: {
+          text: '启用',
+          type: 'success'
+        },
+        2: {
+          text: '...',
+          type: 'info'
+        }
+      },
+      invalidMap: {
+        0: {
+          text: '正常',
+          type: 'success'
+        },
+        1: {
+          text: '作废',
+          type: 'danger'
+        },
+        2: {
+          text: '...',
+          type: 'info'
+        }
+      },
+      auth: {
+        give: false,
+        add: true,
+        set: true,
+        del: true,
+        enable: true,
+        disable: true,
+        normal: true,
+        invalid: true
+      },
+      form: {
+      },
+      rules: {
+      }
     }
   },
   filters: {
@@ -245,6 +333,197 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+    },
+    // 获取列表中的编号
+    _getIdList(val) {
+      if (val === null) {
+        val = this.multipleSelection
+      }
+
+      let idList = []
+      if (Array.isArray(val)) {
+        val.forEach(value => {
+          idList.push(value.coupon_id)
+        })
+      } else {
+        idList.push(this.currentTableData[val].coupon_id)
+      }
+
+      return idList
+    },
+    // 选中数据项
+    handleSelectionChange(val) {
+      this.multipleSelection = val
+    },
+    // 获取排序字段
+    sortChange({ column, prop, order }) {
+      let sort = {
+        order_type: undefined,
+        order_field: undefined
+      }
+
+      if (column && order) {
+        sort.order_type = order === 'ascending' ? 'asc' : 'desc'
+        sort.order_field = prop
+      }
+
+      this.$emit('sort', sort)
+    },
+    // 打开优惠劵使用明细
+    handleGive(key) {
+      if (this.auth.give) {
+        this.$router.push({
+          name: 'marketing-card-give',
+          params: { coupon_id: key }
+        })
+      }
+    },
+    // 批量删除
+    handleDelete(val) {
+      let coupon_id = this._getIdList(val)
+      if (coupon_id.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          delCouponList(coupon_id)
+            .then(() => {
+              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
+                if (coupon_id.indexOf(this.currentTableData[i].coupon_id) !== -1) {
+                  this.currentTableData.splice(i, 1)
+                }
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 批量设置状态
+    handleStatus(val, status = 0, confirm = false) {
+      let coupon_id = this._getIdList(val)
+      if (coupon_id.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      function setStatus(coupon_id, status, vm) {
+        setCouponStatus(coupon_id, status)
+          .then(() => {
+            vm.currentTableData.forEach((value, index) => {
+              if (coupon_id.indexOf(value.coupon_id) !== -1) {
+                vm.$set(vm.currentTableData, index, {
+                  ...value,
+                  status
+                })
+              }
+            })
+
+            vm.$message.success('操作成功')
+          })
+      }
+
+      if (!confirm) {
+        let oldData = this.currentTableData[val]
+        const newStatus = oldData.status ? 0 : 1
+
+        if (oldData.status > 1) {
+          return
+        }
+
+        // 禁用权限检测
+        if (newStatus === 0 && !this.auth.disable) {
+          return
+        }
+
+        // 启用权限检测
+        if (newStatus === 1 && !this.auth.enable) {
+          return
+        }
+
+        this.$set(this.currentTableData, val, { ...oldData, status: 2 })
+        setStatus(coupon_id, newStatus, this)
+        return
+      }
+
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          setStatus(coupon_id, status, this)
+        })
+        .catch(() => {
+        })
+    },
+    // 批量设置是否有效
+    handleInvalid(val, invalid = 0, confirm = false) {
+      let coupon_id = this._getIdList(val)
+      if (coupon_id.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      function setInvalid(coupon_id, is_invalid, vm) {
+        setCouponInvalid(coupon_id, is_invalid)
+          .then(() => {
+            vm.currentTableData.forEach((value, index) => {
+              if (coupon_id.indexOf(value.coupon_id) !== -1) {
+                vm.$set(vm.currentTableData, index, {
+                  ...value,
+                  is_invalid
+                })
+              }
+            })
+
+            vm.$message.success('操作成功')
+          })
+      }
+
+      if (!confirm) {
+        let oldData = this.currentTableData[val]
+        const newInvalid = oldData.is_invalid ? 0 : 1
+
+        if (oldData.is_invalid > 1) {
+          return
+        }
+
+        // 禁用权限检测
+        if (newInvalid === 0 && !this.auth.normal) {
+          return
+        }
+
+        // 启用权限检测
+        if (newInvalid === 1 && !this.auth.invalid) {
+          return
+        }
+
+        this.$set(this.currentTableData, val, { ...oldData, is_invalid: 2 })
+        setInvalid(coupon_id, newInvalid, this)
+        return
+      }
+
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          setInvalid(coupon_id, invalid, this)
+        })
+        .catch(() => {
+        })
     }
   }
 }

@@ -65,6 +65,68 @@
             <el-form-item label="名称">
               <span>{{props.row.name}}</span>
             </el-form-item>
+
+            <el-form-item label="描述">
+              <span>{{props.row.description}}</span>
+            </el-form-item>
+
+            <el-form-item label="类型">
+              <span>{{typeMap[props.row.type]}}</span>
+            </el-form-item>
+
+            <el-form-item label="领取码">
+              <span>{{props.row.give_code}}</span>
+            </el-form-item>
+
+            <el-form-item label="优惠金额">
+              <span>{{props.row.money | getNumber}}</span>
+            </el-form-item>
+
+            <el-form-item label="限制金额">
+              <span>{{props.row.quota | getNumber}}</span>
+            </el-form-item>
+
+            <el-form-item label="限领次数">
+              <span>{{props.row.frequency || '不限次数'}}</span>
+            </el-form-item>
+
+            <el-form-item label="发放数">
+              <span>{{props.row.give_num}}</span>
+            </el-form-item>
+
+            <el-form-item label="领取数">
+              <span>{{props.row.receive_num}}</span>
+            </el-form-item>
+
+            <el-form-item label="使用数">
+              <span>{{props.row.use_num}}</span>
+            </el-form-item>
+
+            <el-form-item label="状态">
+              <span>{{props.row.status}}</span>
+            </el-form-item>
+
+            <el-form-item label="是否有效">
+              <span>{{props.row.is_invalid}}</span>
+            </el-form-item>
+
+            <el-divider/>
+
+            <el-form-item label="发放开始日期">
+              <span>{{props.row.give_begin_time}}</span>
+            </el-form-item>
+
+            <el-form-item label="发放截至日期">
+              <span>{{props.row.give_end_time}}</span>
+            </el-form-item>
+
+            <el-form-item label="使用开始日期">
+              <span>{{props.row.use_begin_time}}</span>
+            </el-form-item>
+
+            <el-form-item label="使用截至日期">
+              <span>{{props.row.use_end_time}}</span>
+            </el-form-item>
           </el-form>
         </template>
       </el-table-column>
@@ -199,8 +261,13 @@ export default {
     padding: 0 65px;
   }
   .table-expand >>> label {
-    width: 90px;
+    float: left;
+    width: 120px;
     color: #99a9bf;
+  }
+  .table-expand >>> .el-form-item__content {
+    display: block;
+    padding-left: 120px;
   }
   .table-expand .el-form-item {
     margin-right: 0;

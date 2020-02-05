@@ -82,8 +82,8 @@
               <span>{{props.row.money | getNumber}}</span>
             </el-form-item>
 
-            <el-form-item label="限制金额">
-              <span>{{props.row.quota | getNumber}}</span>
+            <el-form-item label="使用门槛">
+              <span>满 {{props.row.quota | getNumber}}</span>
             </el-form-item>
 
             <el-form-item label="限领次数">
@@ -126,7 +126,7 @@
               <span>{{props.row.give_begin_time}}</span>
             </el-form-item>
 
-            <el-form-item label="发放截至日期">
+            <el-form-item label="发放结束日期">
               <span>{{props.row.give_end_time}}</span>
             </el-form-item>
 
@@ -134,7 +134,7 @@
               <span>{{props.row.use_begin_time}}</span>
             </el-form-item>
 
-            <el-form-item label="使用截至日期">
+            <el-form-item label="使用截止日期">
               <span>{{props.row.use_end_time}}</span>
             </el-form-item>
           </el-form>
@@ -145,7 +145,7 @@
         label="名称"
         prop="name"
         sortable="custom"
-        min-width="200"
+        min-width="180"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <el-tooltip
@@ -168,6 +168,12 @@
       </el-table-column>
 
       <el-table-column
+        label="发放数"
+        sortable="custom"
+        prop="give_num">
+      </el-table-column>
+
+      <el-table-column
         label="优惠金额"
         prop="money">
         <template slot-scope="scope">
@@ -176,17 +182,11 @@
       </el-table-column>
 
       <el-table-column
-        label="限制金额"
+        label="使用门槛"
         prop="quota">
         <template slot-scope="scope">
-          {{scope.row.quota | getNumber}}
+          满 {{scope.row.quota | getNumber}}
         </template>
-      </el-table-column>
-
-      <el-table-column
-        label="发放数"
-        sortable="custom"
-        prop="give_num">
       </el-table-column>
 
       <el-table-column
@@ -231,23 +231,317 @@
         min-width="120">
         <template slot-scope="scope">
           <el-button
+            @click="() => {}"
+            size="small"
+            type="text">编辑</el-button>
+
+          <el-button
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
+
+          <el-button
+            @click="() => {}"
+            size="small"
+            type="text">更多操作</el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <el-dialog
+      :title="textMap[dialogStatus]"
+      :visible.sync="dialogFormVisible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="650px">
+      <el-form
+        :model="form"
+        :rules="rules"
+        ref="form"
+        label-width="100px">
+        <el-form-item
+          label="名称"
+          prop="name">
+          <el-input
+            v-model="form.name"
+            placeholder="请输入优惠劵名称"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="描述"
+          prop="description">
+          <el-input
+            v-model="form.description"
+            type="textarea"
+            placeholder="可输入优惠劵描述"
+            :autosize="{minRows: 3}"
+            maxlength="255"
+            show-word-limit/>
+        </el-form-item>
+
+        <el-form-item
+          v-if="form.type === '2'"
+          label="引导地址"
+          prop="guide">
+          <el-input
+            v-model="form.guide"
+            placeholder="可输入优惠劵引导地址"
+            :clearable="true">
+          </el-input>
+          <div class="help-block">
+            <span>引导顾客到特定的页面上进行领取</span>
+          </div>
+        </el-form-item>
+
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="类型"
+              prop="type">
+              <el-select
+                v-model="form.type"
+                placeholder="请选择"
+                clearable
+                value="">
+                <el-option
+                  v-for="(item, index) in typeMap"
+                  :key="index"
+                  :label="item"
+                  :value="index"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="发放数"
+              prop="give_num">
+              <el-input-number
+                v-model="form.give_num"
+                placeholder="请输入发放数"
+                controls-position="right"
+                :min="0">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="优惠金额"
+              prop="money">
+              <el-input-number
+                v-model="form.money"
+                placeholder="请输入优惠金额"
+                controls-position="right"
+                :precision="2"
+                :min="0">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="使用门槛"
+              prop="quota">
+              <el-input-number
+                v-model="form.quota"
+                placeholder="请输入使用门槛"
+                controls-position="right"
+                :precision="2"
+                :min="0">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-form-item
+          label="指定分类"
+          prop="category">
+          <cs-goods-category
+            v-model="form.category"
+            type="all">
+            <el-button slot="control">商品分类选取</el-button>
+          </cs-goods-category>
+
+          <div class="help-block">
+            <span>指定商品分类后，该优惠劵只能对分类范围内的商品有效</span>
+          </div>
+        </el-form-item>
+
+        <el-form-item
+          label="排除分类"
+          prop="exclude_category">
+          <cs-goods-category
+            v-model="form.exclude_category"
+            type="all">
+            <el-button slot="control">商品分类选取</el-button>
+          </cs-goods-category>
+
+          <div class="help-block">
+            <span>排除商品分类后，该优惠劵对分类范围内的商品没有效果</span>
+          </div>
+        </el-form-item>
+
+        <el-row v-if="form.type === '2'" :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="会员等级"
+              prop="level">
+              <el-select
+                v-model="form.level"
+                placeholder="请选择"
+                collapse-tags
+                multiple>
+                <el-option
+                  v-for="item in userLevel"
+                  :key="item.user_level_id"
+                  :label="item.name"
+                  :value="item.user_level_id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="限领次数"
+              prop="frequency">
+              <el-input-number
+                v-model="form.frequency"
+                placeholder="可输入限领次数"
+                controls-position="right"
+                :max="255"
+                :min="0">
+              </el-input-number>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="发放开始日期"
+              prop="give_begin_time">
+              <el-date-picker
+                v-model="form.give_begin_time"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择发放开始日期"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="发放结束日期"
+              prop="give_end_time">
+              <el-date-picker
+                v-model="form.give_end_time"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择发放开始日期"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="使用开始日期"
+              prop="use_begin_time">
+              <el-date-picker
+                v-model="form.use_begin_time"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择使用开始日期"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="使用截止日期"
+              prop="use_end_time">
+              <el-date-picker
+                v-model="form.use_end_time"
+                type="datetime"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择使用截止日期"
+                style="width: 100%;">
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <el-form-item
+              label="状态"
+              prop="status">
+              <el-switch
+                v-model="form.status"
+                :active-value="1"
+                :inactive-value="0">
+              </el-switch>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="是否有效"
+              prop="is_invalid">
+              <el-switch
+                v-model="form.is_invalid"
+                :active-value="0"
+                :inactive-value="1">
+              </el-switch>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="dialogFormVisible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          v-if="dialogStatus === 'create'"
+          type="primary"
+          :loading="dialogLoading"
+          @click="create"
+          size="small">确定</el-button>
+
+        <el-button
+          v-else type="primary"
+          :loading="dialogLoading"
+          @click="update"
+          size="small">修改</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { delCouponList, setCouponInvalid, setCouponStatus } from '@/api/marketing/coupon'
+import {
+  delCouponList,
+  setCouponInvalid,
+  setCouponStatus
+} from '@/api/marketing/coupon'
 import util from '@/utils/util'
+import { getUserLevelList } from '@/api/user/level'
 
 export default {
-  // components: {
-  //   'csGoodsCategory': () => import('@/components/cs-goods-category')
-  // },
+  components: {
+    'csGoodsCategory': () => import('@/components/cs-goods-category')
+  },
   props: {
     loading: {
       default: false
@@ -263,6 +557,7 @@ export default {
     return {
       currentTableData: [],
       multipleSelection: [],
+      userLevel: [],
       dialogLoading: false,
       dialogFormVisible: false,
       dialogStatus: '',
@@ -309,6 +604,23 @@ export default {
         invalid: true
       },
       form: {
+        name: undefined,
+        description: undefined,
+        guide: undefined,
+        type: undefined,
+        money: undefined,
+        quota: undefined,
+        category: undefined,
+        exclude_category: undefined,
+        level: undefined,
+        frequency: undefined,
+        give_num: undefined,
+        give_begin_time: undefined,
+        give_end_time: undefined,
+        use_begin_time: undefined,
+        use_end_time: undefined,
+        status: undefined,
+        is_invalid: undefined
       },
       rules: {
       }
@@ -329,6 +641,10 @@ export default {
   },
   mounted() {
     this._validationAuth()
+    getUserLevelList()
+      .then(res => {
+        this.userLevel = res.data || []
+      })
   },
   methods: {
     // 验证权限
@@ -524,12 +840,33 @@ export default {
         })
         .catch(() => {
         })
+    },
+    // 弹出新建对话框
+    handleCreate() {
+      this.form = {
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.dialogStatus = 'create'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+  .help-block {
+    color: #909399;
+    font-size: 12px;
+    line-height: 2;
+    margin-bottom: -8px;
+  }
   .link:hover {
     cursor: pointer;
     color: #409EFF;

@@ -51,7 +51,7 @@
         label="名称"
         prop="name"
         sortable="custom"
-        min-width="200"
+        min-width="180"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">
           <el-tooltip
@@ -184,7 +184,6 @@
                 v-model="form.money"
                 placeholder="请输入面额"
                 controls-position="right"
-                style="width: 100%;"
                 :precision="2"
                 :min="0">
               </el-input-number>
@@ -199,7 +198,6 @@
                 v-model="form.give_num"
                 placeholder="请输入发放数"
                 controls-position="right"
-                style="width: 100%;"
                 :min="0">
               </el-input-number>
             </el-form-item>

@@ -175,7 +175,7 @@
             show-word-limit/>
         </el-form-item>
 
-        <el-row :gutter="20" v-if="dialogStatus === 'create'">
+        <el-row :gutter="20">
           <el-col :span="12">
             <el-form-item
               label="面额"
@@ -184,6 +184,7 @@
                 v-model="form.money"
                 placeholder="请输入面额"
                 controls-position="right"
+                :disabled="dialogStatus !== 'create'"
                 :precision="2"
                 :min="0">
               </el-input-number>
@@ -198,6 +199,7 @@
                 v-model="form.give_num"
                 placeholder="请输入发放数"
                 controls-position="right"
+                :disabled="dialogStatus !== 'create'"
                 :min="0">
               </el-input-number>
             </el-form-item>
@@ -205,14 +207,14 @@
         </el-row>
 
         <el-form-item
-          v-if="dialogStatus === 'create'"
           label="截止日期"
           prop="end_time">
           <el-date-picker
             v-model="form.end_time"
             type="datetime"
             value-format="yyyy-MM-dd HH:mm:ss"
-            placeholder="可选择购物卡截止有效期">
+            placeholder="可选择购物卡截止有效期"
+            :disabled="dialogStatus !== 'create'">
           </el-date-picker>
           <div class="help-block">
             <span>为空表示不限制截止日期</span>

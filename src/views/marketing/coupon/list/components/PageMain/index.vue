@@ -231,7 +231,7 @@
         min-width="120">
         <template slot-scope="scope">
           <el-button
-            @click="() => {}"
+            @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
@@ -253,12 +253,12 @@
       :visible.sync="dialogFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
-      width="650px">
+      width="670px">
       <el-form
         :model="form"
         :rules="rules"
         ref="form"
-        label-width="100px">
+        label-width="110px">
         <el-form-item
           label="名称"
           prop="name">
@@ -302,6 +302,7 @@
               <el-select
                 v-model="form.type"
                 placeholder="请选择"
+                :disabled="dialogStatus !== 'create'"
                 clearable
                 value="">
                 <el-option
@@ -392,7 +393,7 @@
               prop="level">
               <el-select
                 v-model="form.level"
-                placeholder="请选择"
+                placeholder="不选表示全部有效"
                 collapse-tags
                 multiple>
                 <el-option
@@ -531,8 +532,10 @@
 
 <script>
 import {
+  addCouponItem,
   delCouponList,
   setCouponInvalid,
+  setCouponItem,
   setCouponStatus
 } from '@/api/marketing/coupon'
 import util from '@/utils/util'
@@ -623,6 +626,88 @@ export default {
         is_invalid: undefined
       },
       rules: {
+        name: [
+          {
+            required: true,
+            message: '名称不能为空',
+            trigger: 'blur'
+          },
+          {
+            max: 50,
+            message: '长度不能大于 50 个字符',
+            trigger: 'blur'
+          }
+        ],
+        description: [
+          {
+            max: 255,
+            message: '长度不能大于 255 个字符',
+            trigger: 'blur'
+          }
+        ],
+        guide: [
+          {
+            max: 255,
+            message: '长度不能大于 255 个字符',
+            trigger: 'blur'
+          }
+        ],
+        type: [
+          {
+            required: true,
+            message: '至少选择一项',
+            trigger: 'change'
+          }
+        ],
+        money: [
+          {
+            required: true,
+            message: '优惠金额不能为空',
+            trigger: 'blur'
+          }
+        ],
+        quota: [
+          {
+            required: true,
+            message: '使用门槛不能为空',
+            trigger: 'blur'
+          }
+        ],
+        give_num: [
+          {
+            required: true,
+            message: '发放数不能为空',
+            trigger: 'blur'
+          }
+        ],
+        give_begin_time: [
+          {
+            required: true,
+            message: '发放开始日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        give_end_time: [
+          {
+            required: true,
+            message: '发放结束日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        use_begin_time: [
+          {
+            required: true,
+            message: '使用开始日期不能为空',
+            trigger: 'change'
+          }
+        ],
+        use_end_time: [
+          {
+            required: true,
+            message: '使用截止日期不能为空',
+            trigger: 'change'
+          }
+        ]
       }
     }
   },
@@ -844,6 +929,23 @@ export default {
     // 弹出新建对话框
     handleCreate() {
       this.form = {
+        name: '',
+        description: '',
+        guide: '',
+        type: undefined,
+        money: undefined,
+        quota: undefined,
+        category: [],
+        exclude_category: [],
+        level: [],
+        frequency: 0,
+        give_num: undefined,
+        give_begin_time: undefined,
+        give_end_time: undefined,
+        use_begin_time: undefined,
+        use_end_time: undefined,
+        status: 1,
+        is_invalid: 0
       }
 
       this.$nextTick(() => {
@@ -854,6 +956,70 @@ export default {
         this.dialogStatus = 'create'
         this.dialogLoading = false
         this.dialogFormVisible = true
+      })
+    },
+    // 请求创建
+    create() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          addCouponItem({ ...this.form })
+            .then(res => {
+              this.currentTableData.unshift({
+                ...res.data,
+                receive_num: 0,
+                use_num: 0
+              })
+
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
+      })
+    },
+    // 弹出编辑对话框
+    handleUpdate(index) {
+      this.currentIndex = index
+      this.form = {
+        ...this.currentTableData[index],
+        type: this.currentTableData[index].type.toString()
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.form) {
+          this.$refs.form.clearValidate()
+        }
+
+        this.dialogStatus = 'update'
+        this.dialogLoading = false
+        this.dialogFormVisible = true
+      })
+    },
+    // 请求修改
+    update() {
+      this.$refs.form.validate(valid => {
+        if (valid) {
+          this.dialogLoading = true
+          setCouponItem({ ...this.form })
+            .then(res => {
+              this.$set(
+                this.currentTableData,
+                this.currentIndex,
+                {
+                  ...this.currentTableData[this.currentIndex],
+                  ...res.data
+                })
+
+              this.dialogFormVisible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.dialogLoading = false
+            })
+        }
       })
     }
   }

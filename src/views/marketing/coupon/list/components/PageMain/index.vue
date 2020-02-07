@@ -240,10 +240,41 @@
             size="small"
             type="text">删除</el-button>
 
-          <el-button
-            @click="() => {}"
-            size="small"
-            type="text">更多操作</el-button>
+          <el-dropdown
+            v-if="scope.row.type !== 3"
+            :show-timeout="50"
+            size="small">
+            <el-button
+              class="cs-ml-10"
+              size="small"
+              type="text">更多操作</el-button>
+
+            <el-dropdown-menu slot="dropdown">
+              <template v-if="scope.row.type === 2">
+                <el-dropdown-item
+                  @click.native="handleCopyGiveCode(scope.row.give_code)">
+                  复制领取码
+                </el-dropdown-item>
+
+                <el-dropdown-item
+                  @click.native="handleCopyGuide(scope.$index)">
+                  复制领取地址
+                </el-dropdown-item>
+              </template>
+
+              <template v-if="scope.row.type === 1">
+                <el-dropdown-item
+                  @click.native="handleLive(scope.$index)">
+                  生成优惠劵
+                </el-dropdown-item>
+
+                <el-dropdown-item
+                  @click.native="handleExport(scope.$index)">
+                  导出优惠劵
+                </el-dropdown-item>
+              </template>
+            </el-dropdown-menu>
+          </el-dropdown>
         </template>
       </el-table-column>
     </el-table>
@@ -539,7 +570,10 @@ import {
   setCouponStatus
 } from '@/api/marketing/coupon'
 import util from '@/utils/util'
+import * as clipboard from 'clipboard-polyfill'
 import { getUserLevelList } from '@/api/user/level'
+import { getCouponGiveExport, giveCouponLive } from '@/api/marketing/coupon_give'
+import { tableExport } from '@careyshop/vue-table-export'
 
 export default {
   components: {
@@ -1021,6 +1055,97 @@ export default {
             })
         }
       })
+    },
+    // 复制领取码
+    handleCopyGiveCode(val) {
+      clipboard.writeText(val)
+        .then(() => {
+          this.$message.success('已复制到剪贴板')
+        })
+        .catch(err => {
+          this.$message.error(err)
+        })
+    },
+    // 复制领取地址
+    handleCopyGuide(index) {
+      const data = this.currentTableData[index]
+      let giveLink = data.guide || process.env.VUE_APP_BASE_API
+      giveLink += data.guide ? '?give_code=' : '/v1/coupon_give/method/give.coupon.code/give_code/'
+      giveLink += data.give_code
+
+      clipboard.writeText(giveLink)
+        .then(() => {
+          this.$message.success('已复制到剪贴板')
+        })
+        .catch(err => {
+          this.$message.error(err)
+        })
+    },
+    // 请求生成优惠劵
+    handleLive(index) {
+      const data = this.currentTableData[index]
+      const message = `请填写生成数量（最多还可生成 ${data.give_num - data.receive_num} 张）`
+
+      this.$prompt(message, '生成优惠劵', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '请填写生成数量'
+      })
+        .then(({ value }) => {
+          giveCouponLive(data.coupon_id, value)
+            .then(() => {
+              this.$set(data, 'receive_num', data.receive_num + Number(value))
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 导出优惠劵
+    handleExport(index) {
+      const data = this.currentTableData[index]
+      if (data.receive_num <= 0) {
+        this.$message.error('没有可导出的数据，请先生成优惠劵')
+        return
+      }
+
+      const columns = [
+        {
+          label: '编号',
+          prop: 'coupon_give_id'
+        },
+        {
+          label: '兑换码',
+          prop: 'exchange_code'
+        },
+        {
+          label: '使用时间',
+          prop: 'use_time'
+        },
+        {
+          label: '创建时间',
+          prop: 'create_time'
+        },
+        {
+          label: '是否删除',
+          prop: 'is_delete'
+        }
+      ]
+
+      const replace = {
+        is_delete: {
+          0: '否',
+          1: '是'
+        }
+      }
+
+      getCouponGiveExport(data.coupon_id)
+        .then(res => {
+          // eslint-disable-next-line new-cap
+          let instance = new tableExport(columns, res.data, replace, data.name)
+          instance.export()
+        })
     }
   }
 }

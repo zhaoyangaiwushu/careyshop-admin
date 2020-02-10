@@ -273,6 +273,18 @@
                   导出优惠劵
                 </el-dropdown-item>
               </template>
+
+              <template v-if="scope.row.type === 0">
+                <el-dropdown-item
+                  @click.native="handleGiveUser('user', scope.$index)">
+                  会员账号发放
+                </el-dropdown-item>
+
+                <el-dropdown-item
+                  @click.native="handleGiveUser('level', scope.$index)">
+                  账号等级发放
+                </el-dropdown-item>
+              </template>
             </el-dropdown-menu>
           </el-dropdown>
         </template>
@@ -558,6 +570,58 @@
           size="small">修改</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      title="发放优惠劵"
+      :visible.sync="dialogGiveFormVisible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-form>
+        <el-form-item
+          v-if="dialogGiveType === 'level'"
+          label="会员等级">
+          <el-select
+            v-model="giveForm.user_level_id"
+            placeholder="请选择"
+            collapse-tags
+            multiple>
+            <el-option
+              v-for="item in userLevel"
+              :key="item.user_level_id"
+              :label="item.name"
+              :value="item.user_level_id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          v-if="dialogGiveType === 'user'"
+          label="会员账号">
+          <cs-user-select
+            :check-list="giveForm.username"
+            @confirm="() => {}">
+            <el-button slot="control">账号选取</el-button>
+          </cs-user-select>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <div style="float: left; font-size: 13px;">
+          <span>剩余 {{giveNumber}} 张优惠劵可发放</span>
+        </div>
+
+        <el-button
+          @click="dialogGiveFormVisible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="dialogGiveLoading"
+          @click="giveCoupon"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -569,14 +633,19 @@ import {
   setCouponItem,
   setCouponStatus
 } from '@/api/marketing/coupon'
-import util from '@/utils/util'
+import {
+  giveCouponLive,
+  giveCouponUser,
+  getCouponGiveExport
+} from '@/api/marketing/coupon_give'
 import * as clipboard from 'clipboard-polyfill'
+import util from '@/utils/util'
 import { getUserLevelList } from '@/api/user/level'
-import { getCouponGiveExport, giveCouponLive } from '@/api/marketing/coupon_give'
 import { tableExport } from '@careyshop/vue-table-export'
 
 export default {
   components: {
+    'csUserSelect': () => import('@/components/cs-user-select'),
     'csGoodsCategory': () => import('@/components/cs-goods-category')
   },
   props: {
@@ -742,6 +811,15 @@ export default {
             trigger: 'change'
           }
         ]
+      },
+      dialogGiveLoading: false,
+      dialogGiveFormVisible: false,
+      dialogGiveType: '',
+      giveNumber: 0,
+      giveForm: {
+        coupon_id: undefined,
+        username: undefined,
+        user_level_id: undefined
       }
     }
   },
@@ -1083,7 +1161,7 @@ export default {
     },
     // 请求生成优惠劵
     handleLive(index) {
-      const data = this.currentTableData[index]
+      let data = this.currentTableData[index]
       const message = `请填写生成数量（最多还可生成 ${data.give_num - data.receive_num} 张）`
 
       this.$prompt(message, '生成优惠劵', {
@@ -1145,6 +1223,40 @@ export default {
           // eslint-disable-next-line new-cap
           let instance = new tableExport(columns, res.data, replace, data.name)
           instance.export()
+        })
+    },
+    // 指定会员发放优惠劵
+    handleGiveUser(type, index) {
+      this.currentIndex = index
+      this.dialogGiveType = type
+
+      let data = this.currentTableData[index]
+      this.giveNumber = data.give_num - data.receive_num
+
+      this.giveForm = {
+        coupon_id: data.coupon_id,
+        username: undefined,
+        user_level_id: undefined
+      }
+
+      this.$nextTick(() => {
+        this.dialogGiveLoading = false
+        this.dialogGiveFormVisible = true
+      })
+    },
+    // 请求发放优惠劵
+    giveCoupon() {
+      this.dialogGiveLoading = true
+      let data = this.currentTableData[this.currentIndex]
+
+      giveCouponUser({ ...this.giveForm })
+        .then(res => {
+          this.$set(data, 'receive_num', data.receive_num + res.data)
+          this.dialogGiveFormVisible = false
+          this.$message.success('操作成功')
+        })
+        .catch(() => {
+          this.dialogGiveLoading = false
         })
     }
   }

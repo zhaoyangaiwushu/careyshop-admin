@@ -3,42 +3,46 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item>
+      <el-form-item v-if="auth.add">
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
           @click="handleCreate">新增优惠劵</el-button>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
           <el-button
+            v-if="auth.enable"
             icon="el-icon-check"
             :disabled="loading"
             @click="handleStatus(null, 1, true)">启用</el-button>
 
           <el-button
+            v-if="auth.disable"
             icon="el-icon-close"
             :disabled="loading"
             @click="handleStatus(null, 0, true)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.normal || auth.invalid">
         <el-button-group>
           <el-button
+            v-if="auth.normal"
             icon="el-icon-circle-check"
             :disabled="loading"
             @click="handleInvalid(null, 0, true)">正常</el-button>
 
           <el-button
+            v-if="auth.invalid"
             icon="el-icon-circle-close"
             :disabled="loading"
             @click="handleInvalid(null, 1, true)">作废</el-button>
         </el-button-group>
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item v-if="auth.del">
         <el-button
           icon="el-icon-delete"
           :disabled="loading"
@@ -154,7 +158,7 @@
             placement="top-start">
             <i class="el-icon-tickets cs-pr-5"/>
           </el-tooltip>
-          <span :class="{link: auth.give}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
+          <span :class="{link: auth.info}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
@@ -231,17 +235,19 @@
         min-width="120">
         <template slot-scope="scope">
           <el-button
+            v-if="auth.set"
             @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
           <el-button
+            v-if="auth.del"
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
 
           <el-dropdown
-            v-if="scope.row.type !== 3"
+            v-if="scope.row.type !== 3 && auth.give"
             :show-timeout="50"
             size="small">
             <el-button
@@ -699,14 +705,15 @@ export default {
         }
       },
       auth: {
+        info: true,
+        add: false,
+        set: false,
+        del: false,
         give: false,
-        add: true,
-        set: true,
-        del: true,
-        enable: true,
-        disable: true,
-        normal: true,
-        invalid: true
+        enable: false,
+        disable: false,
+        normal: false,
+        invalid: false
       },
       form: {
         name: undefined,
@@ -845,6 +852,14 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.add = this.$has('/marketing/coupon/list/add')
+      this.auth.set = this.$has('/marketing/coupon/list/set')
+      this.auth.del = this.$has('/marketing/coupon/list/del')
+      this.auth.give = this.$has('/marketing/coupon/list/give')
+      this.auth.enable = this.$has('/marketing/coupon/list/enable')
+      this.auth.disable = this.$has('/marketing/coupon/list/disable')
+      this.auth.normal = this.$has('/marketing/coupon/list/normal')
+      this.auth.invalid = this.$has('/marketing/coupon/list/invalid')
     },
     // 获取列表中的编号
     _getIdList(val) {
@@ -883,7 +898,7 @@ export default {
     },
     // 打开优惠劵使用明细
     handleGive(key) {
-      if (this.auth.give) {
+      if (this.auth.info) {
         this.$router.push({
           name: 'marketing-card-give',
           params: { coupon_id: key }

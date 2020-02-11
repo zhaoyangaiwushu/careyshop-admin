@@ -158,7 +158,7 @@
             placement="top-start">
             <i class="el-icon-tickets cs-pr-5"/>
           </el-tooltip>
-          <span :class="{link: auth.info}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
+          <span :class="{link: auth.use}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 
@@ -253,7 +253,7 @@
             <el-button
               class="cs-ml-10"
               size="small"
-              type="text">更多操作</el-button>
+              type="text">发放操作</el-button>
 
             <el-dropdown-menu slot="dropdown">
               <template v-if="scope.row.type === 2">
@@ -705,7 +705,7 @@ export default {
         }
       },
       auth: {
-        info: true,
+        use: false,
         add: false,
         set: false,
         del: false,
@@ -898,7 +898,7 @@ export default {
     },
     // 打开优惠劵使用明细
     handleGive(key) {
-      if (this.auth.info) {
+      if (this.auth.use) {
         this.$router.push({
           name: 'marketing-card-give',
           params: { coupon_id: key }

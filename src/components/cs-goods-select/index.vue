@@ -205,10 +205,6 @@ export default {
       this.visible = true
     },
     handleOpen() {
-      if (!this.tableData.length) {
-        this.handleSubmit(true)
-      }
-
       if (!this.isCheck && this.checkList.length) {
         let idList = []
         for (let value of this.checkList) {
@@ -227,6 +223,15 @@ export default {
               }
             })
           })
+          .then(() => {
+            if (!this.tableData.length) {
+              this.handleSubmit(true)
+            }
+          })
+      } else {
+        if (!this.tableData.length) {
+          this.handleSubmit(true)
+        }
       }
 
       // 组件存在时只需处理一次

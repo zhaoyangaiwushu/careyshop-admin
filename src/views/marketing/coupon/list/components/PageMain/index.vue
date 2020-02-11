@@ -576,6 +576,7 @@
       :visible.sync="dialogGiveFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
+      :destroy-on-close="true"
       width="600px">
       <el-form>
         <el-form-item
@@ -598,9 +599,7 @@
         <el-form-item
           v-if="dialogGiveType === 'user'"
           label="会员账号">
-          <cs-user-select
-            :check-list="giveForm.username"
-            @confirm="() => {}">
+          <cs-user-select @confirm="handleUserConfirm">
             <el-button slot="control">账号选取</el-button>
           </cs-user-select>
         </el-form-item>
@@ -1243,6 +1242,15 @@ export default {
         this.dialogGiveLoading = false
         this.dialogGiveFormVisible = true
       })
+    },
+    // 会员选取确认事件
+    handleUserConfirm(val) {
+      let userList = []
+      val.forEach(value => {
+        userList.push(value.username)
+      })
+
+      this.giveForm.username = userList
     },
     // 请求发放优惠劵
     giveCoupon() {

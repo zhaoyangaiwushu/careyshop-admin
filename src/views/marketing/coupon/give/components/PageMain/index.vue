@@ -282,7 +282,7 @@ export default {
           type: 'success'
         },
         1: {
-          text: '作废',
+          text: '无效',
           type: 'danger'
         }
       },

@@ -23,9 +23,9 @@
         clearable
         value="">
         <el-option label="正常" value="normal"/>
-        <el-option label="作废" value="invalid"/>
+        <el-option label="无效" value="invalid"/>
         <el-option label="已使用" value="used"/>
-        <el-option label="已删除" value="delete"/>
+        <el-option label="回收站" value="delete"/>
       </el-select>
     </el-form-item>
 

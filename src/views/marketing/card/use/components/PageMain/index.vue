@@ -286,7 +286,7 @@ export default {
     // 显示购物卡信息
     handleInfo() {
       if (!this.cardData) {
-        this.$message.info('查询全部购物卡时无法显示购物卡信息')
+        this.$message.info('查询全部购物卡时无法显示信息')
         return
       }
 

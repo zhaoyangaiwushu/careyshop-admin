@@ -852,6 +852,7 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
+      this.auth.use = this.$has('/marketing/coupon/give/list')
       this.auth.add = this.$has('/marketing/coupon/list/add')
       this.auth.set = this.$has('/marketing/coupon/list/set')
       this.auth.del = this.$has('/marketing/coupon/list/del')
@@ -900,7 +901,7 @@ export default {
     handleGive(key) {
       if (this.auth.use) {
         this.$router.push({
-          name: 'marketing-card-give',
+          name: 'marketing-coupon-give',
           params: { coupon_id: key }
         })
       }

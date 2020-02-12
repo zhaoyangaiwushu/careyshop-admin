@@ -5,7 +5,6 @@
     ref="form"
     size="mini"
     style="margin-bottom: -18px;">
-
     <el-form-item label="昵称" prop="nick_name">
       <el-input
         v-model="form.nick_name"

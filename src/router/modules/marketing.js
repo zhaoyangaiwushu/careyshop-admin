@@ -42,6 +42,13 @@ export default {
       name: `${pre}coupon-list`,
       meta: { ...meta, cache: true, title: '优惠劵' },
       component: () => import('@/views/marketing/coupon/list')
+    },
+    {
+      path: 'coupon/give',
+      name: `${pre}coupon-give`,
+      props: true,
+      meta: { ...meta, title: '优惠劵使用' },
+      component: () => import('@/views/marketing/coupon/give')
     }
   ])('marketing-')
 }

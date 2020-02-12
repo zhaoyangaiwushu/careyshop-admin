@@ -6,12 +6,11 @@
     size="mini"
     @submit.native.prevent
     style="margin-bottom: -18px;">
-
     <el-form-item label="卡号" prop="number">
       <el-input
         v-model="form.number"
         prefix-icon="el-icon-search"
-        placeholder="可输入 购物卡卡号"
+        placeholder="可输入购物卡卡号"
         @keyup.enter.native="handleFormSubmit(true)"
         style="width: 200px;"
         :clearable="true"/>
@@ -65,7 +64,7 @@
             <el-input
               v-model="form.name"
               prefix-icon="el-icon-search"
-              placeholder="可输入 购物卡名称"
+              placeholder="可输入购物卡名称"
               @keyup.enter.native="handleFormSubmit(true)"
               :clearable="true"/>
           </el-form-item>
@@ -74,7 +73,7 @@
             <el-input
               v-model="form.account"
               prefix-icon="el-icon-search"
-              placeholder="可输入 账号/昵称"
+              placeholder="可输入账号/昵称"
               @keyup.enter.native="handleFormSubmit(true)"
               :clearable="true"/>
           </el-form-item>

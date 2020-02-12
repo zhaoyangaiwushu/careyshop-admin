@@ -5,7 +5,6 @@
     ref="form"
     size="mini"
     style="margin-bottom: -18px;">
-
     <el-form-item label="分类" prop="article_cat_id">
       <el-cascader
         v-model="form.article_cat_id"

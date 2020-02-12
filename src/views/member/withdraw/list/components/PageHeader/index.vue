@@ -19,7 +19,7 @@
       <el-input
         v-model="form.account"
         prefix-icon="el-icon-search"
-        placeholder="可输入 账号/昵称"
+        placeholder="可输入账号/昵称"
         @keyup.enter.native="handleFormSubmit(true)"
         style="width: 170px;"
         :clearable="true"/>

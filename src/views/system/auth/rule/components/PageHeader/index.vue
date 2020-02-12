@@ -5,7 +5,6 @@
     ref="form"
     size="mini"
     style="margin-bottom: -18px;">
-
     <el-form-item label="模块" prop="module">
       <el-select
         v-model="form.module"

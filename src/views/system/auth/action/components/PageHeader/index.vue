@@ -5,7 +5,6 @@
     ref="form"
     size="mini"
     style="margin-bottom: -18px;">
-
     <el-form-item label="账号" prop="username">
       <el-input
         v-model="form.username"

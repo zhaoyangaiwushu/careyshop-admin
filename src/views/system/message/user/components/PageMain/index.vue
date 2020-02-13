@@ -115,7 +115,7 @@
             prop="create_time"
             sortable="custom"
             align="center"
-            width="200">
+            width="160">
           </el-table-column>
         </el-table>
       </el-tab-pane>

@@ -72,7 +72,7 @@
         prop="create_time"
         sortable="custom"
         align="center"
-        min-width="160">
+        width="160">
       </el-table-column>
 
       <el-table-column

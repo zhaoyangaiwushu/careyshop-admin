@@ -95,8 +95,8 @@
         label="创建日期"
         prop="create_time"
         align="center"
-        width="160"
-        sortable="custom">
+        sortable="custom"
+        width="160">
       </el-table-column>
     </el-table>
 

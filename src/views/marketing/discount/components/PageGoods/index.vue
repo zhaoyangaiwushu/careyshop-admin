@@ -1,75 +1,42 @@
 <template>
-  <el-table
-    v-loading="loading"
-    :data="discountList">
-    <el-table-column
-      label="编号"
-      prop="goods_id"
-      min-width="15">
-    </el-table-column>
+  <div>
+    <el-table
+      v-loading="loading"
+      :data="discountList">
+      <el-table-column
+        label="编号"
+        prop="goods_id"
+        min-width="15">
+      </el-table-column>
 
-    <el-table-column
-      label="商品名称"
-      prop="name">
-      <template slot-scope="scope">
-        <div class="discount-text" :title="scope.row.goods | filterGoodsName">
-          <span>{{scope.row.goods | filterGoodsName}}</span>
-        </div>
-      </template>
-    </el-table-column>
+      <el-table-column
+        label="商品名称"
+        prop="name">
+        <template slot-scope="scope">
+          <div class="discount-text" :title="scope.row.goods | filterGoodsName">
+            <span
+              @click="handleViewGoods(scope.row.goods_id)"
+              class="link">{{scope.row.goods | filterGoodsName}}</span>
+          </div>
+        </template>
+      </el-table-column>
 
-    <el-table-column
-      :label="typeMap[type] || '折扣方式'"
-      width="160">
-      <template slot="header" slot-scope="scope">
-        <el-tooltip placement="top" :content="typeHelp[type]">
-          <i class="el-icon-warning-outline cs-mr-10" v-show="typeHelp[type]"/>
-        </el-tooltip>
-        <span>{{scope.column.label}}</span>
-      </template>
+      <el-table-column
+        :label="typeMap[type] || '折扣方式'"
+        width="160">
+        <template slot="header" slot-scope="scope">
+          <el-tooltip placement="top" :content="typeHelp[type]">
+            <i class="el-icon-warning-outline cs-mr-10" v-show="typeHelp[type]"/>
+          </el-tooltip>
+          <span>{{scope.column.label}}</span>
+        </template>
 
-      <template slot-scope="scope">
-        <el-select
-          v-if="type === '3'"
-          :value="filterCoupon(scope.row.discount)"
-          @change="val => {scope.row.discount = val}"
-          placeholder="请选择"
-          size="mini">
-          <el-option
-            v-for="item in couponData"
-            :key="item.coupon_id"
-            :label="item.name"
-            :value="item.coupon_id">
-          </el-option>
-        </el-select>
-
-        <el-input-number
-          v-else
-          v-model="scope.row.discount"
-          controls-position="right"
-          placeholder="请输入"
-          size="mini"
-          :max="type === '0' ? 100 : Number.MAX_SAFE_INTEGER"
-          :min="0"
-          :precision="2">
-        </el-input-number>
-      </template>
-    </el-table-column>
-
-    <el-table-column
-      :label="type"
-      align="center"
-      width="80">
-      <template slot="header" slot-scope="scope">
-        <el-popover
-          v-model="batchVisible"
-          placement="top-end"
-          trigger="manual">
+        <template slot-scope="scope">
           <el-select
             v-if="type === '3'"
-            v-model="batchValue"
-            class="cs-mb-10"
-            :placeholder="`请选择${typeMap[scope.column.label]}`"
+            :value="filterCoupon(scope.row.discount)"
+            @change="val => {scope.row.discount = val}"
+            placeholder="请选择"
             size="mini">
             <el-option
               v-for="item in couponData"
@@ -81,37 +48,84 @@
 
           <el-input-number
             v-else
-            v-model="batchValue"
-            :placeholder="`请输入${typeMap[scope.column.label]}`"
+            v-model="scope.row.discount"
             controls-position="right"
+            placeholder="请输入"
             size="mini"
-            style="width: 150px; margin-bottom: 10px;"
             :max="type === '0' ? 100 : Number.MAX_SAFE_INTEGER"
             :min="0"
             :precision="2">
           </el-input-number>
+        </template>
+      </el-table-column>
 
-          <div class="cs-tr">
-            <el-button @click="batchVisible = false" size="mini" type="text">取消</el-button>
-            <el-button @click="batchDiscount" type="primary" size="mini">确定</el-button>
-          </div>
+      <el-table-column
+        :label="type"
+        align="center"
+        width="80">
+        <template slot="header" slot-scope="scope">
+          <el-popover
+            v-model="batchVisible"
+            placement="top-end"
+            trigger="manual">
+            <el-select
+              v-if="type === '3'"
+              v-model="batchValue"
+              class="cs-mb-10"
+              :placeholder="`请选择${typeMap[scope.column.label]}`"
+              size="mini">
+              <el-option
+                v-for="item in couponData"
+                :key="item.coupon_id"
+                :label="item.name"
+                :value="item.coupon_id">
+              </el-option>
+            </el-select>
 
+            <el-input-number
+              v-else
+              v-model="batchValue"
+              :placeholder="`请输入${typeMap[scope.column.label]}`"
+              controls-position="right"
+              size="mini"
+              style="width: 150px; margin-bottom: 10px;"
+              :max="type === '0' ? 100 : Number.MAX_SAFE_INTEGER"
+              :min="0"
+              :precision="2">
+            </el-input-number>
+
+            <div class="cs-tr">
+              <el-button @click="batchVisible = false" size="mini" type="text">取消</el-button>
+              <el-button @click="batchDiscount" type="primary" size="mini">确定</el-button>
+            </div>
+
+            <el-button
+              :disabled="!type"
+              type="text"
+              slot="reference"
+              @click="handleBatch">批处理</el-button>
+          </el-popover>
+        </template>
+
+        <template slot-scope="scope">
           <el-button
-            :disabled="!type"
+            @click="remove(scope.$index)"
             type="text"
-            slot="reference"
-            @click="handleBatch">批处理</el-button>
-        </el-popover>
-      </template>
+            size="small">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
 
-      <template slot-scope="scope">
-        <el-button
-          @click="remove(scope.$index)"
-          type="text"
-          size="small">删除</el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+    <el-drawer
+      class="view-goods"
+      size="100%"
+      :visible.sync="drawer"
+      :append-to-body="true"
+      :show-close="true"
+      :modal="false">
+      <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
+    </el-drawer>
+  </div>
 </template>
 
 <script>
@@ -119,6 +133,9 @@ import { getCouponSelect } from '@/api/marketing/coupon'
 import { getGoodsSelect } from '@/api/goods/goods'
 
 export default {
+  components: {
+    'csGoodsView': () => import('@/views/goods/admin/view')
+  },
   props: {
     // 外部v-model值
     value: {
@@ -155,6 +172,8 @@ export default {
   },
   data() {
     return {
+      drawer: false,
+      currentGoodsId: 0,
       typeHelp: {
         '0': '打折额度，比如65表示按6.5折结算',
         '1': '减多少额度，比如65表示在原价的基础上减去65',
@@ -234,6 +253,10 @@ export default {
       this.discountList.forEach(value => {
         value.discount = this.batchValue
       })
+    },
+    handleViewGoods(val) {
+      this.drawer = true
+      this.currentGoodsId = val
     }
   }
 }
@@ -244,5 +267,14 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap
+  }
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
+  }
+  .view-goods >>> .el-drawer__body {
+    height: auto;
+    overflow: auto;
   }
 </style>

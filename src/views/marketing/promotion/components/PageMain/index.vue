@@ -65,7 +65,8 @@
         label="促销日期"
         prop="begin_time"
         sortable="custom"
-        align="center">
+        align="center"
+        width="160">
         <template slot-scope="scope">
           <span>{{scope.row.begin_time}}</span>
           <br>

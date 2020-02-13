@@ -63,8 +63,8 @@
         label="日期"
         prop="create_time"
         align="center"
-        width="160"
-        sortable="custom">
+        sortable="custom"
+        width="160">
         <template slot-scope="scope">
           <el-tooltip placement="top">
             <div slot="content">

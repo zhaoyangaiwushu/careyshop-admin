@@ -158,7 +158,9 @@
             placement="top-start">
             <i class="el-icon-tickets cs-pr-5"/>
           </el-tooltip>
-          <span :class="{link: auth.use}" @click="handleGive(scope.row.coupon_id)">{{scope.row.name}}</span>
+          <span
+            @click="handleGive(scope.row.coupon_id)"
+            :class="{link: auth.use}">{{scope.row.name}}</span>
         </template>
       </el-table-column>
 

@@ -6,6 +6,72 @@
       :highlight-current-row="true"
       @sort-change="sortChange">
       <el-table-column type="expand">
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="table-expand">
+            <el-form-item label="退款流水号">
+              <span>{{props.row.refund_no}}</span>
+            </el-form-item>
+
+            <el-form-item label="交易账号">
+              <span>{{props.row.get_user.username}}</span>
+            </el-form-item>
+
+            <el-form-item label="订单号">
+              <span>{{props.row.order_no}}</span>
+            </el-form-item>
+
+            <el-form-item label="支付流水号">
+              <span>{{props.row.payment_no}}</span>
+            </el-form-item>
+
+            <el-form-item label="退款交易号">
+              <span>{{props.row.out_trade_no}}</span>
+            </el-form-item>
+
+            <el-form-item label="退款信息">
+              <span>{{props.row.out_trade_msg}}</span>
+            </el-form-item>
+
+            <el-form-item label="支付总额">
+              <el-tag
+                type="success"
+                effect="plain"
+                size="mini">
+                + {{props.row.total_amount | getNumber}}
+              </el-tag>
+            </el-form-item>
+
+            <el-form-item label="退款金额">
+              <el-tag
+                type="danger"
+                effect="plain"
+                size="mini">
+                + {{props.row.amount | getNumber}}
+              </el-tag>
+            </el-form-item>
+
+            <el-form-item label="退款方式">
+              <span>{{getToPayment(props.row.to_payment)}}</span>
+            </el-form-item>
+
+            <el-form-item label="退款状态">
+              <el-tag
+                :type="statusMap[props.row.status].type"
+                effect="plain"
+                size="mini">
+                {{statusMap[props.row.status].text}}
+              </el-tag>
+            </el-form-item>
+
+            <el-form-item label="创建日期">
+              <span>{{props.row.create_time}}</span>
+            </el-form-item>
+
+            <el-form-item label="最后更新">
+              <span>{{props.row.update_time}}</span>
+            </el-form-item>
+          </el-form>
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -157,7 +223,7 @@ export default {
       queryData: {},
       queryVisible: false,
       auth: {
-        query: true
+        query: false
       },
       statusMap: {
         0: {
@@ -184,7 +250,13 @@ export default {
       return util.getNumber(val)
     }
   },
+  mounted() {
+    this._validationAuth()
+  },
   methods: {
+    _validationAuth() {
+      this.auth.query = this.$has('/order/admin/refund/query')
+    },
     getToPayment(val) {
       return val !== '' ? this.toPayment[val]['name'] : ''
     },

@@ -1,6 +1,6 @@
 {
   "name": "careyshop-admin",
-  "version": "1.4.7",
+  "version": "1.4.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -27,7 +27,7 @@
     "lowdb": "^1.0.0",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
-    "screenfull": "^5.0.1",
+    "screenfull": "^5.0.2",
     "ua-parser-js": "^0.7.21",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",

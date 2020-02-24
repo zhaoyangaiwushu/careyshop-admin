@@ -16,13 +16,12 @@ export default {
      * @param {Object} param context
      */
     checkUpdate({ state, commit }) {
-      axios.get('https://api.github.com/repos/dnyz520/careyshop/releases/latest')
+      axios.get('https://raw.githubusercontent.com/dnyz520/careyshop-admin/master/package.json')
         .then(res => {
-          let versionGet = res.tag_name
-          const update = semver.lt(process.env.VUE_APP_VERSION, versionGet)
+          const update = semver.lt(process.env.VUE_APP_VERSION, res.version)
           if (update) {
-            util.log.capsule('CareyShop Admin', `New version ${res.name}`)
-            console.log(`版本号: ${res.tag_name} | 详情 ${res.html_url}`)
+            util.log.capsule('CareyShop Admin', `New version ${res.version}`)
+            console.log(`版本号: ${res.version} | 详情 ${process.env.VUE_APP_GITHUB_URL}`)
             commit('updateSet', true)
           }
           commit('latestSet', res)

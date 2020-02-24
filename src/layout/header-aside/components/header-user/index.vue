@@ -140,10 +140,15 @@ export default {
     ...mapState('careyshop/user', [
       'info',
       'unreadMessage'
+    ]),
+    ...mapState('careyshop/releases', [
+      'update',
+      'latest'
     ])
   },
   mounted() {
     this._validationAuth()
+    this.checkUpdate()
     this.getMessageUnread()
     this.timer = setInterval(this.getMessageUnread, 1000 * 60 * 5)
   },
@@ -181,6 +186,21 @@ export default {
 
           this.$store.commit('careyshop/user/setMessage', res.data['total'])
         })
+    },
+    /**
+     * 检测版本更新
+     */
+    checkUpdate() {
+      if (this.update) {
+        const h = this.$createElement
+        this.$notify({
+          title: '版本更新',
+          message: h('p', { 'class': 'cs-cp' }, `发现最新版本号： ${this.latest.version}，点击查看详情。`),
+          position: 'bottom-right',
+          duration: 0,
+          onClick: () => { this.$open(process.env.VUE_APP_GITHUB_URL) }
+        })
+      }
     },
     /**
      * @description 登出
@@ -275,9 +295,7 @@ export default {
      * 打开未读消息
      */
     handleMessage() {
-      this.$router.push({
-        name: 'system-message-user'
-      })
+      this.$router.push({ name: 'system-message-user' })
         .catch(() => {
         })
     }

@@ -195,10 +195,10 @@ export default {
         const h = this.$createElement
         this.$notify({
           title: '版本更新',
-          message: h('p', { 'class': 'cs-cp' }, `发现最新版本号： ${this.latest.version}，点击查看详情。`),
+          message: h('p', { 'class': 'cs-cp' }, `发现最新版本号： ${this.latest.ver}，点击查看详情。`),
           position: 'bottom-right',
           duration: 0,
-          onClick: () => { this.$open(process.env.VUE_APP_GITHUB_URL) }
+          onClick: () => { this.$open(this.latest.url) }
         })
       }
     },

@@ -85,7 +85,7 @@ export function getAppInstallList(data) {
 }
 
 /**
- * 根据请求获取一个应用安装包
+ * 根据条件查询是否有更新
  * @param {String} user_agent
  * @param {String} ver
  * @returns

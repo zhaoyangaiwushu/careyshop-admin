@@ -16,19 +16,32 @@ export default {
      * @param {Object} param context
      */
     checkUpdate({ state, commit }) {
-      axios.get('https://raw.githubusercontent.com/dnyz520/careyshop-admin/master/package.json')
-        .then(res => {
-          const update = semver.lt(process.env.VUE_APP_VERSION, res.version)
-          if (update) {
-            util.log.capsule('CareyShop Admin', `New version ${res.version}`)
-            console.log(`版本号: ${res.version} | 详情 ${process.env.VUE_APP_GITHUB_URL}`)
-            commit('updateSet', true)
-          }
-          commit('latestSet', res)
-        })
-        .catch(err => {
-          console.log('checkUpdate error', err)
-        })
+      // queryAppInstallUpdated('vue', process.env.VUE_APP_VERSION)
+      //   .then(res => {
+      //     if (res.is_updated) {
+      //       if (semver.lt(process.env.VUE_APP_VERSION, res.ver)) {
+      //         util.log.capsule('CareyShop Admin', `New version ${res.ver}`)
+      //         console.log(`版本号: ${res.ver} | 详情 ${res.url}`)
+      //         commit('updateSet', true)
+      //       }
+      //     }
+      //
+      //     commit('latestSet', res)
+      //   })
+
+      // axios.get('https://raw.githubusercontent.com/dnyz520/careyshop-admin/master/package.json')
+      //   .then(res => {
+      //     const update = semver.lt(process.env.VUE_APP_VERSION, res.version)
+      //     if (update) {
+      //       util.log.capsule('CareyShop Admin', `New version ${res.version}`)
+      //       console.log(`版本号: ${res.version} | 详情 ${process.env.VUE_APP_GITHUB_URL}`)
+      //       commit('updateSet', true)
+      //     }
+      //     commit('latestSet', res)
+      //   })
+      //   .catch(err => {
+      //     console.log('checkUpdate error', err)
+      //   })
     }
   },
   mutations: {

@@ -16,7 +16,7 @@ import pluginAxios from '@/plugin/axios'
 import pluginError from '@/plugin/error'
 import pluginLog from '@/plugin/log'
 import pluginOpen from '@/plugin/open'
-import pluginHas from '@/plugin/has'
+import pluginPermission from '@/plugin/permission'
 import pluginPreview from '@/plugin/preview'
 import pluginPlayer from '@/plugin/player'
 import pluginPrint from '@/plugin/print'
@@ -42,7 +42,7 @@ export default {
     Vue.use(pluginError)
     Vue.use(pluginLog)
     Vue.use(pluginOpen)
-    Vue.use(pluginHas)
+    Vue.use(pluginPermission)
     Vue.use(pluginPreview)
     Vue.use(pluginPlayer)
     Vue.use(pluginPrint)

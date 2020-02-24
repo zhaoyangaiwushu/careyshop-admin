@@ -346,11 +346,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.set = this.$has('/setting/payment/config/set')
-      this.auth.setting = this.$has('/setting/payment/config/setting')
-      this.auth.sort = this.$has('/setting/payment/config/sort')
-      this.auth.enable = this.$has('/setting/payment/config/enable')
-      this.auth.disable = this.$has('/setting/payment/config/disable')
+      this.auth.set = this.$permission('/setting/payment/config/set')
+      this.auth.setting = this.$permission('/setting/payment/config/setting')
+      this.auth.sort = this.$permission('/setting/payment/config/sort')
+      this.auth.enable = this.$permission('/setting/payment/config/enable')
+      this.auth.disable = this.$permission('/setting/payment/config/disable')
     },
     // 资源下拉框事件
     handleCommand(command) {

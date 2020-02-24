@@ -155,9 +155,9 @@ export default {
      * 权限检测
      */
     _validationAuth() {
-      this.auth.cache = this.$has('/index/help/cache')
-      this.auth.optimize = this.$has('/index/help/optimize')
-      this.auth.unread = this.$has('/system/message/unread')
+      this.auth.cache = this.$permission('/index/help/cache')
+      this.auth.optimize = this.$permission('/index/help/optimize')
+      this.auth.unread = this.$permission('/system/message/unread')
     },
     /**
      * 获取未读消息数

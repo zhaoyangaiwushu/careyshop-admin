@@ -854,15 +854,15 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.use = this.$has('/marketing/coupon/give/list')
-      this.auth.add = this.$has('/marketing/coupon/list/add')
-      this.auth.set = this.$has('/marketing/coupon/list/set')
-      this.auth.del = this.$has('/marketing/coupon/list/del')
-      this.auth.give = this.$has('/marketing/coupon/list/give')
-      this.auth.enable = this.$has('/marketing/coupon/list/enable')
-      this.auth.disable = this.$has('/marketing/coupon/list/disable')
-      this.auth.normal = this.$has('/marketing/coupon/list/normal')
-      this.auth.invalid = this.$has('/marketing/coupon/list/invalid')
+      this.auth.use = this.$permission('/marketing/coupon/give/list')
+      this.auth.add = this.$permission('/marketing/coupon/list/add')
+      this.auth.set = this.$permission('/marketing/coupon/list/set')
+      this.auth.del = this.$permission('/marketing/coupon/list/del')
+      this.auth.give = this.$permission('/marketing/coupon/list/give')
+      this.auth.enable = this.$permission('/marketing/coupon/list/enable')
+      this.auth.disable = this.$permission('/marketing/coupon/list/disable')
+      this.auth.normal = this.$permission('/marketing/coupon/list/normal')
+      this.auth.invalid = this.$permission('/marketing/coupon/list/invalid')
     },
     // 获取列表中的编号
     _getIdList(val) {

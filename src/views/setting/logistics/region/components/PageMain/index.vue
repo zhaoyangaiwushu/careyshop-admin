@@ -252,10 +252,10 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/setting/logistics/region/add')
-      this.auth.set = this.$has('/setting/logistics/region/set')
-      this.auth.del = this.$has('/setting/logistics/region/del')
-      this.auth.move = this.$has('/setting/logistics/region/move')
+      this.auth.add = this.$permission('/setting/logistics/region/add')
+      this.auth.set = this.$permission('/setting/logistics/region/set')
+      this.auth.del = this.$permission('/setting/logistics/region/del')
+      this.auth.move = this.$permission('/setting/logistics/region/move')
     },
     // 过滤节点
     filterNode(value, data) {

@@ -308,12 +308,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/auth/group/add')
-      this.auth.del = this.$has('/system/auth/group/del')
-      this.auth.set = this.$has('/system/auth/group/set')
-      this.auth.enable = this.$has('/system/auth/group/enable')
-      this.auth.disable = this.$has('/system/auth/group/disable')
-      this.auth.sort = this.$has('/system/auth/group/sort')
+      this.auth.add = this.$permission('/system/auth/group/add')
+      this.auth.del = this.$permission('/system/auth/group/del')
+      this.auth.set = this.$permission('/system/auth/group/set')
+      this.auth.enable = this.$permission('/system/auth/group/enable')
+      this.auth.disable = this.$permission('/system/auth/group/disable')
+      this.auth.sort = this.$permission('/system/auth/group/sort')
     },
     // 选中数据项
     handleSelectionChange(val) {

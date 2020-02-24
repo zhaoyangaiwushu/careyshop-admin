@@ -255,7 +255,7 @@ export default {
   },
   methods: {
     _validationAuth() {
-      this.auth.query = this.$has('/order/admin/refund/query')
+      this.auth.query = this.$permission('/order/admin/refund/query')
     },
     getToPayment(val) {
       return val !== '' ? this.toPayment[val]['name'] : ''

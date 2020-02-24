@@ -817,17 +817,17 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/member/user/client/add')
-      this.auth.set = this.$has('/member/user/client/set')
-      this.auth.del = this.$has('/member/user/client/del')
-      this.auth.enable = this.$has('/member/user/client/enable')
-      this.auth.disable = this.$has('/member/user/client/disable')
-      this.auth.more = this.$has('/member/user/client/more')
-      this.auth.reset = this.$has('/member/user/client/reset')
-      this.auth.withdraw = this.$has('/member/user/client/withdraw')
-      this.auth.address = this.$has('/member/user/client/address')
-      this.auth.money = this.$has('/member/user/client/money')
-      this.auth.finance = this.$has('/member/user/client/finance')
+      this.auth.add = this.$permission('/member/user/client/add')
+      this.auth.set = this.$permission('/member/user/client/set')
+      this.auth.del = this.$permission('/member/user/client/del')
+      this.auth.enable = this.$permission('/member/user/client/enable')
+      this.auth.disable = this.$permission('/member/user/client/disable')
+      this.auth.more = this.$permission('/member/user/client/more')
+      this.auth.reset = this.$permission('/member/user/client/reset')
+      this.auth.withdraw = this.$permission('/member/user/client/withdraw')
+      this.auth.address = this.$permission('/member/user/client/address')
+      this.auth.money = this.$permission('/member/user/client/money')
+      this.auth.finance = this.$permission('/member/user/client/finance')
     },
     // 获取列表中的编号
     _getIdList(val) {

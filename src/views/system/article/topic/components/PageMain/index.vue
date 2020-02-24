@@ -185,11 +185,11 @@ export default {
     ]),
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/article/topic/add')
-      this.auth.del = this.$has('/system/article/topic/del')
-      this.auth.set = this.$has('/system/article/topic/set')
-      this.auth.enable = this.$has('/system/article/topic/enable')
-      this.auth.disable = this.$has('/system/article/topic/disable')
+      this.auth.add = this.$permission('/system/article/topic/add')
+      this.auth.del = this.$permission('/system/article/topic/del')
+      this.auth.set = this.$permission('/system/article/topic/set')
+      this.auth.enable = this.$permission('/system/article/topic/enable')
+      this.auth.disable = this.$permission('/system/article/topic/disable')
     },
     // 获取列表中的专题编号
     _getTopicIdList(val) {

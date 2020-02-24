@@ -366,12 +366,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/admin/member/add')
-      this.auth.del = this.$has('/system/admin/member/del')
-      this.auth.set = this.$has('/system/admin/member/set')
-      this.auth.enable = this.$has('/system/admin/member/enable')
-      this.auth.disable = this.$has('/system/admin/member/disable')
-      this.auth.reset = this.$has('/system/admin/member/reset')
+      this.auth.add = this.$permission('/system/admin/member/add')
+      this.auth.del = this.$permission('/system/admin/member/del')
+      this.auth.set = this.$permission('/system/admin/member/set')
+      this.auth.enable = this.$permission('/system/admin/member/enable')
+      this.auth.disable = this.$permission('/system/admin/member/disable')
+      this.auth.reset = this.$permission('/system/admin/member/reset')
     },
     // 获取列表中的用户编号
     _getClientIdList(val) {

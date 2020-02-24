@@ -256,13 +256,13 @@ export default {
     ]),
     // 验证权限
     _validationAuth() {
-      this.auth.ignore = this.$has('/goods/opinion/comment/ignore')
-      this.auth.show = this.$has('/goods/opinion/comment/show')
-      this.auth.hide = this.$has('/goods/opinion/comment/hide')
-      this.auth.top = this.$has('/goods/opinion/comment/top')
-      this.auth.remove_top = this.$has('/goods/opinion/comment/remove_top')
-      this.auth.del = this.$has('/goods/opinion/comment/del')
-      this.auth.detail = this.$has('/goods/opinion/comment/detail')
+      this.auth.ignore = this.$permission('/goods/opinion/comment/ignore')
+      this.auth.show = this.$permission('/goods/opinion/comment/show')
+      this.auth.hide = this.$permission('/goods/opinion/comment/hide')
+      this.auth.top = this.$permission('/goods/opinion/comment/top')
+      this.auth.remove_top = this.$permission('/goods/opinion/comment/remove_top')
+      this.auth.del = this.$permission('/goods/opinion/comment/del')
+      this.auth.detail = this.$permission('/goods/opinion/comment/detail')
     },
     // 忽略评论
     handleIgnore(index) {

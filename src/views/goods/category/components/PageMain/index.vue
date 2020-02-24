@@ -534,12 +534,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/goods/setting/category/add')
-      this.auth.set = this.$has('/goods/setting/category/set')
-      this.auth.del = this.$has('/goods/setting/category/del')
-      this.auth.enable = this.$has('/goods/setting/category/enable')
-      this.auth.disable = this.$has('/goods/setting/category/disable')
-      this.auth.move = this.$has('/goods/setting/category/move')
+      this.auth.add = this.$permission('/goods/setting/category/add')
+      this.auth.set = this.$permission('/goods/setting/category/set')
+      this.auth.del = this.$permission('/goods/setting/category/del')
+      this.auth.enable = this.$permission('/goods/setting/category/enable')
+      this.auth.disable = this.$permission('/goods/setting/category/disable')
+      this.auth.move = this.$permission('/goods/setting/category/move')
     },
     // 资源下拉框事件
     handleCommand(command) {

@@ -367,11 +367,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/marketing/marketing/discount/add')
-      this.auth.set = this.$has('/marketing/marketing/discount/set')
-      this.auth.del = this.$has('/marketing/marketing/discount/del')
-      this.auth.enable = this.$has('/marketing/marketing/discount/enable')
-      this.auth.disable = this.$has('/marketing/marketing/discount/disable')
+      this.auth.add = this.$permission('/marketing/marketing/discount/add')
+      this.auth.set = this.$permission('/marketing/marketing/discount/set')
+      this.auth.del = this.$permission('/marketing/marketing/discount/del')
+      this.auth.enable = this.$permission('/marketing/marketing/discount/enable')
+      this.auth.disable = this.$permission('/marketing/marketing/discount/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

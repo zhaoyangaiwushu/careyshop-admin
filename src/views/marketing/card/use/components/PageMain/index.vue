@@ -258,9 +258,9 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.info = this.$has('/marketing/card/use/info')
-      this.auth.enable = this.$has('/marketing/card/use/enable')
-      this.auth.disable = this.$has('/marketing/card/use/disable')
+      this.auth.info = this.$permission('/marketing/card/use/info')
+      this.auth.enable = this.$permission('/marketing/card/use/enable')
+      this.auth.disable = this.$permission('/marketing/card/use/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

@@ -405,13 +405,13 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.use = this.$has('/marketing/card/use/list')
-      this.auth.add = this.$has('/marketing/card/list/add')
-      this.auth.set = this.$has('/marketing/card/list/set')
-      this.auth.del = this.$has('/marketing/card/list/del')
-      this.auth.export = this.$has('/marketing/card/list/export')
-      this.auth.enable = this.$has('/marketing/card/list/enable')
-      this.auth.disable = this.$has('/marketing/card/list/disable')
+      this.auth.use = this.$permission('/marketing/card/use/list')
+      this.auth.add = this.$permission('/marketing/card/list/add')
+      this.auth.set = this.$permission('/marketing/card/list/set')
+      this.auth.del = this.$permission('/marketing/card/list/del')
+      this.auth.export = this.$permission('/marketing/card/list/export')
+      this.auth.enable = this.$permission('/marketing/card/list/enable')
+      this.auth.disable = this.$permission('/marketing/card/list/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

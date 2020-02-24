@@ -213,10 +213,10 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.read = this.$has('/system/message/user/read')
-      this.auth.read_all = this.$has('/system/message/user/read_all')
-      this.auth.del = this.$has('/system/message/user/del')
-      this.auth.del_all = this.$has('/system/message/user/del_all')
+      this.auth.read = this.$permission('/system/message/user/read')
+      this.auth.read_all = this.$permission('/system/message/user/read_all')
+      this.auth.del = this.$permission('/system/message/user/del')
+      this.auth.del_all = this.$permission('/system/message/user/del_all')
     },
     // 获取列表中的编号
     _getIdList(val) {

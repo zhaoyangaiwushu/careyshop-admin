@@ -376,12 +376,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/goods/setting/spec/add')
-      this.auth.set = this.$has('/goods/setting/spec/set')
-      this.auth.del = this.$has('/goods/setting/spec/del')
-      this.auth.sort = this.$has('/goods/setting/spec/sort')
-      this.auth.index = this.$has('/goods/setting/spec/index')
-      this.auth.close = this.$has('/goods/setting/spec/close')
+      this.auth.add = this.$permission('/goods/setting/spec/add')
+      this.auth.set = this.$permission('/goods/setting/spec/set')
+      this.auth.del = this.$permission('/goods/setting/spec/del')
+      this.auth.sort = this.$permission('/goods/setting/spec/sort')
+      this.auth.index = this.$permission('/goods/setting/spec/index')
+      this.auth.close = this.$permission('/goods/setting/spec/close')
     },
     // 获取列表中的编号
     _getIdList(val) {

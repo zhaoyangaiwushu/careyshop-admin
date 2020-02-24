@@ -556,11 +556,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.sms_setting = this.$has('/setting/notice/template/sms_setting')
-      this.auth.email_setting = this.$has('/setting/notice/template/email_setting')
-      this.auth.enable = this.$has('/setting/notice/template/enable')
-      this.auth.disable = this.$has('/setting/notice/template/disable')
-      this.auth.tpl = this.$has('/setting/notice/template/tpl')
+      this.auth.sms_setting = this.$permission('/setting/notice/template/sms_setting')
+      this.auth.email_setting = this.$permission('/setting/notice/template/email_setting')
+      this.auth.enable = this.$permission('/setting/notice/template/enable')
+      this.auth.disable = this.$permission('/setting/notice/template/disable')
+      this.auth.tpl = this.$permission('/setting/notice/template/tpl')
     },
     // 获取列表中的编号
     _getIdList(val) {

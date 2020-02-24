@@ -3,7 +3,7 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item v-has="'/setting/logistics/dist/trace'">
+      <el-form-item v-permission="'/setting/logistics/dist/trace'">
         <el-button
           type="primary"
           icon="el-icon-map-location"

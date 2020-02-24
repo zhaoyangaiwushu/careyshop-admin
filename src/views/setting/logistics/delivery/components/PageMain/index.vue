@@ -697,13 +697,13 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/setting/logistics/delivery/add')
-      this.auth.set = this.$has('/setting/logistics/delivery/set')
-      this.auth.del = this.$has('/setting/logistics/delivery/del')
-      this.auth.sort = this.$has('/setting/logistics/delivery/sort')
-      this.auth.area = this.$has('/setting/logistics/delivery/area')
-      this.auth.enable = this.$has('/setting/logistics/delivery/enable')
-      this.auth.disable = this.$has('/setting/logistics/delivery/disable')
+      this.auth.add = this.$permission('/setting/logistics/delivery/add')
+      this.auth.set = this.$permission('/setting/logistics/delivery/set')
+      this.auth.del = this.$permission('/setting/logistics/delivery/del')
+      this.auth.sort = this.$permission('/setting/logistics/delivery/sort')
+      this.auth.area = this.$permission('/setting/logistics/delivery/area')
+      this.auth.enable = this.$permission('/setting/logistics/delivery/enable')
+      this.auth.disable = this.$permission('/setting/logistics/delivery/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

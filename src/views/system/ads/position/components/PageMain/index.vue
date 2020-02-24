@@ -536,11 +536,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/ads/position/add')
-      this.auth.set = this.$has('/system/ads/position/set')
-      this.auth.del = this.$has('/system/ads/position/del')
-      this.auth.enable = this.$has('/system/ads/position/enable')
-      this.auth.disable = this.$has('/system/ads/position/disable')
+      this.auth.add = this.$permission('/system/ads/position/add')
+      this.auth.set = this.$permission('/system/ads/position/set')
+      this.auth.del = this.$permission('/system/ads/position/del')
+      this.auth.enable = this.$permission('/system/ads/position/enable')
+      this.auth.disable = this.$permission('/system/ads/position/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

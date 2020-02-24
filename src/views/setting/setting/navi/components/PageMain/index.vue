@@ -328,12 +328,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/setting/setting/navi/add')
-      this.auth.set = this.$has('/setting/setting/navi/set')
-      this.auth.del = this.$has('/setting/setting/navi/del')
-      this.auth.sort = this.$has('/setting/setting/navi/sort')
-      this.auth.enable = this.$has('/setting/setting/navi/enable')
-      this.auth.disable = this.$has('/setting/setting/navi/disable')
+      this.auth.add = this.$permission('/setting/setting/navi/add')
+      this.auth.set = this.$permission('/setting/setting/navi/set')
+      this.auth.del = this.$permission('/setting/setting/navi/del')
+      this.auth.sort = this.$permission('/setting/setting/navi/sort')
+      this.auth.enable = this.$permission('/setting/setting/navi/enable')
+      this.auth.disable = this.$permission('/setting/setting/navi/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

@@ -406,11 +406,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/marketing/marketing/promotion/add')
-      this.auth.set = this.$has('/marketing/marketing/promotion/set')
-      this.auth.del = this.$has('/marketing/marketing/promotion/del')
-      this.auth.enable = this.$has('/marketing/marketing/promotion/enable')
-      this.auth.disable = this.$has('/marketing/marketing/promotion/disable')
+      this.auth.add = this.$permission('/marketing/marketing/promotion/add')
+      this.auth.set = this.$permission('/marketing/marketing/promotion/set')
+      this.auth.del = this.$permission('/marketing/marketing/promotion/del')
+      this.auth.enable = this.$permission('/marketing/marketing/promotion/enable')
+      this.auth.disable = this.$permission('/marketing/marketing/promotion/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

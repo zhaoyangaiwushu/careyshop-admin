@@ -317,9 +317,9 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.info = this.$has('/marketing/coupon/give/info')
-      this.auth.del = this.$has('/marketing/coupon/give/del')
-      this.auth.rec = this.$has('/marketing/coupon/give/rec')
+      this.auth.info = this.$permission('/marketing/coupon/give/info')
+      this.auth.del = this.$permission('/marketing/coupon/give/del')
+      this.auth.rec = this.$permission('/marketing/coupon/give/rec')
     },
     // 获取列表中的编号
     _getIdList(val) {

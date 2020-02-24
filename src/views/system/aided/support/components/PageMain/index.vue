@@ -346,12 +346,12 @@ export default {
     },
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/aided/support/add')
-      this.auth.set = this.$has('/system/aided/support/set')
-      this.auth.del = this.$has('/system/aided/support/del')
-      this.auth.sort = this.$has('/system/aided/support/sort')
-      this.auth.enable = this.$has('/system/aided/support/enable')
-      this.auth.disable = this.$has('/system/aided/support/disable')
+      this.auth.add = this.$permission('/system/aided/support/add')
+      this.auth.set = this.$permission('/system/aided/support/set')
+      this.auth.del = this.$permission('/system/aided/support/del')
+      this.auth.sort = this.$permission('/system/aided/support/sort')
+      this.auth.enable = this.$permission('/system/aided/support/enable')
+      this.auth.disable = this.$permission('/system/aided/support/disable')
     },
     // 选中数据项
     handleSelectionChange(val) {

@@ -381,10 +381,10 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/setting/logistics/delivery/area/add')
-      this.auth.set = this.$has('/setting/logistics/delivery/area/set')
-      this.auth.del = this.$has('/setting/logistics/delivery/area/del')
-      this.auth.region = this.$has('/setting/logistics/delivery/area/region')
+      this.auth.add = this.$permission('/setting/logistics/delivery/area/add')
+      this.auth.set = this.$permission('/setting/logistics/delivery/area/set')
+      this.auth.del = this.$permission('/setting/logistics/delivery/area/del')
+      this.auth.region = this.$permission('/setting/logistics/delivery/area/region')
     },
     // 删除选择项
     handleDelete(index) {

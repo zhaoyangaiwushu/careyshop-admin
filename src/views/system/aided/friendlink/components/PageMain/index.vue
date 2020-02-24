@@ -412,12 +412,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/aided/friendlink/add')
-      this.auth.set = this.$has('/system/aided/friendlink/set')
-      this.auth.del = this.$has('/system/aided/friendlink/del')
-      this.auth.sort = this.$has('/system/aided/friendlink/sort')
-      this.auth.enable = this.$has('/system/aided/friendlink/enable')
-      this.auth.disable = this.$has('/system/aided/friendlink/disable')
+      this.auth.add = this.$permission('/system/aided/friendlink/add')
+      this.auth.set = this.$permission('/system/aided/friendlink/set')
+      this.auth.del = this.$permission('/system/aided/friendlink/del')
+      this.auth.sort = this.$permission('/system/aided/friendlink/sort')
+      this.auth.enable = this.$permission('/system/aided/friendlink/enable')
+      this.auth.disable = this.$permission('/system/aided/friendlink/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

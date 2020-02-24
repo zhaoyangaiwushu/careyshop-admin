@@ -11,10 +11,10 @@ import { frameInRoutes } from '@/router/routes'
 // 核心插件
 Vue.use(careyshop)
 
-// v-has
-Vue.directive('has', {
+// v-permission
+Vue.directive('permission', {
   bind: (el, binding) => {
-    if (!Vue.prototype.$has(binding.value)) {
+    if (!Vue.prototype.$permission(binding.value)) {
       el.parentNode ? el.parentNode.removeChild(el) : el.style.display = 'none'
     }
   }

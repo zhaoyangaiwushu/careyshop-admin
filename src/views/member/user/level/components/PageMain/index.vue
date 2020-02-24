@@ -310,9 +310,9 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/member/user/level/add')
-      this.auth.set = this.$has('/member/user/level/set')
-      this.auth.del = this.$has('/member/user/level/del')
+      this.auth.add = this.$permission('/member/user/level/add')
+      this.auth.set = this.$permission('/member/user/level/set')
+      this.auth.del = this.$permission('/member/user/level/del')
     },
     // 获取列表中的编号
     _getIdList(val) {

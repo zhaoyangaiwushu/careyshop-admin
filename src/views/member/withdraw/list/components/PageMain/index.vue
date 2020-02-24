@@ -249,9 +249,9 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.process = this.$has('/member/withdraw/list/process')
-      this.auth.complete = this.$has('/member/withdraw/list/complete')
-      this.auth.refuse = this.$has('/member/withdraw/list/refuse')
+      this.auth.process = this.$permission('/member/withdraw/list/process')
+      this.auth.complete = this.$permission('/member/withdraw/list/complete')
+      this.auth.refuse = this.$permission('/member/withdraw/list/refuse')
     },
     // 获取排序字段
     sortChange({ column, prop, order }) {

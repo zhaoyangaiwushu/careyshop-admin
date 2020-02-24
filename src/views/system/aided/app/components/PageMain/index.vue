@@ -255,12 +255,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/aided/app/add')
-      this.auth.set = this.$has('/system/aided/app/set')
-      this.auth.del = this.$has('/system/aided/app/del')
-      this.auth.replace = this.$has('/system/aided/app/replace')
-      this.auth.enable = this.$has('/system/aided/app/enable')
-      this.auth.disable = this.$has('/system/aided/app/disable')
+      this.auth.add = this.$permission('/system/aided/app/add')
+      this.auth.set = this.$permission('/system/aided/app/set')
+      this.auth.del = this.$permission('/system/aided/app/del')
+      this.auth.replace = this.$permission('/system/aided/app/replace')
+      this.auth.enable = this.$permission('/system/aided/app/enable')
+      this.auth.disable = this.$permission('/system/aided/app/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

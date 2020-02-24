@@ -92,7 +92,7 @@
       </el-timeline>
 
       <el-form
-        v-has="'/goods/opinion/consult/detail'"
+        v-permission="'/goods/opinion/consult/detail'"
         :model="form"
         :rules="rules"
         ref="form"

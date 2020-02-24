@@ -48,7 +48,7 @@ export default {
       // eslint-disable-next-line no-unused-vars
       for (const value of router) {
         const newPath = index + '/' + value.path
-        if (this.$has(newPath)) {
+        if (this.$permission(newPath)) {
           this.$router.push({ path: newPath }).catch(() => {})
           break
         }

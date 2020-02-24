@@ -284,10 +284,10 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/setting/logistics/company/add')
-      this.auth.set = this.$has('/setting/logistics/company/set')
-      this.auth.del = this.$has('/setting/logistics/company/del')
-      this.auth.copy = this.$has('/setting/logistics/company/copy')
+      this.auth.add = this.$permission('/setting/logistics/company/add')
+      this.auth.set = this.$permission('/setting/logistics/company/set')
+      this.auth.del = this.$permission('/setting/logistics/company/del')
+      this.auth.copy = this.$permission('/setting/logistics/company/copy')
     },
     // 获取列表中的编号
     _getIdList(val) {

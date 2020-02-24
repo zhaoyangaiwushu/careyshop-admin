@@ -492,13 +492,13 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/goods/setting/brand/add')
-      this.auth.set = this.$has('/goods/setting/brand/set')
-      this.auth.del = this.$has('/goods/setting/brand/del')
-      this.auth.sort = this.$has('/goods/setting/brand/sort')
-      this.auth.url = this.$has('/goods/setting/brand/url')
-      this.auth.enable = this.$has('/goods/setting/brand/enable')
-      this.auth.disable = this.$has('/goods/setting/brand/disable')
+      this.auth.add = this.$permission('/goods/setting/brand/add')
+      this.auth.set = this.$permission('/goods/setting/brand/set')
+      this.auth.del = this.$permission('/goods/setting/brand/del')
+      this.auth.sort = this.$permission('/goods/setting/brand/sort')
+      this.auth.url = this.$permission('/goods/setting/brand/url')
+      this.auth.enable = this.$permission('/goods/setting/brand/enable')
+      this.auth.disable = this.$permission('/goods/setting/brand/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

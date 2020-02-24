@@ -2,7 +2,7 @@ import store from '@/store'
 
 export default {
   install(Vue, options) {
-    Vue.prototype.$has = (path) => {
+    Vue.prototype.$permission = (path) => {
       const auth = store.state.careyshop.menu.sourceData
       if (!path || !Array.isArray(auth)) {
         return false

@@ -218,7 +218,7 @@
       </el-timeline>
 
       <el-form
-        v-has="'/goods/opinion/comment/detail'"
+        v-permission="'/goods/opinion/comment/detail'"
         :model="form"
         :rules="rules"
         id="reply-form"

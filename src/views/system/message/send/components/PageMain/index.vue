@@ -408,11 +408,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/message/send/add')
-      this.auth.set = this.$has('/system/message/send/set')
-      this.auth.del = this.$has('/system/message/send/del')
-      this.auth.status = this.$has('/system/message/send/status')
-      this.auth.view = this.$has('/system/message/send/view')
+      this.auth.add = this.$permission('/system/message/send/add')
+      this.auth.set = this.$permission('/system/message/send/set')
+      this.auth.del = this.$permission('/system/message/send/del')
+      this.auth.status = this.$permission('/system/message/send/status')
+      this.auth.view = this.$permission('/system/message/send/view')
     },
     // 获取列表中的编号
     _getIdList(val) {

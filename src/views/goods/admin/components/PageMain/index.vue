@@ -579,18 +579,18 @@ export default {
     ]),
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/goods/admin/list/add')
-      this.auth.set = this.$has('/goods/admin/list/set')
-      this.auth.del = this.$has('/goods/admin/list/del')
-      this.auth.restore = this.$has('/goods/admin/list/restore')
-      this.auth.copy = this.$has('/goods/admin/list/copy')
-      this.auth.shelves = this.$has('/goods/admin/list/shelves')
-      this.auth.recommend = this.$has('/goods/admin/list/recommend')
-      this.auth.new = this.$has('/goods/admin/list/new')
-      this.auth.hot = this.$has('/goods/admin/list/hot')
-      this.auth.sort = this.$has('/goods/admin/list/sort')
-      this.auth.price = this.$has('/goods/admin/list/price')
-      this.auth.store = this.$has('/goods/admin/list/store')
+      this.auth.add = this.$permission('/goods/admin/list/add')
+      this.auth.set = this.$permission('/goods/admin/list/set')
+      this.auth.del = this.$permission('/goods/admin/list/del')
+      this.auth.restore = this.$permission('/goods/admin/list/restore')
+      this.auth.copy = this.$permission('/goods/admin/list/copy')
+      this.auth.shelves = this.$permission('/goods/admin/list/shelves')
+      this.auth.recommend = this.$permission('/goods/admin/list/recommend')
+      this.auth.new = this.$permission('/goods/admin/list/new')
+      this.auth.hot = this.$permission('/goods/admin/list/hot')
+      this.auth.sort = this.$permission('/goods/admin/list/sort')
+      this.auth.price = this.$permission('/goods/admin/list/price')
+      this.auth.store = this.$permission('/goods/admin/list/store')
     },
     // 获取列表中的编号
     _getIdList(val) {

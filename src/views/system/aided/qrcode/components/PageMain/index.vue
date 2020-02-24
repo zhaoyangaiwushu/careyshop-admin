@@ -397,10 +397,10 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/aided/qrcode/add')
-      this.auth.set = this.$has('/system/aided/qrcode/set')
-      this.auth.del = this.$has('/system/aided/qrcode/del')
-      this.auth.view = this.$has('/system/aided/qrcode/view')
+      this.auth.add = this.$permission('/system/aided/qrcode/add')
+      this.auth.set = this.$permission('/system/aided/qrcode/set')
+      this.auth.del = this.$permission('/system/aided/qrcode/del')
+      this.auth.view = this.$permission('/system/aided/qrcode/view')
     },
     // 获取列表中的编号
     _getIdList(val) {

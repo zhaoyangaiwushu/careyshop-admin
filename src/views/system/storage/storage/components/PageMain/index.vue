@@ -375,17 +375,17 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/storage/storage/add')
-      this.auth.upload = this.$has('/system/storage/storage/upload')
-      this.auth.rename = this.$has('/system/storage/storage/rename')
-      this.auth.replace = this.$has('/system/storage/storage/replace')
-      this.auth.cover = this.$has('/system/storage/storage/cover')
-      this.auth.clear_cover = this.$has('/system/storage/storage/clear_cover')
-      this.auth.default = this.$has('/system/storage/storage/default')
-      this.auth.move = this.$has('/system/storage/storage/move')
-      this.auth.del = this.$has('/system/storage/storage/del')
-      this.auth.refresh = this.$has('/system/storage/storage/refresh')
-      this.auth.link = this.$has('/system/storage/storage/link')
+      this.auth.add = this.$permission('/system/storage/storage/add')
+      this.auth.upload = this.$permission('/system/storage/storage/upload')
+      this.auth.rename = this.$permission('/system/storage/storage/rename')
+      this.auth.replace = this.$permission('/system/storage/storage/replace')
+      this.auth.cover = this.$permission('/system/storage/storage/cover')
+      this.auth.clear_cover = this.$permission('/system/storage/storage/clear_cover')
+      this.auth.default = this.$permission('/system/storage/storage/default')
+      this.auth.move = this.$permission('/system/storage/storage/move')
+      this.auth.del = this.$permission('/system/storage/storage/del')
+      this.auth.refresh = this.$permission('/system/storage/storage/refresh')
+      this.auth.link = this.$permission('/system/storage/storage/link')
     },
     // 资源上传成功后处理
     _getUploadFileList(files) {

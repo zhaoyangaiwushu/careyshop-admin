@@ -3,7 +3,7 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item v-has="'/member/user/withdraw/add'">
+      <el-form-item v-permission="'/member/user/withdraw/add'">
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
@@ -46,13 +46,13 @@
         min-width="100">
         <template slot-scope="scope">
           <el-button
-            v-has="'/member/user/withdraw/set'"
+            v-permission="'/member/user/withdraw/set'"
             @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
           <el-button
-            v-has="'/member/user/withdraw/del'"
+            v-permission="'/member/user/withdraw/del'"
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>

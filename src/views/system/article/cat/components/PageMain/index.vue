@@ -318,10 +318,10 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/article/cat/add')
-      this.auth.set = this.$has('/system/article/cat/set')
-      this.auth.del = this.$has('/system/article/cat/del')
-      this.auth.move = this.$has('/system/article/cat/move')
+      this.auth.add = this.$permission('/system/article/cat/add')
+      this.auth.set = this.$permission('/system/article/cat/set')
+      this.auth.del = this.$permission('/system/article/cat/del')
+      this.auth.move = this.$permission('/system/article/cat/move')
     },
     // 过滤分类
     filterNode(value, data) {

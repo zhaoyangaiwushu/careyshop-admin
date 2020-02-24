@@ -155,8 +155,8 @@ export default {
     ]),
     // 验证权限
     _validationAuth() {
-      this.auth.del = this.$has('/member/ask/list/del')
-      this.auth.detail = this.$has('/member/ask/list/detail')
+      this.auth.del = this.$permission('/member/ask/list/del')
+      this.auth.detail = this.$permission('/member/ask/list/detail')
     },
     // 获取排序字段
     sortChange({ column, prop, order }) {

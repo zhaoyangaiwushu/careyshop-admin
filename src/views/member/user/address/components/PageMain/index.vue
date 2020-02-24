@@ -3,7 +3,7 @@
     <el-form
       :inline="true"
       size="small">
-      <el-form-item v-has="'/member/user/address/add'">
+      <el-form-item v-permission="'/member/user/address/add'">
         <el-button
           icon="el-icon-plus"
           :disabled="loading"
@@ -63,19 +63,19 @@
         min-width="150">
         <template slot-scope="scope">
           <el-button
-            v-has="'/member/user/address/set'"
+            v-permission="'/member/user/address/set'"
             @click="handleUpdate(scope.$index)"
             size="small"
             type="text">编辑</el-button>
 
           <el-button
-            v-has="'/member/user/address/del'"
+            v-permission="'/member/user/address/del'"
             @click="handleDelete(scope.$index)"
             size="small"
             type="text">删除</el-button>
 
           <el-button
-            v-has="'/member/user/address/default'"
+            v-permission="'/member/user/address/default'"
             @click="handleDefault(scope.row.user_address_id)"
             :disabled="scope.row.user_address_id === addressId"
             size="small"

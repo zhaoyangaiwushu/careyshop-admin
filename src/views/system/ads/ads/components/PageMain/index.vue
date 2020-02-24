@@ -569,12 +569,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/system/ads/ads/add')
-      this.auth.set = this.$has('/system/ads/ads/set')
-      this.auth.del = this.$has('/system/ads/ads/del')
-      this.auth.sort = this.$has('/system/ads/ads/sort')
-      this.auth.enable = this.$has('/system/ads/ads/enable')
-      this.auth.disable = this.$has('/system/ads/ads/disable')
+      this.auth.add = this.$permission('/system/ads/ads/add')
+      this.auth.set = this.$permission('/system/ads/ads/set')
+      this.auth.del = this.$permission('/system/ads/ads/del')
+      this.auth.sort = this.$permission('/system/ads/ads/sort')
+      this.auth.enable = this.$permission('/system/ads/ads/enable')
+      this.auth.disable = this.$permission('/system/ads/ads/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

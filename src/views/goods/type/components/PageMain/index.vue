@@ -179,11 +179,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/goods/setting/type/add')
-      this.auth.set = this.$has('/goods/setting/type/set')
-      this.auth.del = this.$has('/goods/setting/type/del')
-      this.auth.attribute = this.$has('/goods/setting/type/attribute')
-      this.auth.spec = this.$has('/goods/setting/type/spec')
+      this.auth.add = this.$permission('/goods/setting/type/add')
+      this.auth.set = this.$permission('/goods/setting/type/set')
+      this.auth.del = this.$permission('/goods/setting/type/del')
+      this.auth.attribute = this.$permission('/goods/setting/type/attribute')
+      this.auth.spec = this.$permission('/goods/setting/type/spec')
     },
     // 获取排序字段
     sortChange({ column, prop, order }) {

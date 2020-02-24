@@ -550,13 +550,13 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$has('/goods/setting/attribute/add')
-      this.auth.add_son = this.$has('/goods/setting/attribute/add_son')
-      this.auth.set = this.$has('/goods/setting/attribute/set')
-      this.auth.del = this.$has('/goods/setting/attribute/del')
-      this.auth.important = this.$has('/goods/setting/attribute/important')
-      this.auth.sort = this.$has('/goods/setting/attribute/sort')
-      this.auth.search = this.$has('/goods/setting/attribute/search')
+      this.auth.add = this.$permission('/goods/setting/attribute/add')
+      this.auth.add_son = this.$permission('/goods/setting/attribute/add_son')
+      this.auth.set = this.$permission('/goods/setting/attribute/set')
+      this.auth.del = this.$permission('/goods/setting/attribute/del')
+      this.auth.important = this.$permission('/goods/setting/attribute/important')
+      this.auth.sort = this.$permission('/goods/setting/attribute/sort')
+      this.auth.search = this.$permission('/goods/setting/attribute/search')
     },
     // 获取列表中的编号
     _getIdList(val) {

@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import semver from 'semver'
 import { mapState, mapActions } from 'vuex'
 import { clearCacheAll, setSystemOptimize } from '@/api/index'
 import { setAdminPassword } from '@/api/user/admin'
@@ -140,10 +141,6 @@ export default {
     ...mapState('careyshop/user', [
       'info',
       'unreadMessage'
-    ]),
-    ...mapState('careyshop/releases', [
-      'update',
-      'latest'
     ])
   },
   mounted() {
@@ -191,16 +188,50 @@ export default {
      * 检测版本更新
      */
     checkUpdate() {
-      if (this.update) {
-        const h = this.$createElement
-        this.$notify({
-          title: '版本更新',
-          message: h('p', { 'class': 'cs-cp' }, `发现最新版本号： ${this.latest.ver}，点击查看详情。`),
-          position: 'bottom-right',
-          duration: 0,
-          onClick: () => { this.$open(this.latest.url) }
-        })
+      let host = process.env.VUE_APP_BASE_API
+      if (process.env.NODE_ENV !== 'development') {
+        host = 'https://api.careyshop.cn/api'
       }
+
+      this.$axios({
+        /**
+         * 版本更新检查使用远程官方接口,便于版本号统一
+         * 如二次开发有所需求,可修改 host 参数
+         */
+        url: host + '/v1/app_install',
+        method: 'post',
+        headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+        params: {
+          method: 'query.app.install.updated'
+        },
+        data: {
+          user_agent: 'vue',
+          ver: process.env.VUE_APP_VERSION
+        }
+      })
+        .then(res => {
+          const data = res.data || {}
+          if (!data.is_updated) {
+            return
+          }
+
+          if (semver.lt(process.env.VUE_APP_VERSION, data.ver)) {
+            const h = this.$createElement
+            this.$notify.info({
+              title: '版本更新',
+              message: h('p', { 'class': 'cs-cp' }, `发现最新版本号： ${data.ver}，点击查看。`),
+              position: 'bottom-right',
+              duration: 0,
+              onClick: () => { this.$open(data.url) }
+            })
+
+            this.$log.capsule('CareyShop Admin', `New version ${data.ver}`)
+            console.log(`版本号: ${data.ver} | 详情 ${data.url}`)
+          }
+        })
+        .catch(err => {
+          console.log('checkUpdate error', err)
+        })
     },
     /**
      * @description 登出

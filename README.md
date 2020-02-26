@@ -69,9 +69,9 @@ npm -v
 npm install -g @vue/cli
 
 ### API 参数配置
-请求接口所需的参数采用动态配置，在「public\static\config」路径下存在「development」与「production」文件夹，分别代表`开发环境`与`生产环境`。
+API 接口参数采用动态配置（正式发布后可单独修改配置文件），在「public\static\config」路径下存在「development」与「production」文件夹，分别代表`开发环境`与`生产环境`。
 
-在各自文件夹下只能存在一个以`.json`为后缀的配置文件（为了相对安全，文件名可以任意填写），具体配置如下：
+在各自文件夹下只能存在一个`.json`为后缀的配置文件（为了相对安全，文件名可以任意填写），具体配置如下：
 ```
 {
   "BASE_API": "//demo.careyshop.cn/api",            // API 接口访问地址

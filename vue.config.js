@@ -1,7 +1,7 @@
 // 插件
+const { chain, set, each } = require('lodash')
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const cdnDependencies = require('./dependencies-cdn')
-const { chain, set, each } = require('lodash')
 
 // 拼接路径
 const resolve = dir => require('path').join(__dirname, dir)

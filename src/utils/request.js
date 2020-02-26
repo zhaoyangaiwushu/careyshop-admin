@@ -37,7 +37,7 @@ function errorLog(err) {
 // 创建一个axios实例
 const service = axios.create({
   // api的base_url
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: util.config.get().BASE_API,
   // request timeout
   timeout: 30000,
   // 使用简单请求,复杂请求(多一次OPTIONS请求)可用 application/json
@@ -154,7 +154,7 @@ function setDefaultParams(config) {
   }
 
   config.data['token'] = token
-  config.data['appkey'] = process.env.VUE_APP_KEY
+  config.data['appkey'] = util.config.get().APP_KEY
   config.data['timestamp'] = Math.round(new Date() / 1000) + 100
   config.data['format'] = 'json'
   config.data['sign'] = util.getSign(Object.assign(config.data, config.params))

@@ -188,7 +188,7 @@ export default {
      * 检测版本更新
      */
     checkUpdate() {
-      let host = process.env.VUE_APP_BASE_API
+      let host = this.$baseConfig.BASE_API
       if (process.env.NODE_ENV !== 'development') {
         host = 'https://api.careyshop.cn/api'
       }

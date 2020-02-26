@@ -144,7 +144,7 @@ export default {
       // 本地上传所需要的权限参数
       if (this.token['token']['upload_url']['module'] === 'careyshop') {
         this.params['token'] = util.cookies.get('token')
-        this.params['appkey'] = process.env.VUE_APP_KEY
+        this.params['appkey'] = this.$baseConfig.APP_KEY
         this.params['timestamp'] = Math.round(new Date() / 1000) + 100
         this.params['format'] = 'json'
         this.params['method'] = 'add.upload.list'

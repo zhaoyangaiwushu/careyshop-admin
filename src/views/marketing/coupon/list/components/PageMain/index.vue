@@ -1164,7 +1164,7 @@ export default {
     // 复制领取地址
     handleCopyGuide(index) {
       const data = this.currentTableData[index]
-      let giveLink = data.guide || process.env.VUE_APP_BASE_API
+      let giveLink = data.guide || this.$baseConfig.BASE_API
       giveLink += data.guide ? '?give_code=' : '/v1/coupon_give/method/give.coupon.code/give_code/'
       giveLink += data.give_code
 

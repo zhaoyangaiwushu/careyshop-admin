@@ -1,11 +1,13 @@
 import cookies from './util.cookies'
 import db from './util.db'
 import log from './util.log'
+import config from './util.config'
 
 let util = {
   cookies,
   db,
-  log
+  log,
+  config
 }
 
 /**
@@ -170,7 +172,7 @@ util.guid = () => {
  */
 util.getSign = (params) => {
   let sorted = Object.keys(params).sort()
-  let basestring = process.env.VUE_APP_SECRET
+  let basestring = config.get().APP_SECRET
   const type = ['undefined', 'object', 'function']
 
   for (let i = 0, l = sorted.length; i < l; i++) {
@@ -184,7 +186,7 @@ util.getSign = (params) => {
     }
   }
 
-  basestring += process.env.VUE_APP_SECRET
+  basestring += config.get().APP_SECRET
   return util.md5(basestring)
 }
 
@@ -195,7 +197,7 @@ util.getSign = (params) => {
  * @returns {string}
  */
 util.getImageCodeUrl = (url, code = '') => {
-  let data = process.env.VUE_APP_BASE_API
+  let data = config.get().BASE_API
   data += '/v1/storage/method/get.storage.thumb/code/' + code
   data += '?url=' + encodeURIComponent(url)
 
@@ -209,7 +211,7 @@ util.getImageCodeUrl = (url, code = '') => {
  * @returns {*}
  */
 util.getDownloadUrl = (file, code) => {
-  let data = process.env.VUE_APP_BASE_API
+  let data = config.get().BASE_API
   data += '/v1/storage/method/get.storage.download/code/' + code
   data += '?url=' + encodeURIComponent(file.url)
   data += '&filename=' + encodeURI(file.name)
@@ -225,7 +227,7 @@ util.getDownloadUrl = (file, code) => {
  */
 util.getImageStyleUrl = (url, style = '') => {
   if (url) {
-    let data = process.env.VUE_APP_BASE_API
+    let data = config.get().BASE_API
     data += '/v1/storage/method/get.storage.thumb' + '?url=' + encodeURIComponent(url)
     data += style
 

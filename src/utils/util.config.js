@@ -6,13 +6,13 @@ const config = {}
  */
 config.get = () => {
   let configFile = ''
-  const files = require.context('@static/config', false, /\.json$/)
+  const files = require.context('@static/config/' + process.env.NODE_ENV, false, /\.json$/)
 
   files.keys().forEach(key => {
     configFile = key.replace(/(\.\/)/g, '')
   })
 
-  return require('@static/config/' + configFile)
+  return require('@static/config/' + process.env.NODE_ENV + '/' + configFile)
 }
 
 export default config

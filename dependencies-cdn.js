@@ -103,5 +103,11 @@ module.exports = [
     library: 'LocalStorage',
     js: '//cdn.jsdelivr.net/npm/lowdb@1.0.0/dist/LocalStorage.min.js',
     css: ''
+  },
+  {
+    name: '@careyshop/stats',
+    library: '@careyshop/stats',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.0/stats.min.js',
+    css: ''
   }
 ]

@@ -119,7 +119,7 @@
         :model="form"
         :rules="rules"
         ref="form"
-        label-width="80px">
+        label-width="90px">
         <el-form-item
           label="名称"
           prop="app_name">
@@ -127,6 +127,16 @@
             v-model="form.app_name"
             placeholder="请输入应用名称"
             :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="登录验证码"
+          prop="login_captcha">
+          <el-switch
+            v-model="form.login_captcha"
+            active-value="1"
+            inactive-value="0">
+          </el-switch>
         </el-form-item>
 
         <el-form-item
@@ -215,6 +225,7 @@ export default {
       },
       form: {
         app_name: undefined,
+        login_captcha: undefined,
         status: undefined
       },
       rules: {
@@ -287,6 +298,7 @@ export default {
     handleCreate() {
       this.form = {
         app_name: undefined,
+        login_captcha: '0',
         status: '1'
       }
 
@@ -412,6 +424,7 @@ export default {
 
       this.form = {
         ...data,
+        login_captcha: data.login_captcha.toString(),
         status: data.status.toString()
       }
 

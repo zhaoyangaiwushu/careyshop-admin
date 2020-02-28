@@ -123,6 +123,26 @@ export function replaceAppSecret(app_id) {
 }
 
 /**
+ * 批量设置登录验证码
+ * @param {Array} app_id
+ * @param {Number} login_captcha
+ * @returns
+ */
+export function setAppCaptcha(app_id, login_captcha) {
+  return request({
+    url: '/v1/app',
+    method: 'post',
+    params: {
+      method: 'set.app.captcha'
+    },
+    data: {
+      app_id,
+      login_captcha
+    }
+  })
+}
+
+/**
  * 批量设置应用状态
  * @param {Array} app_id
  * @param {Number} status

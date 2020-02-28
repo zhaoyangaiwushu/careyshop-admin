@@ -11,7 +11,7 @@
     "inspect": "vue-cli-service inspect --mode production --verbose"
   },
   "dependencies": {
-    "@careyshop/stats": "^1.0.0",
+    "@careyshop/stats": "^1.0.1",
     "@careyshop/vue-table-export": "^1.0.5",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",

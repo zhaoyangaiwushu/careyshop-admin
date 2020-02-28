@@ -11,7 +11,7 @@ module.exports = [
   {
     name: 'vue-router',
     library: 'VueRouter',
-    js: '//cdn.jsdelivr.net/npm/vue-router@3.1.3/dist/vue-router.js',
+    js: '//cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.js',
     css: ''
   },
   {
@@ -23,7 +23,7 @@ module.exports = [
   {
     name: 'axios',
     library: 'axios',
-    js: '//cdn.jsdelivr.net/npm/axios@0.19.0/dist/axios.min.js',
+    js: '//cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js',
     css: ''
   },
   {
@@ -41,7 +41,7 @@ module.exports = [
   {
     name: 'dayjs',
     library: 'dayjs',
-    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.17/dayjs.min.js',
+    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.21/dayjs.min.js',
     css: ''
   },
   {
@@ -83,13 +83,13 @@ module.exports = [
   {
     name: 'screenfull',
     library: 'screenfull',
-    js: '//cdn.jsdelivr.net/npm/screenfull@5.0.0/dist/screenfull.min.js',
+    js: '//cdn.jsdelivr.net/npm/screenfull@5.0.2/dist/screenfull.min.js',
     css: ''
   },
   {
     name: 'ua-parser-js',
     library: 'UAParser',
-    js: '//cdn.jsdelivr.net/npm/ua-parser-js@0.7.20/dist/ua-parser.min.js',
+    js: '//cdn.jsdelivr.net/npm/ua-parser-js@0.7.21/dist/ua-parser.min.js',
     css: ''
   },
   {
@@ -107,7 +107,7 @@ module.exports = [
   {
     name: '@careyshop/stats',
     library: '@careyshop/stats',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.0/stats.min.js',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.1/stats.min.js',
     css: ''
   }
 ]

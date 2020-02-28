@@ -5,19 +5,19 @@ module.exports = [
   {
     name: 'vue',
     library: 'Vue',
-    js: '//cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js',
+    js: '//cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.min.js',
     css: ''
   },
   {
     name: 'vue-router',
     library: 'VueRouter',
-    js: '//cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.js',
+    js: '//cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.min.js',
     css: ''
   },
   {
     name: 'vuex',
     library: 'Vuex',
-    js: '//cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.js',
+    js: '//cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js',
     css: ''
   },
   {
@@ -35,7 +35,7 @@ module.exports = [
   {
     name: 'element-ui',
     library: 'ELEMENT',
-    js: '//cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/index.js',
+    js: '//cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/index.min.js',
     css: '//cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/theme-chalk/index.css'
   },
   {
@@ -53,7 +53,7 @@ module.exports = [
   {
     name: 'hotkeys-js',
     library: 'hotkeys',
-    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.7.3/dist/hotkeys.js',
+    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.7.3/dist/hotkeys.min.js',
     css: ''
   },
   {

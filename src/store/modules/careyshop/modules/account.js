@@ -8,12 +8,11 @@ export default {
     /**
      * @description 登录
      * @param {Object} payload dispatch
-     * @param {Object} payload username {String} 用户账号
-     * @param {Object} payload password {String} 密码
+     * @param {Object} login 登录数据
      */
-    login({ dispatch }, { username, password }) {
+    login({ dispatch }, login) {
       return new Promise((resolve, reject) => {
-        loginAdminUser(username, password)
+        loginAdminUser({ ...login })
           .then(res => {
             util.cookies.set('uuid', res.data.admin.username)
             util.cookies.set('token', res.data.token.token)

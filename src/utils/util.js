@@ -238,6 +238,19 @@ util.getImageStyleUrl = (url, style = '') => {
 }
 
 /**
+ * 获取验证码地址
+ * @returns {string}
+ */
+util.getCaptchaUrl = () => {
+  let app = config.get()
+  let data = app.BASE_API + '/v1/app/method/image.app.captcha'
+  data += '?t=' + (new Date()).getTime()
+  data += '&appkey=' + app.APP_KEY
+
+  return data
+}
+
+/**
  * 数字 格式化
  * @param num
  * @param digits

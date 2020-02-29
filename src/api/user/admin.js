@@ -2,11 +2,10 @@ import request from '@/utils/request'
 
 /**
  * 账号登录，并且获取授权码
- * @param {String} username
- * @param {String} password
+ * @param {Object} data
  * @returns
  */
-export function loginAdminUser(username, password) {
+export function loginAdminUser(data) {
   return request({
     url: '/v1/admin',
     method: 'post',
@@ -14,10 +13,7 @@ export function loginAdminUser(username, password) {
       method: 'login.admin.user',
       platform: 'admin'
     },
-    data: {
-      username,
-      password
-    }
+    data
   })
 }
 

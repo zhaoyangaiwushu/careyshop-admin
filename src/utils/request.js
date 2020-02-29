@@ -41,7 +41,9 @@ const service = axios.create({
   // request timeout
   timeout: 30000,
   // 使用简单请求,复杂请求(多一次OPTIONS请求)可用 application/json
-  headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+  headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+  // 由客户端来控制跨站点访问
+  withCredentials: true
 })
 
 // 请求拦截器

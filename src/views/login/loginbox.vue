@@ -11,17 +11,16 @@
         <i slot="prefix" class="el-icon-key"/>
       </el-input>
     </el-form-item>
-    <el-form-item prop="code">
+    <el-form-item v-if="captcha" prop="login_code">
       <el-row :span="34">
         <el-col :span="14">
-          <el-input size="small" @keyup.enter.native="handleLogin()" :maxlength="code.len" v-model="loginForm.code" auto-complete="off" placeholder="请输入验证码">
+          <el-input size="small" @keyup.enter.native="handleLogin()" v-model="loginForm.login_code" auto-complete="off" placeholder="请输入验证码">
             <i slot="prefix" class="el-icon-mobile"/>
           </el-input>
         </el-col>
         <el-col :span="10">
           <div class="login-code">
-            <span class="login-code-img" @click="refreshCode" v-if="code.type === 'text'">{{code.value}}</span>
-            <img v-else :src="code.src" class="login-code-img" @click="refreshCode" alt=""/>
+            <img :src="codeUrl" class="login-code-img" @click="refreshCode" alt=""/>
           </div>
         </el-col>
       </el-row>
@@ -42,23 +41,21 @@
 <script>
 import util from '@/utils/util'
 import { mapActions } from 'vuex'
+import { getAppCaptcha } from '@/api/aided/app'
 
 export default {
   name: 'loginbox',
   data() {
     return {
+      checked: false,
+      loading: false,
+      captcha: false,
+      passwordType: 'password',
+      codeUrl: '',
       loginForm: {
         username: 'admin',
         password: 'admin888',
-        code: '',
-        redomStr: ''
-      },
-      checked: false,
-      code: {
-        src: '',
-        value: '',
-        len: 4,
-        type: 'text'
+        login_code: ''
       },
       loginRules: {
         username: [
@@ -68,29 +65,31 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '密码长度最少为6位', trigger: 'blur' }
         ],
-        code: [
+        login_code: [
           { required: true, message: '请输入验证码', trigger: 'blur' },
           { min: 4, max: 4, message: '验证码长度为4位', trigger: 'blur' }
         ]
-      },
-      passwordType: 'password',
-      loading: false
+      }
     }
   },
-  created() {
-    this.refreshCode()
+  mounted() {
+    getAppCaptcha(this.$baseConfig.APP_KEY)
+      .then(res => {
+        if (res.data.captcha) {
+          this.captcha = true
+          this.refreshCode()
+        }
+      })
   },
   methods: {
     ...mapActions('careyshop/account', [
       'login'
     ]),
     /**
-     * @description 创建随机验证码
+     * @description 获取验证码
      */
     refreshCode() {
-      this.loginForm.redomStr = util.randomLenNum(this.code.len, true)
-      this.code.value = util.randomLenNum(this.code.len)
-      this.loginForm.code = this.code.value
+      this.codeUrl = util.getCaptchaUrl()
     },
     /**
      * @description 是否显示实际密码
@@ -104,11 +103,10 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
-          // 登录,暂时没有对验证码进行处理
           this.loading = true
           this.login({
-            username: this.loginForm.username,
-            password: this.loginForm.password
+            ...this.loginForm,
+            appkey: this.$baseConfig.APP_KEY
           })
             .then(() => {
               this.$store.dispatch('careyshop/account/load')

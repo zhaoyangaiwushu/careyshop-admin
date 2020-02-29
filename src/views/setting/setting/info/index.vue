@@ -32,6 +32,15 @@
           @click="copyData(delivery.value)">复制</el-button>
       </el-form-item>
 
+      <el-form-item class="action" :label="captcha.name">
+        <span>{{captcha.value}}</span>
+        <el-button
+          class="form-button active"
+          type="text"
+          size="small"
+          @click="copyData(captcha.value)">复制</el-button>
+      </el-form-item>
+
       <el-form-item class="action" :label="qrcode.name">
         <span>{{qrcode.value}}</span>
         <el-button
@@ -108,6 +117,10 @@ export default {
         name: '二维码调用URL',
         value: ''
       },
+      captcha: {
+        name: '应用验证码调用URL',
+        value: ''
+      },
       alipay: {
         notify: {
           name: '支付宝异步URL',
@@ -154,6 +167,11 @@ export default {
         },
         {
           version: 'v1',
+          controller: 'app',
+          method: 'get.app.captcha.callurl'
+        },
+        {
+          version: 'v1',
           controller: 'payment',
           method: 'get.payment.notify',
           to_payment: 2
@@ -190,6 +208,10 @@ export default {
 
                 case 'get.delivery.dist.callback':
                   this.delivery.value = value.data.callback_url
+                  break
+
+                case 'get.app.captcha.callurl':
+                  this.captcha.value = value.data.call_url
                   break
 
                 case 'get.qrcode.callurl':

@@ -161,3 +161,21 @@ export function setAppStatus(app_id, status) {
     }
   })
 }
+
+/**
+ * 查询登录是否需要验证码
+ * @param {String} app_key
+ * @returns
+ */
+export function getAppCaptcha(app_key) {
+  return request({
+    url: '/v1/app',
+    method: 'post',
+    params: {
+      method: 'get.app.captcha'
+    },
+    data: {
+      appkey: app_key
+    }
+  })
+}

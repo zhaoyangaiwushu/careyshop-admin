@@ -8,8 +8,14 @@ export default {
     header: [],
     // 侧栏菜单
     aside: [],
+    // 侧边历史菜单
+    history: [],
     // 侧边栏收缩
     asideCollapse: setting.menu.asideCollapse,
+    // 侧边栏首页路径
+    asideIndex: setting.page.opened[0]['fullPath'],
+    // 侧边栏限制历史菜单
+    historyCount: setting.menu.historyCount,
     // 菜单源数据
     sourceData: []
   },

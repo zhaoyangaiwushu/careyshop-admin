@@ -43,7 +43,9 @@ export default {
   computed: {
     ...mapState('careyshop/menu', [
       'aside',
-      'asideCollapse'
+      'asideCollapse',
+      'asideIndex',
+      'historyCount'
     ])
   },
   watch: {
@@ -76,6 +78,10 @@ export default {
             this.$refs.menu.activeIndex = fullPath
           }
         })
+
+        // 处理访问历史
+        if (this.asideIndex === fullPath) {
+        }
       },
       immediate: true
     }

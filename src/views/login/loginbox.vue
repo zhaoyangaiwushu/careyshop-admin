@@ -55,7 +55,8 @@ export default {
       loginForm: {
         username: 'admin',
         password: 'admin888',
-        login_code: ''
+        login_code: '',
+        appkey: this.$baseConfig.APP_KEY
       },
       loginRules: {
         username: [
@@ -104,10 +105,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.login({
-            ...this.loginForm,
-            appkey: this.$baseConfig.APP_KEY
-          })
+          this.login(this.loginForm)
             .then(() => {
               this.$store.dispatch('careyshop/account/load')
               this.$router.replace(this.$route.query.redirect || '/')

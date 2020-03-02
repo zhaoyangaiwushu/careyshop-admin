@@ -7,9 +7,12 @@ export default {
       close: 'esc'
     }
   },
-  // 侧边栏默认折叠状态
+  // 侧边栏配置
   menu: {
-    asideCollapse: false
+    // 侧边栏默认折叠状态
+    asideCollapse: false,
+    // 访问历史收藏数
+    historyCoutn: 20
   },
   // 在读取持久化数据失败时默认页面
   page: {

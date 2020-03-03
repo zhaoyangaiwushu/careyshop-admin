@@ -111,6 +111,8 @@ export default {
         await dispatch('careyshop/size/load', null, { root: true })
         // DB -> store 持久化数据读取菜单源数据
         await dispatch('careyshop/menu/sourceDataLoad', null, { root: true })
+        // DB -> store 持久化数据读取历史菜单数据
+        await dispatch('careyshop/menu/historyLoad', null, { root: true })
         // end
         resolve()
       })

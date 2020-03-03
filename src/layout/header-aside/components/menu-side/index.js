@@ -45,6 +45,7 @@ export default {
       'aside',
       'asideCollapse',
       'asideIndex',
+      'history',
       'historyCount'
     ])
   },
@@ -79,7 +80,7 @@ export default {
           }
         })
 
-        // 处理访问历史
+        // 处理访问历史(进入首页时执行)
         if (this.asideIndex === fullPath) {
         }
       },

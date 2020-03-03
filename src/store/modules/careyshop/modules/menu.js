@@ -102,6 +102,25 @@ export default {
         // end
         resolve()
       })
+    },
+    /**
+     * @description 从持久化数据读取历史菜单数据
+     * @param state state
+     * @param dispatch
+     * @returns {Promise<*>}
+     */
+    async historyLoad({ state, dispatch }) {
+      return new Promise(async resolve => {
+        // 历史菜单持久化
+        state.history = await dispatch('careyshop/db/get', {
+          dbName: 'database',
+          path: '$menu.history',
+          defaultValue: [],
+          user: true
+        }, { root: true })
+        // end
+        resolve()
+      })
     }
   },
   mutations: {

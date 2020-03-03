@@ -3,7 +3,6 @@ import App from './App'
 
 import store from '@/store'
 import careyshop from '@/plugin/careyshop'
-import config from '@/utils/util.config'
 
 // 菜单和路由设置
 import router from './router'
@@ -13,7 +12,7 @@ import { frameInRoutes } from '@/router/routes'
 Vue.use(careyshop)
 
 // API配置
-Vue.prototype.$baseConfig = config.get()
+Vue.prototype.$baseConfig = serverConfig
 
 // v-permission
 Vue.directive('permission', {

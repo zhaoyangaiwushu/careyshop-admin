@@ -1,8 +1,7 @@
 import axios from 'axios'
-import config from '@/utils/util.config'
 
 export function getHelpRouter(router) {
-  let host = config.get().BASE_API
+  let host = serverConfig.BASE_API
   if (process.env.NODE_ENV !== 'development') {
     host = 'https://api.careyshop.cn/api'
   }

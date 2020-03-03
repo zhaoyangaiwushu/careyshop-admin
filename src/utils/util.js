@@ -1,13 +1,11 @@
 import cookies from './util.cookies'
 import db from './util.db'
 import log from './util.log'
-import config from './util.config'
 
 let util = {
   cookies,
   db,
-  log,
-  config
+  log
 }
 
 /**
@@ -172,7 +170,7 @@ util.guid = () => {
  */
 util.getSign = (params) => {
   let sorted = Object.keys(params).sort()
-  let basestring = config.get().APP_SECRET
+  let basestring = serverConfig.APP_SECRET
   const type = ['undefined', 'object', 'function']
 
   for (let i = 0, l = sorted.length; i < l; i++) {
@@ -186,7 +184,7 @@ util.getSign = (params) => {
     }
   }
 
-  basestring += config.get().APP_SECRET
+  basestring += serverConfig.APP_SECRET
   return util.md5(basestring)
 }
 
@@ -197,7 +195,7 @@ util.getSign = (params) => {
  * @returns {string}
  */
 util.getImageCodeUrl = (url, code = '') => {
-  let data = config.get().BASE_API
+  let data = serverConfig.BASE_API
   data += '/v1/storage/method/get.storage.thumb/code/' + code
   data += '?url=' + encodeURIComponent(url)
 
@@ -211,7 +209,7 @@ util.getImageCodeUrl = (url, code = '') => {
  * @returns {*}
  */
 util.getDownloadUrl = (file, code) => {
-  let data = config.get().BASE_API
+  let data = serverConfig.BASE_API
   data += '/v1/storage/method/get.storage.download/code/' + code
   data += '?url=' + encodeURIComponent(file.url)
   data += '&filename=' + encodeURI(file.name)
@@ -227,7 +225,7 @@ util.getDownloadUrl = (file, code) => {
  */
 util.getImageStyleUrl = (url, style = '') => {
   if (url) {
-    let data = config.get().BASE_API
+    let data = serverConfig.BASE_API
     data += '/v1/storage/method/get.storage.thumb' + '?url=' + encodeURIComponent(url)
     data += style
 
@@ -242,10 +240,9 @@ util.getImageStyleUrl = (url, style = '') => {
  * @returns {string}
  */
 util.getCaptchaUrl = () => {
-  let app = config.get()
-  let data = app.BASE_API + '/v1/app/method/image.app.captcha'
+  let data = serverConfig.BASE_API + '/v1/app/method/image.app.captcha'
   data += '?t=' + (new Date()).getTime()
-  data += '&appkey=' + app.APP_KEY
+  data += '&appkey=' + serverConfig.APP_KEY
 
   return data
 }

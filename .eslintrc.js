@@ -21,6 +21,9 @@ module.exports = {
       }
     }
   ],
+  globals: {
+    'serverConfig': false
+  },
   rules: {
     'accessor-pairs': 2,
     'arrow-spacing': [2, {

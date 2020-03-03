@@ -63,6 +63,7 @@
       (function() { let hm = document.createElement("script"); hm.src = "https://hm.baidu.com/hm.js?" + hmid; let s = document.getElementsByTagName("script")[0]; s.parentNode.insertBefore(hm, s);})();
     </script>
     <% } %>
+    <script type="text/javascript" src="static/config/<%= NODE_ENV %>.js"></script>
     <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
     <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
     <% } %>

@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/plugin/axios/request'
 
 /**
  * 获取指定账号资金信息

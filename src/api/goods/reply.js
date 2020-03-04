@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/plugin/axios/request'
 
 /**
  * 批量删除商品评价的回复

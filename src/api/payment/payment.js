@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/plugin/axios/request'
 
 /**
  * 获取支付配置列表

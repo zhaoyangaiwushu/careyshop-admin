@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/plugin/axios/request'
 
 /**
  * 账号登录，并且获取授权码

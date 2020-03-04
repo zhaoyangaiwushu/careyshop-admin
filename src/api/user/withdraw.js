@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/plugin/axios/request'
 
 /**
  * 获取一个提现请求

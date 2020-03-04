@@ -20,7 +20,7 @@
         </el-col>
         <el-col :span="10">
           <div class="login-code">
-            <img :src="codeUrl" class="login-code-img" @click="refreshCode" alt=""/>
+            <img :src="codeUrl" crossorigin="anonymous" class="login-code-img" @click="refreshCode" alt=""/>
           </div>
         </el-col>
       </el-row>

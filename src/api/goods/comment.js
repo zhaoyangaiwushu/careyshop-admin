@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/plugin/axios/request'
 
 /**
  * 顾客对商品的评价管理组成员可对其进行回复，可回复多条（追加评价）。

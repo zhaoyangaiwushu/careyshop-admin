@@ -77,15 +77,6 @@
           @click="copyData(weixin.notify.value)">复制</el-button>
       </el-form-item>
 
-      <el-form-item class="action" :label="weixin.return.name">
-        <span>{{weixin.return.value}}</span>
-        <el-button
-          class="form-button active"
-          type="text"
-          size="small"
-          @click="copyData(weixin.return.value)">复制</el-button>
-      </el-form-item>
-
       <el-form-item size="small">
         <el-button @click="getInfoData('操作成功')">刷新</el-button>
       </el-form-item>
@@ -133,11 +124,7 @@ export default {
       },
       weixin: {
         notify: {
-          name: '微信异步URL',
-          value: ''
-        },
-        return: {
-          name: '微信同步URL',
+          name: '微信支付异步URL',
           value: ''
         }
       },
@@ -187,12 +174,6 @@ export default {
           controller: 'payment',
           method: 'get.payment.notify',
           to_payment: 3
-        },
-        {
-          version: 'v1',
-          controller: 'payment',
-          method: 'get.payment.return',
-          to_payment: 3
         }
       ]
 
@@ -230,9 +211,6 @@ export default {
                 case 'get.payment.return':
                   if (value.data.to_payment === 2) {
                     this.alipay.return.value = value.data.return_url
-                  }
-                  if (value.data.to_payment === 3) {
-                    this.weixin.return.value = value.data.return_url
                   }
                   break
               }

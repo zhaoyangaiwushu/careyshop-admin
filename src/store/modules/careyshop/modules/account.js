@@ -8,14 +8,16 @@ export default {
     /**
      * @description 登录
      * @param {Object} payload dispatch
-     * @param {Object} login 登录数据
+     * @param {Object} payload login 登录数据
+     * @param {Object} payload remember 是否保持登录
      */
-    login({ dispatch }, login) {
+    login({ dispatch }, { login, remember }) {
       return new Promise((resolve, reject) => {
         loginAdminUser({ ...login })
           .then(res => {
-            util.cookies.set('uuid', res.data.admin.username)
-            util.cookies.set('token', res.data.token.token)
+            let cookieSetting = remember ? { expires: 365 } : { expires: null }
+            util.cookies.set('uuid', res.data.admin.username, cookieSetting)
+            util.cookies.set('token', res.data.token.token, cookieSetting)
             dispatch('careyshop/user/set', {
               name: res.data.admin.nickname,
               admin: res.data.admin,

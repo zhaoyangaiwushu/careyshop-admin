@@ -25,7 +25,7 @@
         </el-col>
       </el-row>
     </el-form-item>
-    <el-checkbox v-model="checked">记住账号</el-checkbox>
+    <el-checkbox v-model="remember">保持登录</el-checkbox>
     <el-form-item>
       <el-button
         type="primary"
@@ -47,7 +47,7 @@ export default {
   name: 'loginbox',
   data() {
     return {
-      checked: false,
+      remember: false,
       loading: false,
       captcha: true,
       passwordType: 'password',
@@ -105,7 +105,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.login(this.loginForm)
+          this.login({ login: this.loginForm, remember: this.remember })
             .then(() => {
               this.$store.dispatch('careyshop/account/load')
               this.$router.replace(this.$route.query.redirect || '/')

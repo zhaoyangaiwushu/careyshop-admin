@@ -115,6 +115,7 @@ export default {
 
           this.login({ login: this.loginForm, remember: this.remember })
             .then(() => {
+              this.captcha = false
               this.$store.dispatch('careyshop/account/load')
               this.$router.replace(this.$route.query.redirect || '/')
             })

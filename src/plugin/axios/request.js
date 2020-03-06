@@ -40,7 +40,7 @@ const service = axios.create({
   baseURL: serverConfig.BASE_API,
   // request timeout
   timeout: 30000,
-  // 使用简单请求,复杂请求(多一次OPTIONS请求)可用 application/json
+  // 使用简单请求,避免复杂请求(多一次OPTIONS请求)
   headers: { 'Content-Type': 'text/plain; charset=utf-8' }
   // 由客户端来控制跨站点访问
   // withCredentials: true

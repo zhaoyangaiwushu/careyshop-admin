@@ -62,7 +62,7 @@ export default {
             util.cookies.remove('uuid')
 
             // 跳转路由并重新载入vue
-            vm.$router.push({ name: 'index' }).catch(() => {})
+            // vm.$router.push({ name: 'index' }).catch(() => {})
             location.reload()
           })
           .catch(() => {

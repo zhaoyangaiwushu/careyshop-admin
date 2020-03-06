@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import util from '@/utils/util'
 import { mapActions } from 'vuex'
 import { getAppCaptcha } from '@/api/aided/app'
 
@@ -49,14 +48,16 @@ export default {
     return {
       remember: false,
       loading: false,
-      captcha: true,
+      captcha: false,
       passwordType: 'password',
       codeUrl: '',
+      sessionId: '',
       loginForm: {
         username: 'admin',
         password: 'admin888',
+        appkey: this.$baseConfig.APP_KEY,
         login_code: '',
-        appkey: this.$baseConfig.APP_KEY
+        session_id: ''
       },
       loginRules: {
         username: [
@@ -78,6 +79,7 @@ export default {
       .then(res => {
         if (res.data.captcha) {
           this.captcha = true
+          this.sessionId = res.data.session_id
           this.refreshCode()
         }
       })
@@ -90,7 +92,11 @@ export default {
      * @description 获取验证码
      */
     refreshCode() {
-      this.codeUrl = util.getCaptchaUrl()
+      let url = this.$baseConfig.BASE_API + '/v1/app/method/image.app.captcha'
+      url += '?t=' + (new Date()).getTime()
+      url += '&session_id=' + this.sessionId
+
+      this.codeUrl = url
     },
     /**
      * @description 是否显示实际密码
@@ -105,6 +111,8 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          this.loginForm.session_id = this.sessionId
+
           this.login({ login: this.loginForm, remember: this.remember })
             .then(() => {
               this.$store.dispatch('careyshop/account/load')

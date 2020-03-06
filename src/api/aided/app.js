@@ -123,12 +123,12 @@ export function replaceAppSecret(app_id) {
 }
 
 /**
- * 批量设置登录验证码
+ * 批量设置应用验证码
  * @param {Array} app_id
- * @param {Number} login_captcha
+ * @param {Number} captcha
  * @returns
  */
-export function setAppCaptcha(app_id, login_captcha) {
+export function setAppCaptcha(app_id, captcha) {
   return request({
     url: '/v1/app',
     method: 'post',
@@ -137,7 +137,7 @@ export function setAppCaptcha(app_id, login_captcha) {
     },
     data: {
       app_id,
-      login_captcha
+      captcha
     }
   })
 }
@@ -163,7 +163,7 @@ export function setAppStatus(app_id, status) {
 }
 
 /**
- * 查询登录是否需要验证码
+ * 查询应用验证码状态
  * @param {String} app_key
  * @returns
  */

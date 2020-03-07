@@ -276,7 +276,6 @@
         :clearable="true"/>
 
       <el-button
-        v-if="platforms.length > 1"
         size="small"
         type="text"
         @click.prevent="platforms.splice(index, 1)">删除</el-button>
@@ -300,7 +299,6 @@
         :clearable="true"/>
 
       <el-button
-        v-if="form.allow_origin.value.length > 1"
         size="small"
         type="text"
         @click.prevent="form.allow_origin.value.splice(index, 1)">删除</el-button>
@@ -469,14 +467,6 @@ export default {
             'value': this.form.platform.value[key]
           })
         }
-      }
-
-      if (!this.form.allow_origin.value.length) {
-        this.form.allow_origin.value = ['']
-      }
-
-      if (!this.platforms.length) {
-        this.platforms = [{ 'key': null, 'value': '' }]
       }
     },
     // 确定修改

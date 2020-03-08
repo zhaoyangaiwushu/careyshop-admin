@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       remember: false,
-      loading: false,
+      loading: true,
       captcha: false,
       passwordType: 'password',
       codeUrl: '',
@@ -82,6 +82,9 @@ export default {
           this.sessionId = res.data.session_id
           this.refreshCode()
         }
+      })
+      .finally(() => {
+        this.loading = false
       })
   },
   methods: {

@@ -159,7 +159,7 @@ export default {
   },
   data() {
     return {
-      tabPane: 0,
+      tabPane: '0',
       typeList: {},
       currentTableData: [],
       multipleSelection: [],

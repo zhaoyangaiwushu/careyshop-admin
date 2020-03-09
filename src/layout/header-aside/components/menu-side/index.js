@@ -1,4 +1,4 @@
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import menuMixin from '../mixin/menu'
 import BScroll from 'better-scroll'
 import { elMenuItem, elSubmenu } from '../libs/util.menu'
@@ -69,8 +69,8 @@ export default {
 
         // 切换菜单时调整被激活菜单
         const path = fullPath.slice(0, fullPath.lastIndexOf('/'))
-        const openeds = this.menuAside.findIndex(menu => menu.path === path)
-        this.openeds = openeds !== -1 ? [path] : []
+        const openeds = this.menuAside.find(menu => menu.path === path)
+        this.openeds = openeds ? [path] : []
 
         this.active = fullPath
         this.$nextTick(() => {
@@ -78,6 +78,12 @@ export default {
             this.$refs.menu.activeIndex = fullPath
           }
         })
+
+        // 记录历史菜单
+        if (openeds !== undefined && openeds.children) {
+          const history = openeds.children.find(menu => menu.path === fullPath)
+          this.historyDataSet(history)
+        }
 
         // 进入"首页"时,将历史菜单压入最底部
         if (this.asideIndex === fullPath && this.history.length) {
@@ -96,6 +102,9 @@ export default {
     this.scrollDestroy()
   },
   methods: {
+    ...mapActions('careyshop/menu', [
+      'historyDataSet'
+    ]),
     scrollInit() {
       this.BS = new BScroll(this.$el, {
         mouseWheel: true,

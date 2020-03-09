@@ -111,13 +111,41 @@ export default {
      */
     async historyLoad({ state, dispatch }) {
       return new Promise(async resolve => {
-        // 历史菜单持久化
+        // 获取历史菜单持久化
         state.history = await dispatch('careyshop/db/get', {
           dbName: 'database',
           path: '$menu.history',
           defaultValue: [],
           user: true
         }, { root: true })
+        // end
+        resolve()
+      })
+    },
+    /**
+     * 将 history 属性赋值并持久化 在这之前请先确保已经更新了 state.history
+     * @param context
+     * @param dispatch
+     * @returns {Promise<any>}
+     */
+    historyDataWrite({ state, dispatch }) {
+      return new Promise(async resolve => {
+        // 历史菜单持久化
+        dispatch('careyshop/db/set', {
+          dbName: 'database',
+          path: '$menu.history',
+          value: state.history,
+          user: true
+        }, { root: true })
+        // end
+        resolve()
+      })
+    },
+    historyDataSet({ state, commit, dispatch }, history) {
+      return new Promise(async resolve => {
+        console.log(history)
+        // 持久化
+        await dispatch('historyDataWrite')
         // end
         resolve()
       })

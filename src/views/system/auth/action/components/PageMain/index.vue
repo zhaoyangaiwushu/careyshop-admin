@@ -50,25 +50,11 @@
       </el-table-column>
 
       <el-table-column
-        label="请求参数"
-        align="center"
-        width="80">
+        label="请求/处理"
+        align="center">
         <template slot-scope="scope">
           <el-tag
-            @click.native="getObjectToJson(scope.$index, 'params')"
-            class="cs-cp"
-            size="mini"
-            type="info">详细</el-tag>
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        label="处理结果"
-        align="center"
-        width="80">
-        <template slot-scope="scope">
-          <el-tag
-            @click.native="getObjectToJson(scope.$index, 'result')"
+            @click.native="getObjectToJson(scope.$index)"
             class="cs-cp"
             size="mini"
             type="info">详细</el-tag>
@@ -101,23 +87,26 @@
     </el-table>
 
     <el-dialog
-      :title="jsonMap[dialogStatus]"
       :visible.sync="dialogFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
       width="600px">
-      <cs-highlight :code="dialogJson" style="margin-top: -25px;"/>
+      <el-tabs v-model="dialogStatus" style="margin-top: -25px;">
+        <el-tab-pane label="请求参数" name="params">
+          <cs-highlight :code="dialogJson.params"/>
+        </el-tab-pane>
+
+        <el-tab-pane label="处理结果" name="result">
+          <cs-highlight :code="dialogJson.result"/>
+        </el-tab-pane>
+      </el-tabs>
 
       <div slot="footer" class="dialog-footer">
         <div class="cs-fl">
           <el-button
-            @click="copyData(dialogJson)"
+            @click="copyData(dialogJson[dialogStatus])"
             size="small">复制</el-button>
         </div>
-
-        <el-button
-          @click.native="dialogFormVisible = false"
-          size="small">取消</el-button>
 
         <el-button
           @click.native="dialogFormVisible = false"
@@ -149,11 +138,7 @@ export default {
         0: '成功',
         1: '失败'
       },
-      jsonMap: {
-        params: '请求参数',
-        result: '处理结果'
-      },
-      dialogJson: '',
+      dialogJson: {},
       dialogStatus: '',
       dialogFormVisible: false
     }
@@ -174,9 +159,12 @@ export default {
       this.$emit('sort', sort)
     },
     // 从结果集中获取JSON数据
-    getObjectToJson(index, type) {
-      this.dialogJson = JSON.stringify(this.tableData[index][type], null, 2)
-      this.dialogStatus = type
+    getObjectToJson(index) {
+      const data = this.tableData[index]
+      this.dialogJson.params = JSON.stringify(data.params, null, 2)
+      this.dialogJson.result = JSON.stringify(data.result, null, 2)
+
+      this.dialogStatus = 'params'
       this.dialogFormVisible = true
     },
     copyData(val) {

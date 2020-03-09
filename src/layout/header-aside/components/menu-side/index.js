@@ -45,8 +45,7 @@ export default {
       'aside',
       'asideCollapse',
       'asideIndex',
-      'history',
-      'historyCount'
+      'history'
     ])
   },
   watch: {
@@ -64,7 +63,7 @@ export default {
         const pathRoute = matched[0].path ? matched[0].path : matched[1].path
         if (matched.length > 0 && pathRoute !== this.matched) {
           const _side = this.aside.find(menu => menu.path === pathRoute)
-          this.menuAside = _side && _side.children ? _side.children : []
+          this.menuAside = _side && _side.children ? [..._side.children] : []
           this.matched = pathRoute
         }
 
@@ -80,8 +79,11 @@ export default {
           }
         })
 
-        // 处理访问历史(进入首页时执行)
-        if (this.asideIndex === fullPath) {
+        // 进入"首页"时,将历史菜单压入最底部
+        if (this.asideIndex === fullPath && this.history.length) {
+          const index = { path: '/index', title: '首页', icon: 'shouye_o' }
+          this.menuAside.unshift(index)
+          this.menuAside = [].concat(this.menuAside, history)
         }
       },
       immediate: true

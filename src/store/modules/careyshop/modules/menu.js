@@ -141,12 +141,31 @@ export default {
         resolve()
       })
     },
+    /**
+     * 设置历史菜单数据
+     * @param state
+     * @param commit
+     * @param dispatch
+     * @param history
+     * @returns {Promise<unknown>}
+     */
     historyDataSet({ state, commit, dispatch }, history) {
       return new Promise(async resolve => {
-        state.history.unshift(history)
-        state.history = state.history.slice(0, state.historyCount)
-        // 持久化
-        await dispatch('historyDataWrite')
+        if (history) {
+          let index = state.history.findIndex(menu => menu.path === history.path)
+          if (index !== -1) {
+            state.history.splice(index, 1)
+          }
+
+          state.history.unshift(history)
+
+          if (state.history.length > state.historyCount) {
+            state.history = state.history.slice(0, state.historyCount)
+          }
+          // 持久化
+          await dispatch('historyDataWrite')
+        }
+
         // end
         resolve()
       })

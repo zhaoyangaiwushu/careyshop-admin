@@ -81,7 +81,7 @@ export default {
 
         // 记录历史菜单
         if (openeds !== undefined && openeds.children) {
-          const history = openeds.children.find(menu => menu.path === fullPath)
+          let history = openeds.children.find(menu => menu.path === fullPath)
           this.historyDataSet(history)
         }
 

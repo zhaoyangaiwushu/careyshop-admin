@@ -143,7 +143,8 @@ export default {
     },
     historyDataSet({ state, commit, dispatch }, history) {
       return new Promise(async resolve => {
-        console.log(history)
+        state.history.unshift(history)
+        state.history = state.history.slice(0, state.historyCount)
         // 持久化
         await dispatch('historyDataWrite')
         // end

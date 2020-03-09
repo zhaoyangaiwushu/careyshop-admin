@@ -89,7 +89,7 @@ export default {
         if (this.asideIndex === fullPath && this.history.length) {
           const index = { path: '/index', title: '首页', icon: 'shouye_o' }
           this.menuAside.unshift(index)
-          this.menuAside = [].concat(this.menuAside, history)
+          this.menuAside = [].concat(this.menuAside, this.history)
         }
       },
       immediate: true

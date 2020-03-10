@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="system-article-article">
+  <cs-container :is-back-to-top="true" parent-path="system-article-admin">
     <div class="cs-p">
       <el-card
         class="box-card"

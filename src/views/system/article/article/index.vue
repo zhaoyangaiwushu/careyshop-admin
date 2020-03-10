@@ -27,7 +27,7 @@ import { mapActions } from 'vuex'
 import { getArticleList } from '@/api/article/article'
 
 export default {
-  name: 'system-article-article',
+  name: 'system-article-admin',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),
@@ -99,7 +99,7 @@ export default {
         page_size: this.page.size
       })
         .then(res => {
-          this.updateData({ type: 'clear', name: 'system-article-article' })
+          this.updateData({ type: 'clear', name: 'system-article-admin' })
           this.table = res.data.items || []
           this.page.total = res.data.total_result
         })

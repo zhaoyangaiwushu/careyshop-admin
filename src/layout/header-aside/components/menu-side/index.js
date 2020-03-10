@@ -82,7 +82,7 @@ export default {
         // 记录历史菜单
         if (openeds !== undefined && openeds.children) {
           let history = openeds.children.find(menu => menu.path === fullPath)
-          this.historyDataSet(history)
+          this.historyDataSet(history).then(() => {})
         }
 
         // 进入"首页"时,将历史菜单压入最底部

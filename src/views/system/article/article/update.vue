@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="system-article-article">
+  <cs-container :is-back-to-top="true" parent-path="system-article-admin">
     <page-edit
       state="update"
       :loading="loading"
@@ -16,7 +16,7 @@ import { getArticleCatList } from '@/api/article/cat'
 import { getArticleItem } from '@/api/article/article'
 
 export default {
-  name: 'system-article-article-update',
+  name: 'system-article-update',
   components: {
     'PageEdit': () => import('./components/PageEdit')
   },

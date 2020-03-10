@@ -221,7 +221,7 @@ export default {
         .then(res => {
           this.updateData({
             type: 'add',
-            name: 'system-article-topic',
+            name: 'system-topic-admin',
             data: { ...res.data }
           })
 
@@ -238,7 +238,7 @@ export default {
         .then(res => {
           this.updateData({
             type: 'set',
-            name: 'system-article-topic',
+            name: 'system-topic-admin',
             srcId: res.data.topic_id,
             data: { ...res.data }
           })

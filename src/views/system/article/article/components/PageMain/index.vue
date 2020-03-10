@@ -254,7 +254,7 @@ export default {
   },
   activated() {
     this.updateChange({
-      name: 'system-article-article',
+      name: 'system-article-admin',
       source: this.currentTableData,
       key: 'article_id'
     })
@@ -268,13 +268,13 @@ export default {
     ]),
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$permission('/system/article/article/add')
-      this.auth.del = this.$permission('/system/article/article/del')
-      this.auth.set = this.$permission('/system/article/article/set')
-      this.auth.top = this.$permission('/system/article/article/top')
-      this.auth.remove_top = this.$permission('/system/article/article/remove_top')
-      this.auth.enable = this.$permission('/system/article/article/enable')
-      this.auth.disable = this.$permission('/system/article/article/disable')
+      this.auth.add = this.$permission('/system/article/admin/add')
+      this.auth.del = this.$permission('/system/article/admin/del')
+      this.auth.set = this.$permission('/system/article/admin/set')
+      this.auth.top = this.$permission('/system/article/admin/top')
+      this.auth.remove_top = this.$permission('/system/article/admin/remove_top')
+      this.auth.enable = this.$permission('/system/article/admin/enable')
+      this.auth.disable = this.$permission('/system/article/admin/disable')
     },
     // 获取列表中的文章编号
     _getArticleIdList(val) {
@@ -470,7 +470,7 @@ export default {
       }
 
       this.$router.push({
-        name: 'system-article-article-view',
+        name: 'system-article-view',
         params: {
           article_id: this.currentTableData[index].article_id
         }
@@ -479,13 +479,13 @@ export default {
     // 创建文章
     handleCreate() {
       this.$router.push({
-        name: 'system-article-article-create'
+        name: 'system-article-create'
       })
     },
     // 编辑文章
     handleEdit(key) {
       this.$router.push({
-        name: 'system-article-article-update',
+        name: 'system-article-update',
         params: {
           article_id: key
         }

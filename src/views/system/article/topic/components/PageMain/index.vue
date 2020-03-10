@@ -171,7 +171,7 @@ export default {
   },
   activated() {
     this.updateChange({
-      name: 'system-article-topic',
+      name: 'system-topic-admin',
       source: this.currentTableData,
       key: 'topic_id'
     })
@@ -185,11 +185,11 @@ export default {
     ]),
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$permission('/system/article/topic/add')
-      this.auth.del = this.$permission('/system/article/topic/del')
-      this.auth.set = this.$permission('/system/article/topic/set')
-      this.auth.enable = this.$permission('/system/article/topic/enable')
-      this.auth.disable = this.$permission('/system/article/topic/disable')
+      this.auth.add = this.$permission('/system/topic/admin/add')
+      this.auth.del = this.$permission('/system/topic/admin/del')
+      this.auth.set = this.$permission('/system/topic/admin/set')
+      this.auth.enable = this.$permission('/system/topic/admin/enable')
+      this.auth.disable = this.$permission('/system/topic/admin/disable')
     },
     // 获取列表中的专题编号
     _getTopicIdList(val) {
@@ -321,20 +321,20 @@ export default {
     // 发送预览专题请求
     handleView(key) {
       this.$router.push({
-        name: 'system-article-topic-view',
+        name: 'system-topic-view',
         params: { topic_id: key }
       })
     },
     // 创建专题
     handleCreate() {
       this.$router.push({
-        name: 'system-article-topic-create'
+        name: 'system-topic-create'
       })
     },
     // 编辑专题
     handleEdit(key) {
       this.$router.push({
-        name: 'system-article-topic-update',
+        name: 'system-topic-update',
         params: { topic_id: key }
       })
     }

@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="system-article-topic">
+  <cs-container :is-back-to-top="true" parent-path="system-topic-admin">
     <page-edit
       state="create"
       :loading="loading">
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'system-article-topic-create',
+  name: 'system-topic-create',
   components: {
     'PageEdit': () => import('./components/PageEdit')
   },

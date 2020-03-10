@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="system-article-topic">
+  <cs-container :is-back-to-top="true" parent-path="system-topic-admin">
     <page-edit
       state="update"
       :loading="loading"
@@ -12,7 +12,7 @@
 import { getTopicItem } from '@/api/article/topic'
 
 export default {
-  name: 'system-article-topic-update',
+  name: 'system-topic-update',
   components: {
     'PageEdit': () => import('./components/PageEdit')
   },

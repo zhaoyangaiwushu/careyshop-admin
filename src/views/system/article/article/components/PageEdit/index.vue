@@ -418,7 +418,7 @@ export default {
         .then(res => {
           this.updateData({
             type: 'add',
-            name: 'system-article-article',
+            name: 'system-article-admin',
             data: {
               ...res.data,
               page_views: 0,
@@ -441,7 +441,7 @@ export default {
         .then(res => {
           this.updateData({
             type: 'set',
-            name: 'system-article-article',
+            name: 'system-article-admin',
             srcId: res.data.article_id,
             data: {
               ...res.data,

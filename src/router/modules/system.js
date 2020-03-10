@@ -49,53 +49,53 @@ export default {
       component: () => import('@/views/system/article/cat')
     },
     {
-      path: 'article/article',
-      name: `${pre}article-article`,
+      path: 'article/admin',
+      name: `${pre}article-admin`,
       meta: { ...meta, cache: true, title: '文章管理' },
       component: () => import('@/views/system/article/article')
     },
     {
-      path: 'article/article/view/:article_id',
-      name: `${pre}article-article-view`,
+      path: 'article/view/:article_id',
+      name: `${pre}article-view`,
       props: true,
       meta: { ...meta, title: '文章预览' },
       component: () => import('@/views/system/article/article/view')
     },
     {
-      path: 'article/article/create',
-      name: `${pre}article-article-create`,
+      path: 'article/create',
+      name: `${pre}article-create`,
       meta: { ...meta, cache: true, title: '新增文章' },
       component: () => import('@/views/system/article/article/create')
     },
     {
-      path: 'article/article/update/:article_id',
-      name: `${pre}article-article-update`,
+      path: 'article/update/:article_id',
+      name: `${pre}article-update`,
       props: true,
       meta: { ...meta, cache: true, title: '编辑文章' },
       component: () => import('@/views/system/article/article/update')
     },
     {
-      path: 'article/topic',
-      name: `${pre}article-topic`,
+      path: 'topic/admin',
+      name: `${pre}topic-admin`,
       meta: { ...meta, cache: true, title: '专题管理' },
       component: () => import('@/views/system/article/topic')
     },
     {
-      path: 'article/topic/view/:topic_id',
-      name: `${pre}article-topic-view`,
+      path: 'topic/view/:topic_id',
+      name: `${pre}topic-view`,
       props: true,
       meta: { ...meta, title: '专题预览' },
       component: () => import('@/views/system/article/topic/view')
     },
     {
-      path: 'article/topic/create',
-      name: `${pre}article-topic-create`,
+      path: 'topic/create',
+      name: `${pre}topic-create`,
       meta: { ...meta, cache: true, title: '新增专题' },
       component: () => import('@/views/system/article/topic/create')
     },
     {
-      path: 'article/topic/update/:topic_id',
-      name: `${pre}article-topic-update`,
+      path: 'topic/update/:topic_id',
+      name: `${pre}topic-update`,
       props: true,
       meta: { ...meta, cache: true, title: '编辑专题' },
       component: () => import('@/views/system/article/topic/update')

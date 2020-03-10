@@ -71,14 +71,14 @@ npm -v
 npm install -g @vue/cli
 
 ### API 参数配置
-API 接口参数采用动态配置（发包后依旧可以修改配置文件），在「public\static\config」路径下存在「development」与「production」文件夹，分别代表`开发环境`与`生产环境`。
+接口参数使用动态配置（发包后依旧可以修改配置文件），在「public\static\config」路径下存在「development」与「production」js 文件，分别代表`开发环境`与`生产环境`。
 
-在各自文件夹下只能存在一个`.json`为后缀的配置文件（为了相对安全，文件名可以任意填写），具体配置如下：
-```
-{
-  "BASE_API": "//demo.careyshop.cn/api",            // API 接口访问地址
-  "APP_KEY": "86757125",                            // 后端获取的 App应用 钥匙
-  "APP_SECRET": "ea1bd533d001fd73b09944f04c96a6fc"  // 后端获取的 App应用 密钥
+具体配置如下：
+```js
+const serverConfig = {
+  BASE_API: '//api.careyshop.cn/api',               // API 接口访问地址
+  APP_KEY: '86757125',                              // 后端获取的 App应用 钥匙
+  APP_SECRET: 'ea1bd533d001fd73b09944f04c96a6fc'    // 后端获取的 App应用 密钥
 }
 ```
 

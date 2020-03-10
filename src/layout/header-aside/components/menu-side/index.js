@@ -67,11 +67,12 @@ export default {
           this.matched = pathRoute
         }
 
-        // 切换菜单时调整被激活菜单
+        // 计算待激活菜单
         const path = fullPath.slice(0, fullPath.lastIndexOf('/'))
         const openeds = this.menuAside.find(menu => menu.path === path)
-        this.openeds = openeds ? [path] : []
+        this.openeds = openeds ? [path] : fullPath === '/index' ? ['/index'] : []
 
+        // 调整被激活菜单
         this.active = fullPath
         this.$nextTick(() => {
           if (this.aside.length > 0 && this.$refs.menu) {
@@ -87,9 +88,15 @@ export default {
 
         // 进入"首页"时,将历史菜单压入最底部
         if (this.asideIndex === fullPath && this.history.length) {
-          const index = { path: '/index', title: '首页', icon: 'shouye_o' }
-          this.menuAside.unshift(index)
-          this.menuAside = [].concat(this.menuAside, this.history)
+          let history = {
+            path: '/index',
+            title: '历史记录',
+            icon: 'lishijilu_o',
+            children: [...this.history]
+          }
+
+          this.menuAside.unshift({ path: '/index', title: '首页', icon: 'shouye_o' })
+          this.menuAside.push(history)
         }
       },
       immediate: true

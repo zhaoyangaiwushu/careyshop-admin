@@ -91,20 +91,27 @@
       :append-to-body="true"
       :close-on-click-modal="false"
       width="600px">
-      <el-tabs v-model="dialogStatus" style="margin-top: -25px;">
+      <el-tabs
+        v-model="dialogStatus"
+        :before-leave="handleBefore"
+        style="margin-top: -25px;">
         <el-tab-pane label="请求参数" name="params">
-          <cs-highlight :code="dialogJson.params"/>
+          <cs-highlight v-if="dialogStatus === 'params'" :code="dialogJson"/>
         </el-tab-pane>
 
         <el-tab-pane label="处理结果" name="result">
-          <cs-highlight :code="dialogJson.result"/>
+          <cs-highlight v-if="dialogStatus === 'result'" :code="dialogJson"/>
+        </el-tab-pane>
+
+        <el-tab-pane label="请求头部" name="header">
+          <cs-highlight v-if="dialogStatus === 'header'" :code="dialogJson"/>
         </el-tab-pane>
       </el-tabs>
 
       <div slot="footer" class="dialog-footer">
         <div class="cs-fl">
           <el-button
-            @click="copyData(dialogJson[dialogStatus])"
+            @click="copyData()"
             size="small">复制</el-button>
         </div>
 
@@ -138,7 +145,7 @@ export default {
         0: '成功',
         1: '失败'
       },
-      dialogJson: {},
+      dialogJson: '',
       dialogStatus: '',
       dialogFormVisible: false
     }
@@ -160,15 +167,29 @@ export default {
     },
     // 从结果集中获取JSON数据
     getObjectToJson(index) {
-      const data = this.tableData[index]
-      this.dialogJson.params = JSON.stringify(data.params, null, 2)
-      this.dialogJson.result = JSON.stringify(data.result, null, 2)
-
+      this.dialogIndex = index
       this.dialogStatus = 'params'
+      this.handleBefore(this.dialogStatus)
       this.dialogFormVisible = true
     },
-    copyData(val) {
-      clipboard.writeText(val)
+    handleBefore(activeName) {
+      const data = this.tableData[this.dialogIndex]
+      switch (activeName) {
+        case 'params':
+          this.dialogJson = JSON.stringify(data.params, null, 2)
+          break
+
+        case 'result':
+          this.dialogJson = JSON.stringify(data.result, null, 2)
+          break
+
+        case 'header':
+          this.dialogJson = JSON.stringify(data.header, null, 2)
+          break
+      }
+    },
+    copyData() {
+      clipboard.writeText(this.dialogJson)
         .then(() => {
           this.$message.success('已复制到剪贴板')
         })

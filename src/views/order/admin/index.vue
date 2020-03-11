@@ -15,6 +15,7 @@
       :to-payment="toPayment"
       :status-map="statusMap"
       @sort="handleSort"
+      @tabs="handleTabs"
       @refresh="handleRefresh"/>
 
     <page-footer
@@ -29,6 +30,7 @@
 
 <script>
 import { getPaymentList } from '@/api/payment/payment'
+import { getOrderList } from '@/api/order/order'
 
 export default {
   name: 'order-admin-list',
@@ -40,8 +42,10 @@ export default {
   data() {
     return {
       loading: true,
+      tabs: 0,
       table: [],
       toPayment: {},
+      // TODO 可能要进行筛选,不需要全部状态
       statusMap: {
         0: '全部',
         1: '未付款',
@@ -83,6 +87,60 @@ export default {
       })
   },
   methods: {
+    // 刷新列表页面
+    handleRefresh(isTurning = false) {
+      if (isTurning) {
+        !(this.page.current - 1) || this.page.current--
+      }
+
+      this.$nextTick(() => {
+        this.$refs.header.handleFormSubmit()
+      })
+    },
+    // 分页变化改动
+    handlePaginationChange(val) {
+      this.page = val
+      this.$nextTick(() => {
+        this.$refs.header.handleFormSubmit()
+      })
+    },
+    // 排序刷新
+    handleSort(val) {
+      this.order = val
+      this.$nextTick(() => {
+        this.$refs.header.handleFormSubmit()
+      })
+    },
+    // 标签页切换
+    handleTabs(val) {
+      this.tabs = val
+      this.order = {}
+      this.$nextTick(() => {
+        this.$refs.header.handleFormSubmit(true)
+      })
+    },
+    // 提交查询请求
+    handleSubmit(form, isRestore = false) {
+      if (isRestore) {
+        this.page.current = 1
+      }
+
+      this.loading = true
+      getOrderList({
+        ...form,
+        ...this.tabs,
+        ...this.order,
+        page_no: this.page.current,
+        page_size: this.page.size
+      })
+        .then(res => {
+          this.table = res.data.items || []
+          this.page.total = res.data.total_result
+        })
+        .finally(() => {
+          this.loading = false
+        })
+    }
   }
 }
 </script>

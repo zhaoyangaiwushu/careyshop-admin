@@ -90,7 +90,7 @@ export default {
         if (this.asideIndex === fullPath && this.history.length) {
           let history = {
             path: '/index',
-            title: '历史记录',
+            title: '访问历史',
             icon: 'lishijilu_o',
             children: [...this.history]
           }

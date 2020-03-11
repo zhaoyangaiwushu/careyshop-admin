@@ -80,7 +80,7 @@ export default {
           })
         }
 
-        this.page.size = res[1].get('size').value() || 50
+        this.page.size = res[1].get('size').value() || 25
       })
       .then(() => {
         this.handleSubmit()

@@ -1,13 +1,12 @@
 <template>
-
+  <div class="cs-p">
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'index'
 }
 </script>
 
 <style scoped>
-
 </style>

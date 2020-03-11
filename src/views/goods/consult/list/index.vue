@@ -8,8 +8,8 @@
       ref="header"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       :type-list="typeList"
       @refresh="handleRefresh"/>
 

@@ -9,8 +9,8 @@
       ref="header"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       :position-table="positionTable"
       :platform-table="platformTable"
       @sort="handleSort"

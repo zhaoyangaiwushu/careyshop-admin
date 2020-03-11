@@ -1,8 +1,8 @@
 <template>
   <cs-container :is-back-to-top="true">
     <page-main
-      :tree-data="tree"
       :loading="loading"
+      :tree-data="tree"
       @refresh="handleRefresh"
       ref="main"/>
   </cs-container>

@@ -2,15 +2,15 @@
   <cs-container :is-back-to-top="true">
     <page-header
       slot="header"
+      :loading="loading"
       :group="group"
       :level="level"
-      :loading="loading"
       @submit="handleSubmit"
       ref="header"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       :group="group"
       @sort="handleSort"
       @refresh="handleRefresh"/>

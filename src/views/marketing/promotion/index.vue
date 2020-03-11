@@ -7,9 +7,9 @@
       @submit="handleSubmit"/>
 
     <page-main
+      :loading="loading"
       :type-map="typeMap"
       :table-data="table"
-      :loading="loading"
       @sort="handleSort"
       @refresh="handleRefresh"/>
 

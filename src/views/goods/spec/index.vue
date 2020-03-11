@@ -9,8 +9,8 @@
       ref="header"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       :type-data="typeList"
       :select-id="selectTypeId"
       @sort="handleSort"

@@ -7,9 +7,9 @@
       ref="header"/>
 
     <page-main
+      :loading="loading"
       :table-data="table"
       :tabs-config="tabs"
-      :loading="loading"
       @sort="handleSort"
       @tabs="handleTabs"
       @refresh="handleRefresh"/>

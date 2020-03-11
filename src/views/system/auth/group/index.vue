@@ -7,8 +7,8 @@
       ref="header"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       @sort="handleSort"/>
   </cs-container>
 </template>

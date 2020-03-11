@@ -4,13 +4,16 @@
       slot="header"
       :loading="loading"
       :to-payment="toPayment"
+      :status-map="statusMap"
       @submit="handleSubmit"
       ref="header"/>
 
     <page-main
       :loading="loading"
       :table-data="table"
+      :tabs-config="tabs"
       :to-payment="toPayment"
+      :status-map="statusMap"
       @sort="handleSort"
       @refresh="handleRefresh"/>
 
@@ -26,10 +29,9 @@
 
 <script>
 import { getPaymentList } from '@/api/payment/payment'
-import { getPaymentLogList } from '@/api/payment/log'
 
 export default {
-  name: 'setting-payment-log',
+  name: 'order-admin-list',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),
@@ -40,6 +42,16 @@ export default {
       loading: true,
       table: [],
       toPayment: {},
+      statusMap: {
+        0: '全部',
+        1: '未付款',
+        2: '已付款',
+        3: '待发货',
+        4: '已发货',
+        5: '已完成',
+        6: '已取消',
+        7: '待评价'
+      },
       page: {
         current: 1,
         size: 0,
@@ -53,6 +65,7 @@ export default {
   },
   mounted() {
     Promise.all([
+      // TODO 是否需要"type"字段有待验证
       getPaymentList({ is_select: 1 }),
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])
@@ -70,51 +83,6 @@ export default {
       })
   },
   methods: {
-    // 刷新列表页面
-    handleRefresh(isTurning = false) {
-      if (isTurning) {
-        !(this.page.current - 1) || this.page.current--
-      }
-
-      this.$nextTick(() => {
-        this.$refs.header.handleFormSubmit()
-      })
-    },
-    // 分页变化改动
-    handlePaginationChange(val) {
-      this.page = val
-      this.$nextTick(() => {
-        this.$refs.header.handleFormSubmit()
-      })
-    },
-    // 排序刷新
-    handleSort(val) {
-      this.order = val
-      this.$nextTick(() => {
-        this.$refs.header.handleFormSubmit()
-      })
-    },
-    // 确定查询
-    handleSubmit(form, isRestore = false) {
-      if (isRestore) {
-        this.page.current = 1
-      }
-
-      this.loading = true
-      getPaymentLogList({
-        ...form,
-        ...this.order,
-        page_no: this.page.current,
-        page_size: this.page.size
-      })
-        .then(res => {
-          this.table = res.data.items || []
-          this.page.total = res.data.total_result
-        })
-        .finally(() => {
-          this.loading = false
-        })
-    }
   }
 }
 </script>

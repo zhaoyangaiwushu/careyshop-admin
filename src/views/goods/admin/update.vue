@@ -14,8 +14,8 @@
           <el-button
             type="primary"
             size="small"
-            :disabled="loading"
             :loading="confirmLoading"
+            :disabled="loading"
             @click="handleConfirm">确定</el-button>
 
           <el-button

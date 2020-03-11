@@ -7,8 +7,8 @@
       @submit="handleSubmit"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       @sort="handleSort"
       @refresh="handleRefresh"/>
 

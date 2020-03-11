@@ -7,9 +7,9 @@
       ref="header"/>
 
     <page-main
+      :loading="loading"
       :table-data="table"
       :card-data="cardData"
-      :loading="loading"
       @refresh="handleRefresh"/>
 
     <page-footer

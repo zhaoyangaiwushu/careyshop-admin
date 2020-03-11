@@ -3,14 +3,14 @@
     <page-header
       slot="header"
       ref="header"
-      :type-map="typeMap"
       :loading="loading"
+      :type-map="typeMap"
       @submit="handleSubmit"/>
 
     <page-main
+      :loading="loading"
       :type-map="typeMap"
       :table-data="table"
-      :loading="loading"
       @sort="handleSort"
       @refresh="handleRefresh"/>
 

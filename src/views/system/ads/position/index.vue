@@ -2,15 +2,15 @@
   <cs-container :is-back-to-top="true">
     <page-header
       slot="header"
-      :platform-table="platformTable"
       :loading="loading"
+      :platform-table="platformTable"
       @submit="handleSubmit"
       ref="header"/>
 
     <page-main
+      :loading="loading"
       :table-data="table"
       :platform-table="platformTable"
-      :loading="loading"
       @sort="handleSort"
       @refresh="handleRefresh"/>
 

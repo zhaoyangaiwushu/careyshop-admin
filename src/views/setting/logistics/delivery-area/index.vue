@@ -5,8 +5,8 @@
       :title="title"/>
 
     <page-main
-      :table-data="table"
-      :loading="loading"/>
+      :loading="loading"
+      :table-data="table"/>
   </cs-container>
 </template>
 

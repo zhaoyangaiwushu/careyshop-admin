@@ -8,8 +8,8 @@
       ref="header"/>
 
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       :trace-state="state"
       @sort="handleSort"
       @refresh="handleRefresh"/>

@@ -1,8 +1,8 @@
 <template>
   <cs-container :is-back-to-top="true">
     <page-main
-      :table-data="table"
       :loading="loading"
+      :table-data="table"
       @refresh="handleSubmit"/>
   </cs-container>
 </template>

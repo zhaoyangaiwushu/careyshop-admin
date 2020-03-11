@@ -7,8 +7,8 @@
       ref="header"/>
 
     <page-main
-      :tree-data="tree"
       :loading="loading"
+      :tree-data="tree"
       @refresh="handleRefresh"
       ref="main"/>
   </cs-container>

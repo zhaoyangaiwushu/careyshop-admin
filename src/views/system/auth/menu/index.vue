@@ -7,8 +7,8 @@
       ref="header"/>
 
     <page-main
-      :tree-data="tree"
       :loading="loading"
+      :tree-data="tree"
       :module="module"
       @refresh="handleRefresh"
       ref="main"/>

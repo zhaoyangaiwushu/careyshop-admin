@@ -45,7 +45,6 @@ export default {
       tabs: 0,
       table: [],
       toPayment: {},
-      // TODO 可能要进行筛选,不需要全部状态
       statusMap: {
         0: '全部',
         1: '未付款',
@@ -53,8 +52,7 @@ export default {
         3: '待发货',
         4: '已发货',
         5: '已完成',
-        6: '已取消',
-        7: '待评价'
+        6: '已取消'
       },
       page: {
         current: 1,
@@ -69,7 +67,6 @@ export default {
   },
   mounted() {
     Promise.all([
-      // TODO 是否需要"type"字段有待验证
       getPaymentList({ is_select: 1 }),
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])

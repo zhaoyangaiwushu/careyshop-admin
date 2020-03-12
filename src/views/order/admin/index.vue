@@ -4,16 +4,13 @@
       slot="header"
       :loading="loading"
       :to-payment="toPayment"
-      :status-map="statusMap"
       @submit="handleSubmit"
       ref="header"/>
 
     <page-main
       :loading="loading"
       :table-data="table"
-      :tabs-config="tabs"
       :to-payment="toPayment"
-      :status-map="statusMap"
       @sort="handleSort"
       @tabs="handleTabs"
       @refresh="handleRefresh"/>
@@ -42,17 +39,11 @@ export default {
   data() {
     return {
       loading: true,
-      tabs: 0,
       table: [],
       toPayment: {},
-      statusMap: {
-        0: '全部',
-        1: '未付款',
-        2: '已付款',
-        3: '待发货',
-        4: '已发货',
-        5: '已完成',
-        6: '已取消'
+      tabs: {
+        status: 0,
+        is_delete: 0
       },
       page: {
         current: 1,
@@ -110,8 +101,8 @@ export default {
     },
     // 标签页切换
     handleTabs(val) {
-      this.tabs = val
       this.order = {}
+      this.tabs.status = val
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit(true)
       })

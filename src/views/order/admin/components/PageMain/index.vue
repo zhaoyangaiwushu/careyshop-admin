@@ -14,20 +14,58 @@
       </cs-help>
     </el-form>
 
-    <el-tabs v-model="activeName" class="tab-box">
-      <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-      <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-      <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-      <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+    <el-tabs
+      v-model="tabPane"
+      v-loading="loading"
+      :before-leave="handleBefore"
+      class="tab-box">
+      <el-tab-pane
+        v-for="(item, index) in tabList"
+        :key="index"
+        :label="item"
+        :name="index">
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    loading: {
+      default: false
+    },
+    tableData: {
+      default: () => []
+    },
+    toPayment: {
+      default: () => {}
+    }
+  },
   data() {
     return {
-      activeName: 'second'
+      tabPane: '0',
+      tabList: {
+        '0': '全部',
+        '1': '未付款',
+        '2': '已付款',
+        '3': '待发货',
+        '4': '已发货',
+        '5': '已完成',
+        '6': '已取消'
+      }
+    }
+  },
+  filters: {
+  },
+  watch: {
+  },
+  mounted() {
+  },
+  methods: {
+    // 点击切换标签
+    handleBefore(activeName) {
+      this.$emit('tabs', activeName)
     }
   }
 }

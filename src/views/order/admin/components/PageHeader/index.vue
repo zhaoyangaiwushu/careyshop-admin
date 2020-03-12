@@ -107,9 +107,6 @@ export default {
     },
     toPayment: {
       default: () => {}
-    },
-    statusMap: {
-      default: () => {}
     }
   },
   data() {

@@ -50,17 +50,12 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="table-expand">
-            <el-form-item label="名称">
+            <el-form-item label="快递公司">
               <span>{{props.row.get_delivery_item.name}}</span>
             </el-form-item>
 
-            <el-form-item label="状态">
-              <el-tag
-                :type="statusMap[props.row.status].type"
-                effect="plain"
-                size="mini">
-                {{statusMap[props.row.status].text}}
-              </el-tag>
+            <el-form-item label="别名">
+              <span>{{props.row.alias}}</span>
             </el-form-item>
 
             <el-form-item label="首重">
@@ -110,6 +105,15 @@
             <el-form-item label="续体积运费">
               <span>{{props.row.second_volume_price}}</span>
             </el-form-item>
+
+            <el-form-item label="状态">
+              <el-tag
+                :type="statusMap[props.row.status].type"
+                effect="plain"
+                size="mini">
+                {{statusMap[props.row.status].text}}
+              </el-tag>
+            </el-form-item>
           </el-form>
         </template>
       </el-table-column>
@@ -119,6 +123,11 @@
         prop="get_delivery_item.name"
         sortable="custom"
         min-width="100">
+      </el-table-column>
+
+      <el-table-column
+        label="别名"
+        prop="alias">
       </el-table-column>
 
       <el-table-column
@@ -221,6 +230,16 @@
               :value="item.delivery_item_id"/>
           </el-select>
           <div class="help-block">只显示热门快递公司列表</div>
+        </el-form-item>
+
+        <el-form-item
+          label="别名"
+          prop="alias">
+          <el-input
+            v-model="form.alias"
+            placeholder="可输入配送方式别名"
+            :clearable="true">
+          </el-input>
         </el-form-item>
 
         <el-form-item
@@ -498,6 +517,7 @@ export default {
       },
       form: {
         delivery_item_id: undefined,
+        alias: undefined,
         content: undefined,
         first_weight: undefined,
         first_weight_price: undefined,
@@ -520,6 +540,13 @@ export default {
             required: true,
             message: '至少选择一项',
             trigger: 'change'
+          }
+        ],
+        alias: [
+          {
+            max: 32,
+            message: '长度不能大于 32 个字符',
+            trigger: 'blur'
           }
         ],
         content: [

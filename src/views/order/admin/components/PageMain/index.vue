@@ -5,7 +5,37 @@
         <el-button
           icon="el-icon-download"
           :disabled="loading"
-          @click="() => {}">批量导出</el-button>
+          @click="() => {}">导出数据</el-button>
+      </el-form-item>
+
+      <el-form-item>
+        <el-dropdown placement="bottom" :show-timeout="50">
+          <el-button
+            :disabled="loading">
+            <i class="el-icon-printer"/>
+            <span>打印</span>
+            <i class="el-icon-arrow-down cs-pl-5"/>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item
+              @click.native="() => {}">打印订单</el-dropdown-item>
+
+            <el-dropdown-item
+              v-if="['2', '3'].includes(tabPane)"
+              @click.native="() => {}">打印出库单</el-dropdown-item>
+
+            <el-dropdown-item
+              v-if="['3', '4'].includes(tabPane)"
+              @click.native="() => {}">打印发货单</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </el-form-item>
+
+      <el-form-item v-if="tabPane === '2'">
+        <el-button
+          icon="el-icon-takeaway-box"
+          :disabled="loading"
+          @click="() => {}">设为配货</el-button>
       </el-form-item>
 
       <cs-help

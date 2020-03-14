@@ -64,7 +64,16 @@
         placement="bottom"
         trigger="click">
         <div class="more-filter">
-          <el-form-item label="时间段" prop="time_period">
+          <el-form-item label="订单号" prop="order_no">
+            <el-input
+              v-model="form.order_no"
+              prefix-icon="el-icon-search"
+              placeholder="可输入订单号"
+              @keyup.enter.native="handleFormSubmit(true)"
+              :clearable="true"/>
+          </el-form-item>
+
+          <el-form-item label="创建日期" prop="time_period">
             <el-date-picker
               v-model="form.time_period"
               type="datetimerange"
@@ -73,15 +82,6 @@
               end-placeholder="结束日期"
               style="width: 315px;">
             </el-date-picker>
-          </el-form-item>
-
-          <el-form-item label="订单号" prop="order_no">
-            <el-input
-              v-model="form.order_no"
-              prefix-icon="el-icon-search"
-              placeholder="可输入订单号"
-              @keyup.enter.native="handleFormSubmit(true)"
-              :clearable="true"/>
           </el-form-item>
 
           <el-form-item label="支付流水号" prop="payment_no">

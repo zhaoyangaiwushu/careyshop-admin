@@ -46,20 +46,20 @@
 
     <el-form-item>
       <el-popover
-        width="370"
+        width="385"
         placement="bottom"
         trigger="click">
         <div class="more-filter">
-          <el-form-item label="路径" prop="path">
+          <el-form-item label="请求路径" prop="path">
             <el-input
               v-model="form.path"
               prefix-icon="el-icon-search"
-              placeholder="可输入路径"
+              placeholder="可输入请求路径"
               @keyup.enter.native="handleFormSubmit(true)"
               :clearable="true"/>
           </el-form-item>
 
-          <el-form-item label="时间段" prop="time_period">
+          <el-form-item label="创建日期" prop="time_period">
             <el-date-picker
               v-model="form.time_period"
               type="datetimerange"
@@ -141,9 +141,9 @@ export default {
     margin-bottom: -18px;
   }
   .more-filter >>> label {
-    width: 54px;
+    width: 70px;
   }
   .more-filter >>> .el-form-item__content {
-    margin-left: 54px;
+    margin-left: 70px;
   }
 </style>

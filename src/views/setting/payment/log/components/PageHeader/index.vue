@@ -90,7 +90,7 @@
               :clearable="true"/>
           </el-form-item>
 
-          <el-form-item label="时间段" prop="time_period">
+          <el-form-item label="创建日期" prop="time_period">
             <el-date-picker
               v-model="form.time_period"
               type="datetimerange"

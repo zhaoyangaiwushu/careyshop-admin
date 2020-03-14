@@ -29,7 +29,7 @@
       </el-table-column>
 
       <el-table-column
-        label="路径"
+        label="请求路径"
         prop="path"
         sortable="custom"
         :show-overflow-tooltip="true">

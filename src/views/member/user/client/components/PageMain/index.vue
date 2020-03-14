@@ -1171,7 +1171,7 @@ export default {
     // 获取支付方式列表
     getPaymentSelect() {
       if (!this.toPayment.length) {
-        getPaymentList({ is_select: 1, type: 'deposit' })
+        getPaymentList({ type: 'deposit', is_select: 1 })
           .then(res => {
             this.toPayment = res.data || {}
           })

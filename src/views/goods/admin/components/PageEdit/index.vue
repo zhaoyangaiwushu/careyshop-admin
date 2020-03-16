@@ -557,6 +557,7 @@
                 :header-cell-style="{background: '#fff', padding: '0'}"
                 :row-style="{height: '45px'}"
                 :span-method="specSpanMethod"
+                :cell-class-name="specCellClassName"
                 max-height="500"
                 size="small"
                 @cell-dblclick="setComboEdit">
@@ -633,7 +634,7 @@
                     prop="price"
                     width="152">
                     <template slot-scope="scope">
-                      <div v-if="getEditState(scope.$index, 'price')" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'price')">
                         {{scope.row.price | getNumber}}
                       </div>
 
@@ -656,7 +657,7 @@
                     prop="store_qty"
                     width="152">
                     <template slot-scope="scope">
-                      <div v-if="getEditState(scope.$index, 'store_qty')" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'store_qty')">
                         {{scope.row.store_qty}}
                       </div>
 
@@ -678,7 +679,7 @@
                     prop="bar_code"
                     width="150">
                     <template slot-scope="scope">
-                      <div v-if="getEditState(scope.$index, 'bar_code')" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'bar_code')">
                         {{scope.row.bar_code}}
                       </div>
 
@@ -698,7 +699,7 @@
                     prop="goods_sku"
                     width="150">
                     <template slot-scope="scope">
-                      <div v-if="getEditState(scope.$index, 'goods_sku')" class="cs-cp">
+                      <div v-if="getEditState(scope.$index, 'goods_sku')">
                         {{scope.row.goods_sku}}
                       </div>
 
@@ -1755,6 +1756,14 @@ export default {
       }
 
       return [this.specTable.column[rowIndex][columnIndex], 1]
+    },
+    // 设置单元格样式
+    specCellClassName({ column }) {
+      if (['price', 'store_qty', 'bar_code', 'goods_sku'].includes(column.property)) {
+        return 'cs-cp'
+      }
+
+      return ''
     },
     // 显示某个单元格编辑状态
     setComboEdit(row, column) {

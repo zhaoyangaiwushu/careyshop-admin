@@ -104,10 +104,10 @@ npm run lint
 npm run test:unit
 ```
 
-### 软件著作权
+#### 软件著作权
 证书号：软著登字第4396664号
 
 登记号：2019SR0975907
 
-### 优秀开源前端框架
+#### 优秀开源前端框架
 <a href="https://github.com/d2-projects/d2-admin" target="_blank"><img src="https://raw.githubusercontent.com/FairyEver/d2-admin/master/doc/image/d2-admin@2x.png" width="200"></a>

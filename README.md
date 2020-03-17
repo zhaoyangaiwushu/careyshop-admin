@@ -18,6 +18,8 @@ CareyShop 整体的架构理念为前后端分离，这样更容易创建出私�
 如果您还不熟悉 GitHub 的 Fork and Pull 开发模式，您可以 [阅读GitHub的文档](https://help.github.com/articles/about-pull-requests/ "阅读GitHub的文档") 获得更多的信息。
 
 ### 导航向导
+> CareyShop 交流一群（QQ）：714593455
+
 官方网站
 
 [https://www.careyshop.cn](https://www.careyshop.cn "CareyShop官方网站")
@@ -48,9 +50,6 @@ CareyShop 整体的架构理念为前后端分离，这样更容易创建出私�
 
 [数据库词典](https://doc.careyshop.cn/docs/data_dict "数据库词典")
 
-### 帮助交流
-> CareyShop 交流一群（QQ）：714593455
-
 ### 安装依赖
 > 如果您以前运行过 webpack 项目，并且本机 node 版本 >= 8，可以忽略这一步。
 
@@ -74,7 +73,7 @@ npm install -g @vue/cli
 接口参数使用动态配置（发包后依旧可以修改配置文件），在「public\static\config」路径下存在「development」与「production」js 文件，分别代表`开发环境`与`生产环境`。
 
 具体配置如下：
-```js
+```
 const serverConfig = {
   BASE_API: '//api.careyshop.cn/api',               // API 接口访问地址
   APP_KEY: '86757125',                              // 后端获取的 App应用 钥匙
@@ -105,5 +104,9 @@ npm run lint
 npm run test:unit
 ```
 
-### 前端框架支持
+### 软件著作权
+证书号：软著登字第4396664号
+登记号：2019SR0975907
+
+### 优秀开源前端框架
 <a href="https://github.com/d2-projects/d2-admin" target="_blank"><img src="https://raw.githubusercontent.com/FairyEver/d2-admin/master/doc/image/d2-admin@2x.png" width="200"></a>

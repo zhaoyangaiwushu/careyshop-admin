@@ -219,7 +219,7 @@
           prop="delivery_item_id">
           <el-select
             v-model="form.delivery_item_id"
-            placeholder="请选择"
+            placeholder="请选择，只显示热门快递公司列表"
             style="width: 100%;"
             clearable
             value="">
@@ -229,7 +229,6 @@
               :label="item.name"
               :value="item.delivery_item_id"/>
           </el-select>
-          <div class="help-block">只显示热门快递公司列表</div>
         </el-form-item>
 
         <el-form-item
@@ -237,7 +236,7 @@
           prop="alias">
           <el-input
             v-model="form.alias"
-            placeholder="可输入配送方式别名"
+            placeholder="请输入配送方式别名"
             :clearable="true">
           </el-input>
         </el-form-item>
@@ -543,6 +542,11 @@ export default {
           }
         ],
         alias: [
+          {
+            required: true,
+            message: '别名不能为空',
+            trigger: 'blur'
+          },
           {
             max: 32,
             message: '长度不能大于 32 个字符',
@@ -1009,11 +1013,5 @@ export default {
     margin-right: 0;
     margin-bottom: 0;
     width: 50%;
-  }
-  .help-block {
-    color: #909399;
-    font-size: 12px;
-    line-height: 2;
-    margin-bottom: -12px;
   }
 </style>

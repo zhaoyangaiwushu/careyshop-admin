@@ -83,7 +83,7 @@ npm run test:unit
 接口参数使用动态配置（正式发布后依旧可以修改配置文件），在「public\static\config」路径下存在「development」与「production」js 文件，分别代表`开发环境`与`生产环境`。
 
 之后将配置修改为您的环境，具体配置如下：
-```
+```js
 const serverConfig = {
   BASE_API: '//api.careyshop.cn/api',               // API 接口访问地址
   APP_KEY: '86757125',                              // 后端获取的 App应用 钥匙

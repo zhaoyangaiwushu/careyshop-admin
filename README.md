@@ -30,7 +30,7 @@ CareyShop 整体的架构理念为前后端分离，这样更容易创建出私�
 
 > 以下安装过程基本都使用命令行，请在适合的命令环境下输入。
 
-**node**
+**安装 node**
 
 在 [node.js](https://nodejs.org/en/download/ "node.js 官网") 官网下载合适您系统的 node.js（推荐 10 以上的版本），安装完毕后可查看版本号。
 ```shell
@@ -41,7 +41,7 @@ npm -v
 6.12.0
 ```
 
-**@vue/cli**
+**安装 @vue/cli**
 
 此依赖建议全局安装。
 ```shell

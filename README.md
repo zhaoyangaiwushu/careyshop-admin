@@ -12,46 +12,23 @@ CareyShop 整体的架构理念为前后端分离，这样更容易创建出私�
 
 在您使用本项目前，请先安装好 [node](https://nodejs.org "node")。项目技术栈基于 [es2015+](http://es6.ruanyifeng.com/ "es2015+")、[vue](https://cn.vuejs.org/ "vue")、[vuex](https://vuex.vuejs.org/ "vuex")、[vue-router](https://router.vuejs.org/ "vue-router") 、[vue-cli4](https://cli.vuejs.org/ "vue-cli") 、[axios](https://github.com/axios/axios "axios") 和 [element-ui](https://element.eleme.io/ "element-ui")，所有的请求数据都基于 rest 协议。
 
-### 参与开发
-我们欢迎您在 CareyShop 项目的 GitHub 上报告 issue 或者 pull request。
-
-如果您还不熟悉 GitHub 的 Fork and Pull 开发模式，您可以 [阅读GitHub的文档](https://help.github.com/articles/about-pull-requests/ "阅读GitHub的文档") 获得更多的信息。
-
 ### 导航向导
 > CareyShop 交流一群（QQ）：714593455
 
-官方网站
+[官方网站](https://www.careyshop.cn "CareyShop官方网站") | [Demo 后台预览](https://demo.careyshop.cn/admin "Demo 后台预览") | [Demo API 沙盒](https://demo.careyshop.cn/api "Demo API 沙盒") | [文档中心](https://doc.careyshop.cn "CareyShop文档中心") | [客户组 API 文档](https://doc.careyshop.cn/docs/client_api/a-61295176156 "客户组 API 使用手册") | [管理组 API 文档](https://doc.careyshop.cn/docs/admin_api/a-11523287990 "管理组 API 使用手册") | [数据库词典](https://doc.careyshop.cn/docs/data_dict "数据库词典")
 
-[https://www.careyshop.cn](https://www.careyshop.cn "CareyShop官方网站")
+后端项目 Git
 
-后端仓库
+[Github 仓库](https://github.com/dnyz520/careyshop "Github 仓库") | [码云仓库](https://gitee.com/careyshop/careyshop "码云仓库") | [Coding 仓库](https://e.coding.net/careyshop/careyshop.git "Coding 仓库")
 
-[Demo API 沙盒](https://demo.careyshop.cn/api "Demo API 沙盒")
+后台项目 Git
 
-[Github 仓库](https://github.com/dnyz520/careyshop "Github 仓库") |
-[码云仓库](https://gitee.com/careyshop/careyshop "码云仓库") |
-[Coding 仓库](https://e.coding.net/careyshop/careyshop.git "Coding 仓库")
-
-后台仓库
-
-[Demo 预览地址](https://demo.careyshop.cn/admin "Demo 预览地址")
-
-[Github 仓库](https://github.com/dnyz520/careyshop-admin "Github 仓库") |
-[码云仓库](https://gitee.com/careyshop/careyshop-admin "码云仓库") |
-[Coding 仓库](https://e.coding.net/careyshop/careyshop-admin.git "Coding 仓库")
-
-### 文档中心
-[https://doc.careyshop.cn](https://doc.careyshop.cn "CareyShop文档中心")
-
-### 相关文档
-[客户组API 使用手册](https://doc.careyshop.cn/docs/client_api/a-61295176156 "客户组API 使用手册")
-
-[管理组API 使用手册](https://doc.careyshop.cn/docs/admin_api/a-11523287990 "管理组API 使用手册")
-
-[数据库词典](https://doc.careyshop.cn/docs/data_dict "数据库词典")
+[Github 仓库](https://github.com/dnyz520/careyshop-admin "Github 仓库") | [码云仓库](https://gitee.com/careyshop/careyshop-admin "码云仓库") | [Coding 仓库](https://e.coding.net/careyshop/careyshop-admin.git "Coding 仓库")
 
 ### 安装依赖
 > 如果您以前运行过 webpack 项目，并且本机 node 版本 >= 8，可以忽略这一步。
+
+> 以下安装过程基本都使用命令行，请在适合的命令环境下输入。
 
 **node**
 
@@ -66,31 +43,29 @@ npm -v
 
 **@vue/cli**
 
-此依赖建议全局安装，在适合的命令环境下输入：
+此依赖建议全局安装。
+```
 npm install -g @vue/cli
-
-### API 参数配置
-接口参数使用动态配置（发包后依旧可以修改配置文件），在「public\static\config」路径下存在「development」与「production」js 文件，分别代表`开发环境`与`生产环境`。
-
-具体配置如下：
-```
-const serverConfig = {
-  BASE_API: '//api.careyshop.cn/api',               // API 接口访问地址
-  APP_KEY: '86757125',                              // 后端获取的 App应用 钥匙
-  APP_SECRET: 'ea1bd533d001fd73b09944f04c96a6fc'    // 后端获取的 App应用 密钥
-}
 ```
 
-### 项目启动
+**克隆项目**
+
 ```
-# 克隆项目
 git clone https://github.com/dnyz520/careyshop-admin.git
+```
 
-# 安装依赖
+**安装依赖**
+
+进入到克隆下来的项目目录中，执行安装依赖命令：
+```
 npm install
 或
 yarn
+```
 
+**项目启动**
+
+```
 # 启动服务
 npm run serve
 
@@ -104,10 +79,24 @@ npm run lint
 npm run test:unit
 ```
 
-#### 软件著作权
+### API 参数配置
+接口参数使用动态配置（正式发布后依旧可以修改配置文件），在「public\static\config」路径下存在「development」与「production」js 文件，分别代表`开发环境`与`生产环境`。
+
+之后将配置修改为您的环境，具体配置如下：
+```
+const serverConfig = {
+  BASE_API: '//api.careyshop.cn/api',               // API 接口访问地址
+  APP_KEY: '86757125',                              // 后端获取的 App应用 钥匙
+  APP_SECRET: 'ea1bd533d001fd73b09944f04c96a6fc'    // 后端获取的 App应用 密钥
+}
+```
+
+#### 授权
+CareyShop 使用 AGPLv3 开源，请遵守 AGPLv3 的相关条款，或者与我们联系获取商业授权。
+
 证书号：软著登字第4396664号
 
 登记号：2019SR0975907
 
-#### 优秀开源前端框架
+#### 链接
 <a href="https://github.com/d2-projects/d2-admin" target="_blank"><img src="https://raw.githubusercontent.com/FairyEver/d2-admin/master/doc/image/d2-admin@2x.png" width="200"></a>

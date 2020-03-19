@@ -101,7 +101,6 @@
         :key="index"
         :label="item"
         :name="index">
-
         <el-table
           v-if="index === tabPane"
           :data="currentTableData"

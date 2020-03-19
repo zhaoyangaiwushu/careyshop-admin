@@ -32,13 +32,6 @@
       <el-table-column align="center" type="selection" width="55"/>
 
       <el-table-column
-        label="编号"
-        prop="delivery_item_id"
-        sortable="custom"
-        width="100">
-      </el-table-column>
-
-      <el-table-column
         label="名称"
         prop="name"
         sortable="custom">

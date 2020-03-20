@@ -61,22 +61,32 @@
           @sort-change="sortChange">
           <el-table-column align="center" type="selection" width="55"/>
 
-          <el-table-column label="商品" min-width="380">
-          </el-table-column>
+          <el-table-column
+            label="订单"
+            min-width="380">
+            <template slot-scope="scope">
+              <div class="order-summary cs-mb-5">
+                <span class="cs-mr">订单号：{{scope.row.order_no}}</span>
+                <span>创建日期：{{scope.row.create_time}}</span>
+              </div>
 
-          <el-table-column label="单价">
-          </el-table-column>
-
-          <el-table-column label="数量">
-          </el-table-column>
-
-          <el-table-column label="售后">
+              <ul class="order-goods-list">
+                <li v-for="(goods, index) in scope.row.get_order_goods" :key="index">
+                  <el-image
+                    class="order-goods-image cs-cp"
+                    @click="() => {}"
+                    :src="goods.goods_image | getPreviewUrl"
+                    fit="contain"
+                    lazy/>
+                </li>
+              </ul>
+            </template>
           </el-table-column>
 
           <el-table-column label="买家">
           </el-table-column>
 
-          <el-table-column label="实付款">
+          <el-table-column label="实收款">
           </el-table-column>
 
           <el-table-column label="交易状态">
@@ -91,6 +101,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   props: {
     loading: {
@@ -122,6 +134,18 @@ export default {
     }
   },
   filters: {
+    getPreviewUrl(val) {
+      if (val) {
+        if (val.source || val) {
+          return util.getImageCodeUrl(val.source || val, 'goods_image_x80')
+        }
+      }
+
+      return ''
+    },
+    getNumber(val) {
+      return util.getNumber(val)
+    }
   },
   watch: {
     tableData: {
@@ -182,5 +206,23 @@ export default {
   .tab-box {
     padding: 5px 10px;
     background-color: #FFF;
+  }
+  .el-table /deep/ td {
+    background-color: #ffffff !important;
+  }
+  .order-summary {
+    color: $color-text-placehoder;
+    font-size: 13px;
+  }
+  .order-goods-list {
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .order-goods-image {
+    float: left;
+    width: 80px;
+    height: 80px;
   }
 </style>

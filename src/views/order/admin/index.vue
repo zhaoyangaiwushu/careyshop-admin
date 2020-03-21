@@ -58,7 +58,7 @@ export default {
   },
   mounted() {
     Promise.all([
-      getPaymentList({ type: 'payment', is_select: 1 }),
+      getPaymentList({ is_select: 1, exclude_code: [4, 5, 6] }),
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])
       .then(res => {

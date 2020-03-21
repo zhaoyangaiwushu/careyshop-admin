@@ -318,7 +318,7 @@ util.setImageSrcList = (srcList, index) => {
  */
 util.getNumber = (value) => {
   const toFixedNum = Number(value).toFixed(3)
-  return value ? toFixedNum.substring(0, toFixedNum.toString().length - 1) : 0
+  return value ? toFixedNum.substring(0, toFixedNum.toString().length - 1) : '0.00'
 }
 
 /**

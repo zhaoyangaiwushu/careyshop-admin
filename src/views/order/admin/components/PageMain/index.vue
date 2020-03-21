@@ -70,23 +70,87 @@
                 <span>创建日期：{{scope.row.create_time}}</span>
               </div>
 
-              <ul class="order-goods-list">
-                <li v-for="(goods, index) in scope.row.get_order_goods" :key="index">
-                  <el-image
-                    class="order-goods-image cs-cp"
-                    @click="() => {}"
-                    :src="goods.goods_image | getPreviewUrl"
-                    fit="contain"
-                    lazy/>
-                </li>
-              </ul>
+              <div
+                v-for="(goods, index) in scope.row.get_order_goods"
+                :key="index"
+                :class="{'order-goods-list': true, 'cs-mt-10': index > 0}">
+                <el-image
+                  class="goods-image cs-cp"
+                  @click="handleView(goods.goods_id)"
+                  :src="goods.goods_image | getPreviewUrl"
+                  fit="contain"
+                  lazy>
+                </el-image>
+
+                <div class="goods-info cs-ml">
+                  <p @click="handleView(goods.goods_id)" class="link">{{goods.goods_name}}</p>
+                  <p v-if="goods.key_value" class="son">{{goods.key_value}}</p>
+                  <p class="son">本店价：{{goods.shop_price | getNumber}} x {{goods.qty}}</p>
+                </div>
+              </div>
             </template>
           </el-table-column>
 
-          <el-table-column label="买家">
+          <el-table-column
+            label="订单金额"
+            min-width="80">
+            <template slot-scope="scope">
+              <div class="order-pay">
+                <p class="shop-price">{{scope.row.pay_amount | getNumber}}</p>
+                <p class="son">需付款：{{scope.row.total_amount | getNumber}}</p>
+                <p class="son">含运费：{{scope.row.delivery_fee | getNumber}}</p>
+                <p class="son">{{_getPaymentType(scope.row.payment_code)}}</p>
+              </div>
+            </template>
           </el-table-column>
 
-          <el-table-column label="实收款">
+          <el-table-column
+            label="买家">
+            <template slot-scope="scope">
+              <div class="order-user">
+                <p>
+                  <span>{{scope.row.get_user.username}}</span>
+
+                  <el-image
+                    v-if="scope.row.get_user.level_icon"
+                    class="level-icon"
+                    :src="scope.row.get_user.level_icon"
+                    fit="fill">
+                    <div slot="error" class="image-slot">
+                      <i class="el-icon-picture-outline"/>
+                    </div>
+                  </el-image>
+                </p>
+
+                <p>
+                  <el-tooltip placement="top">
+                    <div slot="content">
+                      姓名：{{scope.row.consignee}}<br/>
+                      手机：{{scope.row.mobile}}<br/>
+                      地址：{{scope.row.complete_address}}
+                    </div>
+                    <i class="el-icon-house"/>
+                  </el-tooltip>
+
+                  <el-tooltip
+                    v-if="scope.row.buyer_remark"
+                    :content="scope.row.buyer_remark"
+                    placement="top">
+                    <i class="el-icon-chat-dot-round cs-ml-10"/>
+                  </el-tooltip>
+
+                  <el-tooltip
+                    v-if="scope.row.invoice_title"
+                    placement="top">
+                    <div slot="content">
+                      发票抬头：{{scope.row.invoice_title}}
+                      <template v-if="scope.row.tax_number"><br/>纳税人号：{{scope.row.tax_number}}</template>
+                    </div>
+                    <i class="el-icon-tickets cs-ml-10"/>
+                  </el-tooltip>
+                </p>
+              </div>
+            </template>
           </el-table-column>
 
           <el-table-column label="交易状态">
@@ -135,13 +199,7 @@ export default {
   },
   filters: {
     getPreviewUrl(val) {
-      if (val) {
-        if (val.source || val) {
-          return util.getImageCodeUrl(val.source || val, 'goods_image_x80')
-        }
-      }
-
-      return ''
+      return val ? util.getImageCodeUrl(val, 'goods_image_x80') : ''
     },
     getNumber(val) {
       return util.getNumber(val)
@@ -176,6 +234,14 @@ export default {
 
       return idList
     },
+    // 获取付款方式
+    _getPaymentType(code) {
+      if (this.toPayment.hasOwnProperty(code)) {
+        return this.toPayment[code]['name']
+      }
+
+      return ''
+    },
     // 点击切换标签
     handleBefore(activeName) {
       this.$emit('tabs', activeName)
@@ -197,6 +263,13 @@ export default {
       }
 
       this.$emit('sort', sort)
+    },
+    // 打开商品预览
+    handleView(goods_id) {
+      this.$router.push({
+        name: 'goods-admin-view',
+        params: { goods_id }
+      })
     }
   }
 }
@@ -215,14 +288,55 @@ export default {
     font-size: 13px;
   }
   .order-goods-list {
-    overflow: hidden;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-  .order-goods-image {
     float: left;
-    width: 80px;
-    height: 80px;
+    .goods-image {
+      float: left;
+      width: 80px;
+      height: 80px;
+    }
+    .goods-info {
+      float: left;
+      width: 70%;
+      .son {
+        color: $color-text-sub;
+        font-size: 13px;
+      }
+      .link {
+        &:hover {
+          cursor: pointer;
+          color: $color-primary;
+          text-decoration: underline;
+        }
+      }
+      p {
+        margin: 0;
+      }
+    }
+  }
+  .order-pay {
+    .shop-price {
+      color: $color-danger;
+    }
+    .son {
+      color: $color-text-sub;
+      font-size: 13px;
+    }
+    p {
+      margin: 0;
+    }
+  }
+  .order-user {
+    p {
+      margin: 0;
+    }
+    span {
+      color: $color-text-sub;
+      font-size: 13px;
+    }
+    .level-icon {
+      margin-left: 5px;
+      line-height: 0;
+      vertical-align: text-bottom;
+    }
   }
 </style>

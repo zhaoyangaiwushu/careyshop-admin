@@ -41,10 +41,7 @@ export default {
       loading: true,
       table: [],
       toPayment: {},
-      tabs: {
-        status: 0,
-        is_delete: 0
-      },
+      status: 0,
       page: {
         current: 1,
         size: 0,
@@ -102,7 +99,7 @@ export default {
     // 标签页切换
     handleTabs(val) {
       this.order = {}
-      this.tabs.status = val
+      this.status = val
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit(true)
       })
@@ -116,8 +113,8 @@ export default {
       this.loading = true
       getOrderList({
         ...form,
-        ...this.tabs,
         ...this.order,
+        status: this.status,
         page_no: this.page.current,
         page_size: this.page.size
       })

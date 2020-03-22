@@ -198,6 +198,7 @@
               <div class="order-text">
                 <p>
                   <el-link
+                    v-if="scope.row.delivery_status === 0 && scope.row.trade_status <= 1"
                     class="order-button"
                     type="success"
                     :underline="false">修改地址</el-link>
@@ -224,6 +225,7 @@
 
                 <p>
                   <el-link
+                    v-if="scope.row.delivery_status === 1 && scope.row.trade_status === 2"
                     class="order-button"
                     type="primary"
                     :underline="false">确认收货</el-link>
@@ -231,6 +233,7 @@
 
                 <p>
                   <el-link
+                    v-if="scope.row.delivery_status !== 0"
                     class="order-button"
                     type="primary"
                     :underline="false">物流信息</el-link>
@@ -293,7 +296,8 @@ export default {
         '3': '待发货',
         '4': '已发货',
         '5': '已完成',
-        '6': '已取消'
+        '6': '已取消',
+        '8': '回收站'
       }
     }
   },

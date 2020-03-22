@@ -163,19 +163,21 @@ export function remarkOrderItem(order_no, sellers_remark) {
 }
 
 /**
- * 订单设为配货状态
+ * 订单批量设为配货状态
  * @param {String} order_no
+ * @param {Number} is_picking
  * @returns
  */
-export function pickingOrderItem(order_no) {
+export function pickingOrderList(order_no, is_picking) {
   return request({
     url: '/v1/order',
     method: 'post',
     params: {
-      method: 'picking.order.item'
+      method: 'picking.order.list'
     },
     data: {
-      order_no
+      order_no,
+      is_picking
     }
   })
 }
@@ -197,16 +199,16 @@ export function deliveryOrderItem(data) {
 }
 
 /**
- * 订单确认收货。(卖家也可进行此操作)
+ * 订单批量确认收货
  * @param {String} order_no
  * @returns
  */
-export function completeOrderItem(order_no) {
+export function completeOrderList(order_no) {
   return request({
     url: '/v1/order',
     method: 'post',
     params: {
-      method: 'complete.order.item'
+      method: 'complete.order.list'
     },
     data: {
       order_no

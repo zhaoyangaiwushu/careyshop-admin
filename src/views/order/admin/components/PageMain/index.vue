@@ -32,10 +32,24 @@
       </el-form-item>
 
       <el-form-item v-if="tabPane === '2'">
+        <el-button-group>
+          <el-button
+            icon="el-icon-document-checked"
+            :disabled="loading"
+            @click="() => {}">设为配货</el-button>
+
+          <el-button
+            icon="el-icon-document-delete"
+            :disabled="loading"
+            @click="() => {}">取消配货</el-button>
+        </el-button-group>
+      </el-form-item>
+
+      <el-form-item v-if="tabPane === '4'">
         <el-button
-          icon="el-icon-takeaway-box"
+          icon="el-icon-shopping-bag-2"
           :disabled="loading"
-          @click="() => {}">设为配货</el-button>
+          @click="() => {}">确认收货</el-button>
       </el-form-item>
 
       <cs-help
@@ -63,7 +77,7 @@
 
           <el-table-column
             label="订单"
-            min-width="380">
+            min-width="300">
             <template slot-scope="scope">
               <div class="order-summary cs-mb-5">
                 <span class="cs-mr">订单号：{{scope.row.order_no}}</span>
@@ -82,7 +96,7 @@
                   lazy>
                 </el-image>
 
-                <div class="goods-info cs-ml">
+                <div class="goods-info order-text">
                   <p @click="handleView(goods.goods_id)" class="link">{{goods.goods_name}}</p>
                   <p v-if="goods.key_value" class="son">{{goods.key_value}}</p>
                   <p class="son">本店价：{{goods.shop_price | getNumber}} x {{goods.qty}}</p>
@@ -93,23 +107,28 @@
 
           <el-table-column
             label="订单金额"
-            min-width="80">
+            min-width="100">
             <template slot-scope="scope">
-              <div class="order-pay">
+              <div class="order-text">
                 <p class="shop-price">{{scope.row.pay_amount | getNumber}}</p>
                 <p class="son">需付款：{{scope.row.total_amount | getNumber}}</p>
                 <p class="son">含运费：{{scope.row.delivery_fee | getNumber}}</p>
                 <p class="son">{{_getPaymentType(scope.row.payment_code)}}</p>
+
+                <el-link
+                  v-if="scope.row.trade_status === 0 && scope.row.payment_status === 0"
+                  class="order-button"
+                  type="primary"
+                  :underline="false">修改金额</el-link>
               </div>
             </template>
           </el-table-column>
 
-          <el-table-column
-            label="买家">
+          <el-table-column label="买家">
             <template slot-scope="scope">
-              <div class="order-user">
+              <div class="order-text">
                 <p>
-                  <span>{{scope.row.get_user.username}}</span>
+                  <span class="son">{{scope.row.get_user.username}}</span>
 
                   <el-image
                     v-if="scope.row.get_user.level_icon"
@@ -120,6 +139,10 @@
                       <i class="el-icon-picture-outline"/>
                     </div>
                   </el-image>
+                </p>
+
+                <p>
+                  <span class="son">{{scope.row.get_delivery | getDelivery}}</span>
                 </p>
 
                 <p>
@@ -153,10 +176,47 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="交易状态">
+          <el-table-column
+            label="交易状态"
+            align="center">
+            <template slot-scope="scope">
+              <div class="order-text">
+                <p>
+                  <el-link
+                    class="order-button"
+                    type="info"
+                    :underline="false">详情</el-link>
+                </p>
+              </div>
+            </template>
           </el-table-column>
 
-          <el-table-column label="操作">
+          <el-table-column
+            label="操作"
+            align="center">
+            <template slot-scope="scope">
+              <div class="order-text">
+                <p>
+                  <el-link
+                    v-if="scope.row.trade_status <= 1"
+                    class="order-button"
+                    type="primary"
+                    :underline="false">取消订单</el-link>
+                </p>
+
+                <p>
+                  <el-tooltip
+                    :disabled="scope.row.sellers_remark.length <= 0"
+                    :content="scope.row.sellers_remark"
+                    placement="left">
+                    <el-link
+                      class="order-button"
+                      :type="scope.row.sellers_remark ? 'warning' : 'info'"
+                      :underline="false">备注</el-link>
+                  </el-tooltip>
+                </p>
+              </div>
+            </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -203,6 +263,9 @@ export default {
     },
     getNumber(val) {
       return util.getNumber(val)
+    },
+    getDelivery(val) {
+      return val ? val['alias'] : ''
     }
   },
   watch: {
@@ -287,6 +350,15 @@ export default {
     color: $color-text-placehoder;
     font-size: 13px;
   }
+  .order-text {
+    p {
+      margin: 0;
+    }
+    .son {
+      color: $color-text-sub;
+      font-size: 13px;
+    }
+  }
   .order-goods-list {
     float: left;
     .goods-image {
@@ -295,12 +367,7 @@ export default {
       height: 80px;
     }
     .goods-info {
-      float: left;
-      width: 70%;
-      .son {
-        color: $color-text-sub;
-        font-size: 13px;
-      }
+      padding: 0 30px 0 100px;
       .link {
         &:hover {
           cursor: pointer;
@@ -308,35 +375,18 @@ export default {
           text-decoration: underline;
         }
       }
-      p {
-        margin: 0;
-      }
     }
   }
-  .order-pay {
-    .shop-price {
-      color: $color-danger;
-    }
-    .son {
-      color: $color-text-sub;
-      font-size: 13px;
-    }
-    p {
-      margin: 0;
-    }
+  .shop-price {
+    color: $color-danger;
   }
-  .order-user {
-    p {
-      margin: 0;
-    }
-    span {
-      color: $color-text-sub;
-      font-size: 13px;
-    }
-    .level-icon {
-      margin-left: 5px;
-      line-height: 0;
-      vertical-align: text-bottom;
-    }
+  .level-icon {
+    margin-left: 5px;
+    line-height: 0;
+    vertical-align: text-bottom;
+  }
+  .order-button {
+    padding: 0;
+    font-size: 13px;
   }
 </style>

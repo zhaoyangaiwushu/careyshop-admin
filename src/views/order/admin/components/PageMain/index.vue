@@ -198,9 +198,49 @@
               <div class="order-text">
                 <p>
                   <el-link
-                    v-if="scope.row.trade_status <= 1"
+                    class="order-button"
+                    type="success"
+                    :underline="false">修改地址</el-link>
+                </p>
+
+                <p>
+                  <el-link
                     class="order-button"
                     type="primary"
+                    :underline="false">开始配货</el-link>
+
+                  <el-link
+                    class="order-button"
+                    type="primary"
+                    :underline="false">取消配货</el-link>
+                </p>
+
+                <p>
+                  <el-link
+                    class="order-button"
+                    type="primary"
+                    :underline="false">确定发货</el-link>
+                </p>
+
+                <p>
+                  <el-link
+                    class="order-button"
+                    type="primary"
+                    :underline="false">确认收货</el-link>
+                </p>
+
+                <p>
+                  <el-link
+                    class="order-button"
+                    type="primary"
+                    :underline="false">物流信息</el-link>
+                </p>
+
+                <p>
+                  <el-link
+                    v-if="scope.row.trade_status <= 1"
+                    class="order-button"
+                    type="danger"
                     :underline="false">取消订单</el-link>
                 </p>
 

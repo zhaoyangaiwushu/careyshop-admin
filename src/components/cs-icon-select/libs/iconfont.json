@@ -6291,6 +6291,20 @@
           "font_class": "liangjipin",
           "unicode": "e7a6",
           "unicode_decimal": 59302
+        },
+        {
+          "icon_id": "637798",
+          "name": "微信",
+          "font_class": "weixin_o",
+          "unicode": "e62a",
+          "unicode_decimal": 58922
+        },
+        {
+          "icon_id": "4424124",
+          "name": "小程序",
+          "font_class": "xiaochengxu_o",
+          "unicode": "e61e",
+          "unicode_decimal": 58910
         }
       ]
     },

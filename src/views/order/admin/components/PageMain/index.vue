@@ -259,6 +259,7 @@
                     placement="left">
                     <el-link
                       class="order-button"
+                      title="编辑备注，仅自己可见"
                       :type="scope.row.sellers_remark ? 'warning' : 'info'"
                       :underline="false">备注</el-link>
                   </el-tooltip>
@@ -385,7 +386,45 @@ export default {
     },
     // 获取订单状态
     getOrderStatus(data) {
-      return ['等待买家付款', '配货中', '已发货']
+      let result = []
+
+      switch (data.trade_status) {
+        // 待处理
+        case 0:
+          switch (data.payment_status) {
+            case 0:
+              result.push('等待买家付款')
+              break
+            case 1:
+              result.push('买家已付款')
+              break
+          }
+          break
+        // 配货中
+        case 1:
+          result.push('配货中')
+          break
+        // 已发货
+        case 2:
+          switch (data.delivery_status) {
+            case 1:
+              result.push('全部发货')
+              break
+            case 2:
+              result.push('部分发货')
+              break
+          }
+          break
+        // 已完成
+        case 3:
+          result.push('交易成功')
+          break
+        case 4:
+          result.push('交易关闭')
+          break
+      }
+
+      return result
     }
   }
 }

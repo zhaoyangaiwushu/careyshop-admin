@@ -181,6 +181,11 @@
             align="center">
             <template slot-scope="scope">
               <div class="order-text">
+                <p
+                  v-for="(item, index) in getOrderStatus(scope.row)"
+                  :key="index"
+                  class="order-button">{{item}}</p>
+
                 <p>
                   <el-link
                     class="order-button"
@@ -377,6 +382,10 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
+    },
+    // 获取订单状态
+    getOrderStatus(data) {
+      return ['等待买家付款', '配货中', '已发货']
     }
   }
 }

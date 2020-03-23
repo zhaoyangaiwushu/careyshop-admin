@@ -196,52 +196,52 @@
             align="center">
             <template slot-scope="scope">
               <div class="order-text">
-                <p>
+                <p v-if="scope.row.delivery_status === 0 && scope.row.trade_status <= 1">
                   <el-link
-                    v-if="scope.row.delivery_status === 0 && scope.row.trade_status <= 1"
                     class="order-button"
                     type="success"
                     :underline="false">修改地址</el-link>
                 </p>
 
-                <p>
+                <p v-if="scope.row.payment_status === 1 && scope.row.trade_status === 0">
                   <el-link
                     class="order-button"
                     type="primary"
                     :underline="false">开始配货</el-link>
+                </p>
 
+                <p v-if="scope.row.payment_status === 1 && scope.row.trade_status === 1">
                   <el-link
                     class="order-button"
                     type="primary"
                     :underline="false">取消配货</el-link>
                 </p>
 
-                <p>
+                <p
+                  v-if="scope.row.payment_status === 1 && scope.row.delivery_status !== 1 && [1, 2].includes(scope.row.trade_status)">
                   <el-link
                     class="order-button"
                     type="primary"
-                    :underline="false">确定发货</el-link>
+                    :underline="false">确定发货
+                  </el-link>
                 </p>
 
-                <p>
+                <p v-if="scope.row.delivery_status === 1 && scope.row.trade_status === 2">
                   <el-link
-                    v-if="scope.row.delivery_status === 1 && scope.row.trade_status === 2"
                     class="order-button"
                     type="primary"
                     :underline="false">确认收货</el-link>
                 </p>
 
-                <p>
+                <p v-if="scope.row.delivery_status !== 0">
                   <el-link
-                    v-if="scope.row.delivery_status !== 0"
                     class="order-button"
                     type="primary"
                     :underline="false">物流信息</el-link>
                 </p>
 
-                <p>
+                <p v-if="scope.row.trade_status <= 1">
                   <el-link
-                    v-if="scope.row.trade_status <= 1"
                     class="order-button"
                     type="danger"
                     :underline="false">取消订单</el-link>

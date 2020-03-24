@@ -80,6 +80,7 @@
             min-width="300">
             <template slot-scope="scope">
               <div class="order-summary cs-mb-5">
+                <cs-icon class="cs-mr-10" :name="sourceMap[scope.row.source]"/>
                 <span class="cs-mr">订单号：{{scope.row.order_no}}</span>
                 <span>创建日期：{{scope.row.create_time}}</span>
               </div>
@@ -275,6 +276,7 @@
 
 <script>
 import util from '@/utils/util'
+import { getSettingList } from '@/api/config/setting'
 
 export default {
   props: {
@@ -304,7 +306,8 @@ export default {
         '5': '已完成',
         '6': '已取消',
         '8': '回收站'
-      }
+      },
+      sourceMap: {}
     }
   },
   filters: {
@@ -328,6 +331,7 @@ export default {
     }
   },
   mounted() {
+    this.getOrderSource()
   },
   methods: {
     // 获取列表中的订单编号
@@ -354,6 +358,17 @@ export default {
       }
 
       return ''
+    },
+    // 获取订单来源配置
+    getOrderSource() {
+      getSettingList('system_shopping', 'source')
+        .then(res => {
+          if (res.data) {
+            res.data['source']['value'].forEach((value, index) => {
+              this.sourceMap[index] = value.icon
+            })
+          }
+        })
     },
     // 点击切换标签
     handleClick(tab) {

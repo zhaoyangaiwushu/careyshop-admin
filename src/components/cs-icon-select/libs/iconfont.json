@@ -6293,6 +6293,13 @@
           "unicode_decimal": 59302
         },
         {
+          "icon_id": "7191771",
+          "name": "手机",
+          "font_class": "shouji1_o",
+          "unicode": "e62f",
+          "unicode_decimal": 58927
+        },
+        {
           "icon_id": "637798",
           "name": "微信",
           "font_class": "weixin_o",

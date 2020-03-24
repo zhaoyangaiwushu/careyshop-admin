@@ -61,7 +61,7 @@
     <el-tabs
       v-model="tabPane"
       v-loading="loading"
-      :before-leave="handleBefore"
+      @tab-click="handleClick"
       class="tab-box">
       <el-tab-pane
         v-for="(item, index) in tabList"
@@ -356,8 +356,8 @@ export default {
       return ''
     },
     // 点击切换标签
-    handleBefore(activeName) {
-      this.$emit('tabs', activeName)
+    handleClick(tab) {
+      this.$emit('tabs', tab.name)
     },
     // 选中数据项
     handleSelectionChange(val) {

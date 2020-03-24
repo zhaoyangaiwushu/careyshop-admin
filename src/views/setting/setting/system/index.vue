@@ -3,45 +3,53 @@
     <div class="cs-p">
       <el-tabs
         class="tab-box"
+        v-loading="loading"
         v-model="activeName"
-        v-loading="loading">
+        @tab-click="handleClick">
         <el-tab-pane
+          v-if="auth.info"
           label="系统配置"
           name="system_info">
           <system-info ref="system_info"/>
         </el-tab-pane>
 
         <el-tab-pane
+          v-if="auth.shopping"
           label="购物系统"
           name="system_shopping">
           <system-shopping ref="system_shopping"/>
         </el-tab-pane>
 
         <el-tab-pane
+          v-if="auth.service"
           label="售后服务"
           name="service">
           <service ref="service"/>
         </el-tab-pane>
 
         <el-tab-pane
+          v-if="auth.payment"
           label="支付页面"
           name="payment">
           <payment ref="payment"/>
         </el-tab-pane>
 
         <el-tab-pane
+          v-if="auth.delivery"
           label="配送优惠"
           name="delivery">
           <delivery ref="delivery"/>
         </el-tab-pane>
 
         <el-tab-pane
+          v-if="auth.dist"
           label="配送轨迹"
           name="delivery_dist">
           <delivery-dist ref="delivery_dist"/>
         </el-tab-pane>
 
         <el-tab-pane
+          v-if="auth.upload"
           label="上传配置"
           name="upload">
           <upload ref="upload"/>
@@ -75,20 +83,64 @@ export default {
   data() {
     return {
       loading: false,
-      activeName: 'system_info'
-    }
-  },
-  watch: {
-    activeName: {
-      handler() {
-        this.systemInit()
+      activeName: undefined,
+      auth: {
+        info: false,
+        shopping: false,
+        service: false,
+        payment: false,
+        delivery: false,
+        dist: false,
+        upload: false
       }
     }
   },
   mounted() {
+    this.validationAuth()
     this.systemInit()
   },
   methods: {
+    // 验证权限(必须反方向验证)
+    validationAuth() {
+      if (this.$permission('/setting/setting/system/upload')) {
+        this.auth.upload = true
+        this.activeName = 'upload'
+      }
+
+      if (this.$permission('/setting/setting/system/dist')) {
+        this.auth.dist = true
+        this.activeName = 'delivery_dist'
+      }
+
+      if (this.$permission('/setting/setting/system/delivery')) {
+        this.auth.delivery = true
+        this.activeName = 'delivery'
+      }
+
+      if (this.$permission('/setting/setting/system/payment')) {
+        this.auth.payment = true
+        this.activeName = 'payment'
+      }
+
+      if (this.$permission('/setting/setting/system/service')) {
+        this.auth.service = true
+        this.activeName = 'service'
+      }
+
+      if (this.$permission('/setting/setting/system/shopping')) {
+        this.auth.shopping = true
+        this.activeName = 'system_shopping'
+      }
+
+      if (this.$permission('/setting/setting/system/info')) {
+        this.auth.info = true
+        this.activeName = 'system_info'
+      }
+    },
+    handleClick(tab) {
+      this.activeName = tab.name
+      this.systemInit()
+    },
     systemInit() {
       this.loading = true
       getSettingList(this.activeName)

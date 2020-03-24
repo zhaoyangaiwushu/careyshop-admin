@@ -40,7 +40,8 @@
       v-if="userInput"
       v-model="currentValue"
       v-bind="bind"
-      :readonly="!userInput">
+      :readonly="!userInput"
+      :style="{'max-width': width}">
       <i v-if="value" slot="prefix" class="el-input__icon icon-view" :class="'iconfont icon' + value"/>
       <el-button icon="el-icon-menu" v-popover:pop slot="append"/>
     </el-input>
@@ -88,6 +89,12 @@ export default {
       type: Boolean,
       required: false,
       default: true
+    },
+    // 宽度
+    width: {
+      type: String,
+      required: false,
+      default: ''
     }
   },
   data() {

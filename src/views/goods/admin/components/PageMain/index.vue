@@ -94,7 +94,7 @@
     <el-tabs
       v-model="tabPane"
       v-loading="loading"
-      :before-leave="handleBefore"
+      @tab-click="handleClick"
       class="tab-box">
       <el-tab-pane
         v-for="(item, index) in tabList"
@@ -609,9 +609,9 @@ export default {
       return idList
     },
     // 点击切换标签
-    handleBefore(activeName) {
+    handleClick(tab) {
       let config = { status: 1, is_delete: 0 }
-      switch (activeName) {
+      switch (tab.name) {
         case 'stock':
           config.status = 0
           break

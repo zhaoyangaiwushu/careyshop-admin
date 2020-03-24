@@ -93,7 +93,7 @@
       width="600px">
       <el-tabs
         v-model="dialogStatus"
-        :before-leave="handleBefore"
+        @tab-click="handleClick"
         style="margin-top: -25px;">
         <el-tab-pane label="请求参数" name="params">
           <cs-highlight v-if="dialogStatus === 'params'" :code="dialogJson"/>
@@ -169,12 +169,12 @@ export default {
     getObjectToJson(index) {
       this.dialogIndex = index
       this.dialogStatus = 'params'
-      this.handleBefore(this.dialogStatus)
+      this.handleClick({ name: this.dialogStatus })
       this.dialogFormVisible = true
     },
-    handleBefore(activeName) {
+    handleClick(tab) {
       const data = this.tableData[this.dialogIndex]
-      switch (activeName) {
+      switch (tab.name) {
         case 'params':
           this.dialogJson = JSON.stringify(data.params, null, 2)
           break

@@ -11,6 +11,7 @@
       :loading="loading"
       :table-data="table"
       :to-payment="toPayment"
+      :order-total="total"
       @sort="handleSort"
       @tabs="handleTabs"
       @refresh="handleRefresh"/>
@@ -27,7 +28,7 @@
 
 <script>
 import { getPaymentList } from '@/api/payment/payment'
-import { getOrderList } from '@/api/order/order'
+import { getOrderList, getOrderStatusTotal } from '@/api/order/order'
 
 export default {
   name: 'order-admin-list',
@@ -42,6 +43,7 @@ export default {
       table: [],
       toPayment: {},
       status: 0,
+      total: {},
       page: {
         current: 1,
         size: 0,
@@ -111,6 +113,11 @@ export default {
       }
 
       this.loading = true
+      getOrderStatusTotal()
+        .then(res => {
+          this.total = res.data || {}
+        })
+
       getOrderList({
         ...form,
         ...this.order,

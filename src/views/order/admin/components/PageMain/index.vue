@@ -32,17 +32,17 @@
       </el-form-item>
 
       <el-form-item v-if="tabPane === '2'">
-        <el-button-group>
-          <el-button
-            icon="el-icon-document-checked"
-            :disabled="loading"
-            @click="() => {}">设为配货</el-button>
+        <el-button
+          icon="el-icon-document-checked"
+          :disabled="loading"
+          @click="() => {}">设为配货</el-button>
+      </el-form-item>
 
-          <el-button
-            icon="el-icon-document-delete"
-            :disabled="loading"
-            @click="() => {}">取消配货</el-button>
-        </el-button-group>
+      <el-form-item v-if="tabPane === '3'">
+        <el-button
+          icon="el-icon-document-delete"
+          :disabled="loading"
+          @click="() => {}">取消配货</el-button>
       </el-form-item>
 
       <el-form-item v-if="tabPane === '4'">
@@ -66,7 +66,7 @@
       <el-tab-pane
         v-for="(item, index) in tabList"
         :key="index"
-        :label="item"
+        :label="getTabPaneName(index, item)"
         :name="index">
         <el-table
           v-if="index === tabPane"
@@ -98,7 +98,10 @@
                 </el-image>
 
                 <div class="goods-info order-text">
-                  <p @click="handleView(goods.goods_id)" class="link">{{goods.goods_name}}</p>
+                  <p @click="handleView(goods.goods_id)">
+                    <span class="link">{{goods.goods_name}}</span>
+                    <span class="service">{{serviceMap[goods.is_service]}}</span>
+                  </p>
                   <p v-if="goods.key_value" class="son">{{goods.key_value}}</p>
                   <p class="son">本店价：{{goods.shop_price | getNumber}} x {{goods.qty}}</p>
                 </div>
@@ -114,7 +117,11 @@
                 <p class="shop-price">{{scope.row.pay_amount | getNumber}}</p>
                 <p class="son">需付款：{{scope.row.total_amount | getNumber}}</p>
                 <p class="son">含运费：{{scope.row.delivery_fee | getNumber}}</p>
-                <p class="son">{{_getPaymentType(scope.row.payment_code)}}</p>
+                <p class="son">
+                  <span :class="{'shop-price': scope.row.payment_code === '1'}">
+                    {{_getPaymentType(scope.row.payment_code)}}
+                  </span>
+                </p>
 
                 <el-link
                   v-if="scope.row.trade_status === 0 && scope.row.payment_status === 0"
@@ -213,7 +220,7 @@
                   <el-link
                     class="order-button"
                     type="primary"
-                    :underline="false">开始配货</el-link>
+                    :underline="false">设为配货</el-link>
                 </p>
 
                 <p v-if="scope.row.payment_status === 1 && scope.row.trade_status === 1">
@@ -288,6 +295,9 @@ export default {
     },
     toPayment: {
       default: () => {}
+    },
+    orderTotal: {
+      default: () => {}
     }
   },
   data() {
@@ -306,6 +316,17 @@ export default {
         '5': '已完成',
         '6': '已取消',
         '8': '回收站'
+      },
+      // 键名与"tabList"对应
+      totalMap: {
+        '1': 'not_paid',
+        '2': 'paid',
+        '3': 'not_shipped',
+        '4': 'shipped'
+      },
+      serviceMap: {
+        '1': '售后中',
+        '2': '已售后'
       },
       sourceMap: {}
     }
@@ -358,6 +379,22 @@ export default {
       }
 
       return ''
+    },
+    // 数字化标签名称
+    getTabPaneName(key, value) {
+      if (!this.totalMap.hasOwnProperty(key)) {
+        return value
+      }
+
+      if (!this.orderTotal.hasOwnProperty(this.totalMap[key])) {
+        return value
+      }
+
+      if (this.orderTotal[this.totalMap[key]] <= 0) {
+        return value
+      }
+
+      return value + `(${this.orderTotal[this.totalMap[key]]})`
     },
     // 获取订单来源配置
     getOrderSource() {
@@ -481,6 +518,11 @@ export default {
           color: $color-primary;
           text-decoration: underline;
         }
+      }
+      .service {
+        font-size: 13px;
+        padding-left: 5px;
+        color: $color-warning;
       }
     }
   }

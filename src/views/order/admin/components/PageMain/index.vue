@@ -111,7 +111,7 @@
 
           <el-table-column
             label="订单金额"
-            min-width="120">
+            min-width="100">
             <template slot-scope="scope">
               <div class="order-text">
                 <p class="shop-price">{{scope.row.pay_amount | getNumber}}</p>
@@ -216,6 +216,7 @@
                   <el-link
                     class="order-button"
                     type="success"
+                    @click="setOrderItem(scope.$index)"
                     :underline="false">修改订单</el-link>
                 </p>
 
@@ -331,25 +332,23 @@
       :append-to-body="true"
       :close-on-click-modal="false"
       width="600px">
-      <el-form label-width="80px">
+      <el-form
+        label-width="80px"
+        label-position="left">
         <el-form-item label="增加/减少">
           <el-input-number
             v-model="formAmount.request.total_amount"
             placeholder="可输入调整金额"
-            controls-position="right"
             :precision="2">
           </el-input-number>
 
-          <div class="help-block">
-            <span>正数增加，负数减少</span>
-          </div>
-        </el-form-item>
+          <span class="order-summary cs-pl-10">正数增加，负数减少</span>
 
-        <el-form-item label="实际金额">
-          <strong>{{formAmount.actual + formAmount.request.total_amount | getNumber}}</strong>
-
-          <div class="help-block">
-            <span>实际需付款金额</span>
+          <div>
+            <span>需付款：</span>
+            <span class="cs-pr-10">{{formAmount.actual}}</span>
+            <span>调整后：</span>
+            <strong>{{formAmount.actual + formAmount.request.total_amount | getNumber}}</strong>
           </div>
         </el-form-item>
       </el-form>
@@ -363,6 +362,25 @@
           type="primary"
           :loading="formAmount.loading"
           @click="handleOrderAmount"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      title="修改订单"
+      :visible.sync="formOrder.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formOrder.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formOrder.loading"
+          @click="handleSetOrder"
           size="small">确定</el-button>
       </div>
     </el-dialog>
@@ -434,6 +452,12 @@ export default {
         loading: false,
         visible: false,
         actual: 0,
+        request: {}
+      },
+      formOrder: {
+        index: undefined,
+        loading: false,
+        visible: false,
         request: {}
       }
     }
@@ -696,6 +720,18 @@ export default {
         })
         .catch(() => {
         })
+    },
+    // 修改订单
+    setOrderItem(index) {
+      this.formOrder = {
+        index,
+        loading: false,
+        visible: true,
+        request: { ...this.currentTableData[index] }
+      }
+    },
+    // 请求修改订单
+    handleSetOrder() {
     }
   }
 }
@@ -708,12 +744,6 @@ export default {
   }
   .el-table /deep/ td {
     background-color: #ffffff !important;
-  }
-  .help-block {
-    color: $color-info;
-    font-size: 12px;
-    line-height: 2;
-    margin-bottom: -8px;
   }
   .order-summary {
     color: $color-text-placehoder;
@@ -736,7 +766,7 @@ export default {
       height: 80px;
     }
     .goods-info {
-      padding: 0 30px 0 100px;
+      padding: 0 50px 0 100px;
       .link {
         &:hover {
           cursor: pointer;

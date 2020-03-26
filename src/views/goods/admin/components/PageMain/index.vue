@@ -282,16 +282,16 @@
         :model="nameForm"
         :rules="rules"
         ref="name"
-        label-width="50px"
-        label-position="left"
-        @submit.native.prevent>
+        label-width="80px"
+        label-position="left">
         <el-form-item
           label="名称"
           prop="name">
           <el-input
             v-model="nameForm.name"
+            type="textarea"
+            :rows="6"
             placeholder="请输入商品名称"
-            @keyup.enter.native="handleSetName"
             maxlength="200"
             show-word-limit
             ref="nameInput"/>
@@ -321,16 +321,16 @@
         :model="productForm"
         :rules="rules"
         ref="product"
-        label-width="65px"
-        label-position="left"
-        @submit.native.prevent>
+        label-width="80px"
+        label-position="left">
         <el-form-item
           label="促销名"
           prop="product_name">
           <el-input
             v-model="productForm.product_name"
+            type="textarea"
+            :rows="5"
             placeholder="请输入商品促销名"
-            @keyup.enter.native="handleSetProduct"
             maxlength="100"
             show-word-limit
             ref="productInput"/>

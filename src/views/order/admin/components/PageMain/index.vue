@@ -77,7 +77,7 @@
 
           <el-table-column
             label="订单"
-            min-width="300">
+            min-width="380">
             <template slot-scope="scope">
               <div class="order-summary cs-mb-5">
                 <cs-icon class="cs-mr-10" :name="sourceMap[scope.row.source]"/>
@@ -111,7 +111,7 @@
 
           <el-table-column
             label="订单金额"
-            min-width="100">
+            min-width="120">
             <template slot-scope="scope">
               <div class="order-text">
                 <p class="shop-price">{{scope.row.pay_amount | getNumber}}</p>
@@ -127,6 +127,7 @@
                   v-if="scope.row.trade_status === 0 && scope.row.payment_status === 0"
                   class="order-button"
                   type="primary"
+                  @click="setOrderAmount(scope.$index)"
                   :underline="false">修改金额</el-link>
               </div>
             </template>
@@ -158,7 +159,9 @@
                     <div slot="content">
                       姓名：{{scope.row.consignee}}<br/>
                       手机：{{scope.row.mobile}}<br/>
+                      <template v-if="scope.row.tel">电话：{{scope.row.tel}}<br/></template>
                       地址：{{scope.row.complete_address}}
+                      <template v-if="scope.row.zipcode"><br/>邮编：{{scope.row.zipcode}}</template>
                     </div>
                     <i class="el-icon-house"/>
                   </el-tooltip>
@@ -213,7 +216,7 @@
                   <el-link
                     class="order-button"
                     type="success"
-                    :underline="false">修改地址</el-link>
+                    :underline="false">修改订单</el-link>
                 </p>
 
                 <p v-if="scope.row.payment_status === 1 && scope.row.trade_status === 0">
@@ -257,7 +260,22 @@
                   <el-link
                     class="order-button"
                     type="danger"
+                    @click="handleOrderCancel(scope.$index)"
                     :underline="false">取消订单</el-link>
+                </p>
+
+                <p v-if="scope.row.trade_status === 4 && scope.row.is_delete <= 0">
+                  <el-link
+                    class="order-button"
+                    @click="handleOrderRecycle(scope.$index, 1)"
+                    :underline="false">删除订单</el-link>
+                </p>
+
+                <p v-if="scope.row.is_delete > 0">
+                  <el-link
+                    class="order-button"
+                    @click="handleOrderRecycle(scope.$index, 0)"
+                    :underline="false">恢复订单</el-link>
                 </p>
 
                 <p>
@@ -267,8 +285,8 @@
                     placement="left">
                     <el-link
                       class="order-button"
-                      title="编辑备注，仅自己可见"
                       :type="scope.row.sellers_remark ? 'warning' : 'info'"
+                      @click="setSellersRemark(scope.$index)"
                       :underline="false">备注</el-link>
                   </el-tooltip>
                 </p>
@@ -278,10 +296,86 @@
         </el-table>
       </el-tab-pane>
     </el-tabs>
+
+    <el-dialog
+      title="卖家备注"
+      :visible.sync="formRemark.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-input
+        v-model="formRemark.request.sellers_remark"
+        type="textarea"
+        :rows="6"
+        placeholder="编辑卖家备注，仅卖家自己可见"
+        maxlength="200"
+        show-word-limit>
+      </el-input>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formRemark.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formRemark.loading"
+          @click="handleSellersRemark"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      title="修改金额"
+      :visible.sync="formAmount.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-form label-width="80px">
+        <el-form-item label="增加/减少">
+          <el-input-number
+            v-model="formAmount.request.total_amount"
+            placeholder="可输入调整金额"
+            controls-position="right"
+            :precision="2">
+          </el-input-number>
+
+          <div class="help-block">
+            <span>正数增加，负数减少</span>
+          </div>
+        </el-form-item>
+
+        <el-form-item label="实际金额">
+          <strong>{{formAmount.actual + formAmount.request.total_amount | getNumber}}</strong>
+
+          <div class="help-block">
+            <span>实际需付款金额</span>
+          </div>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formAmount.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formAmount.loading"
+          @click="handleOrderAmount"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import {
+  cancelOrderItem,
+  changePriceOrderItem,
+  remarkOrderItem,
+  recycleOrderItem
+} from '@/api/order/order'
 import util from '@/utils/util'
 import { getSettingList } from '@/api/config/setting'
 
@@ -328,7 +422,20 @@ export default {
         '1': '售后中',
         '2': '已售后'
       },
-      sourceMap: {}
+      sourceMap: {},
+      formRemark: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        request: {}
+      },
+      formAmount: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        actual: 0,
+        request: {}
+      }
     }
   },
   filters: {
@@ -477,6 +584,118 @@ export default {
       }
 
       return result
+    },
+    // 设置卖家备注
+    setSellersRemark(index) {
+      const data = this.currentTableData[index]
+      this.formRemark = {
+        index,
+        loading: false,
+        visible: true,
+        request: {
+          order_no: data.order_no,
+          sellers_remark: data.sellers_remark
+        }
+      }
+    },
+    // 请求卖家备注
+    handleSellersRemark() {
+      this.formRemark.loading = true
+      const index = this.formRemark.index
+
+      remarkOrderItem(this.formRemark.request)
+        .then(res => {
+          this.currentTableData[index].sellers_remark = res.data.sellers_remark
+          this.formRemark.visible = false
+          this.$message.success('操作成功')
+        })
+        .catch(() => {
+          this.formRemark.loading = false
+        })
+    },
+    // 修改金额
+    setOrderAmount(index) {
+      const data = this.currentTableData[index]
+      this.formAmount = {
+        index,
+        loading: false,
+        visible: true,
+        actual: data.total_amount,
+        request: {
+          order_no: data.order_no,
+          total_amount: 0
+        }
+      }
+    },
+    // 请求修改金额
+    handleOrderAmount() {
+      this.formAmount.loading = true
+      const index = this.formAmount.index
+
+      changePriceOrderItem(this.formAmount.request)
+        .then(() => {
+          this.currentTableData[index].total_amount += this.formAmount.request.total_amount
+          this.formAmount.visible = false
+          this.$message.success('操作成功')
+        })
+        .catch(() => {
+          this.formAmount.loading = false
+        })
+    },
+    // 请求取消订单
+    handleOrderCancel(index) {
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          const data = this.currentTableData[index]
+          cancelOrderItem(data.order_no)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  ...res.data
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+              }
+
+              if (this.currentTableData.length <= 0) {
+                this.$emit('refresh', true)
+              }
+
+              this.$emit('total')
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 请求删除或恢复订单
+    handleOrderRecycle(index, type) {
+      this.$confirm('确定要执行该操作吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        closeOnClickModal: false
+      })
+        .then(() => {
+          recycleOrderItem(this.currentTableData[index].order_no, type)
+            .then(() => {
+              this.currentTableData.splice(index, 1)
+
+              if (this.currentTableData.length <= 0) {
+                this.$emit('refresh', true)
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
     }
   }
 }
@@ -489,6 +708,12 @@ export default {
   }
   .el-table /deep/ td {
     background-color: #ffffff !important;
+  }
+  .help-block {
+    color: $color-info;
+    font-size: 12px;
+    line-height: 2;
+    margin-bottom: -8px;
   }
   .order-summary {
     color: $color-text-placehoder;

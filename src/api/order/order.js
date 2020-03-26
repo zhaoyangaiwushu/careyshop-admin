@@ -124,47 +124,39 @@ export function getOrderStatusTotal() {
 
 /**
  * 调整订单应付金额
- * @param {String} order_no
- * @param {Number} total_amount
+ * @param {Object} data
  * @returns
  */
-export function changePriceOrderItem(order_no, total_amount) {
+export function changePriceOrderItem(data) {
   return request({
     url: '/v1/order',
     method: 'post',
     params: {
       method: 'change.price.order.item'
     },
-    data: {
-      order_no,
-      total_amount
-    }
+    data
   })
 }
 
 /**
  * 添加或编辑卖家备注
- * @param {String} order_no
- * @param {String} sellers_remark
+ * @param {Object} data
  * @returns
  */
-export function remarkOrderItem(order_no, sellers_remark) {
+export function remarkOrderItem(data) {
   return request({
     url: '/v1/order',
     method: 'post',
     params: {
       method: 'remark.order.item'
     },
-    data: {
-      order_no,
-      sellers_remark
-    }
+    data
   })
 }
 
 /**
  * 订单批量设为配货状态
- * @param {String} order_no
+ * @param {Array} order_no
  * @param {Number} is_picking
  * @returns
  */
@@ -200,7 +192,7 @@ export function deliveryOrderItem(data) {
 
 /**
  * 订单批量确认收货
- * @param {String} order_no
+ * @param {Array} order_no
  * @returns
  */
 export function completeOrderList(order_no) {

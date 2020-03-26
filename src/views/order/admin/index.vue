@@ -14,7 +14,8 @@
       :order-total="total"
       @sort="handleSort"
       @tabs="handleTabs"
-      @refresh="handleRefresh"/>
+      @refresh="handleRefresh"
+      @total="handleTotal"/>
 
     <page-footer
       slot="footer"
@@ -106,6 +107,13 @@ export default {
         this.$refs.header.handleFormSubmit(true)
       })
     },
+    // 统计标签数量
+    handleTotal() {
+      getOrderStatusTotal()
+        .then(res => {
+          this.total = res.data || {}
+        })
+    },
     // 提交查询请求
     handleSubmit(form, isRestore = false) {
       if (isRestore) {
@@ -113,10 +121,7 @@ export default {
       }
 
       this.loading = true
-      getOrderStatusTotal()
-        .then(res => {
-          this.total = res.data || {}
-        })
+      this.handleTotal()
 
       getOrderList({
         ...form,

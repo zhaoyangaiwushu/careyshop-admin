@@ -12,7 +12,6 @@
       :table-data="table"
       :to-payment="toPayment"
       :order-total="total"
-      @sort="handleSort"
       @tabs="handleTabs"
       @refresh="handleRefresh"
       @total="handleTotal"/>
@@ -88,13 +87,6 @@ export default {
     // 分页变化改动
     handlePaginationChange(val) {
       this.page = val
-      this.$nextTick(() => {
-        this.$refs.header.handleFormSubmit()
-      })
-    },
-    // 排序刷新
-    handleSort(val) {
-      this.order = val
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit()
       })

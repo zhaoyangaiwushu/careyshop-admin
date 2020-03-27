@@ -71,8 +71,7 @@
         <el-table
           v-if="index === tabPane"
           :data="currentTableData"
-          @selection-change="handleSelectionChange"
-          @sort-change="sortChange">
+          @selection-change="handleSelectionChange">
           <el-table-column align="center" type="selection" width="55"/>
 
           <el-table-column
@@ -174,7 +173,7 @@
                   </el-tooltip>
 
                   <el-tooltip
-                    v-if="scope.row.invoice_title"
+                    v-if="scope.row.invoice_type > 0"
                     placement="top">
                     <div slot="content">
                       发票抬头：{{scope.row.invoice_title}}
@@ -372,6 +371,86 @@
       :append-to-body="true"
       :close-on-click-modal="false"
       width="600px">
+      <el-form
+        :model="formOrder.request"
+        :rules="rules.order"
+        ref="formOrder"
+        label-width="120px">
+        <el-form-item
+          label="收货人姓名"
+          prop="consignee">
+          <el-input
+            v-model="formOrder.request.consignee"
+            placeholder="请输入收货人姓名"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人手机号"
+          prop="mobile">
+          <el-input
+            v-model="formOrder.request.mobile"
+            placeholder="请输入收货人手机号码"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人电话"
+          prop="tel">
+          <el-input
+            v-model="formOrder.request.tel"
+            placeholder="可输入收货人电话"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人邮编"
+          prop="zipcode">
+          <el-input
+            v-model="formOrder.request.zipcode"
+            placeholder="请输入收货人邮编"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货区域"
+          prop="region">
+          <cs-region-select v-model="formOrder.request.region"/>
+        </el-form-item>
+
+        <el-form-item
+          label="详细地址"
+          prop="address">
+          <el-input
+            v-model="formOrder.request.address"
+            placeholder="请输入收货详细地址"
+            :clearable="true"/>
+        </el-form-item>
+
+        <template v-if="formOrder.request.invoice_type > 0">
+          <el-divider/>
+
+          <el-form-item
+            label="发票抬头"
+            prop="invoice_title">
+            <el-input
+              v-model="formOrder.request.invoice_title"
+              placeholder="可输入发票抬头"
+              :clearable="true"/>
+          </el-form-item>
+
+          <el-form-item
+            v-if="formOrder.request.invoice_type === 2"
+            label="纳税人识别号"
+            prop="tax_number">
+            <el-input
+              v-model="formOrder.request.tax_number"
+              placeholder="可输入纳税人识别号"
+              :clearable="true"/>
+          </el-form-item>
+        </template>
+      </el-form>
+
       <div slot="footer" class="dialog-footer">
         <el-button
           @click="formOrder.visible = false"
@@ -392,12 +471,16 @@ import {
   cancelOrderItem,
   changePriceOrderItem,
   remarkOrderItem,
-  recycleOrderItem
+  recycleOrderItem,
+  setOrderItem
 } from '@/api/order/order'
 import util from '@/utils/util'
 import { getSettingList } from '@/api/config/setting'
 
 export default {
+  components: {
+    'csRegionSelect': () => import('@/components/cs-region-select')
+  },
   props: {
     loading: {
       default: false
@@ -417,6 +500,82 @@ export default {
       currentTableData: [],
       multipleSelection: [],
       auth: {
+      },
+      rules: {
+        order: {
+          consignee: [
+            {
+              required: true,
+              message: '收货人姓名不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ],
+          mobile: [
+            {
+              required: true,
+              message: '收货人手机号码不能为空',
+              trigger: 'blur'
+            },
+            {
+              min: 7,
+              max: 15,
+              message: '长度在 7 到 15 个字符',
+              trigger: 'blur'
+            }
+          ],
+          tel: [
+            {
+              max: 20,
+              message: '长度不能大于 20 个字符',
+              trigger: 'blur'
+            }
+          ],
+          zipcode: [
+            {
+              max: 20,
+              message: '长度不能大于 20 个字符',
+              trigger: 'blur'
+            }
+          ],
+          region: [
+            {
+              required: true,
+              message: '收货区域不能为空',
+              trigger: 'change'
+            }
+          ],
+          address: [
+            {
+              required: true,
+              message: '收货详细地址不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          invoice_title: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          tax_number: [
+            {
+              max: 20,
+              message: '长度不能大于 20 个字符',
+              trigger: 'blur'
+            }
+          ]
+        }
       },
       tabPane: '0',
       tabList: {
@@ -545,20 +704,6 @@ export default {
     // 选中数据项
     handleSelectionChange(val) {
       this.multipleSelection = val
-    },
-    // 获取排序字段
-    sortChange({ column, prop, order }) {
-      let sort = {
-        order_type: undefined,
-        order_field: undefined
-      }
-
-      if (column && order) {
-        sort.order_type = order === 'ascending' ? 'asc' : 'desc'
-        sort.order_field = prop
-      }
-
-      this.$emit('sort', sort)
     },
     // 打开商品预览
     handleView(goods_id) {
@@ -726,12 +871,59 @@ export default {
       this.formOrder = {
         index,
         loading: false,
-        visible: true,
-        request: { ...this.currentTableData[index] }
+        visible: false,
+        request: {
+          ...this.currentTableData[index],
+          region: []
+        }
       }
+
+      let region = ['province', 'city', 'district']
+      region.forEach(item => {
+        if (this.formOrder.request.hasOwnProperty(item)) {
+          if (this.formOrder.request[item] > 0) {
+            this.formOrder.request.region.push(this.formOrder.request[item])
+          }
+        }
+      })
+
+      this.$nextTick(() => {
+        if (this.$refs.formOrder) {
+          this.$refs.formOrder.clearValidate()
+        }
+
+        this.formOrder.visible = true
+      })
     },
     // 请求修改订单
     handleSetOrder() {
+      this.$refs.formOrder.validate(valid => {
+        if (valid) {
+          let region = ['province', 'city', 'district']
+          region.forEach((item, index) => {
+            if (this.formOrder.request.hasOwnProperty(item)) {
+              if (this.formOrder.request[item] > 0) {
+                this.formOrder.request[item] = this.formOrder.request.region[index]
+              }
+            }
+          })
+
+          this.formOrder.loading = true
+          setOrderItem(this.formOrder.request)
+            .then(res => {
+              this.$set(this.currentTableData, this.formOrder.index, {
+                ...this.currentTableData[this.formOrder.index],
+                ...res.data
+              })
+
+              this.formOrder.visible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.formOrder.loading = false
+            })
+        }
+      })
     }
   }
 }

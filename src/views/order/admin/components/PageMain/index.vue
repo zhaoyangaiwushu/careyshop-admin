@@ -49,7 +49,7 @@
         <el-button
           icon="el-icon-shopping-bag-2"
           :disabled="loading"
-          @click="() => {}">确认收货</el-button>
+          @click="handleComplete()">确认收货</el-button>
       </el-form-item>
 
       <cs-help
@@ -99,7 +99,9 @@
                 <div class="goods-info order-text">
                   <p @click="handleView(goods.goods_id)">
                     <span class="link">{{goods.goods_name}}</span>
-                    <span class="service">{{serviceMap[goods.is_service]}}</span>
+                    <span
+                      :class="`${goods.is_service === 1 ? 'service' : 'complete'}`"
+                      class="cs-pl-5">{{serviceMap[goods.is_service]}}</span>
                   </p>
                   <p v-if="goods.key_value" class="son">{{goods.key_value}}</p>
                   <p class="son">本店价：{{goods.shop_price | getNumber}} x {{goods.qty}}</p>
@@ -248,6 +250,7 @@
                   <el-link
                     class="order-button"
                     type="primary"
+                    @click="handleComplete(scope.$index)"
                     :underline="false">确认收货</el-link>
                 </p>
 
@@ -406,15 +409,6 @@
         </el-form-item>
 
         <el-form-item
-          label="收货人邮编"
-          prop="zipcode">
-          <el-input
-            v-model="formOrder.request.zipcode"
-            placeholder="请输入收货人邮编"
-            :clearable="true"/>
-        </el-form-item>
-
-        <el-form-item
           label="收货区域"
           prop="region">
           <cs-region-select v-model="formOrder.request.region"/>
@@ -426,6 +420,15 @@
           <el-input
             v-model="formOrder.request.address"
             placeholder="请输入收货详细地址"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人邮编"
+          prop="zipcode">
+          <el-input
+            v-model="formOrder.request.zipcode"
+            placeholder="请输入收货人邮编"
             :clearable="true"/>
         </el-form-item>
 
@@ -474,7 +477,9 @@ import {
   changePriceOrderItem,
   remarkOrderItem,
   recycleOrderItem,
-  setOrderItem
+  setOrderItem,
+  pickingOrderList,
+  completeOrderList
 } from '@/api/order/order'
 import util from '@/utils/util'
 import { getSettingList } from '@/api/config/setting'
@@ -672,6 +677,19 @@ export default {
 
       return ''
     },
+    // 询问提示
+    _whetherToConfirm(message = null, type = 'warning') {
+      let options = {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type
+      }
+
+      let msg = message || '确定要执行该操作吗?'
+
+      return this.$confirm(msg, '提示', options)
+    },
     // 数字化标签名称
     getTabPaneName(key, value) {
       if (!this.totalMap.hasOwnProperty(key)) {
@@ -815,14 +833,11 @@ export default {
     },
     // 请求取消订单
     handleOrderCancel(index) {
-      this.$confirm('确定要执行该操作吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        closeOnClickModal: false
-      })
+      this._whetherToConfirm()
         .then(() => {
+          let refreshTotal = true
           const data = this.currentTableData[index]
+
           cancelOrderItem(data.order_no)
             .then(res => {
               if (this.tabPane === '0') {
@@ -832,13 +847,13 @@ export default {
                 })
               } else {
                 this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  refreshTotal = false
+                  this.$emit('refresh', true)
+                }
               }
 
-              if (this.currentTableData.length <= 0) {
-                this.$emit('refresh', true)
-              }
-
-              this.$emit('total')
+              refreshTotal && this.$emit('total')
               this.$message.success('操作成功')
             })
         })
@@ -847,12 +862,7 @@ export default {
     },
     // 请求删除或恢复订单
     handleOrderRecycle(index, type) {
-      this.$confirm('确定要执行该操作吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        closeOnClickModal: false
-      })
+      this._whetherToConfirm()
         .then(() => {
           recycleOrderItem(this.currentTableData[index].order_no, type)
             .then(() => {
@@ -935,7 +945,81 @@ export default {
         return
       }
 
-      console.log(orderList)
+      this._whetherToConfirm()
+        .then(() => {
+          let refreshTotal = true
+          pickingOrderList(orderList, is_picking)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.currentTableData.forEach(item => {
+                  if (orderList.indexOf(item.order_no) !== -1) {
+                    this.$set(item, 'trade_status', res.data.trade_status)
+                  }
+                })
+              } else {
+                for (let i = this.currentTableData.length - 1; i >= 0; i--) {
+                  if (orderList.indexOf(this.currentTableData[i].order_no) !== -1) {
+                    this.currentTableData.splice(i, 1)
+                  }
+                }
+
+                if (this.currentTableData.length <= 0) {
+                  refreshTotal = false
+                  this.$emit('refresh', true)
+                }
+              }
+
+              refreshTotal && this.$emit('total')
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 请求确认收货
+    handleComplete(value = null) {
+      let orderList = this._getOrderNoList(value)
+      if (orderList.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      this._whetherToConfirm()
+        .then(() => {
+          let refreshTotal = true
+          completeOrderList(orderList)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.currentTableData.forEach(item => {
+                  if (orderList.indexOf(item.order_no) !== -1) {
+                    item.trade_status = res.data.trade_status
+                    item.finished_time = res.data.finished_time
+                    item.get_order_goods.forEach(goods => {
+                      if (goods.is_service === 1) {
+                        goods.is_service = 0
+                      }
+                    })
+                  }
+                })
+              } else {
+                for (let i = this.currentTableData.length - 1; i >= 0; i--) {
+                  if (orderList.indexOf(this.currentTableData[i].order_no) !== -1) {
+                    this.currentTableData.splice(i, 1)
+                  }
+                }
+
+                if (this.currentTableData.length <= 0) {
+                  refreshTotal = false
+                  this.$emit('refresh', true)
+                }
+              }
+
+              refreshTotal && this.$emit('total')
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
     }
   }
 }
@@ -980,8 +1064,11 @@ export default {
       }
       .service {
         font-size: 13px;
-        padding-left: 5px;
         color: $color-warning;
+      }
+      .complete {
+        font-size: 13px;
+        color: $color-success;
       }
     }
   }

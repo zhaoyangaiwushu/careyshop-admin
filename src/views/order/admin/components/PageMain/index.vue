@@ -35,14 +35,14 @@
         <el-button
           icon="el-icon-document-checked"
           :disabled="loading"
-          @click="() => {}">设为配货</el-button>
+          @click="handlePicking(1)">设为配货</el-button>
       </el-form-item>
 
       <el-form-item v-if="tabPane === '3'">
         <el-button
           icon="el-icon-document-delete"
           :disabled="loading"
-          @click="() => {}">取消配货</el-button>
+          @click="handlePicking(0)">取消配货</el-button>
       </el-form-item>
 
       <el-form-item v-if="tabPane === '4'">
@@ -177,7 +177,7 @@
                     placement="top">
                     <div slot="content">
                       发票抬头：{{scope.row.invoice_title}}
-                      <template v-if="scope.row.tax_number"><br/>纳税人号：{{scope.row.tax_number}}</template>
+                      <template v-if="scope.row.invoice_type === 2"><br/>纳税人号：{{scope.row.tax_number}}</template>
                     </div>
                     <i class="el-icon-tickets cs-ml-10"/>
                   </el-tooltip>
@@ -223,6 +223,7 @@
                   <el-link
                     class="order-button"
                     type="primary"
+                    @click="handlePicking(1, scope.$index)"
                     :underline="false">设为配货</el-link>
                 </p>
 
@@ -230,6 +231,7 @@
                   <el-link
                     class="order-button"
                     type="primary"
+                    @click="handlePicking(0, scope.$index)"
                     :underline="false">取消配货</el-link>
                 </p>
 
@@ -924,6 +926,16 @@ export default {
             })
         }
       })
+    },
+    // 请求配货状态
+    handlePicking(is_picking, value = null) {
+      let orderList = this._getOrderNoList(value)
+      if (orderList.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      console.log(orderList)
     }
   }
 }

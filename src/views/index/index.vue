@@ -2,7 +2,7 @@
   <cs-container>
     <cs-page-cover
       title="CareyShop Admin"
-      sub-title="商城后台管理系统集成方案(开发继续中...)">
+      sub-title="商城后台管理系统集成方案(订单、售后模块继续中...)">
       <img src="~@/assets/image/logo@2x.png" alt="logo">
       <div slot="footer" class="index-btn-group">
         <span @click="$open('https://www.careyshop.cn')">主页</span>
@@ -29,6 +29,7 @@ export default {
   .index-btn-group {
     color: $color-text-placehoder;
     span {
+      font-size: 13px;
       color: $color-text-sub;
       &:hover {
         color: $color-text-main;

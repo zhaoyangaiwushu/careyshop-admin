@@ -116,15 +116,7 @@
       </el-table-column>
     </el-table>
 
-    <el-drawer
-      class="view-goods"
-      size="100%"
-      :visible.sync="drawer"
-      :append-to-body="true"
-      :show-close="true"
-      :modal="false">
-      <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
-    </el-drawer>
+    <cs-goods-drawer ref="goodsDrawer"/>
   </div>
 </template>
 
@@ -134,7 +126,7 @@ import { getGoodsSelect } from '@/api/goods/goods'
 
 export default {
   components: {
-    'csGoodsView': () => import('@/views/goods/admin/view')
+    'csGoodsDrawer': () => import('@/components/cs-goods-drawer')
   },
   props: {
     // 外部v-model值
@@ -172,8 +164,6 @@ export default {
   },
   data() {
     return {
-      drawer: false,
-      currentGoodsId: 0,
       typeHelp: {
         '0': '打折额度，比如65表示按6.5折结算',
         '1': '减多少额度，比如65表示在原价的基础上减去65',
@@ -255,8 +245,9 @@ export default {
       })
     },
     handleViewGoods(val) {
-      this.drawer = true
-      this.currentGoodsId = val
+      this.$nextTick(() => {
+        this.$refs.goodsDrawer.show(val)
+      })
     }
   }
 }
@@ -272,9 +263,5 @@ export default {
     cursor: pointer;
     color: #409EFF;
     text-decoration: underline;
-  }
-  .view-goods >>> .el-drawer__body {
-    height: auto;
-    overflow: auto;
   }
 </style>

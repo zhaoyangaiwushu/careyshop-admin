@@ -74,18 +74,8 @@
                 @click="handleViewGoods(scope.row.goods_id)"
                 class="name">{{scope.row.name}}</div>
 
-              <p class="price">￥{{scope.row.shop_price|getNumber}}</p>
+              <p class="price"><span style="color: #909399;">本店价：</span>{{scope.row.shop_price|getNumber}}</p>
             </div>
-
-            <el-drawer
-              class="view-goods"
-              size="100%"
-              :visible.sync="drawer"
-              :append-to-body="true"
-              :show-close="true"
-              :modal="false">
-              <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
-            </el-drawer>
           </template>
         </el-table-column>
 
@@ -133,6 +123,8 @@
           size="small">确定</el-button>
       </div>
     </el-dialog>
+
+    <cs-goods-drawer ref="goodsDrawer"/>
   </div>
 </template>
 
@@ -143,8 +135,8 @@ import { getGoodsAdminList, getGoodsSelect } from '@/api/goods/goods'
 export default {
   name: 'cs-goods-select',
   components: {
-    'PageFooter': () => import('@/layout/header-aside/components/footer'),
-    'csGoodsView': () => import('@/views/goods/admin/view')
+    'csGoodsDrawer': () => import('@/components/cs-goods-drawer'),
+    'PageFooter': () => import('@/layout/header-aside/components/footer')
   },
   props: {
     // 确认按钮事件
@@ -160,8 +152,6 @@ export default {
   },
   data() {
     return {
-      drawer: false,
-      currentGoodsId: 0,
       visible: false,
       loading: true,
       isCheck: false,
@@ -277,8 +267,9 @@ export default {
       this.visible = false
     },
     handleViewGoods(val) {
-      this.drawer = true
-      this.currentGoodsId = val
+      this.$nextTick(() => {
+        this.$refs.goodsDrawer.show(val)
+      })
     }
   }
 }
@@ -288,10 +279,6 @@ export default {
   .goods-control {
     width: auto;
     display: inline;
-  }
-  .view-goods /deep/ .el-drawer__body {
-    height: auto;
-    overflow: auto;
   }
   .goods-image {
     float: left;

@@ -1,6 +1,6 @@
 {
   "name": "careyshop-admin",
-  "version": "1.5.7",
+  "version": "1.5.8",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -22,7 +22,7 @@
     "flex.css": "^1.1.7",
     "fuse.js": "^3.6.1",
     "highlight.js": "^9.18.1",
-    "hotkeys-js": "^3.7.3",
+    "hotkeys-js": "^3.7.6",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
     "lowdb": "^1.0.0",

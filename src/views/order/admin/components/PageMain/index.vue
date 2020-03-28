@@ -61,7 +61,7 @@
     <el-tabs
       v-model="tabPane"
       v-loading="loading"
-      @tab-click="handleClick"
+      @tab-click="tab => {$emit('tabs', tab.name)}"
       class="tab-box">
       <el-tab-pane
         v-for="(item, index) in tabList"
@@ -478,9 +478,9 @@
       width="760px">
       <el-table
         :data="formDelivery.goods"
-        :highlight-current-row="true"
-        row-key="order_goods_id"
-        style="margin-top: -25px;">
+        style="margin-top: -25px;"
+        ref="dliveryMultiple"
+        @selection-change="val => {formDelivery.selection = val}">
         <el-table-column
           align="center"
           type="selection"
@@ -525,6 +525,68 @@
         </el-table-column>
       </el-table>
 
+      <div class="cs-mt">
+        <el-radio-group
+          v-model="formDelivery.delivery"
+          class="cs-pb">
+          <el-radio :label="0">无需配送</el-radio>
+          <el-radio :label="1">配送方式</el-radio>
+          <el-radio :label="2">快递公司</el-radio>
+        </el-radio-group>
+
+        <el-form
+          :inline="true"
+          :model="formDelivery.request"
+          :rules="rules.delivery"
+          ref="formDelivery"
+          size="small">
+          <el-form-item
+            v-if="formDelivery.delivery === 1"
+            label="配送方式"
+            prop="delivery_id">
+            <el-select
+              v-model="formDelivery.request.delivery_id"
+              placeholder="请选择"
+              clearable>
+              <el-option
+                v-for="item in delivery.select"
+                :key="item.delivery_id"
+                :label="item.alias"
+                :value="item.delivery_id">
+                <span style="float: left;">{{item.alias}}</span>
+                <span style="float: right; color: #8492a6; font-size: 13px;">{{item.name}}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            v-if="formDelivery.delivery === 2"
+            label="快递公司"
+            prop="delivery_item_id">
+            <el-select
+              v-model="formDelivery.request.delivery_item_id"
+              placeholder="请选择"
+              clearable>
+              <el-option
+                v-for="item in delivery.company"
+                :key="item.delivery_item_id"
+                :label="item.name"
+                :value="item.delivery_item_id"/>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            v-if="formDelivery.delivery !== 0"
+            label="快递单号"
+            prop="logistic_code">
+            <el-input
+              v-model="formDelivery.request.logistic_code"
+              placeholder="请输入快递单号"
+              :clearable="true"/>
+          </el-form-item>
+        </el-form>
+      </div>
+
       <cs-goods-drawer ref="goodsDrawer"/>
 
       <div slot="footer" class="dialog-footer">
@@ -535,7 +597,7 @@
         <el-button
           type="primary"
           :loading="formDelivery.loading"
-          @click="() => {}"
+          @click="deliveryOrderItem"
           size="small">确定</el-button>
       </div>
     </el-dialog>
@@ -550,10 +612,13 @@ import {
   recycleOrderItem,
   setOrderItem,
   pickingOrderList,
-  completeOrderList
+  completeOrderList,
+  deliveryOrderItem
 } from '@/api/order/order'
 import util from '@/utils/util'
 import { getSettingList } from '@/api/config/setting'
+import { getDeliverySelect } from '@/api/logistics/delivery'
+import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
   components: {
@@ -578,6 +643,7 @@ export default {
     return {
       currentTableData: [],
       multipleSelection: [],
+      delivery: {},
       auth: {
       },
       rules: {
@@ -654,6 +720,34 @@ export default {
               trigger: 'blur'
             }
           ]
+        },
+        delivery: {
+          delivery_id: [
+            {
+              required: true,
+              message: '至少选择一项',
+              trigger: 'change'
+            }
+          ],
+          delivery_item_id: [
+            {
+              required: true,
+              message: '至少选择一项',
+              trigger: 'change'
+            }
+          ],
+          logistic_code: [
+            {
+              required: true,
+              message: '快递单号不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ]
         }
       },
       tabPane: '0',
@@ -708,6 +802,8 @@ export default {
         index: undefined,
         loading: false,
         visible: false,
+        delivery: 1,
+        selection: [],
         goods: {},
         request: {}
       }
@@ -735,6 +831,7 @@ export default {
   },
   mounted() {
     this.getOrderSource()
+    this.handleOpenDelivery()
   },
   methods: {
     // 获取列表中的订单编号
@@ -801,10 +898,6 @@ export default {
             })
           }
         })
-    },
-    // 点击切换标签
-    handleClick(tab) {
-      this.$emit('tabs', tab.name)
     },
     // 选中数据项
     handleSelectionChange(val) {
@@ -1112,21 +1205,103 @@ export default {
         this.$refs.goodsDrawer.show(value)
       })
     },
+    // 获取配送信息
+    handleOpenDelivery() {
+      if (!this.delivery.select) {
+        getDeliverySelect()
+          .then(res => {
+            this.delivery.select = res.data || []
+          })
+      }
+
+      if (!this.delivery.company) {
+        getDeliveryCompanySelect(0)
+          .then(res => {
+            this.delivery.company = res.data || []
+          })
+      }
+    },
     // 确认发货
     handleDelivery(index) {
       const data = this.currentTableData[index]
       this.formDelivery = {
         index,
         loading: false,
-        visible: true,
+        visible: false,
+        delivery: 1,
+        selection: [],
         goods: data.get_order_goods,
         request: {
           order_no: data.order_no,
           order_goods_id: [],
           delivery_id: data.delivery_id,
-          logistic_code: ''
+          delivery_item_id: undefined,
+          logistic_code: undefined
         }
       }
+
+      // 处理el-select项不存在的bug
+      if (this.delivery.select) {
+        if (!this.delivery.select.find(item => item.delivery_id === data.delivery_id)) {
+          this.formDelivery.request.delivery_id = undefined
+        }
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.formDelivery) {
+          this.$refs.formDelivery.clearValidate()
+        }
+
+        if (this.$refs.dliveryMultiple) {
+          this.$refs.dliveryMultiple.clearSelection()
+        }
+
+        this.formDelivery.visible = true
+      })
+    },
+    // 请求确认发货
+    deliveryOrderItem() {
+      this.$refs.formDelivery.validate(valid => {
+        if (valid) {
+          if (this.formDelivery.selection.length <= 0) {
+            this.formDelivery.loading = false
+            this.$message.error('请选择要操作的商品')
+            return
+          }
+
+          let data = this.formDelivery.request
+          let orderGoods = []
+
+          this.formDelivery.selection.forEach(item => {
+            orderGoods.push(item.order_goods_id)
+          })
+
+          switch (this.formDelivery.delivery) {
+            case 0:
+              delete data.delivery_id
+              delete data.delivery_item_id
+              delete data.logistic_code
+              break
+            case 1:
+              delete data.delivery_item_id
+              break
+            case 2:
+              delete data.delivery_id
+              break
+          }
+
+          this.formDelivery.request.order_goods_id = orderGoods
+          this.formDelivery.loading = true
+
+          deliveryOrderItem({ ...data })
+            .then(res => {
+              console.log(res)
+            })
+            .catch(() => {
+              this.formDelivery.loading = false
+            })
+        }
+      })
     }
   }
 }

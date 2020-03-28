@@ -973,6 +973,13 @@
 </template>
 
 <script>
+import {
+  addGoodsItem,
+  setGoodsItem,
+  getGoodsItem,
+  getGoodsAttrConfig,
+  getGoodsSpecConfig
+} from '@/api/goods/goods'
 import util from '@/utils/util'
 import { debounce } from 'lodash'
 import { mapActions } from 'vuex'
@@ -981,13 +988,6 @@ import { getGoodsCategoryList } from '@/api/goods/category'
 import { getGoodsTypeSelect } from '@/api/goods/type'
 import { getGoodsSpecList } from '@/api/goods/spec'
 import { getGoodsAttributeList } from '@/api/goods/attribute'
-import {
-  addGoodsItem,
-  setGoodsItem,
-  getGoodsItem,
-  getGoodsAttrConfig,
-  getGoodsSpecConfig
-} from '@/api/goods/goods'
 
 export default {
   components: {

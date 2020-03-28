@@ -242,6 +242,7 @@
                   <el-link
                     class="order-button"
                     type="primary"
+                    @click="handleDelivery(scope.$index)"
                     :underline="false">确定发货
                   </el-link>
                 </p>
@@ -468,6 +469,76 @@
           size="small">确定</el-button>
       </div>
     </el-dialog>
+
+    <el-dialog
+      title="确定发货"
+      :visible.sync="formDelivery.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="760px">
+      <el-table
+        :data="formDelivery.goods"
+        :highlight-current-row="true"
+        row-key="order_goods_id"
+        style="margin-top: -25px;">
+        <el-table-column
+          align="center"
+          type="selection"
+          width="50"
+          :selectable="row => {return !row.status}">
+        </el-table-column>
+
+        <el-table-column
+          label="商品"
+          prop="goods_name">
+          <template slot-scope="scope">
+            <div class="order-goods-list">
+              <el-image
+                class="goods-image-small cs-cp"
+                @click="handleViewGoods(scope.row.goods_id)"
+                :src="scope.row.goods_image | getPreviewUrl"
+                fit="contain">
+              </el-image>
+
+              <div class="goods-info order-text" style="padding: 0 30px 0 70px;">
+                <p class="goods-name link" @click="handleViewGoods(scope.row.goods_id)">{{scope.row.goods_name}}</p>
+                <p v-if="scope.row.key_value" class="son">{{scope.row.key_value}}</p>
+              </div>
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          label="数量"
+          prop="qty"
+          width="100">
+        </el-table-column>
+
+        <el-table-column
+          label="状态"
+          prop="status"
+          align="center"
+          width="80">
+          <template slot-scope="scope">
+            <span :style="{'color': scope.row.status !== 1 || '#67C23A'}">{{statusMap[scope.row.status]}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <cs-goods-drawer ref="goodsDrawer"/>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formDelivery.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formDelivery.loading"
+          @click="() => {}"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -486,7 +557,8 @@ import { getSettingList } from '@/api/config/setting'
 
 export default {
   components: {
-    'csRegionSelect': () => import('@/components/cs-region-select')
+    'csRegionSelect': () => import('@/components/cs-region-select'),
+    'csGoodsDrawer': () => import('@/components/cs-goods-drawer')
   },
   props: {
     loading: {
@@ -606,6 +678,12 @@ export default {
         '1': '售后中',
         '2': '已售后'
       },
+      statusMap: {
+        0: '待发货',
+        1: '已发货',
+        2: '已收货',
+        3: '已取消'
+      },
       sourceMap: {},
       formRemark: {
         index: undefined,
@@ -624,6 +702,13 @@ export default {
         index: undefined,
         loading: false,
         visible: false,
+        request: {}
+      },
+      formDelivery: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        goods: {},
         request: {}
       }
     }
@@ -1020,6 +1105,28 @@ export default {
         })
         .catch(() => {
         })
+    },
+    // 商品预览弹出窗
+    handleViewGoods(value) {
+      this.$nextTick(() => {
+        this.$refs.goodsDrawer.show(value)
+      })
+    },
+    // 确认发货
+    handleDelivery(index) {
+      const data = this.currentTableData[index]
+      this.formDelivery = {
+        index,
+        loading: false,
+        visible: true,
+        goods: data.get_order_goods,
+        request: {
+          order_no: data.order_no,
+          order_goods_id: [],
+          delivery_id: data.delivery_id,
+          logistic_code: ''
+        }
+      }
     }
   }
 }
@@ -1053,8 +1160,18 @@ export default {
       width: 80px;
       height: 80px;
     }
+    .goods-image-small {
+      float: left;
+      width: 60px;
+      height: 60px;
+    }
     .goods-info {
       padding: 0 50px 0 100px;
+      .goods-name {
+        height: 36px;
+        line-height: 18px;
+        overflow: hidden;
+      }
       .link {
         &:hover {
           cursor: pointer;

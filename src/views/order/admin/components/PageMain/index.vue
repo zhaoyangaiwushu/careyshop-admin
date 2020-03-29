@@ -134,7 +134,8 @@
             </template>
           </el-table-column>
 
-          <el-table-column label="买家">
+          <el-table-column
+            label="买家">
             <template slot-scope="scope">
               <div class="order-text">
                 <p>
@@ -259,6 +260,7 @@
                   <el-link
                     class="order-button"
                     type="primary"
+                    @click="handleDeliveryDist(scope.row.order_no)"
                     :underline="false">物流信息</el-link>
                 </p>
 
@@ -547,6 +549,7 @@
             <el-select
               v-model="formDelivery.request.delivery_id"
               placeholder="请选择"
+              style="width: 280px;"
               clearable>
               <el-option
                 v-for="item in delivery.select"
@@ -566,6 +569,7 @@
             <el-select
               v-model="formDelivery.request.delivery_item_id"
               placeholder="请选择"
+              style="width: 280px;"
               clearable>
               <el-option
                 v-for="item in delivery.company"
@@ -601,6 +605,8 @@
           size="small">确定</el-button>
       </div>
     </el-dialog>
+
+    <cs-delivery-dist ref="deliveryDist"/>
   </div>
 </template>
 
@@ -623,7 +629,8 @@ import { getDeliveryCompanySelect } from '@/api/logistics/company'
 export default {
   components: {
     'csRegionSelect': () => import('@/components/cs-region-select'),
-    'csGoodsDrawer': () => import('@/components/cs-goods-drawer')
+    'csGoodsDrawer': () => import('@/components/cs-goods-drawer'),
+    'csDeliveryDist': () => import('@/components/cs-delivery-dist')
   },
   props: {
     loading: {
@@ -1327,6 +1334,12 @@ export default {
             })
         }
       })
+    },
+    // 查询配送轨迹
+    handleDeliveryDist(value) {
+      if (this.$refs.deliveryDist) {
+        this.$refs.deliveryDist.show(value)
+      }
     }
   }
 }

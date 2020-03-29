@@ -99,11 +99,12 @@
       title="即时查询"
       :visible.sync="traceFormVisible"
       :append-to-body="true"
-      :close-on-click-modal="false"
       width="600px">
       <el-form
+        v-loading="traceLoading"
         label-width="80px"
-        v-loading="traceLoading">
+        label-position="left"
+        style="margin-top: -25px;">
         <el-form-item
           label="快递单号"
           prop="logistic_code">

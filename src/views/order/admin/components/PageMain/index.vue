@@ -520,7 +520,7 @@
           align="center"
           width="80">
           <template slot-scope="scope">
-            <span :style="{'color': scope.row.status !== 1 || '#67C23A'}">{{statusMap[scope.row.status]}}</span>
+            <span :style="{'color': scope.row.status > 0 ? '#67C23A' : ''}">{{statusMap[scope.row.status]}}</span>
           </template>
         </el-table-column>
       </el-table>
@@ -1265,12 +1265,12 @@ export default {
         if (valid) {
           if (this.formDelivery.selection.length <= 0) {
             this.formDelivery.loading = false
-            this.$message.error('请选择要操作的商品')
+            this.$message.error('请至少选择一个商品')
             return
           }
 
-          let data = this.formDelivery.request
           let orderGoods = []
+          let request = this.formDelivery.request
 
           this.formDelivery.selection.forEach(item => {
             orderGoods.push(item.order_goods_id)
@@ -1278,24 +1278,49 @@ export default {
 
           switch (this.formDelivery.delivery) {
             case 0:
-              delete data.delivery_id
-              delete data.delivery_item_id
-              delete data.logistic_code
+              delete request.delivery_id
+              delete request.delivery_item_id
+              delete request.logistic_code
               break
             case 1:
-              delete data.delivery_item_id
+              delete request.delivery_item_id
               break
             case 2:
-              delete data.delivery_id
+              delete request.delivery_id
               break
           }
 
-          this.formDelivery.request.order_goods_id = orderGoods
           this.formDelivery.loading = true
+          this.formDelivery.request.order_goods_id = orderGoods
 
-          deliveryOrderItem({ ...data })
+          deliveryOrderItem({ ...request })
             .then(res => {
-              console.log(res)
+              let refreshTotal = true
+              const index = this.formDelivery.index
+
+              if (this.tabPane === '0' || res.data.delivery_status !== 1) {
+                this.formDelivery.goods.forEach(item => {
+                  if (orderGoods.includes(item.order_goods_id)) {
+                    item['is_service'] = 0
+                    item['status'] = 1
+                  }
+                })
+
+                this.$set(this.currentTableData, index, {
+                  ...this.currentTableData[index],
+                  ...res.data
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  refreshTotal = false
+                  this.$emit('refresh', true)
+                }
+              }
+
+              refreshTotal && this.$emit('total')
+              this.formDelivery.visible = false
+              this.$message.success('操作成功')
             })
             .catch(() => {
               this.formDelivery.loading = false

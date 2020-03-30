@@ -2,10 +2,18 @@
   <div class="cs-p">
     <el-form :inline="true" size="small">
       <el-form-item>
-        <el-button
-          icon="el-icon-download"
-          :disabled="loading"
-          @click="() => {}">导出数据</el-button>
+        <el-tooltip placement="top-start" :open-delay="650">
+          <div slot="content">
+            <span>为您提供三个月内的数据导出</span><br/>
+            <span>当勾选订单时，只导出被选中的数据</span>
+          </div>
+
+          <el-button
+            icon="el-icon-download"
+            :disabled="loading"
+            :loading="exportLoading"
+            @click="handleExport">导出数据</el-button>
+        </el-tooltip>
       </el-form-item>
 
       <el-form-item>
@@ -622,11 +630,13 @@ import {
   deliveryOrderItem
 } from '@/api/order/order'
 import util from '@/utils/util'
+import exportOrder from '../mixins/export'
 import { getSettingList } from '@/api/config/setting'
 import { getDeliverySelect } from '@/api/logistics/delivery'
 import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
+  mixins: [exportOrder],
   components: {
     'csRegionSelect': () => import('@/components/cs-region-select'),
     'csGoodsDrawer': () => import('@/components/cs-goods-drawer'),

@@ -648,7 +648,7 @@ import {
 import * as clipboard from 'clipboard-polyfill'
 import util from '@/utils/util'
 import { getUserLevelList } from '@/api/user/level'
-import { tableExport } from '@careyshop/vue-table-export'
+import { TableExport } from '@careyshop/vue-table-export'
 
 export default {
   components: {
@@ -1237,8 +1237,7 @@ export default {
 
       getCouponGiveExport(data.coupon_id)
         .then(res => {
-          // eslint-disable-next-line new-cap
-          let instance = new tableExport(columns, res.data, replace, data.name)
+          let instance = new TableExport(columns, res.data, replace, data.name)
           instance.export()
         })
     },

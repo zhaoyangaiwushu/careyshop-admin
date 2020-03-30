@@ -291,7 +291,7 @@ import {
 } from '@/api/marketing/card'
 import util from '@/utils/util'
 import { getCardUseExport } from '@/api/marketing/card_use'
-import { tableExport } from '@careyshop/vue-table-export'
+import { TableExport } from '@careyshop/vue-table-export'
 
 export default {
   components: {
@@ -678,8 +678,7 @@ export default {
 
       getCardUseExport(id)
         .then(res => {
-          // eslint-disable-next-line new-cap
-          let instance = new tableExport(columns, res.data, replace, name)
+          let instance = new TableExport(columns, res.data, replace, name)
           instance.export()
         })
     }

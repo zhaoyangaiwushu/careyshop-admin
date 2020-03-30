@@ -19,6 +19,20 @@ export default {
       component: () => import('@/views/order/admin')
     },
     {
+      path: 'admin/info/:order_no',
+      name: `${pre}admin-info`,
+      props: true,
+      meta: { ...meta, title: '订单详情' },
+      component: () => import('@/views/order/admin/info')
+    },
+    {
+      path: 'admin/print',
+      name: `${pre}admin-print`,
+      props: true,
+      meta: { ...meta, cache: true, title: '订单打印' },
+      component: () => import('@/views/order/admin/print')
+    },
+    {
       path: 'admin/refund',
       name: `${pre}admin-refund`,
       meta: { ...meta, cache: true, title: '退款日志' },

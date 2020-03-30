@@ -26,15 +26,15 @@
           </el-button>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item
-              @click.native="() => {}">打印订单</el-dropdown-item>
+              @click.native="handlePrint('order')">打印订单</el-dropdown-item>
 
             <el-dropdown-item
               v-if="['2', '3'].includes(tabPane)"
-              @click.native="() => {}">打印出库单</el-dropdown-item>
+              @click.native="handlePrint('out')">打印出库单</el-dropdown-item>
 
             <el-dropdown-item
               v-if="['3', '4'].includes(tabPane)"
-              @click.native="() => {}">打印发货单</el-dropdown-item>
+              @click.native="handlePrint('delivery')">打印发货单</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-form-item>
@@ -211,6 +211,7 @@
                   <el-link
                     class="order-button"
                     type="info"
+                    @click="handleInfo(scope.row.order_no)"
                     :underline="false">详情</el-link>
                 </p>
               </div>
@@ -920,11 +921,33 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val
     },
-    // 打开商品预览
+    // 商品预览
     handleView(goods_id) {
       this.$router.push({
         name: 'goods-admin-view',
         params: { goods_id }
+      })
+    },
+    // 订单详情
+    handleInfo(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
+    },
+    // 订单打印
+    handlePrint(type) {
+      if (this.multipleSelection.length <= 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      this.$router.push({
+        name: 'order-admin-print',
+        params: {
+          type,
+          orderData: this.multipleSelection
+        }
       })
     },
     // 获取订单状态

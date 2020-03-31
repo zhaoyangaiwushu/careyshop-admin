@@ -9,7 +9,6 @@
     <page-main
       :loading="loading"
       :table-data="table"
-      @sort="handleSort"
       @refresh="handleRefresh"/>
 
     <page-footer
@@ -40,10 +39,6 @@ export default {
         current: 1,
         size: 0,
         total: 0
-      },
-      order: {
-        order_type: undefined,
-        order_field: undefined
       }
     }
   },
@@ -74,13 +69,6 @@ export default {
         this.$refs.header.handleFormSubmit()
       })
     },
-    // 排序刷新
-    handleSort(val) {
-      this.order = val
-      this.$nextTick(() => {
-        this.$refs.header.handleFormSubmit()
-      })
-    },
     handleSubmit(form, isRestore = false) {
       if (isRestore) {
         this.page.current = 1
@@ -89,7 +77,6 @@ export default {
       this.loading = true
       getQrcodeList({
         ...form,
-        ...this.order,
         page_no: this.page.current,
         page_size: this.page.size
       })

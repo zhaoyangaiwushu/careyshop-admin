@@ -27,8 +27,7 @@
       v-loading="loading"
       :data="currentTableData"
       :highlight-current-row="true"
-      @selection-change="handleSelectionChange"
-      @sort-change="sortChange">
+      @selection-change="handleSelectionChange">
       <el-table-column align="center" type="selection" width="55"/>
 
       <el-table-column
@@ -67,9 +66,12 @@
 
       <el-table-column
         label="尺寸"
-        prop="size"
-        sortable="custom"
-        width="75">
+        prop="size">
+      </el-table-column>
+
+      <el-table-column
+        label="后缀"
+        prop="suffix">
       </el-table-column>
 
       <el-table-column
@@ -148,16 +150,34 @@
           </el-input>
         </el-form-item>
 
-        <el-form-item
-          label="尺寸"
-          prop="size">
-          <el-input-number
-            v-model="form.size"
-            controls-position="right"
-            :min="1"
-            :max="10"
-            style="width: 120px;"/>
-        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item
+              label="尺寸"
+              prop="size">
+              <el-input-number
+                v-model="form.size"
+                controls-position="right"
+                :min="50"
+                :max="65535"
+                :step="10"/>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="12">
+            <el-form-item
+              label="后缀"
+              prop="suffix">
+              <el-select
+                v-model="form.suffix"
+                placeholder="请选择">
+                <el-option label="png" value="png"/>
+                <el-option label="jpg" value="jpg"/>
+                <el-option label="gif" value="gif"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
 
       <el-divider>效果预览</el-divider>
@@ -301,7 +321,8 @@ export default {
       qrcodeData: {
         name: '',
         text: '',
-        url: ''
+        url: '',
+        suffix: ''
       },
       textMap: {
         update: '编辑二维码',
@@ -351,17 +372,25 @@ export default {
             message: '必须为数字值',
             trigger: 'blur'
           }
+        ],
+        suffix: [
+          {
+            required: true,
+            message: '至少选择一项',
+            trigger: 'change'
+          }
         ]
       }
     }
   },
   computed: {
     changeQrcode() {
-      const { text, size, logo } = this.form
+      const { text, size, logo, suffix } = this.form
       return {
         text,
         size,
-        logo
+        logo,
+        suffix
       }
     }
   },
@@ -437,7 +466,11 @@ export default {
         return
       }
 
-      let parm = `?text=${this.form.text}&size=${this.form.size}&logo=${this.form.logo}`
+      let parm = `?text=${this.form.text}`
+      parm += `&size=${this.form.size}`
+      parm += `&logo=${this.form.logo}`
+      parm += `&suffix=${this.form.suffix}`
+
       this.qrcodeImage = this.qrcodeUrl + encodeURI(parm)
     }, 500),
     // 获取上传资源
@@ -472,28 +505,15 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val
     },
-    // 获取排序字段
-    sortChange({ column, prop, order }) {
-      let sort = {
-        order_type: undefined,
-        order_field: undefined
-      }
-
-      if (column && order) {
-        sort.order_type = order === 'ascending' ? 'asc' : 'desc'
-        sort.order_field = prop
-      }
-
-      this.$emit('sort', sort)
-    },
     // 弹出新建对话框
     handleCreate() {
       this.qrcodeImage = ''
       this.form = {
         name: '',
         text: '',
-        size: 3,
-        logo: ''
+        size: 90,
+        logo: '',
+        suffix: 'png'
       }
 
       this.$nextTick(() => {

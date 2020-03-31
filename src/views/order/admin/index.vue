@@ -48,10 +48,6 @@ export default {
         current: 1,
         size: 0,
         total: 0
-      },
-      order: {
-        order_type: undefined,
-        order_field: undefined
       }
     }
   },
@@ -117,7 +113,6 @@ export default {
 
       getOrderList({
         ...form,
-        ...this.order,
         status: this.status,
         page_no: this.page.current,
         page_size: this.page.size

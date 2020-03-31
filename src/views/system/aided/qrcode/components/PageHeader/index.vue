@@ -14,20 +14,6 @@
         :clearable="true"/>
     </el-form-item>
 
-    <el-form-item label="尺寸" prop="size">
-      <el-select
-        v-model="form.size"
-        placeholder="请选择"
-        style="width: 120px;"
-        clearable
-        value="">
-        <el-option
-          v-for="index in 10"
-          :key="index"
-          :value="index"/>
-      </el-select>
-    </el-form-item>
-
     <el-form-item>
       <el-button
         type="primary"
@@ -54,8 +40,7 @@ export default {
   data() {
     return {
       form: {
-        name: undefined,
-        size: undefined
+        name: undefined
       }
     }
   },

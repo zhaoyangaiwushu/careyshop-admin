@@ -50,6 +50,15 @@
           @click="copyData(qrcode.value)">复制</el-button>
       </el-form-item>
 
+      <el-form-item class="action" :label="barcode.name">
+        <span>{{barcode.value}}</span>
+        <el-button
+          class="form-button active"
+          type="text"
+          size="small"
+          @click="copyData(barcode.value)">复制</el-button>
+      </el-form-item>
+
       <el-form-item class="action" :label="alipay.notify.name">
         <span>{{alipay.notify.value}}</span>
         <el-button
@@ -108,6 +117,10 @@ export default {
         name: '二维码调用URL',
         value: ''
       },
+      barcode: {
+        name: '条形码调用URL',
+        value: ''
+      },
       captcha: {
         name: '应用验证码调用URL',
         value: ''
@@ -154,6 +167,11 @@ export default {
         },
         {
           version: 'v1',
+          controller: 'barcode',
+          method: 'get.barcode.callurl'
+        },
+        {
+          version: 'v1',
           controller: 'app',
           method: 'get.app.captcha.callurl'
         },
@@ -197,6 +215,10 @@ export default {
 
                 case 'get.qrcode.callurl':
                   this.qrcode.value = value.data.call_url
+                  break
+
+                case 'get.barcode.callurl':
+                  this.barcode.value = value.data.call_url
                   break
 
                 case 'get.payment.notify':

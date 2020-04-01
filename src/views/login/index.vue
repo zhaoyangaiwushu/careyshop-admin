@@ -113,6 +113,6 @@ export default {
   .login-code-img {
     margin-top: 5px;
     width: 100px;
-    height: 32px;
+    height: 31px;
   }
 </style>

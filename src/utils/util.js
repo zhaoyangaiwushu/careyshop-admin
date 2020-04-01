@@ -236,6 +236,55 @@ util.getImageStyleUrl = (url, style = '') => {
 }
 
 /**
+ * 动态生成二维码图片地址
+ * @param text
+ * @param expand
+ * @returns {string}
+ */
+util.getQrcodeUrl = (text, expand = {}) => {
+  let data = serverConfig.BASE_API
+  data += '/v1/qrcode/method/get.qrcode.item?text='
+  data += encodeURI(expand.hasOwnProperty('text') ? expand['text'] : text)
+
+  for (const key in expand) {
+    if (key === 'text' || expand[key] === '') {
+      continue
+    }
+
+    if (key === 'logo') {
+      data += `&${key}=${encodeURIComponent(expand[key])}`
+      continue
+    }
+
+    data += `&${key}=${encodeURI(expand[key])}`
+  }
+
+  return data
+}
+
+/**
+ * 动态生成条形码图片地址
+ * @param text
+ * @param expand
+ * @returns {string}
+ */
+util.getBarcodeUrl = (text, expand = {}) => {
+  let data = serverConfig.BASE_API
+  data += '/v1/barcode/method/get.barcode.item?text='
+  data += encodeURI(expand.hasOwnProperty('text') ? expand['text'] : text)
+
+  for (const key in expand) {
+    if (key === 'text' || expand[key] === '') {
+      continue
+    }
+
+    data += `&${key}=${encodeURI(expand[key])}`
+  }
+
+  return data
+}
+
+/**
  * 数字 格式化
  * @param num
  * @param digits

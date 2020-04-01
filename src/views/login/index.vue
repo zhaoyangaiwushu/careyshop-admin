@@ -108,20 +108,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-around;
-    margin: 0 0 0 10px;
+    margin-left: 10px;
   }
   .login-code-img {
-    margin-top: 2px;
+    margin-top: 5px;
     width: 100px;
     height: 32px;
-    background-color: #fdfdfd;
-    border: 1px solid #f0f0f0;
-    color: #333;
-    font-size: 14px;
-    font-weight: bold;
-    letter-spacing: 5px;
-    line-height: 32px;
-    text-indent: 5px;
-    text-align: center;
   }
 </style>

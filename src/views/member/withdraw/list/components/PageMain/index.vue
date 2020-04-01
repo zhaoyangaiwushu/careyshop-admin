@@ -126,9 +126,8 @@
             </td>
             <td rowspan="2">
               <el-image
-                v-if="qrcodeUrl"
                 class="cs-fr"
-                :src="`${qrcodeUrl}?text=${infoForm.withdraw_no}`"
+                :src="infoForm.withdraw_no | getQrcodeImage"
                 fit="fill"/>
             </td>
           </tr>
@@ -174,13 +173,12 @@
 </template>
 
 <script>
-import util from '@/utils/util'
 import {
   completeWithdrawItem,
   processWithdrawItem,
   refuseWithdrawItem
 } from '@/api/user/withdraw'
-import { getQrcodeCallurl } from '@/api/aided/qrcode'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -209,7 +207,6 @@ export default {
         refuse: false
       },
       currentTableData: [],
-      qrcodeUrl: '',
       statusMap: {
         0: {
           text: '待处理',
@@ -237,14 +234,13 @@ export default {
   filters: {
     getNumber(val) {
       return util.getNumber(val)
+    },
+    getQrcodeImage(text, expand = {}) {
+      return util.getQrcodeUrl(text, expand)
     }
   },
   mounted() {
     this._validationAuth()
-    getQrcodeCallurl()
-      .then(res => {
-        this.qrcodeUrl = res.data['call_url']
-      })
   },
   methods: {
     // 验证权限

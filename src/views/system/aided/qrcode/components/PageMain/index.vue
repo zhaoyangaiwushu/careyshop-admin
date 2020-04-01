@@ -233,7 +233,7 @@
           <p>效果预览</p>
         </el-col>
         <el-col :span="20">
-          <el-image v-if="qrcodeData.url" fit="fill" :src="qrcodeData.url"/>
+          <el-image v-if="qrcodeData.url" fit="fill" :src="`${qrcodeData.url}&t=${Math.random()}`"/>
         </el-col>
       </el-row>
 
@@ -280,10 +280,10 @@
 
 <script>
 import {
-  getQrcodeCallurl,
   delQrcodeList,
   addQrcodeItem,
-  setQrcodeItem
+  setQrcodeItem,
+  getQrcodeCallurl
 } from '@/api/aided/qrcode'
 import { debounce } from 'lodash'
 import * as clipboard from 'clipboard-polyfill'
@@ -321,8 +321,7 @@ export default {
       qrcodeData: {
         name: '',
         text: '',
-        url: '',
-        suffix: ''
+        url: ''
       },
       textMap: {
         update: '编辑二维码',
@@ -466,12 +465,8 @@ export default {
         return
       }
 
-      let parm = `?text=${this.form.text}`
-      parm += `&size=${this.form.size}`
-      parm += `&logo=${this.form.logo}`
-      parm += `&suffix=${this.form.suffix}`
-
-      this.qrcodeImage = this.qrcodeUrl + encodeURI(parm)
+      const { text, size, logo, suffix } = this.form
+      this.qrcodeImage = util.getQrcodeUrl('', { text, size, logo, suffix })
     }, 500),
     // 获取上传资源
     _getUploadFileList(files) {
@@ -511,7 +506,7 @@ export default {
       this.form = {
         name: '',
         text: '',
-        size: 90,
+        size: 75,
         logo: '',
         suffix: 'png'
       }

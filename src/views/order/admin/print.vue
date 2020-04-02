@@ -1,13 +1,22 @@
 <template>
-  <cs-container parent-path="order-admin-list">
+  <cs-container :is-back-to-top="true" parent-path="order-admin-list">
     <template v-if="orderData">
       <div class="print-main" ref="print">
         <template v-if="type === 'order'">
-          <div
-            v-for="(item, index) in orderData"
-            :key="index"
-            class="print-order">
-            <span>{{item.order_no}}</span>
+          <div v-for="(item, index) in orderData" :key="index" class="print-order">
+            <table style="border-top: none;">
+              <tr>
+                <th><img :src="logo" alt=""></th>
+                <th style="width: 250px;" valign="bottom">买家账号：{{item.get_user.username}}</th>
+              </tr>
+            </table>
+
+            <table>
+              <tr>
+                <th>订单号：{{item.order_no}}</th>
+                <th style="width: 250px;">创建日期：{{item.create_time}}</th>
+              </tr>
+            </table>
           </div>
         </template>
 
@@ -38,6 +47,8 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { getSettingList } from '@/api/config/setting'
+import util from '@/utils/util'
 
 export default {
   name: 'order-admin-print',
@@ -53,6 +64,7 @@ export default {
   },
   data() {
     return {
+      logo: ''
     }
   },
   activated() {
@@ -60,6 +72,16 @@ export default {
       this.$router.push({ name: 'index' })
       this.handleClose()
     }
+  },
+  mounted() {
+    getSettingList('system_info', 'logo')
+      .then(res => {
+        if (res.data.logo && res.data.logo.value) {
+          this.logo = util.checkUrl(res.data.logo.value)
+        } else {
+          this.logo = './image/print/logo.png'
+        }
+      })
   },
   methods: {
     ...mapActions('careyshop/page', [
@@ -78,9 +100,26 @@ export default {
 <style scoped>
   .print-main {
     background: #FFFFFF;
+    font: 12px/1.5 "宋体", Arial, Helvetica, sans-serif;
   }
+
   .print-order {
     padding: 20px;
     min-height: 1000px;
+  }
+
+  .print-order table {
+    width: 100%;
+    border-top: 1px solid #aaa;
+    text-align: left;
+  }
+
+  .print-order table tr th,
+  .print_area table tr td {
+    padding: 4px 5px;
+  }
+
+  .print_area table tr td ul li {
+    list-style: none;
   }
 </style>

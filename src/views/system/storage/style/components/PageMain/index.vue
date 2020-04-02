@@ -676,7 +676,7 @@ export default {
       imageLoading: false,
       uploadModule: '',
       uploadTable: [],
-      quality: 90,
+      quality: 100,
       slider: {
         pc: 0,
         mobile: 0
@@ -960,7 +960,7 @@ export default {
         platform: 0,
         scale: {},
         resize: '',
-        quality: 90,
+        quality: 100,
         suffix: '',
         style: '',
         status: '1'
@@ -982,7 +982,7 @@ export default {
         }
       }
 
-      this.quality = 90
+      this.quality = 100
       this.slider = { pc: 0, mobile: 0 }
 
       this.scaleTab = 'Pc'

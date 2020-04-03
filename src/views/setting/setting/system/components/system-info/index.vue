@@ -87,6 +87,58 @@
         </el-input>
         <div class="help-block" v-html="form.logo.help_text"></div>
       </el-form-item>
+
+      <el-form-item
+        :label="form.square_logo.description"
+        prop="square_logo">
+        <el-input
+          v-model="form.square_logo.value"
+          :placeholder="form.square_logo.description"
+          :clearable="true">
+          <template slot="prepend">
+            <el-popover
+              v-if="form.square_logo.value"
+              width="150"
+              placement="top"
+              trigger="hover">
+              <div class="popover-image">
+                <el-image
+                  :src="form.square_logo.value | getPreviewUrl"
+                  @click.native="$preview(form.square_logo.value)"
+                  fit="fill"/>
+              </div>
+              <i slot="reference" class="el-icon-picture"/>
+            </el-popover>
+          </template>
+
+          <el-dropdown
+            slot="append"
+            :show-timeout="50"
+            @command="handleCommand">
+            <el-button icon="el-icon-upload"/>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item :command="{command: 'storage', source: 'square_logo'}" icon="el-icon-finished">
+                <span>资源选择</span>
+              </el-dropdown-item>
+              <el-dropdown-item :command="{command: 'upload', source: 'square_logo'}" icon="el-icon-upload2">
+                <span>上传资源</span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-input>
+        <div class="help-block" v-html="form.square_logo.help_text"></div>
+      </el-form-item>
+
+      <el-form-item
+        :label="form.information.description"
+        prop="information">
+        <el-input
+          v-model="form.information.value"
+          :placeholder="form.information.description"
+          type="textarea"
+          :rows="5"/>
+        <div class="help-block" v-html="form.information.help_text"></div>
+      </el-form-item>
     </div>
 
     <div v-permission="'/setting/setting/system/info/record'">

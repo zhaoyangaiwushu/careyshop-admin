@@ -322,20 +322,24 @@ export default {
 
 <style lang="scss" scoped>
   .el-table /deep/ td {
-    background-color: #ffffff !important;
+    background-color: #FFFFFF !important;
   }
+
   .goods-consult {
     height: 80px;
     margin: 10px 0;
   }
+
   .goods-image {
     float: left;
     width: 80px;
     height: 80px;
   }
+
   .goods-info {
     float: left;
     width: 80%;
+
     .link {
       &:hover {
         cursor: pointer;
@@ -344,16 +348,19 @@ export default {
       }
     }
   }
+
   .consult-content {
     color: $color-text-sub;
     font-size: 13px;
   }
+
   .consult-content p {
     margin: 10px 0 0 0;
     line-height: 1.3;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+
     .title {
       &:hover {
         cursor: pointer;
@@ -362,9 +369,11 @@ export default {
       }
     }
   }
+
   .user-info p {
     line-height: 1.3;
   }
+
   .level-icon {
     margin-left: 5px;
     line-height: 0;

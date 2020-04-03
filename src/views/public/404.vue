@@ -16,6 +16,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+
     .page_title {
       font-size: 20px;
       color: #FFF;

@@ -158,12 +158,15 @@ export default {
     display: table;
     content: "";
   }
+
   .clearfix:after {
     clear: both;
   }
+
   .tac >>> .el-card {
     border-radius: 0;
   }
+
   .box-card {
     height: 400px;
     margin-left: -1px;

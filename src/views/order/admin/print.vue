@@ -50,7 +50,7 @@
                 <col style="width: 8%;">
                 <col style="width: 8%;">
               </colgroup>
-              <tbody style="border-top: 1px solid #aaa;">
+              <tbody style="border-top: 1px solid #AAA;">
                 <tr v-for="(goods, index) in item.get_order_goods" :key="index">
                   <td>{{index + 1}}</td>
                   <td>{{goods.goods_name}}</td>

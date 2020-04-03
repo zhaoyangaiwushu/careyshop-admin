@@ -259,6 +259,7 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap
   }
+
   .link:hover {
     cursor: pointer;
     color: #409EFF;

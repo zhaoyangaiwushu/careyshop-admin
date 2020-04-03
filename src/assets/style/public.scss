@@ -26,6 +26,7 @@ $prefix: cs;
   align-items: center;
   flex-direction: row;
 }
+
 %flex-center-col {
   display: flex;
   justify-content: center;
@@ -35,9 +36,9 @@ $prefix: cs;
 
 // 将元素模拟成卡片外观
 %card {
-  border: 1px solid #dddee1;
-  //border-color: #e9eaec;
-  background: #fff;
+  border: 1px solid #DDDEE1;
+  //border-color: #E9EAEC;
+  background: #FFF;
   border-radius: 4px;
   font-size: 14px;
   position: relative;

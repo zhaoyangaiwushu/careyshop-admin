@@ -153,13 +153,16 @@ export default {
     overflow: auto;
     padding-bottom: 1px;
   }
+
   .region-tag {
     margin: 0 10px 10px 0;
   }
+
   .not-region {
-    color: #99a9bf;
+    color: #99A9BF;
     text-align: center;
   }
+
   .custom-tree-node {
     flex: 1;
     display: flex;
@@ -168,9 +171,11 @@ export default {
     font-size: 14px;
     padding-right: 8px;
   }
+
   .active {
     display: none;
   }
+
   .action:hover .active {
     display: block;
   }

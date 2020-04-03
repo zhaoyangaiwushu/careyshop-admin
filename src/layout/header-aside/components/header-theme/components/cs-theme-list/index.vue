@@ -48,11 +48,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.theme-preview {
-  height: 50px;
-  width: 100px;
-  border-radius: 4px;
-  background-size: cover;
-  border: 1px solid $color-border-1;
-}
+  .theme-preview {
+    height: 50px;
+    width: 100px;
+    border-radius: 4px;
+    background-size: cover;
+    border: 1px solid $color-border-1;
+  }
 </style>

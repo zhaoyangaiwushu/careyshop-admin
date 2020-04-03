@@ -42,9 +42,11 @@ export default {
   .top {
     bottom: 107px;
   }
+
   .parent {
     bottom: 74px;
   }
+
   .cs-floating {
     position: absolute;
     z-index: 1;
@@ -57,6 +59,7 @@ export default {
     text-align: center;
     transition: all .3s;
     @extend %unable-select;
+
     &:hover {
       background-color: rgba($color-text-normal, .9);
     }

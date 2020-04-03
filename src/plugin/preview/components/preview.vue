@@ -55,13 +55,16 @@ export default {
     text-align: center;
     line-height: 0;
   }
+
   .image >>> img {
     vertical-align: middle;
     cursor: pointer;
   }
+
   .image >>> .el-dialog__header {
     display: none;
   }
+
   .image >>> .el-dialog__body {
     padding: 10px;
     background-color: #F5F7FA;

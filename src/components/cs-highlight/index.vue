@@ -58,11 +58,11 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.cs-highlight {
-  margin: 0;
-  border-radius: 4px;
-  font-size: 12px;
-  font-family: source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace;
-}
+<style scoped>
+  .cs-highlight {
+    margin: 0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace;
+  }
 </style>

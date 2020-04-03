@@ -213,6 +213,7 @@ export default {
     cursor: pointer;
     text-decoration: underline;
   }
+
   .level-icon {
     margin-left: 5px;
     line-height: 0;

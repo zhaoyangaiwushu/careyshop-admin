@@ -142,9 +142,11 @@ export default {
   .more-filter {
     margin-bottom: -18px;
   }
+
   .more-filter >>> label {
     width: 40px;
   }
+
   .more-filter >>> .el-form-item__content {
     margin-left: 40px;
   }

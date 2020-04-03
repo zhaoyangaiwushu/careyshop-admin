@@ -138,6 +138,7 @@ export default {
   .more-filter {
     margin-bottom: -18px;
   }
+
   .more-filter >>> label {
     width: auto;
   }

@@ -1210,33 +1210,41 @@ export default {
   .proportion {
     padding: 0 8px;
   }
+
   .size-input {
     width: 82%;
   }
+
   .image {
     text-align: center;
   }
+
   .image >>> img {
     vertical-align: middle;
     cursor: pointer;
   }
+
   .image-info {
     font-size: 13px;
     color: #999;
   }
+
   .bottom {
     margin-top: 5px;
     line-height: 15px;
   }
+
   .button {
     margin-right: 10px;
     float: left;
   }
+
   .clearfix:before,
   .clearfix:after {
     display: table;
     content: "";
   }
+
   .clearfix:after {
     clear: both;
   }

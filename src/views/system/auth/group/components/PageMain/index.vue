@@ -517,12 +517,12 @@ export default {
 }
 </script>
 
-<style>
-  .el-table .warning-row {
+<style scoped>
+  .el-table >>> .warning-row {
     background: oldlace;
   }
 
-  .el-table .spacer-row {
+  .el-table >>> .spacer-row {
     background: #FAFAFA;
   }
 </style>

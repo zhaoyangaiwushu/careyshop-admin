@@ -178,20 +178,25 @@ export default {
   .panel-search {
     margin: 20px;
     width: 100%;
+
     .panel-search__input-group {
       height: 240px;
+
       .panel-search__logo {
         height: 80px;
         margin-bottom: 20px;
       }
+
       .panel-search__input {
         width: 500px;
       }
+
       .panel-search__tip {
         margin-top: 20px;
         margin-bottom: 40px;
         font-size: 13px;
         color: $color-text-placehoder;
+
         .panel-search__key {
           padding: 1px 5px;
           margin: 0 2px;
@@ -201,8 +206,10 @@ export default {
         }
       }
     }
+
     .panel-search__results-group {
       overflow: auto;
+
       .panel-search__results-group-inner {
         margin: -20px;
       }

@@ -111,6 +111,7 @@ export default {
     padding-top: 0;
     padding-bottom: 0;
   }
+
   .input-new-tag {
     width: 90px;
     vertical-align: bottom;

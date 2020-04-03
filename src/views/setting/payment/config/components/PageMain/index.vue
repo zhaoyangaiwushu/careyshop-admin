@@ -498,32 +498,39 @@ export default {
     font-size: 0;
     padding: 0 10px;
   }
+
   .table-expand >>> label {
     float: left;
     width: 160px;
-    color: #99a9bf;
+    color: #99A9BF;
   }
+
   .table-expand >>> .el-form-item__content {
     display: block;
     padding-left: 160px;
   }
+
   .table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
     width: 50%;
   }
+
   .popover-image {
     text-align: center;
     max-width: 150px;
     line-height: 0;
   }
+
   .popover-image >>> img {
     vertical-align: middle;
     cursor: pointer;
   }
+
   .el-image >>> .el-image__error {
     line-height: 1.4;
   }
+
   .help-block {
     color: #909399;
     font-size: 12px;

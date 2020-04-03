@@ -392,43 +392,53 @@ export default {
 
 <style lang="scss" scoped>
   @import '~@/assets/style/fixed/tinymce.scss';
+
   .box-card {
     border-radius: 0;
     border: 1px solid $color-border-1;
   }
+
   .clearfix:before,
   .clearfix:after {
     display: table;
     content: "";
   }
+
   .clearfix:after {
     clear: both
   }
+
   .gallery {
     float: left;
     width: 460px;
   }
+
   .attr-label {
     color: $color-text-sub;
   }
+
   .parameter {
     padding: 0 10px 10px;
     border-bottom: 1px solid $color-border-3;
     font-size: 13px;
     color: $color-text-normal;
+
     .more-par {
       margin-top: -5px;
       text-align: right;
     }
+
     .parameter-list {
       padding: 15px 0 15px;
     }
+
     ul {
       margin: 0;
       padding: 20px 0 15px;
       overflow: hidden;
       _zoom: 1;
     }
+
     ul li {
       width: 20%;
       padding-left: 42px;
@@ -439,60 +449,75 @@ export default {
       overflow: hidden;
     }
   }
+
   .itemInfo {
     margin-left: 480px;
     font-size: 14px;
     color: $color-text-sub;
+
     .dt {
       float: left;
       padding-left: 10px;
       line-height: 20px;
     }
+
     .dd {
       margin-left: 80px;
+
       .price {
         color: $color-danger;
         overflow: hidden;
       }
     }
+
     .goods-name {
       color: $color-text-normal;
       font-size: 16px;
     }
+
     .product-name {
       color: $color-danger;
     }
+
     .summary-first {
       position: relative;
       padding: 5px 0;
+
       .summary-price-wrap {
-        background: #f3f3f3;
+        background: #F3F3F3;
+
         .price-bg {
-          background: url('~@/assets/image/price-bg.png') 0 -12px repeat-x #efefef;
+          background: url('~@/assets/image/price-bg.png') 0 -12px repeat-x #EFEFEF;
         }
+
         .summary-price {
           position: relative;
           padding-bottom: 10px;
         }
+
         .summary-info {
           position: absolute;
           right: 10px;
           top: 10px;
+
           .content {
             text-align: center;
             width: 100px;
             float: left;
+
             p {
               margin: 5px 0;
             }
+
             span {
-              color: #005ea7;
+              color: #005EA7;
             }
           }
         }
       }
     }
   }
+
   .goods-spec {
     @extend %flex-center-row;
     float: left;
@@ -500,25 +525,31 @@ export default {
     line-height: 38px;
     margin: 0 5px 5px 0;
     border: 1px solid $color-border-1;
+
     &.active {
       color: $color-danger;
       border-color: $color-danger;
     }
+
     &:hover {
       @extend %unable-select;
       border-color: $color-danger;
     }
+
     &.disabled {
       cursor: not-allowed;
       color: $color-text-placehoder;
       border: 1px dashed $color-border-3;
+
       .item-info {
         opacity: 0.5;
       }
     }
+
     .item-name {
       padding: 0 10px;
     }
+
     .item-info {
       margin: 1px;
       width: 36px;

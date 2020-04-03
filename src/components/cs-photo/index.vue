@@ -91,6 +91,7 @@ export default {
   .thumbnail {
     @extend %flex-center-col;
   }
+
   .sortable-ghost {
     opacity: 0;
   }

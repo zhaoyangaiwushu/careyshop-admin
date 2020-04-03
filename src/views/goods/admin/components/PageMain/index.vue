@@ -1035,30 +1035,38 @@ export default {
     padding: 5px 10px;
     background-color: #FFF;
   }
+
   .el-table /deep/ td {
-    background-color: #ffffff !important;
+    background-color: #FFFFFF !important;
   }
+
   .goods-summary {
     color: $color-text-placehoder;
     font-size: 13px;
   }
+
   .goods-shop-price {
     color: $color-danger;
   }
+
   .goods-image {
     float: left;
     width: 80px;
     height: 80px;
   }
+
   .goods-info {
     float: left;
     width: 70%;
+
     .son {
       color: $color-text-sub;
       font-size: 13px;
     }
+
     p {
       margin: 0;
+
       .link {
         &:hover {
           cursor: pointer;
@@ -1068,16 +1076,20 @@ export default {
       }
     }
   }
+
   .active {
     display: none;
   }
+
   .action:hover .active {
     display: inline;
   }
+
   .goods-edit {
     padding-left: 5px;
     font-size: 13px;
     color: $color-info;
+
     &:hover {
       cursor: pointer;
       color: $color-primary;

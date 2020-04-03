@@ -29,17 +29,18 @@ export default {
 </script>
 
 <style lang="scss">
-.cs-contentmenu-list {
-  .cs-contentmenu-item {
-    padding: 8px 20px 8px 15px;
-    margin: 0;
-    font-size: 14px;
-    color: #606266;
-    cursor: pointer;
-    &:hover {
-      background: #ecf5ff;
-      color: #66b1ff;
+  .cs-contentmenu-list {
+    .cs-contentmenu-item {
+      padding: 8px 20px 8px 15px;
+      margin: 0;
+      font-size: 14px;
+      color: #606266;
+      cursor: pointer;
+
+      &:hover {
+        background: #ECF5FF;
+        color: #66B1FF;
+      }
     }
   }
-}
 </style>

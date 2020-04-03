@@ -566,7 +566,7 @@
                 :label="item.alias"
                 :value="item.delivery_id">
                 <span style="float: left;">{{item.alias}}</span>
-                <span style="float: right; color: #8492a6; font-size: 13px;">{{item.name}}</span>
+                <span style="float: right; color: #8492A6; font-size: 13px;">{{item.name}}</span>
               </el-option>
             </el-select>
           </el-form-item>
@@ -1383,41 +1383,51 @@ export default {
     padding: 5px 10px;
     background-color: #FFF;
   }
+
   .el-table /deep/ td {
-    background-color: #ffffff !important;
+    background-color: #FFFFFF !important;
   }
+
   .order-summary {
     color: $color-text-placehoder;
     font-size: 13px;
   }
+
   .order-text {
     p {
       margin: 0;
     }
+
     .son {
       color: $color-text-sub;
       font-size: 13px;
     }
   }
+
   .order-goods-list {
     float: left;
+
     .goods-image {
       float: left;
       width: 80px;
       height: 80px;
     }
+
     .goods-image-small {
       float: left;
       width: 60px;
       height: 60px;
     }
+
     .goods-info {
       padding: 0 50px 0 100px;
+
       .goods-name {
         height: 36px;
         line-height: 18px;
         overflow: hidden;
       }
+
       .link {
         &:hover {
           cursor: pointer;
@@ -1425,24 +1435,29 @@ export default {
           text-decoration: underline;
         }
       }
+
       .service {
         font-size: 13px;
         color: $color-warning;
       }
+
       .complete {
         font-size: 13px;
         color: $color-success;
       }
     }
   }
+
   .shop-price {
     color: $color-danger;
   }
+
   .level-icon {
     margin-left: 5px;
     line-height: 0;
     vertical-align: text-bottom;
   }
+
   .order-button {
     padding: 0;
     font-size: 13px;

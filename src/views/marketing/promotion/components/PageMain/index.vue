@@ -640,14 +640,17 @@ export default {
   .active {
     display: none;
   }
+
   .action:hover .active {
     display: inline-block;
   }
+
   .promotion-label {
     width: 80px;
     padding-bottom: 10px;
     display: inline-block;
   }
+
   .promotion-input {
     width: 175px;
     margin-right: 10px;

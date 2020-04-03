@@ -20,7 +20,7 @@
             :label="item.get_delivery_item.name"
             :value="index">
             <span style="float: left;" title="快递公司">{{item.get_delivery_item.name}}</span>
-            <span style="float: right; color: #8492a6; font-size: 13px;" title="创建日期">{{item.create_time}}</span>
+            <span style="float: right; color: #8492A6; font-size: 13px;" title="创建日期">{{item.create_time}}</span>
           </el-option>
         </el-select>
 
@@ -118,7 +118,7 @@ export default {
 
 <style scoped>
   .not-trace {
-    color: #99a9bf;
+    color: #99A9BF;
     text-align: center;
   }
 </style>

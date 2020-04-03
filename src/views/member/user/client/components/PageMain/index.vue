@@ -1222,27 +1222,33 @@ export default {
     text-align: center;
     line-height: 0;
   }
+
   .popover-image >>> img {
     vertical-align: middle;
     cursor: pointer;
   }
+
   .el-image >>> .el-image__error {
     line-height: 1.4;
   }
+
   .table-expand {
     font-size: 0;
     padding: 0 65px;
     /*height: 350px;*/
     /*overflow: auto;*/
   }
+
   .table-expand >>> label {
     width: 90px;
-    color: #99a9bf;
+    color: #99A9BF;
   }
+
   .table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;
   }
+
   .level-icon {
     margin-left: 5px;
     line-height: 0;

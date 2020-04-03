@@ -85,7 +85,7 @@
 
       <div v-if="infoVisible" style="margin-top: -25px;">
         <table style="width: 100%;">
-          <caption><p style="background-color: #f8f8f9">提现单据</p></caption>
+          <caption><p style="background-color: #F8F8F9">提现单据</p></caption>
           <tr>
             <td><b>提现单号：</b>{{infoForm.withdraw_no}}</td>
             <td><b>账号/昵称：</b>{{infoForm.get_user.username}} / {{infoForm.get_user.nickname}}</td>
@@ -100,7 +100,7 @@
             <col style="width: 15%;">
             <col style="width: 75%;">
           </colgroup>
-          <caption><p style="background-color: #f8f8f9">收款明细</p></caption>
+          <caption><p style="background-color: #F8F8F9">收款明细</p></caption>
           <tr><td>收款人姓名：</td><td>{{infoForm.name}}</td></tr>
           <tr><td>收款人手机：</td><td>{{infoForm.mobile}}</td></tr>
           <tr><td>收款账户：</td><td>{{infoForm.bank_name}}</td></tr>
@@ -112,7 +112,7 @@
         </table>
 
         <table style="width: 100%;">
-          <caption><p style="background-color: #f8f8f9">其他内容</p></caption>
+          <caption><p style="background-color: #F8F8F9">其他内容</p></caption>
           <tbody>
           <tr>
             <td>

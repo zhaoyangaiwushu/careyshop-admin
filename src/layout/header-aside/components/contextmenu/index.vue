@@ -56,13 +56,13 @@ export default {
 </script>
 
 <style>
-.cs-contextmenu {
-  position: absolute;
-  padding: 5px 0;
-  z-index: 2018;
-  background: #FFF;
-  border: 1px solid #cfd7e5;
-  border-radius: 4px;
-  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
-}
+  .cs-contextmenu {
+    position: absolute;
+    padding: 5px 0;
+    z-index: 2018;
+    background: #FFF;
+    border: 1px solid #CFD7E5;
+    border-radius: 4px;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+  }
 </style>

@@ -280,24 +280,29 @@ export default {
     width: auto;
     display: inline;
   }
+
   .goods-image {
     float: left;
     width: 60px;
     height: 60px;
   }
+
   .goods-info {
     float: left;
     width: 290px;
+
     .name {
       height: 36px;
       line-height: 18px;
       overflow: hidden;
+
       &:hover {
         cursor: pointer;
         color: $color-primary;
         text-decoration: underline;
       }
     }
+
     .price {
       margin: 0;
       font-size: 12px;

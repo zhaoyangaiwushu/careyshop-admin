@@ -23,7 +23,9 @@ Print.prototype = {
   },
   extend: function (obj, obj2) {
     for (var k in obj2) {
-      obj[k] = obj2[k];
+      if (obj2.hasOwnProperty(k)) {
+        obj[k] = obj2[k];
+      }
     }
     return obj;
   },

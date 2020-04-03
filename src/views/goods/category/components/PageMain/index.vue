@@ -798,6 +798,7 @@ export default {
     overflow: auto;
     padding-bottom: 1px;
   }
+
   .custom-tree-node {
     flex: 1;
     display: flex;
@@ -806,35 +807,44 @@ export default {
     font-size: 14px;
     padding-right: 8px;
   }
+
   .brother-showing i {
     width: 16px;
   }
+
   .active {
     display: none;
   }
+
   .action:hover .active {
     display: block;
   }
+
   .move-tree {
     color: $color-text-placehoder;
     cursor: move;
   }
+
   .status-tree {
     color: $color-text-placehoder;
     text-decoration: line-through;
   }
+
   .box-card {
     border-radius: 0;
     border: 1px solid $color-border-1;
   }
+
   .popover-image {
     text-align: center;
     line-height: 0;
   }
+
   .popover-image /deep/ img {
     vertical-align: middle;
     cursor: pointer;
   }
+
   .el-image /deep/ .el-image__error {
     line-height: 1.4;
   }

@@ -216,15 +216,18 @@ export default {
     font-size: 0;
     padding: 0 10px;
   }
+
   .table-expand >>> label {
     float: left;
     width: 90px;
-    color: #99a9bf;
+    color: #99A9BF;
   }
+
   .table-expand >>> .el-form-item__content {
     display: block;
     padding-left: 90px;
   }
+
   .table-expand .el-form-item {
     margin-right: 0;
     margin-bottom: 0;

@@ -101,29 +101,35 @@ export default {
     flex-wrap: wrap;
     margin: -15px auto -10px;
   }
+
   .cs-navi {
     padding: 20px;
     background-color: #FFF;
+
     .cs-navi__title {
       width: 20px;
       color: $color-info;
       font-size: 16px;
       padding-left: 3px;
     }
+
     .iconfont__mini {
       width: 22px;
       font-size: 20px;
       padding-left: 0;
     }
+
     .iconfont__medium {
       font-size: 40px;
     }
+
     .cs-navi__block {
       width: 20%;
       box-sizing: border-box;
       padding: 0 7.5px;
       margin-top: 15px;
     }
+
     .cs-navi__content {
       display: flex;
       cursor: pointer;
@@ -133,23 +139,27 @@ export default {
       padding: 10px;
       overflow: hidden;
     }
+
     .cs-navi__icon {
       @extend %flex-center-row;
       min-width: 60px;
       font-size: 32px;
     }
+
     .cs-navi__info {
       p {
         margin: 0;
         overflow: hidden;
         text-overflow: ellipsis;
       }
+
       .cs-navi__sub_title {
         color: $color-text-main;
         height: 24px;
         font-size: 14px;
         font-weight: bold;
       }
+
       .cs-navi__desc {
         font-size: 12px;
         height: 23px;

@@ -693,6 +693,7 @@ export default {
     line-height: 2;
     margin-bottom: -8px;
   }
+
   .link:hover {
     cursor: pointer;
     color: #409EFF;

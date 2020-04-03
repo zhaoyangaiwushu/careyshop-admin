@@ -228,31 +228,38 @@ export default {
     border-radius: 0;
     border: 1px solid #DCDFE6;
   }
+
   .box-card-header {
     font-size: 14px;
     color: #606266;
   }
+
   .goods-link:hover {
     cursor: pointer;
     color: #409EFF;
     text-decoration: underline;
   }
+
   .text-explode {
     color: #909399;
   }
+
   .user-icon {
     float: left;
     width: 36px;
   }
+
   .user-name {
     color: #909399;
     font-size: 13px;
   }
+
   .problem {
     float: left;
     width: 90%;
     margin: 0 0 20px 20px;
   }
+
   .consult-content {
     white-space: -moz-pre-wrap;
     white-space: -o-pre-wrap;
@@ -260,6 +267,7 @@ export default {
     word-wrap: break-word;
     *white-space: pre;
   }
+
   .level-icon {
     margin-left: 5px;
     line-height: 0;

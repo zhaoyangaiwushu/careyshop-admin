@@ -286,17 +286,21 @@ export default {
     width: auto;
     display: inline;
   }
+
   .user-info {
     float: left;
+
     .username {
       width: 160px;
       line-height: 14px;
       overflow: hidden;
     }
+
     .level {
       margin: 0;
     }
   }
+
   .level-icon {
     line-height: 0;
     vertical-align: text-bottom;

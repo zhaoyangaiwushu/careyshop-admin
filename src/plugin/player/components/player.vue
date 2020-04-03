@@ -50,6 +50,7 @@ export default {
   .player-dialog >>> .el-dialog__header {
     display: none;
   }
+
   .player-dialog >>> .el-dialog__body {
     padding: 10px;
     background-color: #F5F7FA;

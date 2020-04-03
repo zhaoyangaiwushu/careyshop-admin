@@ -265,12 +265,15 @@ export default {
     padding: 20px;
     background-color: #FFF;
   }
+
   .form-button {
     padding-left: 5px;
   }
+
   .active {
     display: none;
   }
+
   .action:hover .active {
     display: inline;
   }

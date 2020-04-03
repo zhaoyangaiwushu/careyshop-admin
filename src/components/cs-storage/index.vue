@@ -258,10 +258,11 @@ export default {
 
 <style lang="scss" scoped>
   .breadcrumb {
-    background-color: #fff;
+    background-color: #FFF;
     border: 1px solid $color-border-1;
     padding: 10px !important;
   }
+
   .storage-list {
     overflow: hidden;
     list-style: none;
@@ -270,8 +271,9 @@ export default {
     border-style: solid;
     border-color: $color-border-1;
     border-width: 1px 0 0 1px;
-    background-color: #fff;
+    background-color: #FFF;
   }
+
   .storage-list li {
     float: left;
     opacity: 1;
@@ -279,12 +281,15 @@ export default {
     border-color: $color-border-1;
     border-width: 0 1px 1px 0;
   }
-  .storage-list>li:hover {
+
+  .storage-list > li:hover {
     background-color: $color-bg;
   }
+
   .storage-list li dl dt .picture {
     border: none;
   }
+
   .storage-list li dl dt .covers .el-image,
   .storage-list li dl dt .picture .el-image {
     background-color: #F5F7FA;
@@ -296,29 +301,34 @@ export default {
     overflow: hidden;
     cursor: pointer;
   }
+
   .storage-list li:after {
     content: "";
     height: 100%;
   }
+
   .storage-list li:after,
   .storage-list li span {
     display: inline-block;
     vertical-align: middle;
   }
+
   .storage-list li span {
     line-height: normal;
     color: $color-text-sub;
     transition: color .15s linear;
   }
+
   .storage-list .storage-name {
     color: $color-text-main;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
     font-size: 12px;
     width: 80px;
     height: 20px;
   }
+
   .check {
     position: absolute;
     margin-top: 2px;
@@ -326,6 +336,7 @@ export default {
     width: 78px;
     height: 80px;
     z-index: 9;
+
     /deep/ .el-checkbox__label {
       padding-right: 10px;
       line-height: 16px;
@@ -334,6 +345,7 @@ export default {
       background: $color-bg;
     }
   }
+
   .el-image /deep/ .el-image__inner {
     width: auto;
     height: auto;

@@ -201,6 +201,7 @@ export default {
     margin-right: 10px;
     width: 120px;
   }
+
   .dynamic-source-value {
     margin-right: 10px;
     width: 190px;

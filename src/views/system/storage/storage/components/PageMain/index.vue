@@ -762,10 +762,11 @@ export default {
 
 <style lang="scss" scoped>
   .breadcrumb {
-    background-color: #fff;
+    background-color: #FFF;
     border: 1px solid $color-border-1;
     padding: 10px !important;
   }
+
   .storage-list {
     overflow: hidden;
     list-style: none;
@@ -774,8 +775,9 @@ export default {
     border-style: solid;
     border-color: $color-border-1;
     border-width: 1px 0 0 1px;
-    background-color: #fff;
+    background-color: #FFF;
   }
+
   .storage-list li {
     float: left;
     height: 275px;
@@ -785,15 +787,19 @@ export default {
     border-color: $color-border-1;
     border-width: 0 1px 1px 0;
   }
-  .storage-list>li:hover {
-     background-color: $color-bg;
+
+  .storage-list > li:hover {
+    background-color: $color-bg;
   }
-  .storage-list>li:hover .more {
+
+  .storage-list > li:hover .more {
     display: inline-block;
   }
+
   .storage-list li dl dt .picture {
     border: none;
   }
+
   .storage-list li dl dt .covers .el-image,
   .storage-list li dl dt .picture .el-image {
     background-color: #F5F7FA;
@@ -805,28 +811,33 @@ export default {
     overflow: hidden;
     cursor: pointer;
   }
+
   .storage-list li:after {
     content: "";
     height: 100%;
   }
+
   .storage-list li:after,
   .storage-list li span {
     display: inline-block;
     vertical-align: middle;
   }
+
   .storage-list li span {
     line-height: normal;
     color: $color-text-sub;
     transition: color .15s linear;
   }
+
   .storage-list .storage-name {
     color: $color-text-main;
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    overflow:hidden;
-    width:148px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 148px;
     height: 21px;
   }
+
   .storage-list .more {
     width: 20px;
     height: 15px;
@@ -834,22 +845,26 @@ export default {
     cursor: pointer;
     display: none;
   }
+
   .storage-check {
     position: absolute;
     margin-top: 3px;
     margin-left: 3px;
     width: 30px;
     height: 30px;
+
     /deep/ .el-checkbox__label {
       display: none;
     }
   }
+
   .el-image /deep/ .el-image__inner {
     width: auto;
     height: auto;
     max-width: 158px;
     max-height: 158px;
   }
+
   .brother-showing i {
     width: 16px;
   }

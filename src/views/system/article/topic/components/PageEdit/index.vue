@@ -260,9 +260,11 @@ export default {
     display: table;
     content: "";
   }
+
   .clearfix:after {
     clear: both;
   }
+
   .box-card {
     border-radius: 0;
     border: 1px solid #DCDFE6;

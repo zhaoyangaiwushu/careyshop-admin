@@ -5,6 +5,7 @@ import member from './modules/member'
 import marketing from './modules/marketing'
 import order from './modules/order'
 import goods from './modules/goods'
+import finance from './modules/finance'
 
 /**
  * 在主框架内显示
@@ -16,7 +17,8 @@ const frameIn = [
   member,
   marketing,
   order,
-  goods
+  goods,
+  finance
 ]
 
 /**

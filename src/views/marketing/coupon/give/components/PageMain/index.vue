@@ -225,7 +225,7 @@
       </el-form>
 
       <div slot="footer" class="dialog-footer no-print">
-        <div style="float: left">
+        <div class="cs-fl">
           <el-button
             icon="el-icon-printer"
             @click="$print($refs.print)"

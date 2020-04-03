@@ -26,7 +26,7 @@
               <colgroup>
                 <col style="width: 5%;">
                 <col style="width: 22%;">
-                <col style="width: 19%;">
+                <col style="width: 20%;">
                 <col style="width: 10%;">
                 <col style="width: 8%;">
                 <col style="width: 8%;">
@@ -45,12 +45,12 @@
               <colgroup>
                 <col style="width: 5%;">
                 <col style="width: 22%;">
-                <col style="width: 19%;">
+                <col style="width: 20%;">
                 <col style="width: 8%;">
                 <col style="width: 8%;">
                 <col style="width: 8%;">
               </colgroup>
-              <tbody style="border-top: 1px solid #AAA;">
+              <tbody style="border-top: 1px solid #CCC;">
                 <tr v-for="(goods, index) in item.get_order_goods" :key="index">
                   <td>{{index + 1}}</td>
                   <td>{{goods.goods_name}}</td>
@@ -179,11 +179,11 @@ export default {
     getNumber(val) {
       return util.getNumber(val)
     },
-    getBarcode(val) {
-      return util.getBarcodeUrl(val)
+    getBarcode(text) {
+      return util.getBarcodeUrl(text)
     },
-    getQrcode(val) {
-      return util.getQrcodeUrl(val)
+    getQrcode(text) {
+      return util.getQrcodeUrl(text)
     }
   },
   activated() {
@@ -218,9 +218,11 @@ export default {
 
 <style scoped>
   .print-main {
+    /*font-size: 13px;*/
+    /*line-height: 1.5;*/
+    /*font-family: "宋体", verdana, serif;*/
     background: #FFFFFF;
-    font-size: 13px;
-    line-height: 1.5;
+    font: 12px/1.5 "宋体", Helvetica, Arial, sans-serif;
   }
 
   .print-order {
@@ -230,7 +232,7 @@ export default {
 
   .print-order table {
     width: 100%;
-    border-top: 1px solid #AAA;
+    border-top: 1px solid #CCC;
     text-align: left;
   }
 

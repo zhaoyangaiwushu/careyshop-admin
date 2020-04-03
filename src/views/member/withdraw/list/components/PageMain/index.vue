@@ -124,22 +124,22 @@
                 {{statusMap[infoForm.status].text}}
               </el-tag>
             </td>
-            <td rowspan="2">
-              <el-image
-                class="cs-fr"
-                :src="infoForm.withdraw_no | getQrcodeImage"
-                fit="fill"/>
-            </td>
           </tr>
           <tr>
-            <td style="width: 70%;">备注：{{infoForm.remark}}</td>
+            <td>备注：{{infoForm.remark}}</td>
+          </tr>
+          <tr>
+            <td>
+              <el-image :src="infoForm.withdraw_no | getBarcodeImage"/>
+              <el-image class="cs-fr" :src="infoForm.withdraw_no | getQrcodeImage"/>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
 
       <div slot="footer" class="dialog-footer no-print">
-        <div style="float: left">
+        <div class="cs-fl">
           <el-button
             icon="el-icon-printer"
             @click="$print($refs.print)"
@@ -235,8 +235,11 @@ export default {
     getNumber(val) {
       return util.getNumber(val)
     },
-    getQrcodeImage(text, expand = {}) {
-      return util.getQrcodeUrl(text, expand)
+    getBarcodeImage(text) {
+      return util.getBarcodeUrl(text)
+    },
+    getQrcodeImage(text) {
+      return util.getQrcodeUrl(text)
     }
   },
   mounted() {

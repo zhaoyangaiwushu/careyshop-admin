@@ -54,7 +54,7 @@
                 <tr v-for="(goods, index) in item.get_order_goods" :key="index">
                   <td>{{index + 1}}</td>
                   <td>{{goods.goods_name}}</td>
-                  <td>{{goods.key_value}}</td>
+                  <td>{{goods.key_value || '-'}}</td>
                   <td>{{goods.shop_price | getNumber}}</td>
                   <td>{{goods.qty}}</td>
                   <td>{{goods.shop_price * goods.qty | getNumber}}</td>
@@ -65,8 +65,7 @@
             <table>
               <tbody>
                 <tr>
-                  <td style="width: 80px;">买家留言：</td>
-                  <td>{{item.buyer_remark}}</td>
+                  <td>买家留言：{{item.buyer_remark}}</td>
                   <td style="width: 280px;">
                     <ul>
                       <li>总计：<span>{{item.goods_amount | getNumber}}</span></li>
@@ -218,16 +217,13 @@ export default {
 
 <style scoped>
   .print-main {
-    /*font-size: 13px;*/
-    /*line-height: 1.5;*/
-    /*font-family: "宋体", verdana, serif;*/
+    /*font: 12px/1.5 "宋体", Helvetica, Arial, serif;*/
     background: #FFFFFF;
-    font: 12px/1.5 "宋体", Helvetica, Arial, sans-serif;
   }
 
   .print-order {
     padding: 20px;
-    min-height: 1000px;
+    /*min-height: 1000px;*/
   }
 
   .print-order table {

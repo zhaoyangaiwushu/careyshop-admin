@@ -65,7 +65,7 @@
               class="cs-fl"
               size="medium"
               :src="scope.row.head_pic | getPreviewUrl">
-              <img src="image/system/user.png" alt=""/>
+              <img src="image/setting/user.png" alt=""/>
             </el-avatar>
 
             <div class="user-info cs-ml-10">

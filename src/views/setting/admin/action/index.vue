@@ -29,7 +29,7 @@ import { getClientType } from '@/api/public'
 import { getActionLogList } from '@/api/auth/action'
 
 export default {
-  name: 'system-auth-action',
+  name: 'setting-admin-action',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),

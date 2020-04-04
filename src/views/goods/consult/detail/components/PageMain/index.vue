@@ -56,18 +56,18 @@
                 v-if="item.is_client && tableData.get_user.head_pic"
                 size="medium"
                 :src="tableData.get_user.head_pic | getPreviewUrl">
-                <img src="image/system/user.png" alt=""/>
+                <img src="image/setting/user.png" alt=""/>
               </el-avatar>
 
               <el-avatar
                 v-else-if="item.is_client"
                 size="medium"
-                src="image/system/user.png">
+                src="image/setting/user.png">
               </el-avatar>
 
               <el-avatar
                 v-else size="medium"
-                src="image/system/admin.png">
+                src="image/setting/admin.png">
               </el-avatar>
             </div>
 

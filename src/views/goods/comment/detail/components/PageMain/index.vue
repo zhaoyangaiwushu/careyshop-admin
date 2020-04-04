@@ -57,7 +57,7 @@
               <el-avatar
                 size="medium"
                 :src="tableData.get_user.head_pic | getPreviewUrl('head_pic')">
-                <img src="image/system/user.png" alt=""/>
+                <img src="image/setting/user.png" alt=""/>
               </el-avatar>
             </div>
 
@@ -110,7 +110,7 @@
             <div class="user-icon">
               <el-avatar
                 size="medium"
-                src="image/system/admin.png">
+                src="image/setting/admin.png">
               </el-avatar>
             </div>
 
@@ -142,7 +142,7 @@
               <el-avatar
                 size="medium"
                 :src="tableData.get_user.head_pic | getPreviewUrl('head_pic')">
-                <img src="image/system/user.png" alt=""/>
+                <img src="image/setting/user.png" alt=""/>
               </el-avatar>
             </div>
 
@@ -195,7 +195,7 @@
             <div class="user-icon">
               <el-avatar
                 size="medium"
-                src="image/system/admin.png">
+                src="image/setting/admin.png">
               </el-avatar>
             </div>
 

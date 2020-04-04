@@ -192,7 +192,7 @@ export default {
     }
   },
   mounted() {
-    getSettingList('system_info', 'logo')
+    getSettingList('system_info', ['logo'])
       .then(res => {
         if (res.data.logo && res.data.logo.value) {
           this.logo = util.checkUrl(res.data.logo.value)

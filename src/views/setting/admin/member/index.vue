@@ -29,7 +29,7 @@ import { getAuthGroupList } from '@/api/auth/group'
 import { getAdminList } from '@/api/user/admin'
 
 export default {
-  name: 'system-admin-member',
+  name: 'setting-admin-member',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),

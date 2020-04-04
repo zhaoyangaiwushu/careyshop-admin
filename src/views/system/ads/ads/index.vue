@@ -58,7 +58,7 @@ export default {
   mounted() {
     Promise.all([
       getAdsPositionSelect(null),
-      getSettingList('system_info', 'platform'),
+      getSettingList('system_info', ['platform']),
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])
       .then(res => {

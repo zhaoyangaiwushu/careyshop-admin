@@ -13,6 +13,18 @@ export default {
       component: () => import('@/views/setting/index')
     },
     {
+      path: 'admin/member',
+      name: `${pre}admin-member`,
+      meta: { ...meta, cache: true, title: '管理人员' },
+      component: () => import('@/views/setting/admin/member')
+    },
+    {
+      path: 'admin/action',
+      name: `${pre}admin-action`,
+      meta: { ...meta, cache: true, title: '操作日志' },
+      component: () => import('@/views/setting/admin/action')
+    },
+    {
       path: 'setting/system',
       name: `${pre}setting-system`,
       meta: { ...meta, cache: true, title: '系统设置' },

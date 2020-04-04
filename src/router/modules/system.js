@@ -13,12 +13,6 @@ export default {
       component: () => import('@/views/system/index')
     },
     {
-      path: 'admin/member',
-      name: `${pre}admin-member`,
-      meta: { ...meta, cache: true, title: '管理人员' },
-      component: () => import('@/views/system/admin/member')
-    },
-    {
       path: 'auth/group',
       name: `${pre}auth-group`,
       meta: { ...meta, cache: true, title: '用户组' },
@@ -35,12 +29,6 @@ export default {
       name: `${pre}auth-menu`,
       meta: { ...meta, cache: true, title: '菜单管理' },
       component: () => import('@/views/system/auth/menu')
-    },
-    {
-      path: 'auth/action',
-      name: `${pre}auth-action`,
-      meta: { ...meta, cache: true, title: '操作日志' },
-      component: () => import('@/views/system/auth/action')
     },
     {
       path: 'article/cat',

@@ -53,7 +53,7 @@ export default {
   },
   mounted() {
     Promise.all([
-      getSettingList('system_info', 'platform'),
+      getSettingList('system_info', ['platform']),
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])
       .then(res => {

@@ -908,7 +908,7 @@ export default {
     },
     // 获取订单来源配置
     getOrderSource() {
-      getSettingList('system_shopping', 'source')
+      getSettingList('system_shopping', ['source'])
         .then(res => {
           if (res.data) {
             res.data['source']['value'].forEach((value, index) => {

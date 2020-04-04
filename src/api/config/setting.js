@@ -22,10 +22,10 @@ function getRequest(data, method) {
 /**
  * 获取某个模块的设置
  * @param {String} module
- * @param {String} code
+ * @param {Array} code
  * @returns
  */
-export function getSettingList(module, code = '') {
+export function getSettingList(module, code = []) {
   return request({
     url: '/v1/setting',
     method: 'post',

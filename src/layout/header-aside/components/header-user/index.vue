@@ -7,8 +7,9 @@
     </span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item @click.native="$open('/')" icon="el-icon-link">打开前台</el-dropdown-item>
-      <el-dropdown-item v-if="auth.cache" @click.native="clearCache" icon="el-icon-delete">清空缓存</el-dropdown-item>
-      <el-dropdown-item v-if="auth.optimize" @click.native="systemOptimize" icon="el-icon-finished">优化缓存</el-dropdown-item>
+      <el-dropdown-item @click.native="clearHistory" icon="el-icon-time">清空历史</el-dropdown-item>
+      <el-dropdown-item v-if="auth.cache" @click.native="clearCache" icon="el-icon-delete">清除缓存</el-dropdown-item>
+      <el-dropdown-item v-if="auth.optimize" @click.native="systemOptimize" icon="el-icon-finished">优化系统</el-dropdown-item>
       <el-dropdown-item divided @click.native="handleCreate" icon="el-icon-key">修改密码</el-dropdown-item>
       <el-dropdown-item v-if="auth.unread" @click.native="handleMessage" icon="el-icon-bell">
         <span>未读消息</span>
@@ -153,6 +154,9 @@ export default {
     ...mapActions('careyshop/account', [
       'logout'
     ]),
+    ...mapActions('careyshop/menu', [
+      'historyClear'
+    ]),
     /**
      * 权限检测
      */
@@ -241,6 +245,19 @@ export default {
         vm: this,
         confirm: true
       })
+    },
+    /**
+     * 清除历史
+     */
+    clearHistory() {
+      this.historyClear()
+        .then(() => {
+          if (this.$route.path === '/index') {
+            location.reload()
+          }
+
+          this.$message.success('左侧访问历史栏已清空')
+        })
     },
     /**
      * 清空缓存

@@ -169,6 +169,20 @@ export default {
         // end
         resolve()
       })
+    },
+    /**
+     * 清空访问历史
+     * @param state
+     * @param dispatch
+     * @returns {Promise<unknown>}
+     */
+    historyClear({ state, dispatch }) {
+      return new Promise(async resolve => {
+        state.history = []
+        await dispatch('historyDataWrite')
+        // end
+        resolve()
+      })
     }
   },
   mutations: {

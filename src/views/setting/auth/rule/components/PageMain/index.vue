@@ -398,12 +398,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$permission('/system/auth/rule/add')
-      this.auth.del = this.$permission('/system/auth/rule/del')
-      this.auth.set = this.$permission('/system/auth/rule/set')
-      this.auth.enable = this.$permission('/system/auth/rule/enable')
-      this.auth.disable = this.$permission('/system/auth/rule/disable')
-      this.auth.move = this.$permission('/system/auth/rule/move')
+      this.auth.add = this.$permission('/setting/auth/rule/add')
+      this.auth.del = this.$permission('/setting/auth/rule/del')
+      this.auth.set = this.$permission('/setting/auth/rule/set')
+      this.auth.enable = this.$permission('/setting/auth/rule/enable')
+      this.auth.disable = this.$permission('/setting/auth/rule/disable')
+      this.auth.move = this.$permission('/setting/auth/rule/move')
     },
     // 过滤节点
     filterNode(value, data) {

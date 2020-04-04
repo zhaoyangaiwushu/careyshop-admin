@@ -20,7 +20,7 @@ import util from '@/utils/util'
 import { getMenuList } from '@/api/auth/menu'
 
 export default {
-  name: 'system-auth-menu',
+  name: 'setting-auth-menu',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain')

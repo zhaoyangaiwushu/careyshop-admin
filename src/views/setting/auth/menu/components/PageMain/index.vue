@@ -415,11 +415,11 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$permission('/system/auth/menu/add')
-      this.auth.del = this.$permission('/system/auth/menu/del')
-      this.auth.set = this.$permission('/system/auth/menu/set')
-      this.auth.status = this.$permission('/system/auth/menu/status')
-      this.auth.move = this.$permission('/system/auth/menu/move')
+      this.auth.add = this.$permission('/setting/auth/menu/add')
+      this.auth.del = this.$permission('/setting/auth/menu/del')
+      this.auth.set = this.$permission('/setting/auth/menu/set')
+      this.auth.status = this.$permission('/setting/auth/menu/status')
+      this.auth.move = this.$permission('/setting/auth/menu/move')
     },
     // 过滤菜单
     filterNode(value, data) {

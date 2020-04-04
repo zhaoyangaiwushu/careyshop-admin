@@ -24,7 +24,7 @@ import { getAuthGroupList } from '@/api/auth/group'
 import { getAuthRuleList } from '@/api/auth/rule'
 
 export default {
-  name: 'system-auth-rule',
+  name: 'setting-auth-rule',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain')

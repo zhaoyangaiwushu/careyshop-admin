@@ -13,24 +13,6 @@ export default {
       component: () => import('@/views/system/index')
     },
     {
-      path: 'auth/group',
-      name: `${pre}auth-group`,
-      meta: { ...meta, cache: true, title: '用户组' },
-      component: () => import('@/views/system/auth/group')
-    },
-    {
-      path: 'auth/rule',
-      name: `${pre}auth-rule`,
-      meta: { ...meta, cache: true, title: '权限规则' },
-      component: () => import('@/views/system/auth/rule')
-    },
-    {
-      path: 'auth/menu',
-      name: `${pre}auth-menu`,
-      meta: { ...meta, cache: true, title: '菜单管理' },
-      component: () => import('@/views/system/auth/menu')
-    },
-    {
       path: 'article/cat',
       name: `${pre}article-cat`,
       meta: { ...meta, cache: true, title: '文章分类' },

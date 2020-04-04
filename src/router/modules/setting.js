@@ -25,6 +25,24 @@ export default {
       component: () => import('@/views/setting/admin/action')
     },
     {
+      path: 'auth/group',
+      name: `${pre}auth-group`,
+      meta: { ...meta, cache: true, title: '用户组' },
+      component: () => import('@/views/setting/auth/group')
+    },
+    {
+      path: 'auth/menu',
+      name: `${pre}auth-menu`,
+      meta: { ...meta, cache: true, title: '菜单管理' },
+      component: () => import('@/views/setting/auth/menu')
+    },
+    {
+      path: 'auth/rule',
+      name: `${pre}auth-rule`,
+      meta: { ...meta, cache: true, title: '权限规则' },
+      component: () => import('@/views/setting/auth/rule')
+    },
+    {
       path: 'setting/system',
       name: `${pre}setting-system`,
       meta: { ...meta, cache: true, title: '系统管理' },

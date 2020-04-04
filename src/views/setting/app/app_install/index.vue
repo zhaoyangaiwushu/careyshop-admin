@@ -26,7 +26,7 @@
 import { getAppInstallList } from '@/api/aided/app_install'
 
 export default {
-  name: 'system-aided-app_install',
+  name: 'setting-app-app_install',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),

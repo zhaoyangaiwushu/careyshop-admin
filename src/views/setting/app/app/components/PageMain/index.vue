@@ -266,12 +266,12 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$permission('/system/aided/app/add')
-      this.auth.set = this.$permission('/system/aided/app/set')
-      this.auth.del = this.$permission('/system/aided/app/del')
-      this.auth.replace = this.$permission('/system/aided/app/replace')
-      this.auth.enable = this.$permission('/system/aided/app/enable')
-      this.auth.disable = this.$permission('/system/aided/app/disable')
+      this.auth.add = this.$permission('/setting/app/app/add')
+      this.auth.set = this.$permission('/setting/app/app/set')
+      this.auth.del = this.$permission('/setting/app/app/del')
+      this.auth.replace = this.$permission('/setting/app/app/replace')
+      this.auth.enable = this.$permission('/setting/app/app/enable')
+      this.auth.disable = this.$permission('/setting/app/app/disable')
     },
     // 获取列表中的编号
     _getIdList(val) {

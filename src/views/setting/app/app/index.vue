@@ -17,7 +17,7 @@
 import { getAppList } from '@/api/aided/app'
 
 export default {
-  name: 'system-aided-app',
+  name: 'setting-app-app',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain')

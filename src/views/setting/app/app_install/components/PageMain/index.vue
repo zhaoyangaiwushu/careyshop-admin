@@ -275,9 +275,9 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.add = this.$permission('/system/aided/app_install/add')
-      this.auth.set = this.$permission('/system/aided/app_install/set')
-      this.auth.del = this.$permission('/system/aided/app_install/del')
+      this.auth.add = this.$permission('/setting/app/app_install/add')
+      this.auth.set = this.$permission('/setting/app/app_install/set')
+      this.auth.del = this.$permission('/setting/app/app_install/del')
     },
     // 获取列表中的编号
     _getIdList(val) {

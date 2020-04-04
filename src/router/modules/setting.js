@@ -27,7 +27,7 @@ export default {
     {
       path: 'setting/system',
       name: `${pre}setting-system`,
-      meta: { ...meta, cache: true, title: '系统设置' },
+      meta: { ...meta, cache: true, title: '系统管理' },
       component: () => import('@/views/setting/setting/system')
     },
     {
@@ -41,6 +41,12 @@ export default {
       name: `${pre}setting-navi`,
       meta: { ...meta, cache: true, title: '前台导航' },
       component: () => import('@/views/setting/setting/navi')
+    },
+    {
+      path: 'setting/template',
+      name: `${pre}setting-template`,
+      meta: { ...meta, cache: true, title: '消息模板' },
+      component: () => import('@/views/setting/setting/template')
     },
     {
       path: 'payment/config',
@@ -86,10 +92,16 @@ export default {
       component: () => import('@/views/setting/logistics/delivery-area')
     },
     {
-      path: 'notice/template',
-      name: `${pre}notice-template`,
-      meta: { ...meta, cache: true, title: '消息模板' },
-      component: () => import('@/views/setting/notice/template')
+      path: 'app/app',
+      name: `${pre}app-app`,
+      meta: { ...meta, cache: true, title: 'App应用' },
+      component: () => import('@/views/setting/app/app')
+    },
+    {
+      path: 'app/app_install',
+      name: `${pre}app-app_install`,
+      meta: { ...meta, cache: true, title: 'App安装包' },
+      component: () => import('@/views/setting/app/app_install')
     }
   ])('setting-')
 }

@@ -3,7 +3,7 @@
     <slot name="control"/>
 
     <el-dialog
-      title="会员选取"
+      title="账号选取"
       :visible.sync="visible"
       :append-to-body="true"
       :close-on-click-modal="false"
@@ -31,7 +31,7 @@
             <el-form-item prop="account">
               <el-input
                 v-model="form.account"
-                placeholder="输入账号/昵称/手机号进行搜索"
+                placeholder="可输入账号/昵称进行搜索"
                 @keyup.enter.native="handleSubmit(true)"
                 :clearable="true"
                 size="small">
@@ -47,7 +47,7 @@
         v-loading="loading"
         ref="multipleTable"
         :data="tableData"
-        row-key="user_id"
+        :row-key="typeUser === 'client' ? 'user_id' : 'admin_id'"
         @selection-change="handleSelectionChange">
         <el-table-column
           :reserve-selection="true"
@@ -70,7 +70,7 @@
 
             <div class="user-info cs-ml-10">
               <div class="username">{{scope.row.username}}</div>
-              <p class="level">
+              <p v-if="typeUser === 'client'" class="level">
                 <el-tooltip
                   v-if="scope.row.get_user_level.icon"
                   :content="scope.row.get_user_level.name"
@@ -95,8 +95,15 @@
         </el-table-column>
 
         <el-table-column
+          v-if="typeUser === 'client'"
           label="手机号"
           prop="mobile">
+        </el-table-column>
+
+        <el-table-column
+          v-else
+          label="所属组"
+          prop="get_auth_group.name">
         </el-table-column>
 
         <el-table-column
@@ -142,6 +149,7 @@
 <script>
 import util from '@/utils/util'
 import { getUserList, getUserSelect } from '@/api/user/client'
+import { getAdminList, getAdminSelect } from '@/api/user/admin'
 
 export default {
   name: 'cs-user-select',
@@ -158,6 +166,12 @@ export default {
       type: Array,
       required: false,
       default: () => []
+    },
+    // 获取类型
+    typeUser: {
+      type: String,
+      required: false,
+      default: 'client'
     }
   },
   data() {
@@ -209,12 +223,14 @@ export default {
       if (!this.isCheck && this.checkList.length) {
         let idList = []
         for (let value of this.checkList) {
-          if (value.hasOwnProperty('user_id')) {
-            idList.push(value.user_id)
+          const typeId = this.typeUser === 'client' ? 'user_id' : 'admin_id'
+          if (value.hasOwnProperty(typeId)) {
+            idList.push(value[typeId])
           }
         }
 
-        getUserSelect(idList)
+        const funSelect = this.typeUser === 'client' ? getUserSelect : getAdminSelect
+        funSelect(idList)
           .then(res => {
             this.$nextTick(() => {
               if (res.data) {
@@ -247,12 +263,14 @@ export default {
       if (this.isSelection) {
         form.client_id = []
         this.multipleSelection.forEach(value => {
-          form.client_id.push(value.user_id)
+          form.client_id.push(value[this.typeUser === 'client' ? 'user_id' : 'admin_id'])
         })
       }
 
       this.loading = true
-      getUserList({
+      const funList = this.typeUser === 'client' ? getUserList : getAdminList
+
+      funList({
         ...form,
         page_no: this.page.current,
         page_size: this.page.size

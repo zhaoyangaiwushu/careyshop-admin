@@ -204,3 +204,21 @@ export function getAdminList(data) {
     data
   })
 }
+
+/**
+ * 获取指定账号的基础数据
+ * @param {Array} client_id
+ * @returns
+ */
+export function getAdminSelect(client_id) {
+  return request({
+    url: '/v1/user',
+    method: 'post',
+    params: {
+      method: 'get.admin.select'
+    },
+    data: {
+      client_id
+    }
+  })
+}

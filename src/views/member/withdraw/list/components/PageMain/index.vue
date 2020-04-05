@@ -80,62 +80,62 @@
       :visible.sync="infoVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
-      width="600px"
-      ref="print">
+      width="600px">
+      <div ref="print" style="margin-top: -15px;">
+        <template v-if="infoVisible">
+          <table style="width: 100%;">
+            <caption><p style="background-color: #F8F8F9">提现单据</p></caption>
+            <tr>
+              <td><b>提现单号：</b>{{infoForm.withdraw_no}}</td>
+              <td><b>账号/昵称：</b>{{infoForm.get_user.username}} / {{infoForm.get_user.nickname}}</td>
+            </tr>
+            <tr>
+              <td>创建日期：{{infoForm.create_time}}</td>
+            </tr>
+          </table>
 
-      <div v-if="infoVisible" style="margin-top: -25px;">
-        <table style="width: 100%;">
-          <caption><p style="background-color: #F8F8F9">提现单据</p></caption>
-          <tr>
-            <td><b>提现单号：</b>{{infoForm.withdraw_no}}</td>
-            <td><b>账号/昵称：</b>{{infoForm.get_user.username}} / {{infoForm.get_user.nickname}}</td>
-          </tr>
-          <tr>
-            <td>创建日期：{{infoForm.create_time}}</td>
-          </tr>
-        </table>
+          <table style="width: 100%;">
+            <colgroup>
+              <col style="width: 20%;">
+              <col style="width: 75%;">
+            </colgroup>
+            <caption><p style="background-color: #F8F8F9">收款明细</p></caption>
+            <tr><td>收款人姓名：</td><td>{{infoForm.name}}</td></tr>
+            <tr><td>收款人手机：</td><td>{{infoForm.mobile}}</td></tr>
+            <tr><td>收款账户：</td><td>{{infoForm.bank_name}}</td></tr>
+            <tr><td>收款账号：</td><td>{{infoForm.account}}</td></tr>
+            <tr/>
+            <tr><td><b>提现金额：</b></td><td>{{infoForm.money | getNumber}}</td></tr>
+            <tr><td>手续费：</td><td>{{infoForm.fee}} %</td></tr>
+            <tr><td>合计金额：</td><td>{{infoForm.amount | getNumber}}</td></tr>
+          </table>
 
-        <table style="width: 100%;">
-          <colgroup>
-            <col style="width: 15%;">
-            <col style="width: 75%;">
-          </colgroup>
-          <caption><p style="background-color: #F8F8F9">收款明细</p></caption>
-          <tr><td>收款人姓名：</td><td>{{infoForm.name}}</td></tr>
-          <tr><td>收款人手机：</td><td>{{infoForm.mobile}}</td></tr>
-          <tr><td>收款账户：</td><td>{{infoForm.bank_name}}</td></tr>
-          <tr><td>收款账号：</td><td>{{infoForm.account}}</td></tr>
-          <tr/>
-          <tr><td><b>提现金额：</b></td><td>{{infoForm.money | getNumber}}</td></tr>
-          <tr><td>手续费：</td><td>{{infoForm.fee}} %</td></tr>
-          <tr><td>合计金额：</td><td>{{infoForm.amount | getNumber}}</td></tr>
-        </table>
-
-        <table style="width: 100%;">
-          <caption><p style="background-color: #F8F8F9">其他内容</p></caption>
-          <tbody>
-          <tr>
-            <td>
-              <span>状态：</span>
-              <el-tag
-                :type="statusMap[infoForm.status].type"
-                effect="plain"
-                size="mini">
-                {{statusMap[infoForm.status].text}}
-              </el-tag>
-            </td>
-          </tr>
-          <tr>
-            <td>备注：{{infoForm.remark}}</td>
-          </tr>
-          <tr>
-            <td>
-              <el-image :src="infoForm.withdraw_no | getBarcodeImage"/>
-              <el-image class="cs-fr" :src="infoForm.withdraw_no | getQrcodeImage"/>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+          <table style="width: 100%;">
+            <caption><p style="background-color: #F8F8F9">其他内容</p></caption>
+            <tbody>
+            <tr>
+              <td>
+                <span>状态：</span>
+                <el-tag
+                  :type="statusMap[infoForm.status].type"
+                  effect="plain"
+                  size="mini">
+                  {{statusMap[infoForm.status].text}}
+                </el-tag>
+              </td>
+            </tr>
+            <tr>
+              <td>备注：{{infoForm.remark}}</td>
+            </tr>
+            <tr>
+              <td>
+                <img :src="infoForm.withdraw_no | getBarcodeImage" alt="">
+                <img class="cs-fr" :src="infoForm.withdraw_no | getQrcodeImage" alt="">
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </template>
       </div>
 
       <div slot="footer" class="dialog-footer no-print">

@@ -24,13 +24,10 @@
 
             <table>
               <colgroup>
-                <col style="width: 5%;">
-                <col style="width: 22%;">
-                <col style="width: 20%;">
                 <col style="width: 10%;">
-                <col style="width: 8%;">
-                <col style="width: 8%;">
-                <col style="width: 8%;">
+                <col style="width: 35%;">
+                <col style="width: 25%;">
+                <col span="3" style="width: 10%;">
               </colgroup>
               <thead>
               <tr>
@@ -43,12 +40,10 @@
               </tr>
               </thead>
               <colgroup>
-                <col style="width: 5%;">
-                <col style="width: 22%;">
-                <col style="width: 20%;">
-                <col style="width: 8%;">
-                <col style="width: 8%;">
-                <col style="width: 8%;">
+                <col style="width: 10%;">
+                <col style="width: 35%;">
+                <col style="width: 25%;">
+                <col span="3" style="width: 10%;">
               </colgroup>
               <tbody style="border-top: 1px solid #CCC;">
                 <tr v-for="(goods, index) in item.get_order_goods" :key="index">
@@ -229,12 +224,12 @@ export default {
   .print-order table {
     width: 100%;
     border-top: 1px solid #CCC;
-    text-align: left;
   }
 
   .print-order table tr th,
   .print-order table tr td {
     padding: 4px 5px;
+    text-align: left;
   }
 
   .print-order table tr td ul li {

@@ -122,6 +122,28 @@ util.formatDataToTree = (data, key = 'menu_id', pid = 'parent_id', parent = {}) 
 }
 
 /**
+ * 替换对象中指定的替换值
+ * @param data
+ * @param replace
+ * @returns {*}
+ */
+util.dataReplace = (data, replace) => {
+  for (let value of data) {
+    for (let key in value) {
+      if (!value.hasOwnProperty(key)) {
+        continue
+      }
+
+      if (replace.hasOwnProperty(key)) {
+        value[key] = replace[key][value[key]]
+      }
+    }
+  }
+
+  return data
+}
+
+/**
  * 字符计量大小转换为字节大小
  * @param value
  * @returns {number}

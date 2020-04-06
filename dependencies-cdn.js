@@ -17,7 +17,7 @@ module.exports = [
   {
     name: 'vuex',
     library: 'Vuex',
-    js: '//cdn.jsdelivr.net/npm/vuex@3.1.2/dist/vuex.min.js',
+    js: '//cdn.jsdelivr.net/npm/vuex@3.1.3/dist/vuex.min.js',
     css: ''
   },
   {
@@ -41,19 +41,19 @@ module.exports = [
   {
     name: 'dayjs',
     library: 'dayjs',
-    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.21/dayjs.min.js',
+    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.23/dayjs.min.js',
     css: ''
   },
   {
     name: 'fuse.js',
     library: 'Fuse',
-    js: '//cdn.jsdelivr.net/npm/fuse.js@3.4.6/dist/fuse.min.js',
+    js: '//cdn.jsdelivr.net/npm/fuse.js@3.6.1/dist/fuse.min.js',
     css: ''
   },
   {
     name: 'hotkeys-js',
     library: 'hotkeys',
-    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.7.3/dist/hotkeys.min.js',
+    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.7.6/dist/hotkeys.min.js',
     css: ''
   },
   {
@@ -102,6 +102,12 @@ module.exports = [
     name: 'lowdb/adapters/LocalStorage',
     library: 'LocalStorage',
     js: '//cdn.jsdelivr.net/npm/lowdb@1.0.0/dist/LocalStorage.min.js',
+    css: ''
+  },
+  {
+    name: '@careyshop/vue-table-export',
+    library: 'VueTableExport',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.9/dist/vue-table-export.min.js',
     css: ''
   },
   {

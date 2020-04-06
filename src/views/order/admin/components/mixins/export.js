@@ -1,5 +1,6 @@
 import { getOrderList } from '@/api/order/order'
-import { TableExport } from '@careyshop/vue-table-export'
+import VueTableExport from '@careyshop/vue-table-export'
+import util from '@/utils/util'
 
 export default {
   data() {
@@ -64,20 +65,17 @@ export default {
         value.goods = ''
 
         for (let item of value.get_order_goods) {
-          value.goods +=
-            `
-            名称：${item.goods_name};
-            货号：${item.goods_code};
-            SKU：${item.goods_sku};
-            条码：${item.bar_code};
-            规格：${item.key_value};
-            市场价：${item.market_price};
-            本店价：${item.shop_price};
-            购买数量：${item.qty};
-            评价状态：${commentMap[item.is_comment]};
-            售后状态：${serviceMap[item.is_service]};
-            货品状态：${statusMap[item.status]};;
-            `
+          value.goods += `名称：${item.goods_name};`
+          value.goods += `货号：${item.goods_code};`
+          value.goods += `SKU：${item.goods_sku};`
+          value.goods += `条码：${item.bar_code};`
+          value.goods += `规格：${item.key_value};`
+          value.goods += `市场价：${item.market_price};`
+          value.goods += `本店价：${item.shop_price};`
+          value.goods += `购买数量：${item.qty};`
+          value.goods += `评价状态：${commentMap[item.is_comment]};`
+          value.goods += `售后状态：${serviceMap[item.is_service]};`
+          value.goods += `货品状态：${statusMap[item.status]};;`
         }
       }
 
@@ -268,10 +266,14 @@ export default {
         }
       }
 
-      let instance = (new TableExport(columns, data, replace, fileName))
-      instance.export()
-
-      this.exportLoading = false
+      VueTableExport.excel({
+        columns: columns,
+        data: util.dataReplace(data, replace),
+        title: fileName
+      })
+        .finally(() => {
+          this.exportLoading = false
+        })
     }
   }
 }

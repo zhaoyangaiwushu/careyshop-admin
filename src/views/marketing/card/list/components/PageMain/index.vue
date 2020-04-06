@@ -290,8 +290,8 @@ import {
   setCardStatus
 } from '@/api/marketing/card'
 import util from '@/utils/util'
+import VueTableExport from '@careyshop/vue-table-export'
 import { getCardUseExport } from '@/api/marketing/card_use'
-import { TableExport } from '@careyshop/vue-table-export'
 
 export default {
   components: {
@@ -678,8 +678,11 @@ export default {
 
       getCardUseExport(id)
         .then(res => {
-          let instance = new TableExport(columns, res.data, replace, name)
-          instance.export()
+          VueTableExport.excel({
+            columns: columns,
+            data: util.dataReplace(res.data, replace),
+            title: name
+          })
         })
     }
   }

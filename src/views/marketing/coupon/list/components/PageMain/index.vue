@@ -648,7 +648,7 @@ import {
 import * as clipboard from 'clipboard-polyfill'
 import util from '@/utils/util'
 import { getUserLevelList } from '@/api/user/level'
-import { TableExport } from '@careyshop/vue-table-export'
+import VueTableExport from '@careyshop/vue-table-export'
 
 export default {
   components: {
@@ -1237,8 +1237,11 @@ export default {
 
       getCouponGiveExport(data.coupon_id)
         .then(res => {
-          let instance = new TableExport(columns, res.data, replace, data.name)
-          instance.export()
+          VueTableExport.excel({
+            columns: columns,
+            data: util.dataReplace(res.data, replace),
+            title: data.name
+          })
         })
     },
     // 指定会员发放优惠劵

@@ -419,6 +419,19 @@
           :rows="8"/>
         <div class="help-block" v-html="form.third_count.help_text"></div>
       </el-form-item>
+
+      <el-form-item
+        :label="form.card_auth.description"
+        prop="card_auth"
+        size="small">
+        <cs-user-select
+          :check-list="form.card_auth.value"
+          type-user="admin"
+          @confirm="_handleUserConfirm">
+          <el-button slot="control">账号选取</el-button>
+        </cs-user-select>
+        <div class="help-block" v-html="form.card_auth.help_text"></div>
+      </el-form-item>
     </div>
 
     <el-form-item size="small">
@@ -454,7 +467,8 @@ import { setSystemList } from '@/api/config/setting'
 export default {
   components: {
     'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    'csStorage': () => import('@/components/cs-storage'),
+    'csUserSelect': () => import('@/components/cs-user-select')
   },
   data() {
     return {
@@ -517,6 +531,13 @@ export default {
 
         break
       }
+    },
+    // 选取账号
+    _handleUserConfirm(val) {
+      this.form.card_auth.value = []
+      val.forEach(value => {
+        this.form.card_auth.value.push(value.admin_id)
+      })
     },
     // 设置配置数据
     setFormData(val) {

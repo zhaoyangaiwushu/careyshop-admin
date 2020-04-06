@@ -212,7 +212,7 @@ export function getAdminList(data) {
  */
 export function getAdminSelect(client_id) {
   return request({
-    url: '/v1/user',
+    url: '/v1/admin',
     method: 'post',
     params: {
       method: 'get.admin.select'

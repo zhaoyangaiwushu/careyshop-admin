@@ -229,6 +229,10 @@ export default {
           }
         }
 
+        if (this.checkList.length && !idList.length) {
+          idList = this.checkList
+        }
+
         const funSelect = this.typeUser === 'client' ? getUserSelect : getAdminSelect
         funSelect(idList)
           .then(res => {

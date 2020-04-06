@@ -23,7 +23,10 @@
                 <i v-else class="el-icon-document"/>
               </div>
               <div class="cs-navi__info">
-                <p class="cs-navi__sub_title">{{sub.title}}</p>
+                <p class="cs-navi__sub_title">
+                  <i v-if="sub.type" class="el-icon-link cs-pr-5"/>
+                  <span>{{sub.title}}</span>
+                </p>
                 <p class="cs-navi__desc" :title="sub.remark">{{sub.remark}}</p>
               </div>
             </div>

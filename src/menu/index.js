@@ -23,7 +23,8 @@ function getMenuData(arr) {
       path: value.url,
       title: value.name,
       icon: value.icon,
-      remark: value.remark
+      remark: value.remark,
+      type: value.type
     }
 
     if (value.parent_id === 0) {

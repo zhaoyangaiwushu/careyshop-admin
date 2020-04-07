@@ -46,6 +46,14 @@
   float: right;
 }
 
+.#{$prefix}-fcr {
+  @extend %flex-center-row;
+}
+
+.#{$prefix}-fcc {
+  @extend %flex-center-col;
+}
+
 // 鼠标状态
 .#{$prefix}-cm {
   &:hover {

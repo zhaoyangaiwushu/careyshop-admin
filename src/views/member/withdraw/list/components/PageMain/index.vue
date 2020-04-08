@@ -81,7 +81,7 @@
       :append-to-body="true"
       :close-on-click-modal="false"
       width="600px">
-      <div ref="print" style="margin-top: -15px;">
+      <cs-print ref="print" style="margin-top: -15px;">
         <template v-if="infoVisible">
           <table style="width: 100%;">
             <caption><p style="background-color: #F8F8F9">提现单据</p></caption>
@@ -136,13 +136,13 @@
             </tbody>
           </table>
         </template>
-      </div>
+      </cs-print>
 
-      <div slot="footer" class="dialog-footer no-print">
+      <div slot="footer" class="dialog-footer">
         <div class="cs-fl">
           <el-button
             icon="el-icon-printer"
-            @click="$print($refs.print)"
+            @click="$refs.print.toPrint()"
             size="small">打印</el-button>
         </div>
 
@@ -181,6 +181,9 @@ import {
 import util from '@/utils/util'
 
 export default {
+  components: {
+    'csPrint': () => import('@/components/cs-print')
+  },
   props: {
     loading: {
       default: false

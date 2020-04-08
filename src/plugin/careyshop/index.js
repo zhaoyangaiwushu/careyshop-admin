@@ -19,7 +19,6 @@ import pluginOpen from '@/plugin/open'
 import pluginPermission from '@/plugin/permission'
 import pluginPreview from '@/plugin/preview'
 import pluginPlayer from '@/plugin/player'
-import pluginPrint from '@/plugin/print'
 
 export default {
   async install(Vue, options) {
@@ -45,6 +44,5 @@ export default {
     Vue.use(pluginPermission)
     Vue.use(pluginPreview)
     Vue.use(pluginPlayer)
-    Vue.use(pluginPrint)
   }
 }

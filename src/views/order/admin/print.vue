@@ -312,6 +312,15 @@ import { getSettingList } from '@/api/config/setting'
 
 export default {
   name: 'order-admin-print',
+  computed: {
+    outPrint() {
+      const { type, orderData } = this
+      return {
+        type,
+        orderData
+      }
+    }
+  },
   props: {
     type: {
       type: String,
@@ -349,9 +358,9 @@ export default {
     }
   },
   watch: {
-    orderData: {
-      handler() {
-        if (this.type === 'out') {
+    outPrint: {
+      handler(value) {
+        if (value.type === 'out') {
           this.outOrder = {}
           this.handleOutOrder()
         }

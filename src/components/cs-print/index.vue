@@ -16,6 +16,13 @@ export default {
       default: () => []
     }
   },
+  mounted() {
+    this.printd = new Printd()
+    this.iframe = this.printd.getIFrame()
+  },
+  beforeDestroy() {
+    this.iframe && document.body.removeChild(this.iframe)
+  },
   methods: {
     toPrint() {
       let styleList = ['.no-print {display: none;}']
@@ -32,17 +39,14 @@ export default {
         }
       }
 
-      const handlePrint = new Printd()
-      // const iframe = handlePrint.getIFrame()
+      const { contentWindow } = this.iframe
+      this.printd.print(this.$el, this.cssText.concat(styleList))
 
-      // console.dir(iframe)
-
-      // iframe.contentWindow.addEventListener('afterprint', () => {
-      //   // document.body.removeChild(iframe)
-      //   console.log('okokok')
-      // })
-
-      handlePrint.print(this.$el, this.cssText.concat(styleList))
+      contentWindow.addEventListener('afterprint', () => {
+        contentWindow.document.open()
+        contentWindow.document.write('<html lang="zh"><head><title>careyshop</title></head><body/></html>')
+        contentWindow.document.close()
+      })
     }
   }
 }

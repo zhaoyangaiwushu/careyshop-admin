@@ -1,7 +1,10 @@
 <template>
   <cs-container :is-back-to-top="true" parent-path="order-admin-list">
     <template v-if="orderData && !loading">
-      <cs-print class="print-main" ref="print">
+      <cs-print
+        :css-text="['.cs-print {font-size: 12px;}']"
+        class="print-main"
+        ref="print">
         <template v-if="type === 'order'">
           <div
             v-for="(item, index) in orderData"
@@ -443,14 +446,13 @@ export default {
 
 <style scoped>
   .print-main {
-    /*font: 12px/1.5 "宋体", Helvetica, Arial, serif;*/
     background: #FFFFFF;
+    /*font: 12px/1.5 "宋体", Helvetica, Arial, sans-serif;*/
   }
 
   .print-order {
     padding: 20px;
     page-break-after: always;
-    /*min-height: 1000px;*/
   }
 
   .print-order table {

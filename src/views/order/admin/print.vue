@@ -135,9 +135,9 @@
 
             <table>
               <colgroup>
-                <col style="width: 40%;">
-                <col style="width: 25%;">
-                <col span="2" style="width: 10%;">
+                <col style="width: 38%;">
+                <col style="width: 23%;">
+                <col span="2" style="width: 12%;">
                 <col style="width: 15%;">
               </colgroup>
               <thead>
@@ -150,9 +150,9 @@
               </tr>
               </thead>
               <colgroup>
-                <col style="width: 40%;">
-                <col style="width: 25%;">
-                <col span="2" style="width: 10%;">
+                <col style="width: 38%;">
+                <col style="width: 23%;">
+                <col span="2" style="width: 12%;">
                 <col style="width: 15%;">
               </colgroup>
               <tbody style="border-top: 1px solid #CCC;">

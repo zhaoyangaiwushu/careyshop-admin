@@ -113,68 +113,69 @@
       :visible.sync="infoVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
-      width="600px"
-      ref="print">
+      width="600px">
       <el-form
         v-if="cardData"
         label-width="90px"
         label-position="left"
         style="margin-top: -25px;">
-        <el-form-item label="名称：">
-          <span>{{cardData.name}}</span>
-        </el-form-item>
+        <cs-print ref="print">
+          <el-form-item label="名称：">
+            <span>{{cardData.name}}</span>
+          </el-form-item>
 
-        <el-form-item label="描述：">
-          <span>{{cardData.description || '-'}}</span>
-        </el-form-item>
+          <el-form-item label="描述：">
+            <span>{{cardData.description || '-'}}</span>
+          </el-form-item>
 
-        <el-form-item label="面额：">
-          <span>{{cardData.money | getNumber}}</span>
-        </el-form-item>
+          <el-form-item label="面额：">
+            <span>{{cardData.money | getNumber}}</span>
+          </el-form-item>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="发放数：">
-              <span>{{cardData.give_num}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="发放数：">
+                <span>{{cardData.give_num}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="激活数：">
-              <span>{{cardData.active_num}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="激活数：">
+                <span>{{cardData.active_num}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="创建时间：">
-              <span>{{cardData.create_time}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="创建时间：">
+                <span>{{cardData.create_time}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="截止日期：">
-              <span>{{cardData.end_time || '不限日期'}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="截止日期：">
+                <span>{{cardData.end_time || '不限日期'}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-form-item label="状态：">
-          <el-tag
-            :type="invalidMap[cardData.status].type"
-            effect="plain"
-            size="small">
-            {{invalidMap[cardData.status].text}}
-          </el-tag>
-        </el-form-item>
+          <el-form-item label="状态：">
+            <el-tag
+              :type="invalidMap[cardData.status].type"
+              effect="plain"
+              size="small">
+              {{invalidMap[cardData.status].text}}
+            </el-tag>
+          </el-form-item>
+        </cs-print>
       </el-form>
 
-      <div slot="footer" class="dialog-footer no-print">
+      <div slot="footer" class="dialog-footer">
         <div class="cs-fl">
           <el-button
             icon="el-icon-printer"
-            @click="$print($refs.print)"
+            @click="$refs.print.toPrint()"
             size="small">打印</el-button>
         </div>
 
@@ -192,6 +193,9 @@ import util from '@/utils/util'
 import { setCardUseInvalid } from '@/api/marketing/card_use'
 
 export default {
+  components: {
+    'csPrint': () => import('@/components/cs-print')
+  },
   props: {
     loading: {
       default: false

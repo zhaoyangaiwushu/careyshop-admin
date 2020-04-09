@@ -98,137 +98,138 @@
       :visible.sync="infoVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
-      width="650px"
-      ref="print">
+      width="650px">
       <el-form
         v-if="couponData"
         label-width="110px"
         label-position="left"
         style="margin-top: -25px;">
-        <el-form-item label="名称：">
-          <span>{{couponData.name}}</span>
-        </el-form-item>
+        <cs-print ref="print">
+          <el-form-item label="名称：">
+            <span>{{couponData.name}}</span>
+          </el-form-item>
 
-        <el-form-item label="描述：">
-          <span>{{couponData.description || '-'}}</span>
-        </el-form-item>
+          <el-form-item label="描述：">
+            <span>{{couponData.description || '-'}}</span>
+          </el-form-item>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="类型：">
-              <span>{{typeMap[couponData.type]}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="类型：">
+                <span>{{typeMap[couponData.type]}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="领取码：">
-              <span>{{couponData.give_code}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="领取码：">
+                <span>{{couponData.give_code}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="优惠金额：">
-              <span>{{couponData.money | getNumber}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="优惠金额：">
+                <span>{{couponData.money | getNumber}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="使用门槛：">
-              <span>满 {{couponData.quota | getNumber}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="使用门槛：">
+                <span>满 {{couponData.quota | getNumber}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="限领次数：">
-              <span>{{couponData.frequency || '不限次数'}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="限领次数：">
+                <span>{{couponData.frequency || '不限次数'}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="发放数：">
-              <span>{{couponData.give_num}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="发放数：">
+                <span>{{couponData.give_num}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="领取数：">
-              <span>{{couponData.receive_num}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="领取数：">
+                <span>{{couponData.receive_num}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="使用数：">
-              <span>{{couponData.use_num}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="使用数：">
+                <span>{{couponData.use_num}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="状态：">
-              <el-tag
-                :type="statusMap[couponData.status].type"
-                effect="plain"
-                size="mini">
-                {{statusMap[couponData.status].text}}
-              </el-tag>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="状态：">
+                <el-tag
+                  :type="statusMap[couponData.status].type"
+                  effect="plain"
+                  size="mini">
+                  {{statusMap[couponData.status].text}}
+                </el-tag>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="是否有效：">
-              <el-tag
-                :type="invalidMap[couponData.is_invalid].type"
-                effect="plain"
-                size="mini">
-                {{invalidMap[couponData.is_invalid].text}}
-              </el-tag>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="是否有效：">
+                <el-tag
+                  :type="invalidMap[couponData.is_invalid].type"
+                  effect="plain"
+                  size="mini">
+                  {{invalidMap[couponData.is_invalid].text}}
+                </el-tag>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-divider/>
+          <el-divider/>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="发放开始日期：">
-              <span>{{couponData.give_begin_time}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="发放开始日期：">
+                <span>{{couponData.give_begin_time}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="发放结束日期：">
-              <span>{{couponData.give_end_time}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="发放结束日期：">
+                <span>{{couponData.give_end_time}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
 
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="使用开始日期：">
-              <span>{{couponData.use_begin_time}}</span>
-            </el-form-item>
-          </el-col>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="使用开始日期：">
+                <span>{{couponData.use_begin_time}}</span>
+              </el-form-item>
+            </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="使用截止日期：">
-              <span>{{couponData.use_end_time}}</span>
-            </el-form-item>
-          </el-col>
-        </el-row>
+            <el-col :span="12">
+              <el-form-item label="使用截止日期：">
+                <span>{{couponData.use_end_time}}</span>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </cs-print>
       </el-form>
 
-      <div slot="footer" class="dialog-footer no-print">
+      <div slot="footer" class="dialog-footer">
         <div class="cs-fl">
           <el-button
             icon="el-icon-printer"
-            @click="$print($refs.print)"
+            @click="$refs.print.toPrint()"
             size="small">打印</el-button>
         </div>
 
@@ -246,6 +247,9 @@ import util from '@/utils/util'
 import { delCouponGiveList, recCouponGiveList } from '@/api/marketing/coupon_give'
 
 export default {
+  components: {
+    'csPrint': () => import('@/components/cs-print')
+  },
   props: {
     loading: {
       default: false

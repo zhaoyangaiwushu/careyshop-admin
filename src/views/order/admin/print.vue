@@ -1,7 +1,7 @@
 <template>
   <cs-container :is-back-to-top="true" parent-path="order-admin-list">
     <template v-if="orderData && !loading">
-      <div class="print-main" ref="print">
+      <cs-print class="print-main" ref="print">
         <template v-if="type === 'order'">
           <div
             v-for="(item, index) in orderData"
@@ -285,16 +285,16 @@
             </table>
           </div>
         </template>
-      </div>
+      </cs-print>
     </template>
 
-    <template ref="footer" slot="footer">
+    <template slot="footer">
       <div style="margin: -10px 0;">
         <el-button
           type="primary"
           size="small"
           :loading="loading"
-          @click="$print($refs.print)">打印</el-button>
+          @click="$refs.print.toPrint()">打印</el-button>
 
         <el-button
           size="small"
@@ -312,6 +312,9 @@ import { getSettingList } from '@/api/config/setting'
 
 export default {
   name: 'order-admin-print',
+  components: {
+    'csPrint': () => import('@/components/cs-print')
+  },
   computed: {
     outPrint() {
       const { type, orderData } = this

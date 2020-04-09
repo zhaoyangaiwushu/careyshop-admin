@@ -6,6 +6,7 @@
 
 <script>
 import Printd from 'printd'
+
 export default {
   name: 'cs-print',
   props: {
@@ -17,7 +18,7 @@ export default {
   },
   methods: {
     toPrint() {
-      let styleList = []
+      let styleList = ['.no-print {display: none;}']
       let styles = document.querySelectorAll('style,link')
 
       for (let i = 0; i < styles.length; i++) {
@@ -31,11 +32,17 @@ export default {
         }
       }
 
-      const d = new Printd()
-      d.print(this.$el, this.cssText.concat(styleList))
+      const handlePrint = new Printd()
+      // const iframe = handlePrint.getIFrame()
 
-      // todo 未完待续,清理工作未完成
-      // https://www.npmjs.com/package/printd
+      // console.dir(iframe)
+
+      // iframe.contentWindow.addEventListener('afterprint', () => {
+      //   // document.body.removeChild(iframe)
+      //   console.log('okokok')
+      // })
+
+      handlePrint.print(this.$el, this.cssText.concat(styleList))
     }
   }
 }

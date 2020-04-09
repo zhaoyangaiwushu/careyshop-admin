@@ -81,6 +81,12 @@ module.exports = [
     css: '//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css'
   },
   {
+    name: 'printd',
+    library: 'Printd',
+    js: '//cdn.jsdelivr.net/npm/printd@1.4.1/index.min.js',
+    css: ''
+  },
+  {
     name: 'screenfull',
     library: 'screenfull',
     js: '//cdn.jsdelivr.net/npm/screenfull@5.0.2/dist/screenfull.min.js',

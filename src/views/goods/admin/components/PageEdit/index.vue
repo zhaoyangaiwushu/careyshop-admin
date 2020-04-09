@@ -874,13 +874,13 @@
 
     <cs-storage
       ref="storage"
-      style="display: none"
+      style="display: none;"
       :limit="uploadConfig.limit"
       @confirm="storageCallback">
     </cs-storage>
 
     <cs-upload
-      style="display: none"
+      style="display: none;"
       ref="upload"
       type="slot"
       :multiple="uploadConfig.multiple"

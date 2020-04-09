@@ -494,7 +494,7 @@
               <el-alert
                 title="原始图片"
                 :closable="false"
-                style="border-radius: 0"
+                style="border-radius: 0;"
                 center>
               </el-alert>
 
@@ -548,7 +548,7 @@
               <el-alert
                 :title="`实际结果 ${form.style || !form.resize ? '' : scaleTab}`"
                 :closable="false"
-                style="border-radius: 0"
+                style="border-radius: 0;"
                 center>
               </el-alert>
 

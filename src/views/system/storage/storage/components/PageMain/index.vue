@@ -174,7 +174,7 @@
     </el-checkbox-group>
 
     <cs-upload
-      style="display: none"
+      style="display: none;"
       ref="upload"
       type="slot"
       :upload-tip="uploadConfig.uploadTip"
@@ -186,7 +186,7 @@
     </cs-upload>
 
     <cs-storage
-      style="display: none"
+      style="display: none;"
       ref="storage"
       :limit="1"
       @confirm="handleVideoCover">

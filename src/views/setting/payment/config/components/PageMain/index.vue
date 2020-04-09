@@ -156,7 +156,7 @@
         </el-form-item>
 
         <el-form-item label="类型">
-          <div style="width: 300px">
+          <div style="width: 300px;">
             <el-checkbox
               v-model="updateForm.is_deposit"
               :true-label="1"
@@ -219,13 +219,13 @@
 
       <cs-storage
         ref="storage"
-        style="display: none"
+        style="display: none;"
         :limit="1"
         @confirm="_getStorageFileList">
       </cs-storage>
 
       <cs-upload
-        style="display: none"
+        style="display: none;"
         ref="upload"
         type="slot"
         accept="image/*"

@@ -3,8 +3,8 @@
     <label>
       <textarea class="tinymce-textarea" :id="tinymceId"/>
     </label>
-    <cs-upload ref="upload" type="slot" style="display: none" @confirm="_getUploadFileList"/>
-    <cs-storage ref="storage" style="display: none" @confirm="_getStorageFileList"/>
+    <cs-upload ref="upload" type="slot" style="display: none;" @confirm="_getUploadFileList"/>
+    <cs-storage ref="storage" style="display: none;" @confirm="_getStorageFileList"/>
   </div>
 </template>
 

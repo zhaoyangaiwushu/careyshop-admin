@@ -272,12 +272,12 @@
 
         <cs-storage
           ref="storage"
-          style="display: none"
+          style="display: none;"
           @confirm="_getStorageFileList">
         </cs-storage>
 
         <cs-upload
-          style="display: none"
+          style="display: none;"
           ref="upload"
           type="slot"
           accept="image/*"

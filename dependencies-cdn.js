@@ -81,12 +81,6 @@ module.exports = [
     css: '//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.css'
   },
   {
-    name: 'printd',
-    library: 'Printd',
-    js: '//cdn.jsdelivr.net/npm/printd@1.4.1/index.min.js',
-    css: ''
-  },
-  {
     name: 'screenfull',
     library: 'screenfull',
     js: '//cdn.jsdelivr.net/npm/screenfull@5.0.2/dist/screenfull.min.js',
@@ -111,15 +105,21 @@ module.exports = [
     css: ''
   },
   {
-    name: '@careyshop/vue-table-export',
-    library: 'VueTableExport',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.9/dist/vue-table-export.min.js',
+    name: '@careyshop/stats',
+    library: '@careyshop/stats',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.2/stats.min.js',
     css: ''
   },
   {
-    name: '@careyshop/stats',
-    library: '@careyshop/stats',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.1/stats.min.js',
+    name: '@careyshop/vue-print',
+    library: 'PrintCs',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.1/index.min.js',
+    css: ''
+  },
+  {
+    name: '@careyshop/vue-table-export',
+    library: 'VueTableExport',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.10/dist/vue-table-export.min.js',
     css: ''
   }
 ]

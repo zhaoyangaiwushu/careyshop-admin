@@ -142,14 +142,14 @@
               v-if="formStatus === 'create' && auth.add"
               type="text"
               :loading="formLoading"
-              style="float: right; padding: 3px 0"
+              style="float: right; padding: 3px 0;"
               @click="create">确定</el-button>
 
             <el-button
               v-else-if="formStatus === 'update' && auth.set"
               type="text"
               :loading="formLoading"
-              style="float: right; padding: 3px 0"
+              style="float: right; padding: 3px 0;"
               @click="update">修改</el-button>
           </div>
 
@@ -347,13 +347,13 @@
 
           <cs-storage
             ref="storage"
-            style="display: none"
+            style="display: none;"
             :limit="1"
             @confirm="_getStorageFileList">
           </cs-storage>
 
           <cs-upload
-            style="display: none"
+            style="display: none;"
             ref="upload"
             type="slot"
             accept="image/*"

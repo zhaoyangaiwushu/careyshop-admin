@@ -11,8 +11,9 @@
     "inspect": "vue-cli-service inspect --mode production --verbose"
   },
   "dependencies": {
-    "@careyshop/stats": "^1.0.1",
-    "@careyshop/vue-table-export": "^1.0.9",
+    "@careyshop/stats": "^1.0.2",
+    "@careyshop/vue-print": "^1.0.1",
+    "@careyshop/vue-table-export": "^1.0.10",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",
     "clipboard-polyfill": "^2.8.6",
@@ -28,7 +29,6 @@
     "lowdb": "^1.0.0",
     "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
-    "printd": "^1.4.1",
     "screenfull": "^5.0.2",
     "ua-parser-js": "^0.7.21",
     "vue": "^2.6.11",

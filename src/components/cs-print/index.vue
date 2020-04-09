@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Printd from 'printd'
+import PrintCs from '@careyshop/vue-print'
 
 export default {
   name: 'cs-print',
@@ -17,8 +17,8 @@ export default {
     }
   },
   mounted() {
-    this.printd = new Printd()
-    this.iframe = this.printd.getIFrame()
+    this.printCS = new PrintCs()
+    this.iframe = this.printCS.getIFrame()
   },
   beforeDestroy() {
     this.iframe && document.body.removeChild(this.iframe)
@@ -40,12 +40,10 @@ export default {
       }
 
       const { contentWindow } = this.iframe
-      this.printd.print(this.$el, this.cssText.concat(styleList))
+      this.printCS.print(this.$el, this.cssText.concat(styleList))
 
       contentWindow.addEventListener('afterprint', () => {
-        contentWindow.document.open()
-        contentWindow.document.write('<html lang="zh"><head><title>careyshop</title></head><body/></html>')
-        contentWindow.document.close()
+        this.printCS.clearIFrameDocument()
       })
     }
   }

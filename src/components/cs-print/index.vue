@@ -39,12 +39,7 @@ export default {
         }
       }
 
-      const { contentWindow } = this.iframe
       this.printCS.print(this.$el, this.cssText.concat(styleList))
-
-      contentWindow.addEventListener('afterprint', () => {
-        this.printCS.clearIFrameDocument()
-      })
     }
   }
 }

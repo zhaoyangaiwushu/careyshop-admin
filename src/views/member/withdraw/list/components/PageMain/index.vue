@@ -81,7 +81,7 @@
       :append-to-body="true"
       :close-on-click-modal="false"
       width="600px">
-      <cs-print ref="print" style="margin-top: -20px;">
+      <cs-print ref="print" style="margin-top: -15px;">
         <template v-if="infoVisible">
           <table style="width: 100%;">
             <caption><p style="background-color: #F8F8F9;">提现单据</p></caption>

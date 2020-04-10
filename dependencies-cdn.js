@@ -113,7 +113,7 @@ module.exports = [
   {
     name: '@careyshop/vue-print',
     library: 'PrintCS',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.4/index.min.js',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.6/index.min.js',
     css: ''
   },
   {

@@ -41,7 +41,7 @@ module.exports = [
   {
     name: 'dayjs',
     library: 'dayjs',
-    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.23/dayjs.min.js',
+    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.24/dayjs.min.js',
     css: ''
   },
   {
@@ -106,20 +106,20 @@ module.exports = [
   },
   {
     name: '@careyshop/stats',
-    library: '@careyshop/stats',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.2/stats.min.js',
+    library: 'statsCS',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.9/dist/stats.min.js',
     css: ''
   },
   {
     name: '@careyshop/vue-print',
-    library: 'PrintCs',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.3/index.min.js',
+    library: 'PrintCS',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.4/index.min.js',
     css: ''
   },
   {
     name: '@careyshop/vue-table-export',
     library: 'VueTableExport',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.10/dist/vue-table-export.min.js',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.14/dist/vue-table-export.min.js',
     css: ''
   }
 ]

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import PrintCs from '@careyshop/vue-print'
+import PrintCS from '@careyshop/vue-print'
 
 export default {
   name: 'cs-print',
@@ -17,7 +17,7 @@ export default {
     }
   },
   mounted() {
-    this.printCS = new PrintCs()
+    this.printCS = new PrintCS()
     this.iframe = this.printCS.getIFrame()
   },
   beforeDestroy() {

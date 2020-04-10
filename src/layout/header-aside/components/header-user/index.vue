@@ -253,7 +253,9 @@ export default {
       this.historyClear()
         .then(() => {
           if (this.$route.path === '/index') {
-            location.reload()
+            setTimeout(() => {
+              location.reload()
+            }, 500)
           }
 
           this.$message.success('左侧访问历史栏已清空')

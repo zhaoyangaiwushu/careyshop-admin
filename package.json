@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@careyshop/stats": "^1.0.9",
-    "@careyshop/vue-print": "^1.0.6",
+    "@careyshop/vue-print": "^1.0.7",
     "@careyshop/vue-table-export": "^1.0.14",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",

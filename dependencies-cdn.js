@@ -110,12 +110,12 @@ module.exports = [
     js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.9/dist/stats.min.js',
     css: ''
   },
-  {
-    name: '@careyshop/vue-print',
-    library: 'PrintCS',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.7/index.umd.min.js',
-    css: ''
-  },
+  // {
+  //   name: '@careyshop/vue-print',
+  //   library: 'PrintCS',
+  //   js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.7/index.umd.min.js',
+  //   css: ''
+  // },
   {
     name: '@careyshop/vue-table-export',
     library: 'VueTableExport',

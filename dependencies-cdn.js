@@ -106,20 +106,20 @@ module.exports = [
   },
   {
     name: '@careyshop/stats',
-    library: 'statsCS',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.9/dist/stats.min.js',
+    library: 'StatsCS',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.11/dist/stats.min.js',
     css: ''
   },
-  // {
-  //   name: '@careyshop/vue-print',
-  //   library: 'PrintCS',
-  //   js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.7/index.umd.min.js',
-  //   css: ''
-  // },
+  {
+    name: '@careyshop/vue-print',
+    library: 'PrintCS',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-print@1.0.8/dist/print.min.js',
+    css: ''
+  },
   {
     name: '@careyshop/vue-table-export',
     library: 'VueTableExport',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.14/dist/vue-table-export.min.js',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.16/dist/export.min.js',
     css: ''
   }
 ]

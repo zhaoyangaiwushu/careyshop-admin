@@ -1,6 +1,6 @@
 {
   "name": "careyshop-admin",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -11,9 +11,9 @@
     "inspect": "vue-cli-service inspect --mode production --verbose"
   },
   "dependencies": {
-    "@careyshop/stats": "^1.0.9",
-    "@careyshop/vue-print": "^1.0.7",
-    "@careyshop/vue-table-export": "^1.0.14",
+    "@careyshop/stats": "^1.0.11",
+    "@careyshop/vue-print": "^1.0.8",
+    "@careyshop/vue-table-export": "^1.0.16",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",
     "clipboard-polyfill": "^2.8.6",

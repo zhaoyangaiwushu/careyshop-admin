@@ -161,6 +161,20 @@ export default {
       default: true
     }
   },
+  data() {
+    return {
+      loading: true,
+      activeName: 'content',
+      currentPrice: 0,
+      rangePrice: '',
+      currentStore: 0,
+      goodsData: {},
+      attrConfig: [],
+      attrImportant: [],
+      specCombo: {},
+      specConfig: []
+    }
+  },
   filters: {
     getNumber(val) {
       return util.getNumber(val)
@@ -179,20 +193,6 @@ export default {
   },
   components: {
     'PageMedia': () => import('./components/PageMedia')
-  },
-  data() {
-    return {
-      loading: true,
-      activeName: 'content',
-      currentPrice: 0,
-      rangePrice: '',
-      currentStore: 0,
-      goodsData: {},
-      attrConfig: [],
-      attrImportant: [],
-      specCombo: {},
-      specConfig: []
-    }
   },
   methods: {
     resetGoodsData() {

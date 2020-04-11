@@ -40,17 +40,17 @@ export default {
 
 <style lang="scss" scoped>
   .top {
-    bottom: 107px;
+    bottom: 110px;
   }
 
   .back {
-    bottom: 74px;
+    bottom: 75px;
   }
 
   .cs-floating {
     position: absolute;
     z-index: 1;
-    right: 58px;
+    right: 59px;
     width: 32px;
     border-radius: 4px;
     background-color: rgba($color-text-sub, .7);

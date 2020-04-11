@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="goods-opinion-consult">
+  <cs-container :is-back-to-top="true" :is-back="true">
     <page-main
       :loading="loading"
       :table-data="table"

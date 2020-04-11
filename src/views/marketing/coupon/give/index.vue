@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="marketing-coupon-list">
+  <cs-container :is-back-to-top="true" :is-back="true">
     <page-header
       slot="header"
       :loading="loading"

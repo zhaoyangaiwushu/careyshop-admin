@@ -1,5 +1,5 @@
 <template>
-  <cs-container parent-path="order-admin-list">
+  <cs-container :is-back-to-top="true" :is-back="true">
     <span>功能开发中...</span>
   </cs-container>
 </template>

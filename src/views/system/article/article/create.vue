@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="system-article-admin">
+  <cs-container :is-back-to-top="true" :is-back="true">
     <page-edit
       state="create"
       :loading="loading"

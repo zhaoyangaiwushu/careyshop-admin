@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="goods-admin-list">
+  <cs-container :is-back-to-top="true" :is-back="true">
     <template v-if="goods_id">
       <page-edit
         ref="update"

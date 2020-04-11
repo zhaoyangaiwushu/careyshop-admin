@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" parent-path="system-message-user">
+  <cs-container :is-back-to-top="true" :is-back="true">
     <div class="cs-p">
       <el-card
         class="box-card"

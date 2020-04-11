@@ -11,11 +11,11 @@
     </el-tooltip>
 
     <el-tooltip
-      v-if="parentPath"
-      content="返回上级"
+      v-if="isBack"
+      content="返回上一页"
       placement="top"
       :open-delay="1000">
-      <div class="cs-floating parent" @click="$router.push({name: parentPath})">
+      <div class="cs-floating back" @click="$router.back()">
         <i class="el-icon-caret-left"/>
       </div>
     </el-tooltip>
@@ -30,9 +30,9 @@ export default {
       type: Boolean,
       default: false
     },
-    parentPath: {
-      type: String,
-      default: null
+    isBack: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -43,7 +43,7 @@ export default {
     bottom: 107px;
   }
 
-  .parent {
+  .back {
     bottom: 74px;
   }
 

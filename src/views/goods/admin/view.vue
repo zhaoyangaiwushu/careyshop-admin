@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" :parent-path="parentPath">
+  <cs-container :is-back-to-top="true" :is-back="isBack">
     <div class="cs-p">
       <el-card
         class="box-card"
@@ -155,10 +155,10 @@ export default {
       type: [String, Number],
       required: true
     },
-    parentPath: {
-      type: String,
+    isBack: {
+      type: Boolean,
       required: false,
-      default: 'goods-admin-list'
+      default: true
     }
   },
   filters: {

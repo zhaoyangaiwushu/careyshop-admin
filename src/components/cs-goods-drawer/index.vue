@@ -7,7 +7,7 @@
     :destroy-on-close="true"
     :show-close="true"
     :modal="false">
-    <cs-goods-view :goods_id="currentGoodsId" parent-path=""/>
+    <cs-goods-view :goods_id="currentGoodsId" :is-back="false"/>
   </el-drawer>
 </template>
 

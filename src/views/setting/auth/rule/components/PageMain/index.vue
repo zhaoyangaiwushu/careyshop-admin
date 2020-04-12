@@ -243,7 +243,7 @@
                         <i v-else-if="data.children" :class="`el-icon-${node.expanded ? 'folder-opened' : 'folder'}`"/>
                         <i v-else class="el-icon-document"/>
                         {{node.label}}
-                        <i v-if="data.url" class="el-icon-link">
+                        <i v-if="data.url" :class="`${data.type ? 'el-icon-link' : 'el-icon-paperclip'}`">
                           {{data.url}}
                         </i>
                       </span>
@@ -265,7 +265,7 @@
                         <i v-else-if="data.children" :class="`el-icon-${node.expanded ? 'folder-opened' : 'folder'}`"/>
                         <i v-else class="el-icon-document"/>
                         {{node.label}}
-                        <i v-if="data.url" class="el-icon-link">
+                        <i v-if="data.url" :class="`${data.type ? 'el-icon-link' : 'el-icon-paperclip'}`">
                           {{data.url}}
                         </i>
                       </span>

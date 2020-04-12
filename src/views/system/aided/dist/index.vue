@@ -28,7 +28,7 @@
 import { getDeliveryDistList } from '@/api/logistics/dist'
 
 export default {
-  name: 'setting-logistics-dist',
+  name: 'system-aided-dist',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),

@@ -127,6 +127,12 @@ export default {
       component: () => import('@/views/system/aided/support')
     },
     {
+      path: 'aided/dist',
+      name: `${pre}aided-dist`,
+      meta: { ...meta, cache: true, title: '配送轨迹' },
+      component: () => import('@/views/system/aided/dist')
+    },
+    {
       path: 'aided/friendlink',
       name: `${pre}aided-friendlink`,
       meta: { ...meta, cache: true, title: '友情链接' },

@@ -91,12 +91,6 @@ export default {
       component: () => import('@/views/setting/logistics/company')
     },
     {
-      path: 'logistics/dist',
-      name: `${pre}logistics-dist`,
-      meta: { ...meta, cache: true, title: '配送轨迹' },
-      component: () => import('@/views/setting/logistics/dist')
-    },
-    {
       path: 'logistics/delivery',
       name: `${pre}logistics-delivery`,
       meta: { ...meta, cache: true, title: '配送方式' },

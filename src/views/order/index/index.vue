@@ -1,5 +1,5 @@
 <template>
-  <cs-container>
+  <cs-container :is-back="false">
     <page-navi class="cs-m" v-model="root"/>
   </cs-container>
 </template>

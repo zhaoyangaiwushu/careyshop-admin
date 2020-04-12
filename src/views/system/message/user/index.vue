@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true">
+  <cs-container>
     <page-main
       ref="main"
       :loading="loading"

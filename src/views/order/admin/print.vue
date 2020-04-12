@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" :is-back="true">
+  <cs-container>
     <template v-if="orderData && !loading">
       <cs-print
         :css-text="['.cs-print {font-size: 12px;}']"

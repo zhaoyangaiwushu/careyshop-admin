@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" :is-back="true">
+  <cs-container>
     <template v-if="goods_id">
       <page-edit
         ref="update"

@@ -1,5 +1,5 @@
 <template>
-  <cs-container :is-back-to-top="true" :is-back="isBack">
+  <cs-container :is-back="isBack">
     <div class="cs-p">
       <el-card
         class="box-card"

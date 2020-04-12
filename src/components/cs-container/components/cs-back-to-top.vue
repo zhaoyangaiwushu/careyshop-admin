@@ -11,7 +11,7 @@
     </el-tooltip>
 
     <el-tooltip
-      v-if="isBack"
+      v-show="isBack"
       content="返回上一页"
       placement="top"
       :open-delay="1000">
@@ -28,11 +28,11 @@ export default {
   props: {
     isBackToTop: {
       type: Boolean,
-      default: false
+      default: true
     },
     isBack: {
       type: Boolean,
-      default: false
+      default: true
     }
   }
 }

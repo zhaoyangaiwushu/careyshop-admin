@@ -1,5 +1,5 @@
 <template>
-  <cs-container>
+  <cs-container :is-back="false">
     <el-form
       v-loading="loading"
       class="form-box cs-m"

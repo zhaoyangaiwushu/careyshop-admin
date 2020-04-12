@@ -1,5 +1,5 @@
 <template>
-  <cs-container>
+  <cs-container :is-back="false">
     <cs-page-cover
       title="CareyShop Admin"
       sub-title="商城后台管理系统集成方案(订单、售后模块继续中...)">

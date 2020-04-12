@@ -40,6 +40,11 @@
       <el-divider>物流轨迹</el-divider>
 
       <el-timeline v-if="result.length > 0 && result[companyIndex]['trace'].length">
+        <el-timeline-item type="success">
+          物流单号：{{result[companyIndex]['logistic_code']}}
+          快递公司：{{result[companyIndex]['get_delivery_item']['name']}}
+        </el-timeline-item>
+
         <el-timeline-item
           v-for="(trace, index) in result[companyIndex].trace"
           :key="index"
@@ -50,7 +55,11 @@
       </el-timeline>
 
       <div v-else class="not-trace">
-        <span>暂无轨迹</span>
+        <p v-if="result.length">
+          物流单号：{{result[companyIndex]['logistic_code']}}
+          快递公司：{{result[companyIndex]['get_delivery_item']['name']}}
+        </p>
+        <p>暂无轨迹</p>
       </div>
     </div>
   </el-dialog>
@@ -66,6 +75,7 @@ export default {
       visible: false,
       loading: false,
       companyIndex: undefined,
+      result: [],
       stateMap: {
         0: '无轨迹',
         1: '已揽收',
@@ -73,9 +83,7 @@ export default {
         3: '签收',
         4: '问题件',
         201: '到达派件城市'
-      },
-      result: [],
-      request: {}
+      }
     }
   },
   filters: {
@@ -92,7 +100,7 @@ export default {
   },
   methods: {
     show(orderCode, logisticCode = null, excludeCode = []) {
-      this.request = {
+      const request = {
         'order_code': orderCode,
         'logistic_code': logisticCode,
         'exclude_code': excludeCode
@@ -103,7 +111,7 @@ export default {
       this.companyIndex = null
       this.result = null
 
-      getDeliveryDistCode(this.request)
+      getDeliveryDistCode(request)
         .then(res => {
           this.result = res.data || []
           this.companyIndex = this.result.length > 0 ? 0 : null

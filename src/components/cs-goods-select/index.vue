@@ -153,7 +153,7 @@ export default {
   data() {
     return {
       visible: false,
-      loading: true,
+      loading: false,
       isCheck: false,
       isSelection: false,
       tableData: [],

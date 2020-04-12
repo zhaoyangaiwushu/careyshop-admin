@@ -163,7 +163,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       activeName: 'content',
       currentPrice: 0,
       rangePrice: '',

@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       article: {},
-      loading: true
+      loading: false
     }
   },
   watch: {

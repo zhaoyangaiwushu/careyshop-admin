@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       topic: {},
-      loading: true
+      loading: false
     }
   },
   watch: {

@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       message: {},
-      loading: true
+      loading: false
     }
   },
   watch: {

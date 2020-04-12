@@ -142,7 +142,7 @@ export default {
   data() {
     return {
       visible: false,
-      loading: true,
+      loading: false,
       loadingCollection: false,
       naviData: [],
       checkList: [],

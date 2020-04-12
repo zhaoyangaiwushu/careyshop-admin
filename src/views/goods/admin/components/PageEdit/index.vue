@@ -1001,7 +1001,7 @@ export default {
   },
   props: {
     loading: {
-      default: true
+      default: false
     },
     confirmLoading: {
       default: false

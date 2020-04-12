@@ -229,7 +229,7 @@
 
           <div v-loading="treeLoading">
             <el-collapse>
-              <el-collapse-item title="菜单权限">
+              <el-collapse-item :title="`${getModuleName(form.module)}权限`">
                 <el-tree
                   node-key="menu_id"
                   :data="menuData"
@@ -251,7 +251,7 @@
                 </el-tree>
               </el-collapse-item>
 
-              <el-collapse-item v-if="form.module === 'api'" title="记录权限">
+              <el-collapse-item v-if="form.module === 'api'" title="操作日志">
                 <el-tree
                   node-key="menu_id"
                   :data="menuData"
@@ -404,6 +404,14 @@ export default {
       this.auth.enable = this.$permission('/setting/auth/rule/enable')
       this.auth.disable = this.$permission('/setting/auth/rule/disable')
       this.auth.move = this.$permission('/setting/auth/rule/move')
+    },
+    // 获取模块名称
+    getModuleName(val) {
+      if (!this.module.hasOwnProperty(val)) {
+        return ''
+      }
+
+      return this.module[val]
     },
     // 过滤节点
     filterNode(value, data) {
@@ -560,7 +568,7 @@ export default {
         .then(res => {
           this.menuData = util.formatDataToTree(res.data)
 
-          if (this.formStatus === 'update' && res.data.length) {
+          if (this.formStatus === 'update' && res.data) {
             if (!this.menuAuth.length && !this.logAuth.length) {
               return
             }

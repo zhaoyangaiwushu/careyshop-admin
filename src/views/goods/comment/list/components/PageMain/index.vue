@@ -65,8 +65,8 @@
             <p>[主评] <span class="comment-son">{{scope.row.create_time}}</span></p>
             <p>
               <span
-                @click="openCommentDetail(scope.row.goods_comment_id)"
-                :class="{'link': auth.detail}">{{scope.row.content}}</span>
+                :class="{'link': auth.detail, 'no-content': !scope.row.content}"
+                @click="openCommentDetail(scope.row.goods_comment_id)">{{scope.row.content || '无评价内容'}}</span>
             </p>
             <div style="line-height: 0;">
               <el-image
@@ -225,8 +225,8 @@ export default {
   },
   filters: {
     getPreviewUrl(val, code) {
-      if (val && val.source) {
-        return util.getImageCodeUrl(val.source, code)
+      if (val && (val.source || val)) {
+        return util.getImageCodeUrl(val.source || val, code)
       }
 
       return ''
@@ -460,5 +460,9 @@ export default {
     margin-left: 5px;
     line-height: 0;
     vertical-align: text-bottom;
+  }
+
+  .no-content {
+    color: $color-text-placehoder;
   }
 </style>

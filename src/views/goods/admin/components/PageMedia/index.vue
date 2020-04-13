@@ -158,10 +158,8 @@ export default {
   },
   filters: {
     getPreviewUrl(val, code) {
-      if (val) {
-        if (val.source || val) {
-          return util.getImageCodeUrl(val.source || val, code)
-        }
+      if (val && (val.source || val)) {
+        return util.getImageCodeUrl(val.source || val, code)
       }
 
       return ''

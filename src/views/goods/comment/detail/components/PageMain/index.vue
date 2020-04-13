@@ -63,7 +63,7 @@
 
             <div class="problem">
               <div class="consult-content cs-pb-10">
-                <span>{{tableData.content}}</span>
+                <span :class="{'no-content': !tableData.content}">{{tableData.content || '无评价内容'}}</span>
                 <el-button
                   class="form-button active"
                   type="text"
@@ -338,10 +338,8 @@ export default {
   },
   filters: {
     getPreviewUrl(val, code) {
-      if (val) {
-        if (val.source || val) {
-          return util.getImageCodeUrl(val.source || val, code)
-        }
+      if (val && (val.source || val)) {
+        return util.getImageCodeUrl(val.source || val, code)
       }
 
       return ''
@@ -549,5 +547,9 @@ export default {
 
   .action:hover .active {
     display: inline;
+  }
+
+  .no-content {
+    color: #C0C4CC;
   }
 </style>

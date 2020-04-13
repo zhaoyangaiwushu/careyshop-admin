@@ -66,10 +66,9 @@ export default {
     }),
     // 这份数据是展示在搜索面板下面的
     resultsList() {
-      return (this.results.length === 0 && this.searchText === '') ? this.pool.map(e => ({
-        value: e.fullTitle,
-        ...e
-      })) : this.results
+      return (this.results.length === 0 && this.searchText === '')
+        ? this.pool.map(e => ({ ...e }))
+        : this.results
     }
   },
   methods: {
@@ -102,10 +101,7 @@ export default {
         ]
       })
         .search(queryString)
-        .map(e => ({
-          value: e.fullTitle,
-          ...e
-        }))
+        .map(e => ({ ...e.item }))
     },
     /**
      * @description 聚焦输入框

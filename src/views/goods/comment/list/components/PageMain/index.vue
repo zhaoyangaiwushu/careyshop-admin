@@ -74,9 +74,10 @@
                 :key="index"
                 class="comment_thumb"
                 :src="item | getPreviewUrl('comment_thumb_x40')"
+                :preview-src-list="srcList"
                 :lazy="true"
                 fit="cover"
-                @click="$preview(item.url)"/>
+                @click.stop="setImageSrcList(scope.row.image, index)"/>
             </div>
           </div>
 
@@ -93,9 +94,10 @@
                 :key="index"
                 class="comment_thumb"
                 :src="item | getPreviewUrl('comment_thumb_x40')"
+                :preview-src-list="srcList"
                 :lazy="true"
                 fit="cover"
-                @click="$preview(item.url)"/>
+                @click.stop="setImageSrcList(scope.row.get_addition.image, index)"/>
             </div>
           </div>
         </template>
@@ -173,6 +175,7 @@ export default {
   },
   data() {
     return {
+      srcList: [null],
       currentTableData: [],
       auth: {
         ignore: false,
@@ -263,6 +266,10 @@ export default {
       this.auth.remove_top = this.$permission('/goods/opinion/comment/remove_top')
       this.auth.del = this.$permission('/goods/opinion/comment/del')
       this.auth.detail = this.$permission('/goods/opinion/comment/detail')
+    },
+    // 设置大图预览列表及顺序
+    setImageSrcList(srcList, index) {
+      this.srcList = util.setImageSrcList(srcList, index)
     },
     // 忽略评论
     handleIgnore(index) {

@@ -39,7 +39,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       table: [],
       toPayment: {},
       status: 0,

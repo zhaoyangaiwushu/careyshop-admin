@@ -18,7 +18,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       tplCode: 'sms'
     }
   },

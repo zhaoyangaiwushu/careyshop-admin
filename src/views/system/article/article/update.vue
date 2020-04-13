@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       // 加载状态
-      loading: true,
+      loading: false,
       // 分类源数据
       catList: [],
       // 整理后的分类数据
@@ -88,41 +88,37 @@ export default {
       this.$nextTick(() => {
         this.formData = {}
         this.loading = true
-      })
 
-      if (this.catList.length) {
-        // 分类数据已存在时
-        getArticleItem(id)
-          .then(res => {
-            this.formBuffer[id] = this.setArticleData({ ...res.data })
-            this.formData = this.formBuffer[id]
-          })
-          .finally(() => {
-            this.$nextTick(() => {
-              this.loading = false
-            })
-          })
-      } else {
-        // 分类数据不存在时
-        Promise.all([
-          getArticleCatList(null),
+        if (this.catList.length) {
+          // 分类数据已存在时
           getArticleItem(id)
-        ])
-          .then(res => {
-            // 处理分类数据
-            this.catList = res[0].data || []
-            this.catData = util.formatDataToTree(this.catList, 'article_cat_id')
-
-            // 处理文章数据
-            this.formBuffer[id] = this.setArticleData({ ...res[1].data })
-            this.formData = this.formBuffer[id]
-          })
-          .finally(() => {
-            this.$nextTick(() => {
+            .then(res => {
+              this.formBuffer[id] = this.setArticleData({ ...res.data })
+              this.formData = this.formBuffer[id]
+            })
+            .finally(() => {
               this.loading = false
             })
-          })
-      }
+        } else {
+          // 分类数据不存在时
+          Promise.all([
+            getArticleCatList(null),
+            getArticleItem(id)
+          ])
+            .then(res => {
+              // 处理分类数据
+              this.catList = res[0].data || []
+              this.catData = util.formatDataToTree(this.catList, 'article_cat_id')
+
+              // 处理文章数据
+              this.formBuffer[id] = this.setArticleData({ ...res[1].data })
+              this.formData = this.formBuffer[id]
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        }
+      })
     }
   }
 }

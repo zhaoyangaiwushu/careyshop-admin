@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true
+      loading: false
     }
   },
   mounted() {

@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       page: {
         current: 1,
         size: 0,

@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       group: [],
       table: [],
       page: {

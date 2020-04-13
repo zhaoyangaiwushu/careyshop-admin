@@ -39,7 +39,7 @@ export default {
     return {
       table: [],
       platformTable: [],
-      loading: true,
+      loading: false,
       page: {
         current: 1,
         size: 0,

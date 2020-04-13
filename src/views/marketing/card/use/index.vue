@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       cardData: null,
       page: {
         current: 1,

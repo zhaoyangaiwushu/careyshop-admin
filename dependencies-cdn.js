@@ -69,6 +69,12 @@ module.exports = [
     css: ''
   },
   {
+    name: 'lowdb/adapters/LocalStorage',
+    library: 'LocalStorage',
+    js: '//cdn.jsdelivr.net/npm/lowdb@1.0.0/dist/LocalStorage.min.js',
+    css: ''
+  },
+  {
     name: 'mockjs',
     library: 'Mock',
     js: '//cdn.jsdelivr.net/npm/mockjs@1.1.0/dist/mock.min.js',
@@ -96,12 +102,6 @@ module.exports = [
     name: 'js-cookie',
     library: 'Cookies',
     js: '//cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js',
-    css: ''
-  },
-  {
-    name: 'lowdb/adapters/LocalStorage',
-    library: 'LocalStorage',
-    js: '//cdn.jsdelivr.net/npm/lowdb@1.0.0/dist/LocalStorage.min.js',
     css: ''
   },
   {

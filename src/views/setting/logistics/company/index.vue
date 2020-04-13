@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       companyType: {
         0: '热门',
         1: '国内',

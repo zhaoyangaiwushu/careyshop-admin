@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       tree: [],
-      loading: true
+      loading: false
     }
   },
   mounted() {

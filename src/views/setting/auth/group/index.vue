@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       order: {
         order_type: undefined,
         order_field: undefined

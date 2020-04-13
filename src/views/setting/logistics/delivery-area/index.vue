@@ -41,7 +41,7 @@ export default {
     return {
       title: '',
       table: [],
-      loading: true
+      loading: false
     }
   },
   methods: {

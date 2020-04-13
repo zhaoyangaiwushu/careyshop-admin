@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       table: [],
       typeMap: {
         '0': '减价',

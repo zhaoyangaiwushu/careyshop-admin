@@ -21,7 +21,7 @@ export default {
   data() {
     return {
       // 加载状态
-      loading: true,
+      loading: false,
       // 分类源数据
       catList: [],
       // 整理后的分类数据

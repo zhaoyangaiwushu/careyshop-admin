@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       // 加载状态
-      loading: true,
+      loading: false,
       // 表格数据
       table: this.getInitData(),
       // 表格缓存数据
@@ -84,28 +84,26 @@ export default {
       this.$nextTick(() => {
         this.loading = true
         this.table = { ...this.getInitData() }
-      })
 
-      getGoodsConsultItem(id)
-        .then(res => {
-          // 需要在头部插入问题正文
-          if (res.data) {
-            res.data.get_answer.unshift({
-              goods_consult_id: res.data.goods_consult_id,
-              content: res.data.content,
-              create_time: res.data.create_time,
-              is_client: true // 额外参数,表示是否属于提问
-            })
-          }
+        getGoodsConsultItem(id)
+          .then(res => {
+            // 需要在头部插入问题正文
+            if (res.data) {
+              res.data.get_answer.unshift({
+                goods_consult_id: res.data.goods_consult_id,
+                content: res.data.content,
+                create_time: res.data.create_time,
+                is_client: true // 额外参数,表示是否属于提问
+              })
+            }
 
-          this.tableBuffer[id] = { ...res.data }
-          this.table = this.tableBuffer[id]
-        })
-        .finally(() => {
-          this.$nextTick(() => {
+            this.tableBuffer[id] = { ...res.data }
+            this.table = this.tableBuffer[id]
+          })
+          .finally(() => {
             this.loading = false
           })
-        })
+      })
     },
     addReply(id, data) {
       this.tableBuffer[id].status = 1

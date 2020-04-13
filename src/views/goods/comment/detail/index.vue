@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       // 加载状态
-      loading: true,
+      loading: false,
       // 表格数据
       table: this.getInitData(),
       // 表格缓存数据
@@ -85,18 +85,16 @@ export default {
       this.$nextTick(() => {
         this.loading = true
         this.table = { ...this.getInitData() }
-      })
 
-      getGoodsCommentItem(id)
-        .then(res => {
-          this.tableBuffer[id] = { ...res.data }
-          this.table = this.tableBuffer[id]
-        })
-        .finally(() => {
-          this.$nextTick(() => {
+        getGoodsCommentItem(id)
+          .then(res => {
+            this.tableBuffer[id] = { ...res.data }
+            this.table = this.tableBuffer[id]
+          })
+          .finally(() => {
             this.loading = false
           })
-        })
+      })
     },
     addReply(id, data) {
       if (data.type === 1) {

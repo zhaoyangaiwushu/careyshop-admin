@@ -44,7 +44,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       couponData: null,
       couponType: '',
       page: {

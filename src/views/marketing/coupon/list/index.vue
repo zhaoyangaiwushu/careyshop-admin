@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       table: [],
       typeMap: {
         '0': '指定会员',

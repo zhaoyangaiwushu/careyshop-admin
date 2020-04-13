@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       remember: false,
-      loading: true,
+      loading: false,
       captcha: false,
       passwordType: 'password',
       codeUrl: '',

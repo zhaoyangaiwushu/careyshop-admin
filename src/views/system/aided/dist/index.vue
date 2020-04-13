@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       state: {
         0: '无轨迹',
         1: '已揽收',

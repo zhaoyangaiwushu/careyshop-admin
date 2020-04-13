@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       // 加载状态
-      loading: true,
+      loading: false,
       // 表单数据
       formData: {},
       // 表单数据缓存
@@ -73,21 +73,19 @@ export default {
       this.$nextTick(() => {
         this.formData = {}
         this.loading = true
-      })
 
-      getTopicItem(id)
-        .then(res => {
-          this.formBuffer[id] = {
-            ...res.data,
-            status: res.data.status.toString()
-          }
-          this.formData = this.formBuffer[id]
-        })
-        .finally(() => {
-          this.$nextTick(() => {
+        getTopicItem(id)
+          .then(res => {
+            this.formBuffer[id] = {
+              ...res.data,
+              status: res.data.status.toString()
+            }
+            this.formData = this.formBuffer[id]
+          })
+          .finally(() => {
             this.loading = false
           })
-        })
+      })
     }
   }
 }

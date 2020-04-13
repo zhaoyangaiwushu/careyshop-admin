@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       typeList: {
         0: '商品咨询',
         1: '支付',

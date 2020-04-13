@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       // 账户
       username: '',
       // 默认收货地址编号

@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       table: [],
-      loading: true,
+      loading: false,
       typeList: [],
       selectTypeId: null,
       page: {

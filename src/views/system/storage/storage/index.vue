@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       storageId: 0,
       table: [],
       navi: [],

@@ -1,29 +1,55 @@
 <template>
+  <div v-if="!isIE" class="cs-preview">
+    <el-image-viewer v-if="viewer" :initial-index="imageIndex" :url-list="imageList" :on-close="close"/>
+  </div>
+
   <el-dialog
-    :visible.sync="dialogVisible"
+    v-else
+    class="cs-preview image"
+    :visible.sync="viewer"
     :append-to-body="true"
     :show-close="false"
-    @close="close"
-    class="image">
-    <div v-if="dialogVisible">
-      <el-image :src="dialogImageUrl" fit="fill" @click.native="$open(dialogImageUrl)"/>
-    </div>
+    @close="close">
+      <el-image v-if="viewer" :src="imageUrl" fit="fill" @click.native="$open(imageUrl)"/>
   </el-dialog>
 </template>
 
 <script>
+import Vue from 'vue'
 import util from '@/utils/util'
+
+function isIE() {
+  return !Vue.prototype.$isServer && !isNaN(Number(document.documentMode))
+}
 
 export default {
   name: 'preview',
+  components: {
+    'ElImageViewer': () => {
+      return !isIE() ? import('element-ui/packages/image/src/image-viewer') : null
+    }
+  },
+  mounted() {
+    if (!this.isIE) {
+      document.body.appendChild(this.$el)
+    }
+  },
+  destroyed() {
+    if (!this.isIE && this.$el && this.$el.parentNode) {
+      this.$el.parentNode.removeChild(this.$el)
+    }
+  },
   data() {
     return {
-      dialogVisible: false,
-      dialogImageUrl: ''
+      isIE: isIE(),
+      viewer: false,
+      imageIndex: 0,
+      imageList: [],
+      imageUrl: ''
     }
   },
   methods: {
-    getImageUrl(image) {
+    getImageList(image) {
       let result = []
       if (Array.isArray(image)) {
         // eslint-disable-next-line no-unused-vars
@@ -36,21 +62,31 @@ export default {
 
       return result
     },
-    show(image) {
+    visible(image, index) {
       this.$nextTick(() => {
-        this.dialogVisible = true
-        this.dialogImageUrl = Array.isArray(image) ? image[0] : image
+        const temp = this.getImageList(image)
+        this.isIE ? this.imageUrl = temp[0] : this.imageList = temp
+
+        this.imageIndex = index
+        this.viewer = true
       })
     },
     close() {
-      this.dialogVisible = false
-      this.dialogImageUrl = ''
+      this.$nextTick(() => {
+        this.viewer = false
+        this.imageList = []
+        this.imageUrl = ''
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+  .cs-preview >>> .el-image-viewer__close {
+    color: #FFF;
+  }
+
   .image {
     text-align: center;
     line-height: 0;

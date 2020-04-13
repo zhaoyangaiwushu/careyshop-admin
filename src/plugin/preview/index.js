@@ -6,14 +6,8 @@ export default {
     const preview = new PreviewConstructor()
 
     preview.$mount(preview.$el)
-    Vue.prototype.$preview = (imageUrl, isDialog = true) => {
-      const result = preview.getImageUrl(imageUrl)
-      if (isDialog) {
-        preview.show(result)
-        return
-      }
-
-      return result
+    Vue.prototype.$preview = (image, index = 0) => {
+      preview.visible(image, index)
     }
   }
 }

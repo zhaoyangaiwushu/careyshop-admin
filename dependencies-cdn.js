@@ -35,8 +35,8 @@ module.exports = [
   {
     name: 'element-ui',
     library: 'ELEMENT',
-    js: '//cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/index.min.js',
-    css: '//cdn.jsdelivr.net/npm/element-ui@2.13.0/lib/theme-chalk/index.css'
+    js: '//cdn.jsdelivr.net/npm/element-ui@2.13.1/lib/index.min.js',
+    css: '//cdn.jsdelivr.net/npm/element-ui@2.13.1/lib/theme-chalk/index.css'
   },
   {
     name: 'dayjs',
@@ -47,7 +47,7 @@ module.exports = [
   {
     name: 'fuse.js',
     library: 'Fuse',
-    js: '//cdn.jsdelivr.net/npm/fuse.js@3.6.1/dist/fuse.min.js',
+    js: '//cdn.jsdelivr.net/npm/fuse.js@5.1.0/dist/fuse.min.js',
     css: ''
   },
   {

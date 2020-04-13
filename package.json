@@ -19,7 +19,7 @@
     "clipboard-polyfill": "^2.8.6",
     "core-js": "^3.6.5",
     "dayjs": "^1.8.24",
-    "element-ui": "^2.13.0",
+    "element-ui": "^2.13.1",
     "flex.css": "^1.1.7",
     "fuse.js": "^5.1.0",
     "highlight.js": "^9.18.1",

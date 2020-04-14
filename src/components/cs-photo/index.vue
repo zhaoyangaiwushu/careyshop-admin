@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     preview(index) {
-      this.$preview(this.imageList[index].url)
+      this.$preview(this.imageList, index)
     },
     remove(index) {
       this.imageList.splice(index, 1)

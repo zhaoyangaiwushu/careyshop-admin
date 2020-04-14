@@ -5,6 +5,10 @@
     :show-close="false"
     @close="close"
     class="player-dialog">
+    <span class="el-image-viewer__btn el-image-viewer__close" @click="close">
+      <i class="el-icon-circle-close"></i>
+    </span>
+
     <div v-if="dialogVisible" class="player">
       <cs-video :video-data="{url: dialogVideoUrl, mime: dialogVideoMime, cover: dialogVidePoster}"/>
     </div>
@@ -52,7 +56,11 @@ export default {
   }
 
   .player-dialog >>> .el-dialog__body {
-    padding: 10px;
-    background-color: #F5F7FA;
+    padding: 0;
+  }
+
+  .player-dialog >>> .el-image-viewer__close {
+    position: fixed;
+    color: #FFF;
   }
 </style>

@@ -73,11 +73,9 @@ export default {
     // 资源预览
     handlePreview(file) {
       if (file.status === 'success') {
-        let imgObj = new Image()
-        imgObj['src'] = file.url
-
-        if (imgObj['fileSize'] > 0 || (imgObj['width'] > 0 && imgObj['height'] > 0)) {
-          this.$preview(imgObj['src'])
+        const response = file.response.data
+        if (response.length && response[0]['type'] === 0) {
+          this.$preview(response[0]['url'])
           return
         }
       }

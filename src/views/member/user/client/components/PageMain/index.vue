@@ -149,7 +149,7 @@
             <div class="popover-image">
               <el-image
                 :src="scope.row.head_pic | getPreviewUrl"
-                @click.native="$preview(scope.row.head_pic)"
+                @click.stop="$preview(scope.row.head_pic)"
                 fit="fill"/>
             </div>
             <i slot="reference" class="el-icon-picture-outline-round"/>
@@ -365,7 +365,7 @@
                 <div class="popover-image">
                   <el-image
                     :src="form.head_pic | getPreviewUrl"
-                    @click.native="$preview(form.head_pic)"
+                    @click.stop="$preview(form.head_pic)"
                     fit="fill"/>
                 </div>
                 <i slot="reference" class="el-icon-picture-outline-round"/>

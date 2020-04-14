@@ -428,7 +428,18 @@ export default {
       const storage = this.currentTableData[index]
       switch (storage['type']) {
         case 0:
-          this.$preview(storage['url'])
+          if (!isNaN(Number(document.documentMode))) {
+            this.$preview(storage['url'])
+          } else {
+            let imageList = []
+            this.currentTableData.forEach(value => {
+              if (value.type === 0) {
+                imageList.push(value['url'])
+              }
+            })
+
+            this.$preview(imageList, imageList.lastIndexOf(storage['url']))
+          }
           break
 
         case 1:

@@ -238,7 +238,7 @@
                         <div class="popover-image">
                           <el-image
                             :src="form.category_pic | getPreviewUrl"
-                            @click.native="$preview(form.category_pic)"
+                            @click.stop="$preview(form.category_pic)"
                             fit="fill"/>
                         </div>
                         <i slot="reference" class="el-icon-picture"/>

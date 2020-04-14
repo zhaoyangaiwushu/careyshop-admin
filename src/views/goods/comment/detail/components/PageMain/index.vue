@@ -76,10 +76,9 @@
                   :key="index"
                   class="comment_thumb"
                   :src="item | getPreviewUrl('comment_thumb_x40')"
-                  :preview-src-list="srcList"
                   :lazy="true"
                   fit="cover"
-                  @click.stop="setImageSrcList(tableData.image, index)"/>
+                  @click.stop="$preview(tableData.image, index)"/>
               </div>
               <div class="user-name">
                 <el-popover trigger="hover" placement="top">
@@ -123,10 +122,9 @@
                   :key="index"
                   class="comment_thumb"
                   :src="value | getPreviewUrl('comment_thumb_x40')"
-                  :preview-src-list="srcList"
                   :lazy="true"
                   fit="cover"
-                  @click.stop="setImageSrcList(item.image, index)"/>
+                  @click.stop="$preview(item.image, index)"/>
               </div>
               <div class="user-name"><span>客服人员</span></div>
             </div>
@@ -163,10 +161,9 @@
                   :key="index"
                   class="comment_thumb"
                   :src="item | getPreviewUrl('comment_thumb_x40')"
-                  :preview-src-list="srcList"
                   :lazy="true"
                   fit="cover"
-                  @click.stop="setImageSrcList(tableData.get_addition.image, index)"/>
+                  @click.stop="$preview(tableData.get_addition.image, index)"/>
               </div>
               <div class="user-name">
                 <el-popover trigger="hover" placement="top">
@@ -210,10 +207,9 @@
                   :key="index"
                   class="comment_thumb"
                   :src="value | getPreviewUrl('comment_thumb_x40')"
-                  :preview-src-list="srcList"
                   :lazy="true"
                   fit="cover"
-                  @click.stop="setImageSrcList(item.image, index)"/>
+                  @click.stop="$preview(item.image, index)"/>
               </div>
               <div class="user-name"><span>客服人员</span></div>
             </div>
@@ -246,10 +242,9 @@
               class="comment_thumb"
               style="margin: 10px 5px 0 0;"
               :src="value | getPreviewUrl('comment_thumb_x40')"
-              :preview-src-list="srcList"
               :lazy="true"
               fit="cover"
-              @click.stop="setImageSrcList(form.image, index)"/>
+              @click.stop="$preview(form.image, index)"/>
           </div>
 
           <div class="cs-mt-10">
@@ -429,10 +424,6 @@ export default {
       })
 
       this.form.image = insert
-    },
-    // 设置大图预览列表及顺序
-    setImageSrcList(srcList, index) {
-      this.srcList = util.setImageSrcList(srcList, index)
     },
     // 初始化回复框数据
     initReplyForm(id) {

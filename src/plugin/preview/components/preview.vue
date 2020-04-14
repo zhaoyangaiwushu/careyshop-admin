@@ -1,25 +1,29 @@
 <template>
-  <div v-if="!isIE" class="cs-preview">
-    <el-image-viewer v-if="viewer" :initial-index="imageIndex" :url-list="imageList" :on-close="close"/>
+  <div v-if="!isIE" v-show="viewer" class="cs-preview">
+    <el-image-viewer v-if="viewer" :initial-index="imageIndex" :url-list="imageList" :z-index="9999" :on-close="close"/>
   </div>
 
   <el-dialog
     v-else
-    class="cs-preview image"
+    class="cs-preview cs-image cs-fcc"
     :visible.sync="viewer"
     :append-to-body="true"
     :show-close="false"
     @close="close">
-      <el-image v-if="viewer" :src="imageUrl" fit="fill" @click.native="$open(imageUrl)"/>
+    <span class="el-image-viewer__btn el-image-viewer__close" @click="close">
+      <i class="el-icon-circle-close"></i>
+    </span>
+
+    <el-image v-if="viewer" class="cs-cp" :src="imageUrl" fit="fill" @click.native="$open(imageUrl)"/>
   </el-dialog>
 </template>
 
 <script>
-import Vue from 'vue'
 import util from '@/utils/util'
 
 function isIE() {
-  return !Vue.prototype.$isServer && !isNaN(Number(document.documentMode))
+  // return !Vue.prototype.$isServer && !isNaN(Number(document.documentMode))
+  return !isNaN(Number(document.documentMode))
 }
 
 export default {
@@ -52,12 +56,11 @@ export default {
     getImageList(image) {
       let result = []
       if (Array.isArray(image)) {
-        // eslint-disable-next-line no-unused-vars
         for (let item of image) {
-          result.push(util.checkUrl(item))
+          result.push(util.checkUrl(item.source || item))
         }
       } else {
-        result.push(util.checkUrl(image))
+        result.push(util.checkUrl(image.source || image))
       }
 
       return result
@@ -87,22 +90,35 @@ export default {
     color: #FFF;
   }
 
-  .image {
-    text-align: center;
-    line-height: 0;
+  .cs-image >>> .el-image-viewer__close {
+    position: fixed;
   }
 
-  .image >>> img {
-    vertical-align: middle;
-    cursor: pointer;
-  }
-
-  .image >>> .el-dialog__header {
+  .cs-image >>> .el-dialog__header {
     display: none;
   }
 
-  .image >>> .el-dialog__body {
-    padding: 10px;
-    background-color: #F5F7FA;
+  .cs-image >>> .el-dialog__body {
+    padding: 0;
+    text-align: center;
   }
+
+  /*.image {*/
+  /*  text-align: center;*/
+  /*  !*line-height: 0;*!*/
+  /*}*/
+
+  /*.image >>> img {*/
+  /*  !*vertical-align: middle;*!*/
+  /*  cursor: pointer;*/
+  /*}*/
+
+  /*.image >>> .el-dialog__header {*/
+  /*  display: none;*/
+  /*}*/
+
+  /*.image >>> .el-dialog__body {*/
+  /*  padding: 10px;*/
+  /*  background-color: #F5F7FA;*/
+  /*}*/
 </style>

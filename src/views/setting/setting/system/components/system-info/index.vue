@@ -63,7 +63,7 @@
               <div class="popover-image">
                 <el-image
                   :src="form.logo.value | getPreviewUrl"
-                  @click.native="$preview(form.logo.value)"
+                  @click.stop="$preview(form.logo.value)"
                   fit="fill"/>
               </div>
               <i slot="reference" class="el-icon-picture"/>
@@ -104,7 +104,7 @@
               <div class="popover-image">
                 <el-image
                   :src="form.square_logo.value | getPreviewUrl"
-                  @click.native="$preview(form.square_logo.value)"
+                  @click.stop="$preview(form.square_logo.value)"
                   fit="fill"/>
               </div>
               <i slot="reference" class="el-icon-picture"/>
@@ -180,7 +180,7 @@
               <div class="popover-image">
                 <el-image
                   :src="form.miitbeian_ico.value | getPreviewUrl"
-                  @click.native="$preview(form.miitbeian_ico.value)"
+                  @click.stop="$preview(form.miitbeian_ico.value)"
                   fit="fill"/>
               </div>
               <i slot="reference" class="el-icon-picture"/>
@@ -241,7 +241,7 @@
               <div class="popover-image">
                 <el-image
                   :src="form.beian_ico.value | getPreviewUrl"
-                  @click.native="$preview(form.beian_ico.value)"
+                  @click.stop="$preview(form.beian_ico.value)"
                   fit="fill"/>
               </div>
               <i slot="reference" class="el-icon-picture"/>

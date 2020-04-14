@@ -261,6 +261,7 @@ export default {
     background-color: #FFF;
     border: 1px solid $color-border-1;
     padding: 10px !important;
+    line-height: 16px;
   }
 
   .storage-list {

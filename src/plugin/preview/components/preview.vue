@@ -9,6 +9,7 @@
     :visible.sync="viewer"
     :append-to-body="true"
     :show-close="false"
+    :close-on-click-modal="false"
     @close="close">
     <span class="el-image-viewer__btn el-image-viewer__close" @click="close">
       <i class="el-icon-circle-close"></i>
@@ -94,6 +95,14 @@ export default {
     position: fixed;
   }
 
+  .cs-image >>> .el-dialog {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: inherit;
+    width: auto;
+  }
+
   .cs-image >>> .el-dialog__header {
     display: none;
   }
@@ -102,23 +111,4 @@ export default {
     padding: 0;
     text-align: center;
   }
-
-  /*.image {*/
-  /*  text-align: center;*/
-  /*  !*line-height: 0;*!*/
-  /*}*/
-
-  /*.image >>> img {*/
-  /*  !*vertical-align: middle;*!*/
-  /*  cursor: pointer;*/
-  /*}*/
-
-  /*.image >>> .el-dialog__header {*/
-  /*  display: none;*/
-  /*}*/
-
-  /*.image >>> .el-dialog__body {*/
-  /*  padding: 10px;*/
-  /*  background-color: #F5F7FA;*/
-  /*}*/
 </style>

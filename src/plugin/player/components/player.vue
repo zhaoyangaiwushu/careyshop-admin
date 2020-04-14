@@ -3,6 +3,7 @@
     :visible.sync="dialogVisible"
     :append-to-body="true"
     :show-close="false"
+    :close-on-click-modal="false"
     @close="close"
     class="player-dialog">
     <span class="el-image-viewer__btn el-image-viewer__close" @click="close">
@@ -51,16 +52,23 @@ export default {
 </script>
 
 <style scoped>
+  .player-dialog >>> .el-image-viewer__close {
+    position: fixed;
+    color: #FFF;
+  }
+
+  .player-dialog >>> .el-dialog {
+    border-radius: 0;
+    box-shadow: none;
+    background: inherit;
+  }
+
   .player-dialog >>> .el-dialog__header {
     display: none;
   }
 
   .player-dialog >>> .el-dialog__body {
     padding: 0;
-  }
-
-  .player-dialog >>> .el-image-viewer__close {
-    position: fixed;
-    color: #FFF;
+    text-align: center;
   }
 </style>

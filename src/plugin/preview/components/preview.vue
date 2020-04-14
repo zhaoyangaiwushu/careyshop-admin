@@ -22,16 +22,11 @@
 <script>
 import util from '@/utils/util'
 
-function isIE() {
-  // return !Vue.prototype.$isServer && !isNaN(Number(document.documentMode))
-  return !isNaN(Number(document.documentMode))
-}
-
 export default {
   name: 'preview',
   components: {
     'ElImageViewer': () => {
-      return !isIE() ? import('element-ui/packages/image/src/image-viewer') : null
+      return !util.isIE() ? import('element-ui/packages/image/src/image-viewer') : null
     }
   },
   mounted() {
@@ -46,7 +41,7 @@ export default {
   },
   data() {
     return {
-      isIE: isIE(),
+      isIE: util.isIE(),
       viewer: false,
       imageIndex: 0,
       imageList: [],
@@ -69,9 +64,15 @@ export default {
     visible(image, index) {
       this.$nextTick(() => {
         const temp = this.getImageList(image)
-        this.isIE ? this.imageUrl = temp[0] : this.imageList = temp
+        if (this.isIE) {
+          this.imageUrl = temp.hasOwnProperty(index)
+            ? temp[index]
+            : temp[0]
+        } else {
+          this.imageList = temp
+          this.imageIndex = index
+        }
 
-        this.imageIndex = index
         this.viewer = true
       })
     },
@@ -96,11 +97,10 @@ export default {
   }
 
   .cs-image >>> .el-dialog {
-    margin: 0;
+    margin: 0 !important;
     border-radius: 0;
     box-shadow: none;
     background: inherit;
-    width: auto;
   }
 
   .cs-image >>> .el-dialog__header {

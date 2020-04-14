@@ -1,6 +1,6 @@
 {
   "name": "careyshop-admin",
-  "version": "1.6.3",
+  "version": "1.6.4",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -55,6 +55,6 @@
     "sass-loader": "^8.0.2",
     "svg-sprite-loader": "^4.2.5",
     "vue-template-compiler": "^2.6.11",
-    "webpack-bundle-analyzer": "^3.6.1"
+    "webpack-bundle-analyzer": "^3.7.0"
   }
 }

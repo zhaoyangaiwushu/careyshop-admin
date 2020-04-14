@@ -5,7 +5,7 @@
     :show-close="false"
     :close-on-click-modal="false"
     @close="close"
-    class="player-dialog">
+    class="player-dialog cs-fcc">
     <span class="el-image-viewer__btn el-image-viewer__close" @click="close">
       <i class="el-icon-circle-close"></i>
     </span>
@@ -58,6 +58,7 @@ export default {
   }
 
   .player-dialog >>> .el-dialog {
+    margin: 0 !important;
     border-radius: 0;
     box-shadow: none;
     background: inherit;

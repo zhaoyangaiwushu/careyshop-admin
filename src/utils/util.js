@@ -434,4 +434,13 @@ util.checkUrl = (url) => {
   return url
 }
 
+/**
+ * 检测是否为IE游览器
+ * @returns {boolean}
+ */
+util.isIE = () => {
+  // return !Vue.prototype.$isServer && !isNaN(Number(document.documentMode))
+  return !isNaN(Number(document.documentMode))
+}
+
 export default util

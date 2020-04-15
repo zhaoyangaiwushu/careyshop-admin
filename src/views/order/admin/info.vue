@@ -6,23 +6,28 @@
         shadow="never"
         v-loading="loading">
         <el-row>
-          <el-col class="order-left" :span="8">
-            <p>订单信息</p>
+          <el-col class="order-left" :span="9">
+            <p class="card-title">订单信息</p>
           </el-col>
 
-          <el-col :span="15" :push="1">
-            <p>订单状态</p>
+          <el-col :span="14" :push="1">
+            <p class="card-title">订单状态</p>
             <el-steps
               :active="tradeStatus.active"
-              :finish-status="tradeStatus.status"
-              :process-status="tradeStatus.current"
-              :align-center="true">
+              :process-status="tradeStatus.process_status"
+              :finish-status="tradeStatus.finish_status"
+              :align-center="false">
               <el-step
                 v-for="(value, index) of tradeStatus.step"
                 :key="index"
-                :icon="value.icon"
-                :title="value.title"/>
+                :description="value.description"
+                :title="value.title"
+                :icon="value.icon"/>
             </el-steps>
+
+            <div class="order-remark" v-if="orderData.sellers_remark">
+              <span>卖家备注：{{orderData.sellers_remark}}</span>
+            </div>
           </el-col>
         </el-row>
 
@@ -30,9 +35,7 @@
           <el-collapse-item title="商品列表" name="goods">
             <el-table
               style="margin-top: -15px;"
-              :data="orderData.get_order_goods"
-              :summary-method="getSummaries"
-              :show-summary="true">
+              :data="orderData.get_order_goods">
               <el-table-column
                 label="商品名称"
                 min-width="300">
@@ -122,31 +125,7 @@ export default {
     return {
       loading: false,
       orderData: {},
-      tradeStatus: {
-        'active': 0,
-        'step': [
-          {
-            'icon': 'el-icon-edit-outline',
-            'title': '创建订单'
-          },
-          {
-            'icon': 'el-icon-bank-card',
-            'title': '付款'
-          },
-          {
-            'icon': 'el-icon-takeaway-box',
-            'title': '配货'
-          },
-          {
-            'icon': '',
-            'title': '发货'
-          },
-          {
-            'icon': '',
-            'title': '完成'
-          }
-        ]
-      },
+      tradeStatus: {},
       clientMap: {
         '-1': '游客',
         '0': '顾客',
@@ -179,31 +158,90 @@ export default {
   methods: {
     // 处理订单状态数据
     _setTradeStatus() {
+      // 初始化数据
+      this.tradeStatus = {
+        active: 1,
+        step: [
+          {
+            'icon': 'el-icon-edit-outline',
+            'title': '创建订单',
+            'description': this.orderData.create_time
+          },
+          {
+            'icon': 'el-icon-bank-card',
+            'title': '付款',
+            'description': this.orderData.payment_time
+          },
+          {
+            'icon': 'el-icon-receiving',
+            'title': '配货',
+            'description': this.orderData.picking_time
+          },
+          {
+            'icon': 'el-icon-truck',
+            'title': '发货',
+            'description': this.orderData.delivery_time
+          },
+          {
+            'icon': 'el-icon-time',
+            'title': '完成',
+            'description': this.orderData.finished_time
+          }
+        ]
+      }
+
       // 处理状态显示
       switch (this.orderData.trade_status) {
         case 4:
-          // this.tradeStatus.current = 'error'
-          // this.tradeStatus.status = 'wait'
+          this.tradeStatus.process_status = 'wait'
+          this.tradeStatus.finish_status = 'wait'
+          break
+        case 3:
+          this.tradeStatus.process_status = 'finish'
+          this.tradeStatus.finish_status = 'finish'
           break
         default:
-          this.tradeStatus.current = 'success'
-          this.tradeStatus.status = 'success'
+          this.tradeStatus.process_status = 'process'
+          this.tradeStatus.finish_status = 'finish'
       }
 
-      // switch (this.orderData.trade_status) {
-      //   case 4:
-      //     this.tradeStatus.active = 4
-      //     this.tradeStatus.current = 'error'
-      //     this.tradeStatus.status = 'wait'
-      //     this.tradeStatus.step[4] = '交易取消'
-      //     break
-      //   case 3:
-      //     this.tradeStatus.active = 4
-      //     this.tradeStatus.current = 'success'
-      //     this.tradeStatus.status = 'success'
-      //     this.tradeStatus.step[4] = '交易成功'
-      //     break
-      // }
+      // 实际状态转换
+      switch (this.orderData.trade_status) {
+        case 4:
+          this.tradeStatus.active = 4
+          this.tradeStatus.step[4].title = '交易关闭'
+          break
+        case 3:
+          this.tradeStatus.active = 4
+          this.tradeStatus.step[4].title = '交易成功'
+          break
+        case 2:
+          this.tradeStatus.active = 3
+          switch (this.orderData.delivery_status) {
+            case 1:
+              this.tradeStatus.step[3].title = '全部发货'
+              break
+            case 2:
+              this.tradeStatus.step[3].title = '部分发货'
+              break
+          }
+          break
+        case 1:
+          this.tradeStatus.active = 2
+          this.tradeStatus.step[2].title = '配货中'
+          break
+        case 0:
+          this.tradeStatus.active = 1
+          switch (this.orderData.payment_status) {
+            case 0:
+              this.tradeStatus.step[1].title = '等待买家付款'
+              break
+            case 1:
+              this.tradeStatus.step[1].title = '买家已付款'
+              break
+          }
+          break
+      }
     },
     // 获取订单信息
     getOrderData() {
@@ -223,14 +261,6 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
-    },
-    // 金额信息
-    getSummaries() {
-      let money = `订单金额：${util.getNumber(this.orderData.pay_amount)}`
-      money += ` 需付款：${util.getNumber(this.orderData.total_amount)}`
-      money += ` 含运费：${util.getNumber(this.orderData.delivery_fee)}`
-
-      return [money]
     }
   }
 }
@@ -241,13 +271,19 @@ export default {
     border-radius: 0;
     border: 1px solid $color-border-1;
 
-    p {
+    .card-title {
       margin-top: 0;
     }
   }
 
   .order-left {
     border-right: 1px solid $color-border-1;
+  }
+
+  .order-remark {
+    font-size: 14px;
+    line-height: 32px;
+    color: $color-info;
   }
 
   .goods-image {

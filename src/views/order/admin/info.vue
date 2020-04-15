@@ -8,9 +8,45 @@
         <el-row>
           <el-col class="order-left" :span="9">
             <p class="card-title">订单信息</p>
+            <div class="order-info">
+              <div class="dt">订单号</div>
+              <div class="dd">{{orderData.order_no}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">支付流水号</div>
+              <div class="dd">{{orderData.payment_no}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">订单来源</div>
+              <div class="dd">-</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">支付方式</div>
+              <div class="dd">-</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">购物卡号</div>
+              <div class="dd">-</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">买家</div>
+              <div class="dd">-</div>
+            </div>
+
+            <el-divider></el-divider>
+
+            <div class="order-info">
+              <div class="dt">收货人</div>
+              <div class="dd">-</div>
+            </div>
           </el-col>
 
-          <el-col :span="14" :push="1">
+          <el-col class="cs-pl" :span="15">
             <p class="card-title">订单状态</p>
             <el-steps
               :active="tradeStatus.active"
@@ -97,7 +133,7 @@
                 :type="log.client_type ? 'danger' : 'primary'"
                 :timestamp="log.create_time">
                 <div class="order-log">
-                  <li>{{`${clientMap[log.client_type]}：${log.action}`}}</li>
+                  <li><span>[{{clientMap[log.client_type]}}]</span> {{`${log.action}`}}</li>
                   <li>{{`${log.description}：${log.comment}`}}</li>
                 </div>
               </el-timeline-item>
@@ -274,14 +310,29 @@ export default {
     .card-title {
       margin-top: 0;
     }
+
+    .order-info {
+      font-size: 14px;
+      line-height: 28px;
+      display: flex;
+      .dt {
+        color: #99A9BF;
+        width: 90px;
+      }
+    }
   }
 
   .order-left {
+    margin-bottom: 20px;
     border-right: 1px solid $color-border-1;
+
+    .el-divider--horizontal {
+      width: 96%;
+    }
   }
 
   .order-remark {
-    font-size: 14px;
+    font-size: 13px;
     line-height: 32px;
     color: $color-info;
   }
@@ -318,6 +369,10 @@ export default {
       font-size: 12px;
       color: $color-info;
     }
+  }
+
+  .order-log span {
+    color: $color-info;
   }
 
   .el-collapse /deep/ .el-collapse-item__header {

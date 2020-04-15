@@ -7,11 +7,22 @@
         v-loading="loading">
         <el-row>
           <el-col class="order-left" :span="8">
-            <span>订单信息</span>
+            <p>订单信息</p>
           </el-col>
 
           <el-col :span="15" :push="1">
-            <span>订单状态</span>
+            <p>订单状态</p>
+            <el-steps
+              :active="tradeStatus.active"
+              :finish-status="tradeStatus.status"
+              :process-status="tradeStatus.current"
+              :align-center="true">
+              <el-step
+                v-for="(value, index) of tradeStatus.step"
+                :key="index"
+                :icon="value.icon"
+                :title="value.title"/>
+            </el-steps>
           </el-col>
         </el-row>
 
@@ -96,8 +107,8 @@
 </template>
 
 <script>
-import { getOrderItem } from '@/api/order/order'
 import util from '@/utils/util'
+import { getOrderItem } from '@/api/order/order'
 
 export default {
   name: 'order-admin-info',
@@ -111,6 +122,31 @@ export default {
     return {
       loading: false,
       orderData: {},
+      tradeStatus: {
+        'active': 0,
+        'step': [
+          {
+            'icon': 'el-icon-edit-outline',
+            'title': '创建订单'
+          },
+          {
+            'icon': 'el-icon-bank-card',
+            'title': '付款'
+          },
+          {
+            'icon': 'el-icon-takeaway-box',
+            'title': '配货'
+          },
+          {
+            'icon': '',
+            'title': '发货'
+          },
+          {
+            'icon': '',
+            'title': '完成'
+          }
+        ]
+      },
       clientMap: {
         '-1': '游客',
         '0': '顾客',
@@ -141,12 +177,41 @@ export default {
     }
   },
   methods: {
+    // 处理订单状态数据
+    _setTradeStatus() {
+      // 处理状态显示
+      switch (this.orderData.trade_status) {
+        case 4:
+          // this.tradeStatus.current = 'error'
+          // this.tradeStatus.status = 'wait'
+          break
+        default:
+          this.tradeStatus.current = 'success'
+          this.tradeStatus.status = 'success'
+      }
+
+      // switch (this.orderData.trade_status) {
+      //   case 4:
+      //     this.tradeStatus.active = 4
+      //     this.tradeStatus.current = 'error'
+      //     this.tradeStatus.status = 'wait'
+      //     this.tradeStatus.step[4] = '交易取消'
+      //     break
+      //   case 3:
+      //     this.tradeStatus.active = 4
+      //     this.tradeStatus.current = 'success'
+      //     this.tradeStatus.status = 'success'
+      //     this.tradeStatus.step[4] = '交易成功'
+      //     break
+      // }
+    },
     // 获取订单信息
     getOrderData() {
       this.loading = true
       getOrderItem(this.order_no, 1)
         .then(res => {
           this.orderData = res.data || {}
+          this._setTradeStatus()
         })
         .finally(() => {
           this.loading = false
@@ -175,6 +240,10 @@ export default {
   .box-card {
     border-radius: 0;
     border: 1px solid $color-border-1;
+
+    p {
+      margin-top: 0;
+    }
   }
 
   .order-left {

@@ -1,6 +1,6 @@
 <template>
   <div v-if="!isIE" v-show="viewer" class="cs-preview">
-    <el-image-viewer v-if="viewer" :initial-index="imageIndex" :url-list="imageList" :z-index="9999" :on-close="close"/>
+    <el-image-viewer v-if="viewer" :initial-index="imageIndex" :url-list="imageList" :z-index="5000" :on-close="close"/>
   </div>
 
   <el-dialog

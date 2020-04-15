@@ -61,20 +61,20 @@
           prop="name">
           <template slot-scope="scope">
             <el-image
-              class="goods-image cs-cp"
+              class="goods-image"
               @click="handleViewGoods(scope.row.goods_id)"
               :src="scope.row.attachment | getPreviewUrl"
               fit="contain"
               lazy>
             </el-image>
 
-            <div class="goods-info cs-ml-10">
+            <div class="goods-info">
               <div
                 :title="scope.row.name"
                 @click="handleViewGoods(scope.row.goods_id)"
                 class="name">{{scope.row.name}}</div>
 
-              <p class="price"><span style="color: #909399;">本店价：</span>{{scope.row.shop_price|getNumber}}</p>
+              <p class="price"><span style="color: #909399;">本店价：</span>{{scope.row.shop_price | getNumber}}</p>
             </div>
           </template>
         </el-table-column>
@@ -285,11 +285,16 @@ export default {
     float: left;
     width: 60px;
     height: 60px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .goods-info {
     float: left;
     width: 290px;
+    margin-left: 10px;
 
     .name {
       height: 36px;

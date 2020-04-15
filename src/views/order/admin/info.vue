@@ -15,13 +15,81 @@
           </el-col>
         </el-row>
 
-        <div class="cs-pt-10">
-          <span>商品列表</span>
-        </div>
+        <el-collapse :value="['goods', 'log']">
+          <el-collapse-item title="商品列表" name="goods">
+            <el-table
+              style="margin-top: -15px;"
+              :data="orderData.get_order_goods"
+              :summary-method="getSummaries"
+              :show-summary="true">
+              <el-table-column
+                label="商品名称"
+                min-width="300">
+                <template slot-scope="scope">
+                  <el-image
+                    class="goods-image"
+                    @click="handleViewGoods(scope.row.goods_id)"
+                    :src="scope.row.goods_image | getPreviewUrl"
+                    fit="contain"
+                    lazy>
+                  </el-image>
 
-        <div class="cs-pt-10">
-          <span>操作日志</span>
-        </div>
+                  <div class="goods-info">
+                    <div
+                      :title="scope.row.goods_name"
+                      @click="handleViewGoods(scope.row.goods_id)"
+                      class="name">{{scope.row.goods_name}}</div>
+
+                    <p class="specs">{{scope.row.key_value || '-'}}</p>
+                  </div>
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="单价">
+                <template slot-scope="scope">
+                  {{scope.row.shop_price | getNumber}}
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                prop="qty"
+                label="数量">
+              </el-table-column>
+
+              <el-table-column
+                label="小计">
+                <template slot-scope="scope">
+                  {{scope.row.shop_price * scope.row.qty | getNumber}}
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="状态"
+                align="center"
+                width="80">
+                <template slot-scope="scope">
+                  {{statusMap[scope.row.status]}}
+                </template>
+              </el-table-column>
+            </el-table>
+          </el-collapse-item>
+
+          <el-collapse-item title="订单日志" name="log">
+            <el-timeline>
+              <el-timeline-item
+                v-for="(log, index) in orderData.get_order_log"
+                :key="index"
+                :type="log.client_type ? 'danger' : 'primary'"
+                :timestamp="log.create_time">
+                <div class="order-log">
+                  <li>{{`${clientMap[log.client_type]}：${log.action}`}}</li>
+                  <li>{{`${log.description}：${log.comment}`}}</li>
+                </div>
+              </el-timeline-item>
+            </el-timeline>
+          </el-collapse-item>
+        </el-collapse>
       </el-card>
     </div>
   </cs-container>
@@ -29,6 +97,7 @@
 
 <script>
 import { getOrderItem } from '@/api/order/order'
+import util from '@/utils/util'
 
 export default {
   name: 'order-admin-info',
@@ -41,7 +110,26 @@ export default {
   data() {
     return {
       loading: false,
-      orderData: {}
+      orderData: {},
+      clientMap: {
+        '-1': '游客',
+        '0': '顾客',
+        '1': '商家'
+      },
+      statusMap: {
+        0: '待发货',
+        1: '已发货',
+        2: '已收货',
+        3: '已取消'
+      }
+    }
+  },
+  filters: {
+    getNumber(val) {
+      return util.getNumber(val)
+    },
+    getPreviewUrl(val) {
+      return val ? util.getImageCodeUrl(val, 'goods_image_x80') : ''
     }
   },
   watch: {
@@ -63,6 +151,21 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    // 商品预览
+    handleViewGoods(goods_id) {
+      this.$router.push({
+        name: 'goods-admin-view',
+        params: { goods_id }
+      })
+    },
+    // 金额信息
+    getSummaries() {
+      let money = `订单金额：${util.getNumber(this.orderData.pay_amount)}`
+      money += ` 需付款：${util.getNumber(this.orderData.total_amount)}`
+      money += ` 含运费：${util.getNumber(this.orderData.delivery_fee)}`
+
+      return [money]
     }
   }
 }
@@ -76,5 +179,43 @@ export default {
 
   .order-left {
     border-right: 1px solid $color-border-1;
+  }
+
+  .goods-image {
+    float: left;
+    width: 60px;
+    height: 60px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .goods-info {
+    float: left;
+    width: 80%;
+    margin-left: 10px;
+
+    .name {
+      height: 36px;
+      line-height: 18px;
+      overflow: hidden;
+
+      &:hover {
+        cursor: pointer;
+        color: $color-primary;
+        text-decoration: underline;
+      }
+    }
+
+    .specs {
+      margin: 0;
+      font-size: 12px;
+      color: $color-info;
+    }
+  }
+
+  .el-collapse /deep/ .el-collapse-item__header {
+    font-size: 16px;
   }
 </style>

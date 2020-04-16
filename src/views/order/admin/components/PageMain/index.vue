@@ -631,13 +631,17 @@ import {
   deliveryOrderItem
 } from '@/api/order/order'
 import util from '@/utils/util'
+import orderMixins from '../mixins'
 import exportOrder from '../mixins/export'
 import { getSettingList } from '@/api/config/setting'
 import { getDeliverySelect } from '@/api/logistics/delivery'
 import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
-  mixins: [exportOrder],
+  mixins: [
+    orderMixins,
+    exportOrder
+  ],
   components: {
     'csRegionSelect': () => import('@/components/cs-region-select'),
     'csGoodsDrawer': () => import('@/components/cs-goods-drawer'),
@@ -785,16 +789,6 @@ export default {
         '2': 'paid',
         '3': 'not_shipped',
         '4': 'shipped'
-      },
-      serviceMap: {
-        '1': '售后中',
-        '2': '已售后'
-      },
-      statusMap: {
-        0: '待发货',
-        1: '已发货',
-        2: '已收货',
-        3: '已取消'
       },
       sourceMap: {},
       formRemark: {

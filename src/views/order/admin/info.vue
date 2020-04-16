@@ -87,8 +87,12 @@
                   <div class="goods-info">
                     <div
                       :title="scope.row.goods_name"
-                      @click="handleViewGoods(scope.row.goods_id)"
-                      class="name">{{scope.row.goods_name}}</div>
+                      @click="handleViewGoods(scope.row.goods_id)">
+                      <span class="name">{{scope.row.goods_name}}</span>
+                      <span
+                        :class="`${scope.row.is_service === 1 ? 'service' : 'complete'}`"
+                        class="cs-pl-5">{{serviceMap[scope.row.is_service]}}</span>
+                    </div>
 
                     <p class="specs">{{scope.row.key_value || '-'}}</p>
                   </div>
@@ -147,10 +151,14 @@
 
 <script>
 import util from '@/utils/util'
+import orderMixins from './components/mixins'
 import { getOrderItem } from '@/api/order/order'
 
 export default {
   name: 'order-admin-info',
+  mixins: [
+    orderMixins
+  ],
   props: {
     order_no: {
       type: String,
@@ -166,12 +174,6 @@ export default {
         '-1': '游客',
         '0': '顾客',
         '1': '商家'
-      },
-      statusMap: {
-        0: '待发货',
-        1: '已发货',
-        2: '已收货',
-        3: '已取消'
       }
     }
   },
@@ -368,6 +370,16 @@ export default {
       margin: 0;
       font-size: 12px;
       color: $color-info;
+    }
+
+    .service {
+      font-size: 13px;
+      color: $color-warning;
+    }
+
+    .complete {
+      font-size: 13px;
+      color: $color-success;
     }
   }
 

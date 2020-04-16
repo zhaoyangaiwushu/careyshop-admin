@@ -253,8 +253,7 @@
                     class="order-button"
                     type="primary"
                     @click="handleDelivery(scope.$index)"
-                    :underline="false">确定发货
-                  </el-link>
+                    :underline="false">确定发货</el-link>
                 </p>
 
                 <p v-if="scope.row.delivery_status === 1 && scope.row.trade_status === 2">

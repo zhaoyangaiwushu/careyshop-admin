@@ -324,7 +324,7 @@
 </template>
 
 <script>
-import orderMixins from './components/mixins'
+import orderMixins from './components/mixins/order'
 import { getOrderItem } from '@/api/order/order'
 import { getPaymentList } from '@/api/payment/payment'
 import { getSettingList } from '@/api/config/setting'

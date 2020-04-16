@@ -629,7 +629,7 @@ import {
   completeOrderList,
   deliveryOrderItem
 } from '@/api/order/order'
-import orderMixins from '../mixins'
+import orderMixins from '../mixins/order'
 import exportOrder from '../mixins/export'
 import { getSettingList } from '@/api/config/setting'
 import { getDeliverySelect } from '@/api/logistics/delivery'

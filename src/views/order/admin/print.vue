@@ -66,15 +66,15 @@
                   <td style="width: 280px;">
                     <ul>
                       <li>总计：<span>{{item.goods_amount | getNumber}}</span></li>
-                      <li>运费：<span>{{item.delivery_fee | getNumber}}</span></li>
-                      <li>开票：<span>{{item.invoice_amount | getNumber}}</span></li>
-                      <li>余额抵扣：<span>- {{item.use_money | getNumber}}</span></li>
-                      <li>购物卡抵扣：<span>- {{item.use_card | getNumber}}</span></li>
-                      <li>会员抵扣：<span>- {{item.use_level | getNumber}}</span></li>
-                      <li>积分抵扣：<span>- {{item.use_integral | getNumber}}</span></li>
-                      <li>优惠劵抵扣：<span>- {{item.use_coupon | getNumber}}</span></li>
-                      <li>商品折扣抵扣：<span>- {{item.use_discount | getNumber}}</span></li>
-                      <li>订单促销抵扣：<span>- {{item.use_promotion | getNumber}}</span></li>
+                      <li v-if="item.delivery_fee">运费：<span>{{item.delivery_fee | getNumber}}</span></li>
+                      <li v-if="item.invoice_amount">开票：<span>{{item.invoice_amount | getNumber}}</span></li>
+                      <li v-if="item.use_money">余额抵扣：<span>- {{item.use_money | getNumber}}</span></li>
+                      <li v-if="item.use_card">购物卡抵扣：<span>- {{item.use_card | getNumber}}</span></li>
+                      <li v-if="item.use_level">会员抵扣：<span>- {{item.use_level | getNumber}}</span></li>
+                      <li v-if="item.use_integral">积分抵扣：<span>- {{item.use_integral | getNumber}}</span></li>
+                      <li v-if="item.use_coupon">优惠劵抵扣：<span>- {{item.use_coupon | getNumber}}</span></li>
+                      <li v-if="item.use_discount">商品折扣抵扣：<span>- {{item.use_discount | getNumber}}</span></li>
+                      <li v-if="item.use_promotion">订单促销抵扣：<span>- {{item.use_promotion | getNumber}}</span></li>
                       <li>实际支付：<span>{{item.pay_amount + item.delivery_fee | getNumber}}</span></li>
                     </ul>
                   </td>
@@ -265,15 +265,15 @@
                 <td style="width: 280px;">
                   <ul>
                     <li>总计：<span>{{item.goods_amount | getNumber}}</span></li>
-                    <li>运费：<span>{{item.delivery_fee | getNumber}}</span></li>
-                    <li>开票：<span>{{item.invoice_amount | getNumber}}</span></li>
-                    <li>余额抵扣：<span>- {{item.use_money | getNumber}}</span></li>
-                    <li>购物卡抵扣：<span>- {{item.use_card | getNumber}}</span></li>
-                    <li>会员抵扣：<span>- {{item.use_level | getNumber}}</span></li>
-                    <li>积分抵扣：<span>- {{item.use_integral | getNumber}}</span></li>
-                    <li>优惠劵抵扣：<span>- {{item.use_coupon | getNumber}}</span></li>
-                    <li>商品折扣抵扣：<span>- {{item.use_discount | getNumber}}</span></li>
-                    <li>订单促销抵扣：<span>- {{item.use_promotion | getNumber}}</span></li>
+                    <li v-if="item.delivery_fee">运费：<span>{{item.delivery_fee | getNumber}}</span></li>
+                    <li v-if="item.invoice_amount">开票：<span>{{item.invoice_amount | getNumber}}</span></li>
+                    <li v-if="item.use_money">余额抵扣：<span>- {{item.use_money | getNumber}}</span></li>
+                    <li v-if="item.use_card">购物卡抵扣：<span>- {{item.use_card | getNumber}}</span></li>
+                    <li v-if="item.use_level">会员抵扣：<span>- {{item.use_level | getNumber}}</span></li>
+                    <li v-if="item.use_integral">积分抵扣：<span>- {{item.use_integral | getNumber}}</span></li>
+                    <li v-if="item.use_coupon">优惠劵抵扣：<span>- {{item.use_coupon | getNumber}}</span></li>
+                    <li v-if="item.use_discount">商品折扣抵扣：<span>- {{item.use_discount | getNumber}}</span></li>
+                    <li v-if="item.use_promotion">订单促销抵扣：<span>- {{item.use_promotion | getNumber}}</span></li>
                     <li>实际支付：<span>{{item.pay_amount + item.delivery_fee | getNumber}}</span></li>
                   </ul>
                 </td>

@@ -630,7 +630,6 @@ import {
   completeOrderList,
   deliveryOrderItem
 } from '@/api/order/order'
-import util from '@/utils/util'
 import orderMixins from '../mixins'
 import exportOrder from '../mixins/export'
 import { getSettingList } from '@/api/config/setting'
@@ -821,17 +820,6 @@ export default {
       }
     }
   },
-  filters: {
-    getPreviewUrl(val) {
-      return val ? util.getImageCodeUrl(val, 'goods_image_x80') : ''
-    },
-    getNumber(val) {
-      return util.getNumber(val)
-    },
-    getDelivery(val) {
-      return val ? val['alias'] : ''
-    }
-  },
   watch: {
     tableData: {
       handler(val) {
@@ -862,14 +850,6 @@ export default {
       }
 
       return idList
-    },
-    // 获取付款方式
-    _getPaymentType(code) {
-      if (this.toPayment.hasOwnProperty(code)) {
-        return this.toPayment[code]['name']
-      }
-
-      return ''
     },
     // 询问提示
     _whetherToConfirm(message = null, type = 'warning') {
@@ -914,13 +894,6 @@ export default {
     // 选中数据项
     handleSelectionChange(val) {
       this.multipleSelection = val
-    },
-    // 商品预览
-    handleView(goods_id) {
-      this.$router.push({
-        name: 'goods-admin-view',
-        params: { goods_id }
-      })
     },
     // 订单详情
     handleInfo(order_no) {

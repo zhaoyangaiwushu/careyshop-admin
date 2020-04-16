@@ -15,34 +15,148 @@
 
             <div class="order-info">
               <div class="dt">支付流水号</div>
-              <div class="dd">{{orderData.payment_no}}</div>
+              <div class="dd"><span>{{orderData.payment_no}}</span></div>
             </div>
 
             <div class="order-info">
               <div class="dt">订单来源</div>
-              <div class="dd">-</div>
+              <div class="dd">{{sourceMap[orderData.source]}}</div>
             </div>
 
             <div class="order-info">
               <div class="dt">支付方式</div>
-              <div class="dd">-</div>
+              <div class="dd">
+                <span :style="orderData.payment_code === '1' && 'color: #F56C6C;'">
+                  {{_getPaymentType(orderData.payment_code)}}
+                </span>
+              </div>
             </div>
 
-            <div class="order-info">
+            <div class="order-info" v-if="orderData.card_number">
               <div class="dt">购物卡号</div>
-              <div class="dd">-</div>
+              <div class="dd">{{orderData.card_number}}</div>
             </div>
 
             <div class="order-info">
               <div class="dt">买家</div>
-              <div class="dd">-</div>
+              <div class="dd">
+                <span>{{orderData.get_user.username}}</span>
+                <el-image
+                  v-if="orderData.get_user.level_icon"
+                  class="level-icon"
+                  :src="orderData.get_user.level_icon"
+                  fit="fill">
+                  <div slot="error" class="image-slot">
+                    <i class="el-icon-picture-outline"/>
+                  </div>
+                </el-image>
+              </div>
             </div>
 
             <el-divider></el-divider>
 
             <div class="order-info">
-              <div class="dt">收货人</div>
-              <div class="dd">-</div>
+              <div class="dt">收货人姓名</div>
+              <div class="dd">{{orderData.consignee}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">收货地址</div>
+              <div class="dd">{{orderData.complete_address}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">配送方式</div>
+              <div class="dd">{{orderData.get_delivery | getDelivery}}</div>
+            </div>
+
+            <div class="order-info" v-if="orderData.zipcode">
+              <div class="dt">邮编</div>
+              <div class="dd">{{orderData.zipcode}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">收货人手机</div>
+              <div class="dd">{{orderData.mobile}}</div>
+            </div>
+
+            <div class="order-info" v-if="orderData.tel">
+              <div class="dt">收货人电话</div>
+              <div class="dd">{{orderData.tel}}</div>
+            </div>
+
+            <template v-if="orderData.invoice_type > 0">
+              <div class="order-info">
+                <div class="dt">发票抬头</div>
+                <div class="dd">{{orderData.invoice_title}}</div>
+              </div>
+
+              <div class="order-info" v-if="orderData.invoice_type === 2">
+                <div class="dt">纳税人识别号</div>
+                <div class="dd">{{orderData.tax_number}}</div>
+              </div>
+            </template>
+
+            <div class="order-info">
+              <div class="dt">买家备注</div>
+              <div class="dd">{{orderData.buyer_remark}}</div>
+            </div>
+
+            <el-divider></el-divider>
+
+            <div class="order-info">
+              <div class="dt">总计</div>
+              <div class="dd number">{{orderData.goods_amount | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">运费</div>
+              <div class="dd number">{{orderData.delivery_fee | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">开票</div>
+              <div class="dd number">{{orderData.invoice_amount | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">余额抵扣</div>
+              <div class="dd number">- {{orderData.use_money | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">购物卡抵扣</div>
+              <div class="dd number">- {{orderData.use_card | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">会员抵扣</div>
+              <div class="dd number">- {{orderData.use_level | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">积分抵扣</div>
+              <div class="dd number">- {{orderData.use_integral | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">优惠劵抵扣</div>
+              <div class="dd number">- {{orderData.use_coupon | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">商品折扣抵扣</div>
+              <div class="dd number">- {{orderData.use_discount | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">订单促销抵扣</div>
+              <div class="dd number">- {{orderData.use_promotion | getNumber}}</div>
+            </div>
+
+            <div class="order-info">
+              <div class="dt">实际支付</div>
+              <div class="dd number">{{orderData.pay_amount + orderData.delivery_fee | getNumber}}</div>
             </div>
           </el-col>
 
@@ -61,6 +175,8 @@
                 :icon="value.icon"/>
             </el-steps>
 
+            <el-divider></el-divider>
+
             <div class="order-remark" v-if="orderData.sellers_remark">
               <span>卖家备注：{{orderData.sellers_remark}}</span>
             </div>
@@ -78,21 +194,20 @@
                 <template slot-scope="scope">
                   <el-image
                     class="goods-image"
-                    @click="handleViewGoods(scope.row.goods_id)"
+                    @click="handleView(scope.row.goods_id)"
                     :src="scope.row.goods_image | getPreviewUrl"
                     fit="contain"
                     lazy>
                   </el-image>
 
                   <div class="goods-info">
-                    <div
+                    <span
                       :title="scope.row.goods_name"
-                      @click="handleViewGoods(scope.row.goods_id)">
-                      <span class="name">{{scope.row.goods_name}}</span>
-                      <span
-                        :class="`${scope.row.is_service === 1 ? 'service' : 'complete'}`"
-                        class="cs-pl-5">{{serviceMap[scope.row.is_service]}}</span>
-                    </div>
+                      @click="handleView(scope.row.goods_id)"
+                      class="name">{{scope.row.goods_name}}</span>
+                    <span
+                      :class="`${scope.row.is_service === 1 ? 'service' : 'complete'}`"
+                      class="cs-pl-5">{{serviceMap[scope.row.is_service]}}</span>
 
                     <p class="specs">{{scope.row.key_value || '-'}}</p>
                   </div>
@@ -150,9 +265,10 @@
 </template>
 
 <script>
-import util from '@/utils/util'
 import orderMixins from './components/mixins'
 import { getOrderItem } from '@/api/order/order'
+import { getPaymentList } from '@/api/payment/payment'
+import { getSettingList } from '@/api/config/setting'
 
 export default {
   name: 'order-admin-info',
@@ -168,21 +284,21 @@ export default {
   data() {
     return {
       loading: false,
-      orderData: {},
+      isInitial: false,
+      orderData: {
+        get_user: {},
+        get_order_goods: [],
+        get_delivery: {},
+        get_order_log: []
+      },
       tradeStatus: {},
+      toPayment: {},
+      sourceMap: {},
       clientMap: {
         '-1': '游客',
         '0': '顾客',
         '1': '商家'
       }
-    }
-  },
-  filters: {
-    getNumber(val) {
-      return util.getNumber(val)
-    },
-    getPreviewUrl(val) {
-      return val ? util.getImageCodeUrl(val, 'goods_image_x80') : ''
     }
   },
   watch: {
@@ -284,21 +400,34 @@ export default {
     // 获取订单信息
     getOrderData() {
       this.loading = true
-      getOrderItem(this.order_no, 1)
+      let request = [getOrderItem(this.order_no, 1)]
+
+      if (!this.isInitial) {
+        request.push(getPaymentList({ is_select: 1, exclude_code: [4, 5, 6] }))
+        request.push(getSettingList('system_shopping', ['source']))
+        this.isInitial = true
+      }
+
+      Promise.all(request)
         .then(res => {
-          this.orderData = res.data || {}
+          this.orderData = res[0].data || {}
           this._setTradeStatus()
+
+          if (res[1] && res[1].data) {
+            res[1].data.forEach(value => {
+              this.toPayment[value.code] = value
+            })
+          }
+
+          if (res[2] && res[2].data) {
+            res[2].data['source']['value'].forEach((value, index) => {
+              this.sourceMap[index] = value.name
+            })
+          }
         })
         .finally(() => {
           this.loading = false
         })
-    },
-    // 商品预览
-    handleViewGoods(goods_id) {
-      this.$router.push({
-        name: 'goods-admin-view',
-        params: { goods_id }
-      })
     }
   }
 }
@@ -314,12 +443,20 @@ export default {
     }
 
     .order-info {
+      display: table;
       font-size: 14px;
       line-height: 28px;
-      display: flex;
       .dt {
+        float: left;
+        width: 100px;
         color: #99A9BF;
-        width: 90px;
+      }
+      .dd {
+        padding-left: 100px;
+      }
+      .number {
+        width: 100px;
+        text-align: right;
       }
     }
   }
@@ -327,6 +464,12 @@ export default {
   .order-left {
     margin-bottom: 20px;
     border-right: 1px solid $color-border-1;
+
+    .level-icon {
+      margin-left: 5px;
+      line-height: 0;
+      vertical-align: text-bottom;
+    }
 
     .el-divider--horizontal {
       width: 96%;

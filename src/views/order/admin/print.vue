@@ -75,7 +75,8 @@
                       <li v-if="item.use_coupon">优惠劵抵扣：<span>- {{item.use_coupon | getNumber}}</span></li>
                       <li v-if="item.use_discount">商品折扣抵扣：<span>- {{item.use_discount | getNumber}}</span></li>
                       <li v-if="item.use_promotion">订单促销抵扣：<span>- {{item.use_promotion | getNumber}}</span></li>
-                      <li>实际支付：<span>{{item.pay_amount + item.delivery_fee | getNumber}}</span></li>
+                      <li class="cs-pb-10">应付金额：<span>{{item.total_amount | getNumber}}</span></li>
+                      <li>实付款：<span>{{item.pay_amount + item.delivery_fee | getNumber}}</span></li>
                     </ul>
                   </td>
                 </tr>
@@ -83,6 +84,10 @@
             </table>
 
             <table>
+              <tr>
+                <td>付款方式：{{toPayment[item.payment_code]}}</td>
+              </tr>
+
               <tr>
                 <td>收货人姓名：{{item.consignee}}</td>
               </tr>
@@ -195,7 +200,7 @@
                 <td>创建日期：{{item.create_time}}</td>
               </tr>
               <tr>
-                <td>收货人：{{item.consignee}}</td>
+                <td>收货人姓名：{{item.consignee}}</td>
                 <td>
                   <template v-if="item.mobile">
                     手机：{{item.mobile}}
@@ -274,7 +279,8 @@
                     <li v-if="item.use_coupon">优惠劵抵扣：<span>- {{item.use_coupon | getNumber}}</span></li>
                     <li v-if="item.use_discount">商品折扣抵扣：<span>- {{item.use_discount | getNumber}}</span></li>
                     <li v-if="item.use_promotion">订单促销抵扣：<span>- {{item.use_promotion | getNumber}}</span></li>
-                    <li>实际支付：<span>{{item.pay_amount + item.delivery_fee | getNumber}}</span></li>
+                    <li class="cs-pb-10">应付金额：<span>{{item.total_amount | getNumber}}</span></li>
+                    <li>实付款：<span>{{item.pay_amount + item.delivery_fee | getNumber}}</span></li>
                   </ul>
                 </td>
               </tr>
@@ -312,6 +318,7 @@ import dayjs from 'dayjs'
 import util from '@/utils/util'
 import { mapActions } from 'vuex'
 import { getSettingList } from '@/api/config/setting'
+import { getPaymentList } from '@/api/payment/payment'
 
 export default {
   name: 'order-admin-print',
@@ -341,6 +348,7 @@ export default {
     return {
       loading: false,
       outOrder: {},
+      toPayment: {},
       logo: '',
       name: '',
       information: '',
@@ -381,20 +389,33 @@ export default {
     }
   },
   mounted() {
+    let request = [getSettingList('system_info', ['logo', 'name', 'information'])]
+    if (this.type === 'order') {
+      request.push(getPaymentList({ is_select: 1, exclude_code: [4, 5, 6] }))
+    }
+
     this.loading = true
-    getSettingList('system_info', ['logo', 'name', 'information'])
+    Promise.all(request)
       .then(res => {
-        for (let key in res.data) {
-          if (!res.data.hasOwnProperty(key)) {
-            continue
-          }
+        if (res[0]) {
+          for (let key in res[0].data) {
+            if (!res[0].data.hasOwnProperty(key)) {
+              continue
+            }
 
-          if (key === 'logo') {
-            this.logo = util.checkUrl(res.data[key]['value'])
-            continue
-          }
+            if (key === 'logo') {
+              this.logo = util.checkUrl(res[0].data[key]['value'])
+              continue
+            }
 
-          this[key] = res.data[key]['value']
+            this[key] = res[0].data[key]['value']
+          }
+        }
+
+        if (res[1]) {
+          res[1].data.forEach(value => {
+            this.toPayment[value.code] = value.name
+          })
         }
       })
       .finally(() => {

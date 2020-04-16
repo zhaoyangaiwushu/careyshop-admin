@@ -129,17 +129,17 @@
 
             <div style="display: inline-flex;">
               <el-button
-                @click="() => {}"
+                @click="setSellersRemark(0)"
                 size="small">备注</el-button>
 
               <el-button
                 v-if="orderData.delivery_status !== 0"
-                @click="() => {}"
+                @click="handleDeliveryDist(orderData.order_no)"
                 size="small">物流信息</el-button>
 
               <el-button
                 v-if="orderData.trade_status === 0 && orderData.payment_status === 0"
-                @click="() => {}"
+                @click="setOrderAmount(0)"
                 size="small">修改金额</el-button>
 
               <el-button
@@ -296,8 +296,13 @@
                 <div class="dd number">- {{orderData.use_promotion | getNumber}}</div>
               </div>
 
+              <div class="order-info cs-pb-10">
+                <div class="dt">应付金额</div>
+                <div class="dd number">{{orderData.total_amount | getNumber}}</div>
+              </div>
+
               <div class="order-info">
-                <div class="dt">实际支付</div>
+                <div class="dt">实付款</div>
                 <div class="dd number">{{orderData.pay_amount + orderData.delivery_fee | getNumber}}</div>
               </div>
             </div>
@@ -320,6 +325,76 @@
         </el-collapse>
       </el-card>
     </div>
+
+    <el-dialog
+      title="卖家备注"
+      :visible.sync="formRemark.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-input
+        v-model="formRemark.request.sellers_remark"
+        type="textarea"
+        :rows="6"
+        placeholder="编辑卖家备注，仅卖家自己可见"
+        maxlength="200"
+        show-word-limit>
+      </el-input>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formRemark.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formRemark.loading"
+          @click="handleSellersRemark"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      title="修改金额"
+      :visible.sync="formAmount.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-form
+        label-width="80px"
+        label-position="left">
+        <el-form-item label="增加/减少">
+          <el-input-number
+            v-model="formAmount.request.total_amount"
+            placeholder="可输入调整金额"
+            :precision="2">
+          </el-input-number>
+
+          <span class="order-remark cs-pl-10">正数增加，负数减少</span>
+
+          <div>
+            <span>应付款：</span>
+            <span class="cs-pr-10">{{formAmount.actual}}</span>
+            <span>调整后：</span>
+            <strong>{{formAmount.actual + formAmount.request.total_amount | getNumber}}</strong>
+          </div>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formAmount.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formAmount.loading"
+          @click="handleOrderAmount"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <cs-delivery-dist ref="deliveryDist"/>
   </cs-container>
 </template>
 
@@ -470,6 +545,7 @@ export default {
       Promise.all(request)
         .then(res => {
           this.orderData = res[0].data || {}
+          this.currentTableData = [this.orderData]
           this._setTradeStatus()
 
           if (res[1] && res[1].data) {
@@ -534,7 +610,7 @@ export default {
   .order-remark {
     font-size: 13px;
     line-height: 32px;
-    color: $color-info;
+    color: $color-text-placehoder;
   }
 
   .goods-image {

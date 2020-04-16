@@ -261,39 +261,44 @@
                 <div class="dd number">{{orderData.invoice_amount | getNumber}}</div>
               </div>
 
+              <div v-if="orderData.adjustment" class="order-info">
+                <div class="dt">调整金额</div>
+                <div class="dd number">{{orderData.adjustment | getNumber}}</div>
+              </div>
+
               <div v-if="orderData.use_money" class="order-info">
                 <div class="dt">余额抵扣</div>
-                <div class="dd number">- {{orderData.use_money | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_money | getNumber}}</div>
               </div>
 
               <div v-if="orderData.use_card" class="order-info">
                 <div class="dt">购物卡抵扣</div>
-                <div class="dd number">- {{orderData.use_card | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_card | getNumber}}</div>
               </div>
 
               <div v-if="orderData.use_level" class="order-info">
                 <div class="dt">会员抵扣</div>
-                <div class="dd number">- {{orderData.use_level | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_level | getNumber}}</div>
               </div>
 
               <div v-if="orderData.use_integral" class="order-info">
                 <div class="dt">积分抵扣</div>
-                <div class="dd number">- {{orderData.use_integral | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_integral | getNumber}}</div>
               </div>
 
               <div v-if="orderData.use_coupon" class="order-info">
                 <div class="dt">优惠劵抵扣</div>
-                <div class="dd number">- {{orderData.use_coupon | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_coupon | getNumber}}</div>
               </div>
 
               <div v-if="orderData.use_discount" class="order-info">
                 <div class="dt">商品折扣抵扣</div>
-                <div class="dd number">- {{orderData.use_discount | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_discount | getNumber}}</div>
               </div>
 
               <div v-if="orderData.use_promotion" class="order-info">
                 <div class="dt">订单促销抵扣</div>
-                <div class="dd number">- {{orderData.use_promotion | getNumber}}</div>
+                <div class="dd number">-{{orderData.use_promotion | getNumber}}</div>
               </div>
 
               <div class="order-info cs-pb-10">
@@ -303,7 +308,9 @@
 
               <div class="order-info">
                 <div class="dt">实付款</div>
-                <div class="dd number">{{orderData.pay_amount + orderData.delivery_fee | getNumber}}</div>
+                <div class="dd number">
+                  {{orderData.pay_amount + orderData.delivery_fee + orderData.adjustment | getNumber}}
+                </div>
               </div>
             </div>
           </el-collapse-item>

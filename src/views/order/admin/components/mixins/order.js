@@ -119,6 +119,11 @@ export default {
           this.formAmount.visible = false
           this.$message.success('操作成功')
         })
+        .then(() => {
+          if (this.$options.name === 'order-admin-info') {
+            this.getOrderData()
+          }
+        })
         .catch(() => {
           this.formAmount.loading = false
         })

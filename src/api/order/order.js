@@ -21,6 +21,24 @@ export function getOrderItem(order_no, is_get_log = 0) {
 }
 
 /**
+ * 获取一个订单操作日志
+ * @param {String} order_no
+ * @returns
+ */
+export function getOrderLog(order_no) {
+  return request({
+    url: '/v1/order',
+    method: 'post',
+    params: {
+      method: 'get.order.log'
+    },
+    data: {
+      order_no
+    }
+  })
+}
+
+/**
  * 获取订单列表
  * @param {Object} data
  * @returns

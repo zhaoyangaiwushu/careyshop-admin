@@ -6,7 +6,7 @@
         shadow="never"
         v-loading="loading">
         <el-row>
-          <el-col class="order-left" :span="9">
+          <el-col class="order-left cs-pr" :span="9">
             <p class="card-title">订单信息</p>
             <div class="order-info">
               <div class="dt">订单号</div>
@@ -15,7 +15,7 @@
 
             <div class="order-info">
               <div class="dt">支付流水号</div>
-              <div class="dd"><span>{{orderData.payment_no}}</span></div>
+              <div class="dd">{{orderData.payment_no}}</div>
             </div>
 
             <div class="order-info">
@@ -127,59 +127,61 @@
 
             <el-divider></el-divider>
 
-            <el-button
-              @click="() => {}"
-              size="small">备注</el-button>
+            <div style="display: inline-flex;">
+              <el-button
+                @click="() => {}"
+                size="small">备注</el-button>
 
-            <el-button
-              v-if="orderData.delivery_status !== 0"
-              @click="() => {}"
-              size="small">物流信息</el-button>
+              <el-button
+                v-if="orderData.delivery_status !== 0"
+                @click="() => {}"
+                size="small">物流信息</el-button>
 
-            <el-button
-              v-if="orderData.trade_status === 0 && orderData.payment_status === 0"
-              @click="() => {}"
-              size="small">修改金额</el-button>
+              <el-button
+                v-if="orderData.trade_status === 0 && orderData.payment_status === 0"
+                @click="() => {}"
+                size="small">修改金额</el-button>
 
-            <el-button
-              v-if="orderData.delivery_status === 0 && orderData.trade_status <= 1"
-              @click="() => {}"
-              size="small">修改订单</el-button>
+              <el-button
+                v-if="orderData.delivery_status === 0 && orderData.trade_status <= 1"
+                @click="() => {}"
+                size="small">修改订单</el-button>
 
-            <el-button
-              v-if="orderData.payment_status === 1 && orderData.trade_status === 0"
-              @click="() => {}"
-              size="small">设为配货</el-button>
+              <el-button
+                v-if="orderData.payment_status === 1 && orderData.trade_status === 0"
+                @click="() => {}"
+                size="small">设为配货</el-button>
 
-            <el-button
-              v-if="orderData.payment_status === 1 && orderData.trade_status === 1"
-              @click="() => {}"
-              size="small">取消配货</el-button>
+              <el-button
+                v-if="orderData.payment_status === 1 && orderData.trade_status === 1"
+                @click="() => {}"
+                size="small">取消配货</el-button>
 
-            <el-button
-              v-if="orderData.payment_status === 1 && orderData.delivery_status !== 1 && [1, 2].includes(orderData.trade_status)"
-              @click="() => {}"
-              size="small">确定发货</el-button>
+              <el-button
+                v-if="orderData.payment_status === 1 && orderData.delivery_status !== 1 && [1, 2].includes(orderData.trade_status)"
+                @click="() => {}"
+                size="small">确定发货</el-button>
 
-            <el-button
-              v-if="orderData.delivery_status === 1 && orderData.trade_status === 2"
-              @click="() => {}"
-              size="small">确认收货</el-button>
+              <el-button
+                v-if="orderData.delivery_status === 1 && orderData.trade_status === 2"
+                @click="() => {}"
+                size="small">确认收货</el-button>
 
-            <el-button
-              v-if="orderData.trade_status <= 1"
-              @click="() => {}"
-              size="small">取消订单</el-button>
+              <el-button
+                v-if="orderData.trade_status <= 1"
+                @click="() => {}"
+                size="small">取消订单</el-button>
 
-            <el-button
-              v-if="orderData.trade_status === 4 && orderData.is_delete <= 0"
-              @click="() => {}"
-              size="small">删除订单</el-button>
+              <el-button
+                v-if="orderData.trade_status === 4 && orderData.is_delete <= 0"
+                @click="() => {}"
+                size="small">删除订单</el-button>
 
-            <el-button
-              v-if="orderData.is_delete > 0"
-              @click="() => {}"
-              size="small">恢复订单</el-button>
+              <el-button
+                v-if="orderData.is_delete > 0"
+                @click="() => {}"
+                size="small">恢复订单</el-button>
+            </div>
           </el-col>
         </el-row>
 
@@ -209,7 +211,7 @@
                       :class="`${scope.row.is_service === 1 ? 'service' : 'complete'}`"
                       class="cs-pl-5">{{serviceMap[scope.row.is_service]}}</span>
 
-                    <p class="specs">{{scope.row.key_value || '-'}}</p>
+                    <p class="specs">{{scope.row.key_value}}</p>
                   </div>
                 </template>
               </el-table-column>
@@ -526,10 +528,6 @@ export default {
       margin-left: 5px;
       line-height: 0;
       vertical-align: text-bottom;
-    }
-
-    .el-divider--horizontal {
-      width: 96%;
     }
   }
 

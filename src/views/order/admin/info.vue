@@ -53,6 +53,11 @@
               </div>
             </div>
 
+            <div class="order-info">
+              <div class="dt">买家备注</div>
+              <div class="dd">{{orderData.buyer_remark}}</div>
+            </div>
+
             <el-divider></el-divider>
 
             <div class="order-info">
@@ -97,66 +102,11 @@
               </div>
             </template>
 
-            <div class="order-info">
-              <div class="dt">买家备注</div>
-              <div class="dd">{{orderData.buyer_remark}}</div>
-            </div>
-
             <el-divider></el-divider>
 
             <div class="order-info">
-              <div class="dt">总计</div>
-              <div class="dd number">{{orderData.goods_amount | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">运费</div>
-              <div class="dd number">{{orderData.delivery_fee | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">开票</div>
-              <div class="dd number">{{orderData.invoice_amount | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">余额抵扣</div>
-              <div class="dd number">- {{orderData.use_money | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">购物卡抵扣</div>
-              <div class="dd number">- {{orderData.use_card | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">会员抵扣</div>
-              <div class="dd number">- {{orderData.use_level | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">积分抵扣</div>
-              <div class="dd number">- {{orderData.use_integral | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">优惠劵抵扣</div>
-              <div class="dd number">- {{orderData.use_coupon | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">商品折扣抵扣</div>
-              <div class="dd number">- {{orderData.use_discount | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">订单促销抵扣</div>
-              <div class="dd number">- {{orderData.use_promotion | getNumber}}</div>
-            </div>
-
-            <div class="order-info">
-              <div class="dt">实际支付</div>
-              <div class="dd number">{{orderData.pay_amount + orderData.delivery_fee | getNumber}}</div>
+              <div class="dt">卖家备注</div>
+              <div class="dd">{{orderData.sellers_remark}}</div>
             </div>
           </el-col>
 
@@ -230,11 +180,6 @@
               v-if="orderData.is_delete > 0"
               @click="() => {}"
               size="small">恢复订单</el-button>
-
-            <div class="order-remark" v-if="orderData.sellers_remark">
-              <el-divider></el-divider>
-              <span>卖家备注：{{orderData.sellers_remark}}</span>
-            </div>
           </el-col>
         </el-row>
 

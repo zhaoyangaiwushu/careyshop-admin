@@ -242,6 +242,63 @@
                 </template>
               </el-table-column>
             </el-table>
+
+            <div class="cs-fr cs-p">
+              <div class="order-info">
+                <div class="dt">总计</div>
+                <div class="dd number">{{orderData.goods_amount | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">运费</div>
+                <div class="dd number">{{orderData.delivery_fee | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">开票</div>
+                <div class="dd number">{{orderData.invoice_amount | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">余额抵扣</div>
+                <div class="dd number">- {{orderData.use_money | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">购物卡抵扣</div>
+                <div class="dd number">- {{orderData.use_card | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">会员抵扣</div>
+                <div class="dd number">- {{orderData.use_level | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">积分抵扣</div>
+                <div class="dd number">- {{orderData.use_integral | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">优惠劵抵扣</div>
+                <div class="dd number">- {{orderData.use_coupon | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">商品折扣抵扣</div>
+                <div class="dd number">- {{orderData.use_discount | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">订单促销抵扣</div>
+                <div class="dd number">- {{orderData.use_promotion | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">实际支付</div>
+                <div class="dd number">{{orderData.pay_amount + orderData.delivery_fee | getNumber}}</div>
+              </div>
+            </div>
           </el-collapse-item>
 
           <el-collapse-item title="订单日志" name="log">
@@ -455,7 +512,7 @@ export default {
         padding-left: 100px;
       }
       .number {
-        width: 100px;
+        width: 150px;
         text-align: right;
       }
     }

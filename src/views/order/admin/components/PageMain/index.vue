@@ -146,7 +146,7 @@
             label="买家">
             <template slot-scope="scope">
               <div class="order-text">
-                <p>
+                <p style="width: 130px;">
                   <span class="son">{{scope.row.get_user.username}}</span>
 
                   <el-image
@@ -699,6 +699,8 @@ export default {
       immediate: true
     }
   },
+  // beforeRouteEnter(to, from, next) {
+  // },
   mounted() {
     this.getOrderSource()
     this.handleOpenDelivery()

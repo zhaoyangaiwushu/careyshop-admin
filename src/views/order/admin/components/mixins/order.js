@@ -1,8 +1,10 @@
 import {
+  cancelOrderItem,
   changePriceOrderItem,
   completeOrderList,
   deliveryOrderItem,
   pickingOrderList,
+  recycleOrderItem,
   remarkOrderItem,
   setOrderItem
 } from '@/api/order/order'
@@ -574,6 +576,62 @@ export default {
                 }
 
                 refreshTotal && this.$emit('total')
+              } else {
+                this.getOrderData()
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 请求取消订单
+    handleOrderCancel(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          cancelOrderItem(data.order_no)
+            .then(res => {
+              if (this.$options.name !== 'order-admin-info') {
+                let refreshTotal = true
+
+                if (this.tabPane === '0') {
+                  this.$set(this.currentTableData, index, {
+                    ...data,
+                    ...res.data
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    refreshTotal = false
+                    this.$emit('refresh', true)
+                  }
+                }
+
+                refreshTotal && this.$emit('total')
+              } else {
+                this.getOrderData()
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 请求删除或恢复订单
+    handleOrderRecycle(index, type) {
+      this._whetherToConfirm()
+        .then(() => {
+          recycleOrderItem(this.currentTableData[index].order_no, type)
+            .then(() => {
+              if (this.$options.name !== 'order-admin-info') {
+                this.currentTableData.splice(index, 1)
+
+                if (this.currentTableData.length <= 0) {
+                  this.$emit('refresh', true)
+                }
               } else {
                 this.getOrderData()
               }

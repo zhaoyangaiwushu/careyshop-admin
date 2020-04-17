@@ -619,10 +619,6 @@
 </template>
 
 <script>
-import {
-  cancelOrderItem,
-  recycleOrderItem
-} from '@/api/order/order'
 import orderMixins from '../mixins/order'
 import exportOrder from '../mixins/export'
 import { getSettingList } from '@/api/config/setting'
@@ -776,53 +772,6 @@ export default {
       }
 
       return result
-    },
-    // 请求取消订单
-    handleOrderCancel(index) {
-      this._whetherToConfirm()
-        .then(() => {
-          let refreshTotal = true
-          const data = this.currentTableData[index]
-
-          cancelOrderItem(data.order_no)
-            .then(res => {
-              if (this.tabPane === '0') {
-                this.$set(this.currentTableData, index, {
-                  ...data,
-                  ...res.data
-                })
-              } else {
-                this.currentTableData.splice(index, 1)
-                if (this.currentTableData.length <= 0) {
-                  refreshTotal = false
-                  this.$emit('refresh', true)
-                }
-              }
-
-              refreshTotal && this.$emit('total')
-              this.$message.success('操作成功')
-            })
-        })
-        .catch(() => {
-        })
-    },
-    // 请求删除或恢复订单
-    handleOrderRecycle(index, type) {
-      this._whetherToConfirm()
-        .then(() => {
-          recycleOrderItem(this.currentTableData[index].order_no, type)
-            .then(() => {
-              this.currentTableData.splice(index, 1)
-
-              if (this.currentTableData.length <= 0) {
-                this.$emit('refresh', true)
-              }
-
-              this.$message.success('操作成功')
-            })
-        })
-        .catch(() => {
-        })
     }
   }
 }

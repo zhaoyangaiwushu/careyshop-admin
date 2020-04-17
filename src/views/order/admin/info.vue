@@ -169,17 +169,17 @@
 
               <el-button
                 v-if="orderData.trade_status <= 1"
-                @click="() => {}"
+                @click="handleOrderCancel(0)"
                 size="small">取消订单</el-button>
 
               <el-button
                 v-if="orderData.trade_status === 4 && orderData.is_delete <= 0"
-                @click="() => {}"
+                @click="handleOrderRecycle(0, 1)"
                 size="small">删除订单</el-button>
 
               <el-button
                 v-if="orderData.is_delete > 0"
-                @click="() => {}"
+                @click="handleOrderRecycle(0, 0)"
                 size="small">恢复订单</el-button>
             </div>
           </el-col>

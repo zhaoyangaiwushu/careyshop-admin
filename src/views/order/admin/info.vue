@@ -149,22 +149,22 @@
 
               <el-button
                 v-if="orderData.payment_status === 1 && orderData.trade_status === 0"
-                @click="() => {}"
+                @click="handlePicking(1, 0)"
                 size="small">设为配货</el-button>
 
               <el-button
                 v-if="orderData.payment_status === 1 && orderData.trade_status === 1"
-                @click="() => {}"
+                @click="handlePicking(0, 0)"
                 size="small">取消配货</el-button>
 
               <el-button
                 v-if="orderData.payment_status === 1 && orderData.delivery_status !== 1 && [1, 2].includes(orderData.trade_status)"
-                @click="() => {}"
+                @click="handleDelivery(0)"
                 size="small">确定发货</el-button>
 
               <el-button
                 v-if="orderData.delivery_status === 1 && orderData.trade_status === 2"
-                @click="() => {}"
+                @click="handleComplete(0)"
                 size="small">确认收货</el-button>
 
               <el-button
@@ -240,7 +240,7 @@
                 align="center"
                 width="80">
                 <template slot-scope="scope">
-                  {{statusMap[scope.row.status]}}
+                  <span :style="{'color': deliveryMap[scope.row.status]}">{{statusMap[scope.row.status]}}</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -503,6 +503,138 @@
       </div>
     </el-dialog>
 
+    <el-dialog
+      title="确定发货"
+      :visible.sync="formDelivery.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="760px">
+      <el-table
+        :data="formDelivery.goods"
+        style="margin-top: -25px;"
+        ref="dliveryMultiple"
+        @selection-change="val => {formDelivery.selection = val}">
+        <el-table-column
+          align="center"
+          type="selection"
+          width="50"
+          :selectable="row => {return !row.status}">
+        </el-table-column>
+
+        <el-table-column
+          label="商品"
+          prop="goods_name">
+          <template slot-scope="scope">
+            <el-image
+              class="goods-image"
+              @click="handleViewGoods(scope.row.goods_id)"
+              :src="scope.row.goods_image | getPreviewUrl"
+              fit="contain">
+            </el-image>
+
+            <div class="goods-info order-text">
+              <p class="name link" @click="handleViewGoods(scope.row.goods_id)">{{scope.row.goods_name}}</p>
+              <p v-if="scope.row.key_value" class="son">{{scope.row.key_value}}</p>
+            </div>
+          </template>
+        </el-table-column>
+
+        <el-table-column
+          label="数量"
+          prop="qty"
+          width="100">
+        </el-table-column>
+
+        <el-table-column
+          label="状态"
+          prop="status"
+          align="center"
+          width="80">
+          <template slot-scope="scope">
+            <span :style="{'color': deliveryMap[scope.row.status]}">{{statusMap[scope.row.status]}}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div class="cs-mt">
+        <el-radio-group
+          v-model="formDelivery.delivery"
+          class="cs-pb">
+          <el-radio :label="0">无需配送</el-radio>
+          <el-radio :label="1">配送方式</el-radio>
+          <el-radio :label="2">快递公司</el-radio>
+        </el-radio-group>
+
+        <el-form
+          :inline="true"
+          :model="formDelivery.request"
+          :rules="rules.delivery"
+          ref="formDelivery"
+          size="small">
+          <el-form-item
+            v-if="formDelivery.delivery === 1"
+            label="配送方式"
+            prop="delivery_id">
+            <el-select
+              v-model="formDelivery.request.delivery_id"
+              placeholder="请选择"
+              style="width: 280px;"
+              clearable>
+              <el-option
+                v-for="item in delivery.select"
+                :key="item.delivery_id"
+                :label="item.alias"
+                :value="item.delivery_id">
+                <span style="float: left;">{{item.alias}}</span>
+                <span style="float: right; color: #8492A6; font-size: 13px;">{{item.name}}</span>
+              </el-option>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            v-if="formDelivery.delivery === 2"
+            label="快递公司"
+            prop="delivery_item_id">
+            <el-select
+              v-model="formDelivery.request.delivery_item_id"
+              placeholder="请选择"
+              style="width: 280px;"
+              clearable>
+              <el-option
+                v-for="item in delivery.company"
+                :key="item.delivery_item_id"
+                :label="item.name"
+                :value="item.delivery_item_id"/>
+            </el-select>
+          </el-form-item>
+
+          <el-form-item
+            v-if="formDelivery.delivery !== 0"
+            label="快递单号"
+            prop="logistic_code">
+            <el-input
+              v-model="formDelivery.request.logistic_code"
+              placeholder="请输入快递单号"
+              :clearable="true"/>
+          </el-form-item>
+        </el-form>
+      </div>
+
+      <cs-goods-drawer ref="goodsDrawer"/>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formDelivery.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formDelivery.loading"
+          @click="deliveryOrderItem"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
     <cs-delivery-dist ref="deliveryDist"/>
   </cs-container>
 </template>
@@ -536,7 +668,6 @@ export default {
       },
       tradeStatus: {},
       toPayment: {},
-      sourceMap: {},
       clientMap: {
         '-1': '游客',
         '0': '顾客',
@@ -782,6 +913,17 @@ export default {
 
   .order-log span {
     color: $color-info;
+  }
+
+  .order-text {
+    p {
+      margin: 0;
+    }
+
+    .son {
+      color: $color-text-sub;
+      font-size: 13px;
+    }
   }
 
   .el-collapse /deep/ .el-collapse-item__header {

@@ -65,6 +65,20 @@ util.md5 = (str) => {
 }
 
 /**
+ * 删除数据中指定的列表
+ * @param data
+ * @param id
+ * @param key
+ */
+util.deleteDataList = (data, id, key) => {
+  for (let i = data.length - 1; i >= 0; i--) {
+    if (id.indexOf(data[i][key]) !== -1) {
+      data.splice(i, 1)
+    }
+  }
+}
+
+/**
  * 将任意对象转化为树
  * @param data
  * @param key

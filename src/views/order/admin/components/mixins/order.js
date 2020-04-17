@@ -1,14 +1,25 @@
+import {
+  changePriceOrderItem,
+  completeOrderList,
+  deliveryOrderItem,
+  pickingOrderList,
+  remarkOrderItem,
+  setOrderItem
+} from '@/api/order/order'
 import util from '@/utils/util'
-import { changePriceOrderItem, remarkOrderItem, setOrderItem } from '@/api/order/order'
+import { getDeliverySelect } from '@/api/logistics/delivery'
+import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
   components: {
     'csRegionSelect': () => import('@/components/cs-region-select'),
-    'csDeliveryDist': () => import('@/components/cs-delivery-dist')
+    'csDeliveryDist': () => import('@/components/cs-delivery-dist'),
+    'csGoodsDrawer': () => import('@/components/cs-goods-drawer')
   },
   data() {
     return {
       currentTableData: [],
+      multipleSelection: [],
       rules: {
         order: {
           consignee: [
@@ -113,6 +124,14 @@ export default {
           ]
         }
       },
+      delivery: {},
+      deliveryMap: {
+        0: '#303133',
+        1: '#67C23A',
+        2: '#67C23A',
+        3: '#F56C6C'
+      },
+      sourceMap: {},
       serviceMap: {
         '1': '售后中',
         '2': '已售后'
@@ -141,6 +160,15 @@ export default {
         loading: false,
         visible: false,
         request: {}
+      },
+      formDelivery: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        delivery: 1,
+        selection: [],
+        goods: {},
+        request: {}
       }
     }
   },
@@ -155,7 +183,27 @@ export default {
       return val ? val['alias'] : ''
     }
   },
+  mounted() {
+    this.handleOpenDelivery()
+  },
   methods: {
+    // 获取列表中的订单编号
+    _getOrderNoList(val) {
+      if (val === null) {
+        val = this.multipleSelection
+      }
+
+      let idList = []
+      if (Array.isArray(val)) {
+        val.forEach(value => {
+          idList.push(value.order_no)
+        })
+      } else {
+        idList.push(this.currentTableData[val].order_no)
+      }
+
+      return idList
+    },
     // 获取付款方式
     _getPaymentType(code) {
       if (this.toPayment.hasOwnProperty(code)) {
@@ -164,12 +212,32 @@ export default {
 
       return ''
     },
+    // 询问提示
+    _whetherToConfirm(message = null, type = 'warning') {
+      let options = {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type
+      }
+
+      let msg = message || '确定要执行该操作吗?'
+      return this.$confirm(msg, '提示', options)
+    },
+    // 商品预览弹出窗
+    handleViewGoods(value) {
+      this.$nextTick(() => {
+        this.$refs.goodsDrawer.show(value)
+      })
+    },
     // 商品预览
     handleView(goods_id) {
       this.$router.push({
         name: 'goods-admin-view',
         params: { goods_id }
       })
+        .then(() => {
+        })
     },
     // 设置卖家备注
     setSellersRemark(index) {
@@ -301,6 +369,220 @@ export default {
             })
         }
       })
+    },
+    // 请求配货状态
+    handlePicking(is_picking, value = null) {
+      let orderList = this._getOrderNoList(value)
+      if (orderList.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      this._whetherToConfirm()
+        .then(() => {
+          pickingOrderList(orderList, is_picking)
+            .then(res => {
+              if (this.$options.name !== 'order-admin-info') {
+                let refreshTotal = true
+
+                if (this.tabPane === '0') {
+                  this.currentTableData.forEach(item => {
+                    if (orderList.indexOf(item.order_no) !== -1) {
+                      this.$set(item, 'trade_status', res.data.trade_status)
+                    }
+                  })
+                } else {
+                  util.deleteDataList(this.currentTableData, orderList, 'order_no')
+                  if (this.currentTableData.length <= 0) {
+                    refreshTotal = false
+                    this.$emit('refresh', true)
+                  }
+                }
+
+                refreshTotal && this.$emit('total')
+              } else {
+                this.getOrderData()
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 获取配送信息
+    handleOpenDelivery() {
+      if (!this.delivery.select) {
+        getDeliverySelect()
+          .then(res => {
+            this.delivery.select = res.data || []
+          })
+      }
+
+      if (!this.delivery.company) {
+        getDeliveryCompanySelect(0)
+          .then(res => {
+            this.delivery.company = res.data || []
+          })
+      }
+    },
+    // 确认发货
+    handleDelivery(index) {
+      const data = this.currentTableData[index]
+      this.formDelivery = {
+        index,
+        loading: false,
+        visible: false,
+        delivery: 1,
+        selection: [],
+        goods: data.get_order_goods,
+        request: {
+          order_no: data.order_no,
+          order_goods_id: [],
+          delivery_id: data.delivery_id,
+          delivery_item_id: undefined,
+          logistic_code: undefined
+        }
+      }
+
+      // 处理el-select项不存在的bug
+      if (this.delivery.select) {
+        if (!this.delivery.select.find(item => item.delivery_id === data.delivery_id)) {
+          this.formDelivery.request.delivery_id = undefined
+        }
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.formDelivery) {
+          this.$refs.formDelivery.clearValidate()
+        }
+
+        if (this.$refs.dliveryMultiple) {
+          this.$refs.dliveryMultiple.clearSelection()
+        }
+
+        this.formDelivery.visible = true
+      })
+    },
+    // 请求确认发货
+    deliveryOrderItem() {
+      this.$refs.formDelivery.validate(valid => {
+        if (valid) {
+          if (this.formDelivery.selection.length <= 0) {
+            this.formDelivery.loading = false
+            this.$message.error('请至少选择一个商品')
+            return
+          }
+
+          let orderGoods = []
+          let request = this.formDelivery.request
+
+          this.formDelivery.selection.forEach(item => {
+            orderGoods.push(item.order_goods_id)
+          })
+
+          switch (this.formDelivery.delivery) {
+            case 0:
+              delete request.delivery_id
+              delete request.delivery_item_id
+              delete request.logistic_code
+              break
+            case 1:
+              delete request.delivery_item_id
+              break
+            case 2:
+              delete request.delivery_id
+              break
+          }
+
+          this.formDelivery.loading = true
+          this.formDelivery.request.order_goods_id = orderGoods
+
+          deliveryOrderItem({ ...request })
+            .then(res => {
+              if (this.$options.name !== 'order-admin-info') {
+                let refreshTotal = true
+                const index = this.formDelivery.index
+
+                if (this.tabPane === '0' || res.data.delivery_status !== 1) {
+                  this.formDelivery.goods.forEach(item => {
+                    if (orderGoods.includes(item.order_goods_id)) {
+                      item['is_service'] = 0
+                      item['status'] = 1
+                    }
+                  })
+
+                  this.$set(this.currentTableData, index, {
+                    ...this.currentTableData[index],
+                    ...res.data
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    refreshTotal = false
+                    this.$emit('refresh', true)
+                  }
+                }
+
+                refreshTotal && this.$emit('total')
+              } else {
+                this.getOrderData()
+              }
+
+              this.formDelivery.visible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.formDelivery.loading = false
+            })
+        }
+      })
+    },
+    // 请求确认收货
+    handleComplete(value = null) {
+      let orderList = this._getOrderNoList(value)
+      if (orderList.length === 0) {
+        this.$message.error('请选择要操作的数据')
+        return
+      }
+
+      this._whetherToConfirm()
+        .then(() => {
+          completeOrderList(orderList)
+            .then(res => {
+              if (this.$options.name !== 'order-admin-info') {
+                let refreshTotal = true
+
+                if (this.tabPane === '0') {
+                  this.currentTableData.forEach(item => {
+                    if (orderList.indexOf(item.order_no) !== -1) {
+                      item.trade_status = res.data.trade_status
+                      item.finished_time = res.data.finished_time
+                      item.get_order_goods.forEach(goods => {
+                        if (goods.is_service === 1) {
+                          goods.is_service = 0
+                        }
+                      })
+                    }
+                  })
+                } else {
+                  util.deleteDataList(this.currentTableData, orderList, 'order_no')
+                  if (this.currentTableData.length <= 0) {
+                    refreshTotal = false
+                    this.$emit('refresh', true)
+                  }
+                }
+
+                refreshTotal && this.$emit('total')
+              } else {
+                this.getOrderData()
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
     }
   }
 }

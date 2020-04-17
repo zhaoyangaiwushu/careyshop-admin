@@ -69,6 +69,18 @@ export default {
         this.handleSubmit()
       })
   },
+  beforeRouteEnter(to, from, next) {
+    // 从订单详情页返回后刷新列表
+    if (from.name === 'order-admin-info') {
+      next(instance => {
+        if (instance.$refs.header) {
+          instance.$refs.header.handleFormSubmit()
+        }
+      })
+    } else {
+      next()
+    }
+  },
   methods: {
     // 刷新列表页面
     handleRefresh(isTurning = false) {

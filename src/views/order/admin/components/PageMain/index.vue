@@ -699,8 +699,6 @@ export default {
       immediate: true
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  // },
   mounted() {
     this.getOrderSource()
     this.handleOpenDelivery()

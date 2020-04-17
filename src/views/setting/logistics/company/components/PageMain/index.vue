@@ -179,6 +179,7 @@ import {
   setDeliveryCompanyItem,
   copyDeliveryCompanyHot
 } from '@/api/logistics/company'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -370,12 +371,7 @@ export default {
         .then(() => {
           delDeliveryCompanyList(company_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (company_id.indexOf(this.currentTableData[i].delivery_item_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, company_id, 'delivery_item_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

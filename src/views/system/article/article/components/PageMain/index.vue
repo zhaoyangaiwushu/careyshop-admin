@@ -446,12 +446,7 @@ export default {
         .then(() => {
           delArticleList(article_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (article_id.indexOf(this.currentTableData[i].article_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, article_id, 'article_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

@@ -237,6 +237,7 @@ import {
   setAdminItem,
   resetAdminItem
 } from '@/api/user/admin'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -454,12 +455,7 @@ export default {
         .then(() => {
           delAdminList(clients)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (clients.indexOf(this.currentTableData[i].admin_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, clients, 'admin_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

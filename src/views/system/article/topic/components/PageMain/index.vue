@@ -122,6 +122,7 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 import { mapActions } from 'vuex'
 import { delTopicList, setTopicStatus } from '@/api/article/topic'
 
@@ -302,12 +303,7 @@ export default {
         .then(() => {
           delTopicList(topic_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (topic_id.indexOf(this.currentTableData[i].topic_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, topic_id, 'topic_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

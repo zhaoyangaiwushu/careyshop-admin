@@ -608,12 +608,7 @@ export default {
         .then(() => {
           delFriendlinkList(friend_link_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (friend_link_id.indexOf(this.currentTableData[i].friend_link_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, friend_link_id, 'friend_link_id')
               this.$message.success('操作成功')
             })
         })

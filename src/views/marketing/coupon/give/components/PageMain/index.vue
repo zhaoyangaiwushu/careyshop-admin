@@ -364,12 +364,7 @@ export default {
           if (type === 'del') {
             delCouponGiveList(coupon_give_id)
               .then(() => {
-                for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                  if (coupon_give_id.indexOf(this.currentTableData[i].coupon_give_id) !== -1) {
-                    this.currentTableData.splice(i, 1)
-                  }
-                }
-
+                util.deleteDataList(this.currentTableData, coupon_give_id, 'coupon_give_id')
                 this.$message.success('操作成功')
               })
           }
@@ -378,12 +373,7 @@ export default {
           if (type === 'rec') {
             recCouponGiveList(coupon_give_id)
               .then(() => {
-                for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                  if (coupon_give_id.indexOf(this.currentTableData[i].coupon_give_id) !== -1) {
-                    this.currentTableData.splice(i, 1)
-                  }
-                }
-
+                util.deleteDataList(this.currentTableData, coupon_give_id, 'coupon_give_id')
                 this.$message.success('操作成功')
               })
           }

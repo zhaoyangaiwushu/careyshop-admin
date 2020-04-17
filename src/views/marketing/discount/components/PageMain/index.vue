@@ -252,6 +252,7 @@ import {
   setDiscountItem,
   setDiscountStatus
 } from '@/api/marketing/discount'
+import util from '@/utils/util'
 
 export default {
   components: {
@@ -484,12 +485,7 @@ export default {
         .then(() => {
           delDiscountList(discount_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (discount_id.indexOf(this.currentTableData[i].discount_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, discount_id, 'discount_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

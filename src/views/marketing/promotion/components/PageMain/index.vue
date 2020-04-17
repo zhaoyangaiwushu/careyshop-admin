@@ -294,6 +294,7 @@ import {
   setPromotionItem,
   setPromotionStatus
 } from '@/api/marketing/promotion'
+import util from '@/utils/util'
 import { getCouponSelect } from '@/api/marketing/coupon'
 
 export default {
@@ -523,12 +524,7 @@ export default {
         .then(() => {
           delPromotionList(promotion_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (promotion_id.indexOf(this.currentTableData[i].promotion_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, promotion_id, 'promotion_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

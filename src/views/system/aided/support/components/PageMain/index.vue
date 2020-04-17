@@ -210,6 +210,7 @@ import {
   setSupportSort,
   setSupportItem
 } from '@/api/aided/support'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -484,12 +485,7 @@ export default {
         .then(() => {
           delSupportList(support_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (support_id.indexOf(this.currentTableData[i].support_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, support_id, 'support_id')
               this.$message.success('操作成功')
             })
         })

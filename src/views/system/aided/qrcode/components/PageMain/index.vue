@@ -555,12 +555,7 @@ export default {
         .then(() => {
           delQrcodeList(qrcode_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (qrcode_id.indexOf(this.currentTableData[i].qrcode_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, qrcode_id, 'qrcode_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

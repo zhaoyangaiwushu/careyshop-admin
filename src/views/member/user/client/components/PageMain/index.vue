@@ -980,12 +980,7 @@ export default {
         .then(() => {
           delUserList(clients)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (clients.indexOf(this.currentTableData[i].user_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, clients, 'user_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

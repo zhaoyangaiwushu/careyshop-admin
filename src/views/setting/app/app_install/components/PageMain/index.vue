@@ -177,6 +177,7 @@ import {
   setAppInstallItem,
   delAppInstallList
 } from '@/api/aided/app_install'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -371,12 +372,7 @@ export default {
         .then(() => {
           delAppInstallList(app_install_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (app_install_id.indexOf(this.currentTableData[i].app_install_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, app_install_id, 'app_install_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

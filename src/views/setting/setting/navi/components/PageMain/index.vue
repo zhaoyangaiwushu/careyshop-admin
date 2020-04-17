@@ -219,6 +219,7 @@ import {
   setNavigationSort,
   setNavigationItem
 } from '@/api/config/navi'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -483,12 +484,7 @@ export default {
         .then(() => {
           delNavigationList(navigation_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (navigation_id.indexOf(this.currentTableData[i].navigation_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, navigation_id, 'navigation_id')
               this.$message.success('操作成功')
             })
         })

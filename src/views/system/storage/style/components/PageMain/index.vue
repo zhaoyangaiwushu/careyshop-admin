@@ -936,12 +936,7 @@ export default {
         .then(() => {
           delStorageStyleList(styleId)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (styleId.indexOf(this.currentTableData[i].storage_style_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, styleId, 'storage_style_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

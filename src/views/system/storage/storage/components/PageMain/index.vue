@@ -475,12 +475,7 @@ export default {
         .then(() => {
           delStorageList(storageId)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (storageId.indexOf(this.currentTableData[i].storage_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, storageId, 'storage_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', this.storageId)
               }

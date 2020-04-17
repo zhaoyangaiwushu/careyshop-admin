@@ -280,12 +280,7 @@ export default {
         .then(() => {
           delGoodsConsultList(goods_consult_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (goods_consult_id.indexOf(this.currentTableData[i].goods_consult_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, goods_consult_id, 'goods_consult_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

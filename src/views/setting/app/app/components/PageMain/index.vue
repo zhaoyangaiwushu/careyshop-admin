@@ -180,6 +180,7 @@ import {
   setAppItem,
   replaceAppSecret
 } from '@/api/aided/app'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -405,12 +406,7 @@ export default {
         .then(() => {
           delAppList(app_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (app_id.indexOf(this.currentTableData[i].app_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, app_id, 'app_id')
               this.$message.success('操作成功')
             })
         })

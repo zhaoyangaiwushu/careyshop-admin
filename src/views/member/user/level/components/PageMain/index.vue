@@ -392,12 +392,7 @@ export default {
         .then(() => {
           delUserLevelList(user_level_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (user_level_id.indexOf(this.currentTableData[i].user_level_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, user_level_id, 'user_level_id')
               this.$message.success('操作成功')
             })
         })

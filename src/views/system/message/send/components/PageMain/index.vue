@@ -279,6 +279,7 @@ import {
   delMessageList,
   setMessageItem
 } from '@/api/message/message'
+import util from '@/utils/util'
 
 export default {
   components: {
@@ -542,12 +543,7 @@ export default {
         .then(() => {
           delMessageList(idList)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (idList.indexOf(this.currentTableData[i].message_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, idList, 'message_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

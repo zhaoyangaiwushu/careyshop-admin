@@ -376,6 +376,7 @@ import {
   addAdsPositionItem,
   setAdsPositionItem
 } from '@/api/ads/position'
+import util from '@/utils/util'
 
 export default {
   components: {
@@ -696,12 +697,7 @@ export default {
         .then(() => {
           delAdsPositionList(ads_position_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (ads_position_id.indexOf(this.currentTableData[i].ads_position_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, ads_position_id, 'ads_position_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

@@ -468,6 +468,7 @@ import {
   addDeliveryItem,
   setDeliveryItem
 } from '@/api/logistics/delivery'
+import util from '@/utils/util'
 import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
@@ -847,12 +848,7 @@ export default {
         .then(() => {
           delDeliveryList(delivery_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (delivery_id.indexOf(this.currentTableData[i].delivery_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, delivery_id, 'delivery_id')
               this.$message.success('操作成功')
             })
         })

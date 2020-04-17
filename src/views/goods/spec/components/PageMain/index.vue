@@ -256,6 +256,7 @@ import {
   setGoodsSpecKey,
   setGoodsSpecSort
 } from '@/api/goods/spec'
+import util from '@/utils/util'
 
 export default {
   props: {
@@ -598,12 +599,7 @@ export default {
         .then(() => {
           delGoodsSpecList(spec_id)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (spec_id.indexOf(this.currentTableData[i].spec_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, spec_id, 'spec_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

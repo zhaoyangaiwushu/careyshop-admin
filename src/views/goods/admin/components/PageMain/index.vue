@@ -665,12 +665,7 @@ export default {
         .then(() => {
           setShelvesGoodsList(goods_id, status)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (goods_id.indexOf(this.currentTableData[i].goods_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, goods_id, 'goods_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }
@@ -806,12 +801,7 @@ export default {
 
           delGoodsList(goods_id, status)
             .then(() => {
-              for (let i = this.currentTableData.length - 1; i >= 0; i--) {
-                if (goods_id.indexOf(this.currentTableData[i].goods_id) !== -1) {
-                  this.currentTableData.splice(i, 1)
-                }
-              }
-
+              util.deleteDataList(this.currentTableData, goods_id, 'goods_id')
               if (this.currentTableData.length <= 0) {
                 this.$emit('refresh', true)
               }

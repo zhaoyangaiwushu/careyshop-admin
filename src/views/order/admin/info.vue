@@ -301,16 +301,19 @@
                 <div class="dd number">-{{orderData.use_promotion | getNumber}}</div>
               </div>
 
-              <div class="order-info cs-pb-10">
+              <div class="order-info cs-pb">
                 <div class="dt">应付金额</div>
                 <div class="dd number">{{orderData.total_amount | getNumber}}</div>
               </div>
 
               <div class="order-info">
-                <div class="dt">实付款</div>
-                <div class="dd number">
-                  {{orderData.pay_amount + orderData.delivery_fee + orderData.adjustment | getNumber}}
-                </div>
+                <div class="dt">累计优惠</div>
+                <div class="dd number">{{orderData.goods_amount - orderData.pay_amount | getNumber}}</div>
+              </div>
+
+              <div class="order-info">
+                <div class="dt">{{orderData | getPaymentStatus}}</div>
+                <div class="dd number">{{orderData | getPaymentAmount | getNumber}}</div>
               </div>
             </div>
           </el-collapse-item>
@@ -448,6 +451,20 @@ export default {
         this.getOrderData()
       },
       immediate: true
+    }
+  },
+  filters: {
+    getPaymentStatus(val) {
+      return !val.trade_status && !val.payment_status ? '预付款' : '实付款'
+    },
+    getPaymentAmount(val) {
+      if (!val.trade_status && !val.payment_status) {
+        return val.use_money + val.use_integral + val.use_card
+      }
+
+      if (val.trade_status !== 4) {
+        return val.total_amount + val.use_money + val.use_integral + val.use_card
+      }
     }
   },
   methods: {

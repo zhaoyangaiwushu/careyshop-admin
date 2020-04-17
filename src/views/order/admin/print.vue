@@ -76,8 +76,9 @@
                       <li v-if="item.use_coupon">优惠劵抵扣：<span>-{{item.use_coupon | getNumber}}</span></li>
                       <li v-if="item.use_discount">商品折扣抵扣：<span>-{{item.use_discount | getNumber}}</span></li>
                       <li v-if="item.use_promotion">订单促销抵扣：<span>-{{item.use_promotion | getNumber}}</span></li>
-                      <li class="cs-pb-10">应付金额：<span>{{item.total_amount | getNumber}}</span></li>
-                      <li>实付款：<span>{{item.pay_amount + item.delivery_fee + item.adjustment | getNumber}}</span></li>
+                      <li class="cs-pb">应付金额：<span>{{item.total_amount | getNumber}}</span></li>
+                      <li>累计优惠：<span>{{item.goods_amount - item.pay_amount | getNumber}}</span></li>
+                      <li>{{item | getPaymentStatus}}：<span>{{item | getPaymentAmount | getNumber}}</span></li>
                     </ul>
                   </td>
                 </tr>
@@ -281,8 +282,9 @@
                     <li v-if="item.use_coupon">优惠劵抵扣：<span>-{{item.use_coupon | getNumber}}</span></li>
                     <li v-if="item.use_discount">商品折扣抵扣：<span>-{{item.use_discount | getNumber}}</span></li>
                     <li v-if="item.use_promotion">订单促销抵扣：<span>-{{item.use_promotion | getNumber}}</span></li>
-                    <li class="cs-pb-10">应付金额：<span>{{item.total_amount | getNumber}}</span></li>
-                    <li>实付款：<span>{{item.pay_amount + item.delivery_fee + item.adjustment | getNumber}}</span></li>
+                    <li class="cs-pb">应付金额：<span>{{item.total_amount | getNumber}}</span></li>
+                    <li>累计优惠：<span>{{item.goods_amount - item.pay_amount | getNumber}}</span></li>
+                    <li>{{item | getPaymentStatus}}<span>{{item | getPaymentAmount | getNumber}}</span></li>
                   </ul>
                 </td>
               </tr>
@@ -371,6 +373,18 @@ export default {
     },
     getQrcode(text) {
       return util.getQrcodeUrl(text)
+    },
+    getPaymentStatus(val) {
+      return !val.trade_status && !val.payment_status ? '预付款' : '实付款'
+    },
+    getPaymentAmount(val) {
+      if (!val.trade_status && !val.payment_status) {
+        return val.use_money + val.use_integral + val.use_card
+      }
+
+      if (val.trade_status !== 4) {
+        return val.total_amount + val.use_money + val.use_integral + val.use_card
+      }
     }
   },
   watch: {

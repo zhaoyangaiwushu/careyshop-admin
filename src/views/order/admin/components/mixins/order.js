@@ -1,13 +1,118 @@
 import util from '@/utils/util'
-import { changePriceOrderItem, remarkOrderItem } from '@/api/order/order'
+import { changePriceOrderItem, remarkOrderItem, setOrderItem } from '@/api/order/order'
 
 export default {
   components: {
+    'csRegionSelect': () => import('@/components/cs-region-select'),
     'csDeliveryDist': () => import('@/components/cs-delivery-dist')
   },
   data() {
     return {
       currentTableData: [],
+      rules: {
+        order: {
+          consignee: [
+            {
+              required: true,
+              message: '收货人姓名不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ],
+          mobile: [
+            {
+              required: true,
+              message: '收货人手机号码不能为空',
+              trigger: 'blur'
+            },
+            {
+              min: 7,
+              max: 15,
+              message: '长度在 7 到 15 个字符',
+              trigger: 'blur'
+            }
+          ],
+          tel: [
+            {
+              max: 20,
+              message: '长度不能大于 20 个字符',
+              trigger: 'blur'
+            }
+          ],
+          zipcode: [
+            {
+              max: 20,
+              message: '长度不能大于 20 个字符',
+              trigger: 'blur'
+            }
+          ],
+          region: [
+            {
+              required: true,
+              message: '收货区域不能为空',
+              trigger: 'change'
+            }
+          ],
+          address: [
+            {
+              required: true,
+              message: '收货详细地址不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          invoice_title: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          tax_number: [
+            {
+              max: 20,
+              message: '长度不能大于 20 个字符',
+              trigger: 'blur'
+            }
+          ]
+        },
+        delivery: {
+          delivery_id: [
+            {
+              required: true,
+              message: '至少选择一项',
+              trigger: 'change'
+            }
+          ],
+          delivery_item_id: [
+            {
+              required: true,
+              message: '至少选择一项',
+              trigger: 'change'
+            }
+          ],
+          logistic_code: [
+            {
+              required: true,
+              message: '快递单号不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ]
+        }
+      },
       serviceMap: {
         '1': '售后中',
         '2': '已售后'
@@ -29,6 +134,12 @@ export default {
         loading: false,
         visible: false,
         actual: 0,
+        request: {}
+      },
+      formOrder: {
+        index: undefined,
+        loading: false,
+        visible: false,
         request: {}
       }
     }
@@ -115,18 +226,81 @@ export default {
 
       changePriceOrderItem(this.formAmount.request)
         .then(() => {
-          this.currentTableData[index].total_amount += this.formAmount.request.total_amount
-          this.formAmount.visible = false
-          this.$message.success('操作成功')
-        })
-        .then(() => {
-          if (this.$options.name === 'order-admin-info') {
+          if (this.$options.name !== 'order-admin-info') {
+            this.currentTableData[index].total_amount += this.formAmount.request.total_amount
+          } else {
             this.getOrderData()
           }
+
+          this.formAmount.visible = false
+          this.$message.success('操作成功')
         })
         .catch(() => {
           this.formAmount.loading = false
         })
+    },
+    // 修改订单
+    setOrderItem(index) {
+      this.formOrder = {
+        index,
+        loading: false,
+        visible: false,
+        request: {
+          ...this.currentTableData[index],
+          region: []
+        }
+      }
+
+      let region = ['province', 'city', 'district']
+      region.forEach(item => {
+        if (this.formOrder.request.hasOwnProperty(item)) {
+          if (this.formOrder.request[item] > 0) {
+            this.formOrder.request.region.push(this.formOrder.request[item])
+          }
+        }
+      })
+
+      this.$nextTick(() => {
+        if (this.$refs.formOrder) {
+          this.$refs.formOrder.clearValidate()
+        }
+
+        this.formOrder.visible = true
+      })
+    },
+    // 请求修改订单
+    handleSetOrder() {
+      this.$refs.formOrder.validate(valid => {
+        if (valid) {
+          let region = ['province', 'city', 'district']
+          region.forEach((item, index) => {
+            if (this.formOrder.request.hasOwnProperty(item)) {
+              if (this.formOrder.request[item] > 0) {
+                this.formOrder.request[item] = this.formOrder.request.region[index]
+              }
+            }
+          })
+
+          this.formOrder.loading = true
+          setOrderItem(this.formOrder.request)
+            .then(res => {
+              if (this.$options.name !== 'order-admin-info') {
+                this.$set(this.currentTableData, this.formOrder.index, {
+                  ...this.currentTableData[this.formOrder.index],
+                  ...res.data
+                })
+              } else {
+                this.getOrderData()
+              }
+
+              this.formOrder.visible = false
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+              this.formOrder.loading = false
+            })
+        }
+      })
     }
   }
 }

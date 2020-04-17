@@ -144,7 +144,7 @@
 
               <el-button
                 v-if="orderData.delivery_status === 0 && orderData.trade_status <= 1"
-                @click="() => {}"
+                @click="setOrderItem(0)"
                 size="small">修改订单</el-button>
 
               <el-button
@@ -400,6 +400,105 @@
           type="primary"
           :loading="formAmount.loading"
           @click="handleOrderAmount"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      title="修改订单"
+      :visible.sync="formOrder.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-form
+        :model="formOrder.request"
+        :rules="rules.order"
+        ref="formOrder"
+        label-width="120px">
+        <el-form-item
+          label="收货人姓名"
+          prop="consignee">
+          <el-input
+            v-model="formOrder.request.consignee"
+            placeholder="请输入收货人姓名"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人手机号"
+          prop="mobile">
+          <el-input
+            v-model="formOrder.request.mobile"
+            placeholder="请输入收货人手机号码"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人电话"
+          prop="tel">
+          <el-input
+            v-model="formOrder.request.tel"
+            placeholder="可输入收货人电话"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货区域"
+          prop="region">
+          <cs-region-select v-model="formOrder.request.region"/>
+        </el-form-item>
+
+        <el-form-item
+          label="详细地址"
+          prop="address">
+          <el-input
+            v-model="formOrder.request.address"
+            placeholder="请输入收货详细地址"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          label="收货人邮编"
+          prop="zipcode">
+          <el-input
+            v-model="formOrder.request.zipcode"
+            placeholder="请输入收货人邮编"
+            :clearable="true"/>
+        </el-form-item>
+
+        <template v-if="formOrder.request.invoice_type > 0">
+          <el-divider/>
+
+          <el-form-item
+            label="发票抬头"
+            prop="invoice_title">
+            <el-input
+              v-model="formOrder.request.invoice_title"
+              placeholder="可输入发票抬头"
+              :clearable="true"/>
+          </el-form-item>
+
+          <el-form-item
+            v-if="formOrder.request.invoice_type === 2"
+            label="纳税人识别号"
+            prop="tax_number">
+            <el-input
+              v-model="formOrder.request.tax_number"
+              placeholder="可输入纳税人识别号"
+              :clearable="true"/>
+          </el-form-item>
+        </template>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formOrder.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formOrder.loading"
+          @click="handleSetOrder"
           size="small">确定</el-button>
       </div>
     </el-dialog>

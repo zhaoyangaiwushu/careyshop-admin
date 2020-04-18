@@ -128,57 +128,79 @@
             <el-divider></el-divider>
 
             <div style="display: inline-flex;">
+              <el-dropdown
+                v-if="auth.print"
+                placement="bottom"
+                :show-timeout="50">
+                <el-button class="cs-mr-10" size="small">
+                  <i class="el-icon-printer"/>
+                  <span>打印</span>
+                  <i class="el-icon-arrow-down cs-pl-5"/>
+                </el-button>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item
+                    @click.native="handlePrint('order')">打印订单</el-dropdown-item>
+
+                  <el-dropdown-item
+                    @click.native="handlePrint('out')">打印出库单</el-dropdown-item>
+
+                  <el-dropdown-item
+                    @click.native="handlePrint('delivery')">打印发货单</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+
               <el-button
+                v-if="auth.remark"
                 @click="setSellersRemark(0)"
                 size="small">备注</el-button>
 
               <el-button
-                v-if="orderData.delivery_status !== 0"
+                v-if="auth.dist && orderData.delivery_status !== 0"
                 @click="handleDeliveryDist(orderData.order_no)"
                 size="small">物流信息</el-button>
 
               <el-button
-                v-if="orderData.trade_status === 0 && orderData.payment_status === 0"
+                v-if="auth.price && orderData.trade_status === 0 && orderData.payment_status === 0"
                 @click="setOrderAmount(0)"
                 size="small">修改金额</el-button>
 
               <el-button
-                v-if="orderData.delivery_status === 0 && orderData.trade_status <= 1"
+                v-if="auth.set && orderData.delivery_status === 0 && orderData.trade_status <= 1"
                 @click="setOrderItem(0)"
                 size="small">修改订单</el-button>
 
               <el-button
-                v-if="orderData.payment_status === 1 && orderData.trade_status === 0"
+                v-if="auth.start_picking && orderData.payment_status === 1 && orderData.trade_status === 0"
                 @click="handlePicking(1, 0)"
                 size="small">设为配货</el-button>
 
               <el-button
-                v-if="orderData.payment_status === 1 && orderData.trade_status === 1"
+                v-if="auth.cancel_picking && orderData.payment_status === 1 && orderData.trade_status === 1"
                 @click="handlePicking(0, 0)"
                 size="small">取消配货</el-button>
 
               <el-button
-                v-if="orderData.payment_status === 1 && orderData.delivery_status !== 1 && [1, 2].includes(orderData.trade_status)"
+                v-if="auth.delivery && orderData.payment_status === 1 && orderData.delivery_status !== 1 && [1, 2].includes(orderData.trade_status)"
                 @click="handleDelivery(0)"
                 size="small">确定发货</el-button>
 
               <el-button
-                v-if="orderData.delivery_status === 1 && orderData.trade_status === 2"
+                v-if="auth.complete && orderData.delivery_status === 1 && orderData.trade_status === 2"
                 @click="handleComplete(0)"
                 size="small">确认收货</el-button>
 
               <el-button
-                v-if="orderData.trade_status <= 1"
+                v-if="auth.cancel && orderData.trade_status <= 1"
                 @click="handleOrderCancel(0)"
                 size="small">取消订单</el-button>
 
               <el-button
-                v-if="orderData.trade_status === 4 && orderData.is_delete <= 0"
+                v-if="auth.del && orderData.trade_status === 4 && orderData.is_delete <= 0"
                 @click="handleOrderRecycle(0, 1)"
                 size="small">删除订单</el-button>
 
               <el-button
-                v-if="orderData.is_delete > 0"
+                v-if="auth.restore && orderData.is_delete > 0"
                 @click="handleOrderRecycle(0, 0)"
                 size="small">恢复订单</el-button>
             </div>
@@ -817,6 +839,16 @@ export default {
         .finally(() => {
           this.loading = false
         })
+    },
+    // 订单打印
+    handlePrint(type) {
+      this.$router.push({
+        name: 'order-admin-print',
+        params: {
+          type,
+          orderData: this.currentTableData
+        }
+      })
     }
   }
 }

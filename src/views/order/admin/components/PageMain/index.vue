@@ -16,8 +16,10 @@
         </el-tooltip>
       </el-form-item>
 
-      <el-form-item>
-        <el-dropdown placement="bottom" :show-timeout="50">
+      <el-form-item v-if="auth.print">
+        <el-dropdown
+          placement="bottom"
+          :show-timeout="50">
           <el-button
             :disabled="loading">
             <i class="el-icon-printer"/>
@@ -39,21 +41,21 @@
         </el-dropdown>
       </el-form-item>
 
-      <el-form-item v-if="tabPane === '2'">
+      <el-form-item v-if="auth.start_picking && tabPane === '2'">
         <el-button
           icon="el-icon-document-checked"
           :disabled="loading"
           @click="handlePicking(1)">设为配货</el-button>
       </el-form-item>
 
-      <el-form-item v-if="tabPane === '3'">
+      <el-form-item v-if="auth.cancel_picking && tabPane === '3'">
         <el-button
           icon="el-icon-document-delete"
           :disabled="loading"
           @click="handlePicking(0)">取消配货</el-button>
       </el-form-item>
 
-      <el-form-item v-if="tabPane === '4'">
+      <el-form-item v-if="auth.complete && tabPane === '4'">
         <el-button
           icon="el-icon-shopping-bag-2"
           :disabled="loading"
@@ -133,7 +135,7 @@
                 </p>
 
                 <el-link
-                  v-if="scope.row.trade_status === 0 && scope.row.payment_status === 0"
+                  v-if="auth.price && scope.row.trade_status === 0 && scope.row.payment_status === 0"
                   class="order-button"
                   type="primary"
                   @click="setOrderAmount(scope.$index)"
@@ -223,7 +225,7 @@
             align="center">
             <template slot-scope="scope">
               <div class="order-text">
-                <p v-if="scope.row.delivery_status === 0 && scope.row.trade_status <= 1">
+                <p v-if="auth.set && scope.row.delivery_status === 0 && scope.row.trade_status <= 1">
                   <el-link
                     class="order-button"
                     type="success"
@@ -231,7 +233,7 @@
                     :underline="false">修改订单</el-link>
                 </p>
 
-                <p v-if="scope.row.payment_status === 1 && scope.row.trade_status === 0">
+                <p v-if="auth.start_picking && scope.row.payment_status === 1 && scope.row.trade_status === 0">
                   <el-link
                     class="order-button"
                     type="primary"
@@ -239,7 +241,7 @@
                     :underline="false">设为配货</el-link>
                 </p>
 
-                <p v-if="scope.row.payment_status === 1 && scope.row.trade_status === 1">
+                <p v-if="auth.cancel_picking && scope.row.payment_status === 1 && scope.row.trade_status === 1">
                   <el-link
                     class="order-button"
                     type="primary"
@@ -248,7 +250,7 @@
                 </p>
 
                 <p
-                  v-if="scope.row.payment_status === 1 && scope.row.delivery_status !== 1 && [1, 2].includes(scope.row.trade_status)">
+                  v-if="auth.delivery && scope.row.payment_status === 1 && scope.row.delivery_status !== 1 && [1, 2].includes(scope.row.trade_status)">
                   <el-link
                     class="order-button"
                     type="primary"
@@ -256,7 +258,7 @@
                     :underline="false">确定发货</el-link>
                 </p>
 
-                <p v-if="scope.row.delivery_status === 1 && scope.row.trade_status === 2">
+                <p v-if="auth.complete && scope.row.delivery_status === 1 && scope.row.trade_status === 2">
                   <el-link
                     class="order-button"
                     type="primary"
@@ -264,7 +266,7 @@
                     :underline="false">确认收货</el-link>
                 </p>
 
-                <p v-if="scope.row.delivery_status !== 0">
+                <p v-if="auth.dist && scope.row.delivery_status !== 0">
                   <el-link
                     class="order-button"
                     type="primary"
@@ -272,7 +274,7 @@
                     :underline="false">物流信息</el-link>
                 </p>
 
-                <p v-if="scope.row.trade_status <= 1">
+                <p v-if="auth.cancel && scope.row.trade_status <= 1">
                   <el-link
                     class="order-button"
                     type="danger"
@@ -280,21 +282,21 @@
                     :underline="false">取消订单</el-link>
                 </p>
 
-                <p v-if="scope.row.trade_status === 4 && scope.row.is_delete <= 0">
+                <p v-if="auth.del && scope.row.trade_status === 4 && scope.row.is_delete <= 0">
                   <el-link
                     class="order-button"
                     @click="handleOrderRecycle(scope.$index, 1)"
                     :underline="false">删除订单</el-link>
                 </p>
 
-                <p v-if="scope.row.is_delete > 0">
+                <p v-if="auth.restore && scope.row.is_delete > 0">
                   <el-link
                     class="order-button"
                     @click="handleOrderRecycle(scope.$index, 0)"
                     :underline="false">恢复订单</el-link>
                 </p>
 
-                <p>
+                <p v-if="auth.remark">
                   <el-tooltip
                     :disabled="scope.row.sellers_remark.length <= 0"
                     :content="scope.row.sellers_remark"
@@ -644,7 +646,6 @@ export default {
   },
   data() {
     return {
-      auth: {},
       tabPane: '0',
       tabList: {
         '0': '全部',

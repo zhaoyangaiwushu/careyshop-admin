@@ -22,6 +22,20 @@ export default {
     return {
       currentTableData: [],
       multipleSelection: [],
+      auth: {
+        print: false,
+        start_picking: false,
+        cancel_picking: false,
+        delivery: false,
+        complete: false,
+        price: false,
+        set: false,
+        dist: false,
+        cancel: false,
+        del: false,
+        restore: false,
+        remark: false
+      },
       rules: {
         order: {
           consignee: [
@@ -187,8 +201,24 @@ export default {
   },
   mounted() {
     this.handleOpenDelivery()
+    this._validationAuth()
   },
   methods: {
+    // 验证权限
+    _validationAuth() {
+      this.auth.print = this.$permission('/order/admin/list/print')
+      this.auth.start_picking = this.$permission('/order/admin/list/start_picking')
+      this.auth.cancel_picking = this.$permission('/order/admin/list/cancel_picking')
+      this.auth.delivery = this.$permission('/order/admin/list/delivery')
+      this.auth.complete = this.$permission('/order/admin/list/complete')
+      this.auth.price = this.$permission('/order/admin/list/price')
+      this.auth.set = this.$permission('/order/admin/list/set')
+      this.auth.dist = this.$permission('/order/admin/list/dist')
+      this.auth.cancel = this.$permission('/order/admin/list/cancel')
+      this.auth.del = this.$permission('/order/admin/list/del')
+      this.auth.restore = this.$permission('/order/admin/list/restore')
+      this.auth.remark = this.$permission('/order/admin/list/remark')
+    },
     // 获取列表中的订单编号
     _getOrderNoList(val) {
       if (val === null) {

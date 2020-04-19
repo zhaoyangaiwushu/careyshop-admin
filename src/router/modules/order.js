@@ -37,6 +37,12 @@ export default {
       name: `${pre}admin-refund`,
       meta: { ...meta, cache: true, title: '退款日志' },
       component: () => import('@/views/order/refund')
+    },
+    {
+      path: 'service/list',
+      name: `${pre}service-list`,
+      meta: { ...meta, cache: true, title: '售后列表' },
+      component: () => import('@/views/order/service')
     }
   ])('order-')
 }

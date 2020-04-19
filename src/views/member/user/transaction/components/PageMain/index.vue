@@ -12,7 +12,9 @@
             </el-form-item>
 
             <el-form-item label="来源订单号">
-              <span>{{props.row.source_no}}</span>
+              <span
+                @click="handleOrder(props.row.source_no)"
+                class="link">{{props.row.source_no}}</span>
             </el-form-item>
 
             <el-form-item label="交易账号">
@@ -80,6 +82,11 @@
         label="来源订单号"
         prop="source_no"
         width="240">
+        <template slot-scope="scope">
+          <span
+            @click="handleOrder(scope.row.source_no)"
+            class="link">{{scope.row.source_no}}</span>
+        </template>
       </el-table-column>
 
       <el-table-column
@@ -202,12 +209,24 @@ export default {
       }
 
       this.$emit('sort', sort)
+    },
+    handleOrder(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
+  }
+
   .table-expand {
     font-size: 0;
     padding: 0 10px;

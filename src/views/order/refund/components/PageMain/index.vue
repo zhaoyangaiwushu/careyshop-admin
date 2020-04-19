@@ -16,7 +16,9 @@
             </el-form-item>
 
             <el-form-item label="订单号">
-              <span>{{props.row.order_no}}</span>
+              <span
+                @click="handleOrder(props.row.order_no)"
+                class="link">{{props.row.order_no}}</span>
             </el-form-item>
 
             <el-form-item label="支付流水号">
@@ -283,6 +285,12 @@ export default {
           this.queryData = res.data || {}
           this.queryVisible = true
         })
+    },
+    handleOrder(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
     }
   }
 }

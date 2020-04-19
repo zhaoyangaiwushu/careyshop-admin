@@ -6,7 +6,7 @@
       <div slot="header" class="box-card-header">
         <el-row class="cs-mb-10">
           <el-col :span="18">
-            <span class="text-explode">关联商品：</span>
+            <span class="text-explode">商品：</span>
             <span
               @click="handleView(tableData.get_goods.goods_id)"
               class="goods-link">{{tableData.get_goods.name}}</span>

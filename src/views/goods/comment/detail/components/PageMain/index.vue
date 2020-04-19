@@ -6,10 +6,10 @@
       <div slot="header" class="box-card-header">
         <el-row class="cs-mb-10">
           <el-col :span="18">
-            <span class="text-explode">关联商品：</span>
+            <span class="text-explode">商品：</span>
             <span
               @click="handleView(tableData.get_order_goods.goods_id)"
-              class="goods-link">{{tableData.get_order_goods.goods_name}}</span>
+              class="link">{{tableData.get_order_goods.goods_name}}</span>
           </el-col>
 
           <el-col :span="6">
@@ -29,7 +29,9 @@
 
           <el-col :span="6">
             <span class="text-explode">订单号：</span>
-            <span>{{tableData.order_no}}</span>
+            <span
+              @click="handleOrder(tableData.order_no)"
+              class="link">{{tableData.order_no}}</span>
           </el-col>
 
           <el-col :span="6">
@@ -462,6 +464,13 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
+    },
+    // 查看订单详情
+    handleOrder(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
     }
   }
 }
@@ -478,7 +487,7 @@ export default {
     color: #606266;
   }
 
-  .goods-link:hover {
+  .link:hover {
     cursor: pointer;
     color: #409EFF;
     text-decoration: underline;

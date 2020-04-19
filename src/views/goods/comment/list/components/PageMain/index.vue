@@ -119,7 +119,11 @@
                 </div>
               </el-image>
             </p>
-            <p><span class="comment-son">{{scope.row.order_no}}</span></p>
+            <p>
+              <span
+                @click="handleOrder(scope.row.order_no)"
+                class="comment-son link">{{scope.row.order_no}}</span>
+            </p>
             <el-rate
               v-model="scope.row.score"
               :disabled="true"
@@ -376,6 +380,13 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
+    },
+    // 查看订单详情
+    handleOrder(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
     }
   }
 }
@@ -438,14 +449,6 @@ export default {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-
-      .link {
-        &:hover {
-          cursor: pointer;
-          color: $color-primary;
-          text-decoration: underline;
-        }
-      }
     }
   }
 
@@ -461,5 +464,13 @@ export default {
 
   .no-content {
     color: $color-text-placehoder;
+  }
+
+  .link {
+    &:hover {
+      cursor: pointer;
+      color: $color-primary;
+      text-decoration: underline;
+    }
   }
 </style>

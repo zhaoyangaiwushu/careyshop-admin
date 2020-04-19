@@ -16,7 +16,9 @@
             </el-form-item>
 
             <el-form-item label="订单号">
-              <span>{{props.row.order_no}}</span>
+              <span
+                @click="handleOrder(props.row.order_no)"
+                class="link">{{props.row.order_no}}</span>
             </el-form-item>
 
             <el-form-item label="支付方式">
@@ -190,12 +192,24 @@ export default {
       }
 
       this.$emit('sort', sort)
+    },
+    handleOrder(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+  .link:hover {
+    cursor: pointer;
+    color: #409EFF;
+    text-decoration: underline;
+  }
+
   .table-expand {
     font-size: 0;
     padding: 0 10px;

@@ -75,6 +75,11 @@ export default {
     }
   },
   mounted() {
+    if (process.env.VUE_APP_ISDEMO === 'true') {
+      const number = Math.floor(Math.random() * (45 - 1 + 1) + 1)
+      this.loginForm.username = `admin${number}`
+    }
+
     getAppCaptcha(this.$baseConfig.APP_KEY)
       .then(res => {
         if (res.data.captcha) {

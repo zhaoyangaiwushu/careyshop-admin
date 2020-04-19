@@ -44,7 +44,6 @@
 
       <!-- 资源列表开始 -->
       <el-table
-        v-loading="loading"
         ref="multipleTable"
         :data="tableData"
         :row-key="typeUser === 'client' ? 'user_id' : 'admin_id'"
@@ -177,7 +176,6 @@ export default {
   data() {
     return {
       visible: false,
-      loading: false,
       isCheck: false,
       isSelection: false,
       tableData: [],
@@ -210,7 +208,6 @@ export default {
   },
   methods: {
     handleShowDlg() {
-      this.loading = false
       this.visible = true
     },
     handlePaginationChange(val) {
@@ -271,9 +268,7 @@ export default {
         })
       }
 
-      this.loading = true
       const funList = this.typeUser === 'client' ? getUserList : getAdminList
-
       funList({
         ...form,
         page_no: this.page.current,
@@ -282,9 +277,6 @@ export default {
         .then(res => {
           this.tableData = res.data.items || []
           this.page.total = res.data['total_result']
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     handleSelectionChange(val) {

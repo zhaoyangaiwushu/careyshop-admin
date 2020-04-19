@@ -1,7 +1,6 @@
 <template>
   <div class="cs-p">
     <el-table
-      v-loading="loading"
       :data="tableData"
       :highlight-current-row="true"
       @sort-change="sortChange">
@@ -129,9 +128,6 @@ import * as clipboard from 'clipboard-polyfill'
 
 export default {
   props: {
-    loading: {
-      default: false
-    },
     tableData: {
       default: () => []
     },

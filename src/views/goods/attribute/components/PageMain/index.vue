@@ -43,7 +43,6 @@
     </el-form>
 
     <el-table
-      v-loading="loading"
       :data="currentTableData"
       :highlight-current-row="true"
       row-key="goods_attribute_id"

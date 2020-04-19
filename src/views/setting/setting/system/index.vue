@@ -3,7 +3,6 @@
     <div class="cs-p">
       <el-tabs
         class="tab-box"
-        v-loading="loading"
         v-model="activeName"
         @tab-click="handleClick">
         <el-tab-pane
@@ -82,7 +81,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       activeName: undefined,
       auth: {
         info: false,
@@ -142,13 +140,9 @@ export default {
       this.systemInit()
     },
     systemInit() {
-      this.loading = true
       getSettingList(this.activeName)
         .then(res => {
           this.$refs[this.activeName].setFormData(res.data)
-        })
-        .finally(() => {
-          this.loading = false
         })
     }
   }

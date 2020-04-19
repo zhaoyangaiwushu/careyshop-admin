@@ -17,7 +17,6 @@
     </el-form>
 
     <el-table
-      v-loading="loading"
       :data="currentTableData"
       @selection-change="handleSelectionChange">
       <el-table-column align="center" type="selection" width="55"/>

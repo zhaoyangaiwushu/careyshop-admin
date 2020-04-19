@@ -8,7 +8,6 @@ export default {
       moduleName: '',
       replaceId: 0,
       updateToken: true,
-      tokenLoading: false,
       token: {},
       params: {},
       uploadUrl: '',

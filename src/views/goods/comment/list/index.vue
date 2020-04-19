@@ -7,7 +7,6 @@
       ref="header"/>
 
     <page-main
-      :loading="loading"
       :table-data="table"
       @refresh="handleRefresh"/>
 

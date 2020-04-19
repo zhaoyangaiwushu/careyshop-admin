@@ -70,7 +70,6 @@
 
     <el-tabs
       v-model="tabPane"
-      v-loading="loading"
       @tab-click="tab => {$emit('tabs', tab.name)}"
       class="tab-box">
       <el-tab-pane

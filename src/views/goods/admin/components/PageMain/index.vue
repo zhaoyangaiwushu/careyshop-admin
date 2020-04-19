@@ -93,7 +93,6 @@
 
     <el-tabs
       v-model="tabPane"
-      v-loading="loading"
       @tab-click="handleClick"
       class="tab-box">
       <el-tab-pane

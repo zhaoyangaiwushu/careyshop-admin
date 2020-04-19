@@ -1,7 +1,6 @@
 <template>
   <div class="cs-p">
     <el-table
-      v-loading="loading"
       :data="tableData"
       :highlight-current-row="true"
       @sort-change="sortChange">
@@ -154,9 +153,6 @@ import util from '@/utils/util'
 
 export default {
   props: {
-    loading: {
-      default: false
-    },
     toPayment: {
       default: () => {}
     },

@@ -1,7 +1,6 @@
 <template>
   <div class="cs-p">
     <el-table
-      v-loading="loading"
       :data="currentTableData">
       <el-table-column
         label="商品信息"
@@ -164,9 +163,6 @@ import {
 
 export default {
   props: {
-    loading: {
-      default: false
-    },
     tableData: {
       default: () => []
     }

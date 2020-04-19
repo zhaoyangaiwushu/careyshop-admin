@@ -3,8 +3,7 @@
     <div class="cs-p">
       <el-card
         class="box-card"
-        shadow="never"
-        v-loading="loading">
+        shadow="never">
         <div slot="header" class="clearfix">
           <h2>{{topic.title}}</h2>
           <span>创建日期：{{topic.create_time}}</span>
@@ -28,8 +27,7 @@ export default {
   },
   data() {
     return {
-      topic: {},
-      loading: false
+      topic: {}
     }
   },
   watch: {
@@ -45,15 +43,10 @@ export default {
       this.topic = {}
     },
     getTopicData() {
-      this.loading = true
       this.resetTopicData()
-
       getTopicItem(this.topic_id)
         .then(res => {
           this.topic = res.data || {}
-        })
-        .finally(() => {
-          this.loading = false
         })
     }
   }

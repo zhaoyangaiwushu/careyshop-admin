@@ -2,7 +2,6 @@
   <cs-container>
     <page-edit
       state="update"
-      :loading="loading"
       :formData="formData">
     </page-edit>
   </cs-container>
@@ -24,8 +23,6 @@ export default {
   },
   data() {
     return {
-      // 加载状态
-      loading: false,
       // 表单数据
       formData: {},
       // 表单数据缓存
@@ -72,8 +69,6 @@ export default {
       // 否则从服务器上获取数据(未加工原始数据)
       this.$nextTick(() => {
         this.formData = {}
-        this.loading = true
-
         getTopicItem(id)
           .then(res => {
             this.formBuffer[id] = {
@@ -81,9 +76,6 @@ export default {
               status: res.data.status.toString()
             }
             this.formData = this.formBuffer[id]
-          })
-          .finally(() => {
-            this.loading = false
           })
       })
     }

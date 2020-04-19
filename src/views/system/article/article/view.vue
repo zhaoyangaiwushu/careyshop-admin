@@ -3,8 +3,7 @@
     <div class="cs-p">
       <el-card
         class="box-card"
-        shadow="never"
-        v-loading="loading">
+        shadow="never">
         <div slot="header" class="clearfix">
           <h2>{{article.title}}</h2>
           <span>最后编辑：{{article.update_time}}</span>
@@ -29,8 +28,7 @@ export default {
   },
   data() {
     return {
-      article: {},
-      loading: false
+      article: {}
     }
   },
   watch: {
@@ -46,15 +44,10 @@ export default {
       this.article = {}
     },
     getArticleData() {
-      this.loading = true
       this.resetArticleData()
-
       getArticleItem(this.article_id)
         .then(res => {
           this.article = res.data || {}
-        })
-        .finally(() => {
-          this.loading = false
         })
     }
   }

@@ -8,7 +8,6 @@
       ref="header"/>
 
     <page-main
-      :loading="loading"
       :table-data="table"
       :group="group"
       @sort="handleSort"

@@ -34,7 +34,6 @@
     </el-form>
 
     <el-table
-      v-loading="loading"
       :data="currentTableData"
       :highlight-current-row="true"
       :row-class-name="tableRowClassName"

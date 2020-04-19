@@ -12,7 +12,6 @@
       <el-upload
         ref="upload"
         list-type="text"
-        v-loading="tokenLoading"
         :action="uploadUrl"
         :data="params"
         :multiple="multiple"
@@ -122,11 +121,8 @@ export default {
   },
   methods: {
     handleOpen() {
-      this.tokenLoading = true
       this.getDirectory()
-      this.getToken().then(() => {
-        this.tokenLoading = false
-      })
+      this.getToken()
     },
     handleClose() {
       // 替换资源后需要更换Token

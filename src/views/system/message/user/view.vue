@@ -3,8 +3,7 @@
     <div class="cs-p">
       <el-card
         class="box-card"
-        shadow="never"
-        v-loading="loading">
+        shadow="never">
         <div slot="header" class="clearfix">
           <h2>{{message.title}}</h2>
           <span>最后编辑：{{message.update_time}}</span>
@@ -28,8 +27,7 @@ export default {
   },
   data() {
     return {
-      message: {},
-      loading: false
+      message: {}
     }
   },
   watch: {
@@ -45,15 +43,10 @@ export default {
       this.message = {}
     },
     getMessageData() {
-      this.loading = true
       this.resetMessageData()
-
       getMessageUserItem(this.message_id)
         .then(res => {
           this.message = res.data || {}
-        })
-        .finally(() => {
-          this.loading = false
         })
     }
   }

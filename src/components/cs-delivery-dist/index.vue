@@ -5,7 +5,6 @@
     :append-to-body="true"
     width="600px">
     <el-form
-      v-loading="loading"
       label-width="80px"
       label-position="left"
       style="margin-top: -25px;">
@@ -73,7 +72,6 @@ export default {
   data() {
     return {
       visible: false,
-      loading: false,
       companyIndex: undefined,
       result: [],
       stateMap: {
@@ -107,7 +105,6 @@ export default {
       }
 
       this.visible = true
-      this.loading = true
       this.companyIndex = null
       this.result = null
 
@@ -115,9 +112,6 @@ export default {
         .then(res => {
           this.result = res.data || []
           this.companyIndex = this.result.length > 0 ? 0 : null
-        })
-        .finally(() => {
-          this.loading = false
         })
     }
   }

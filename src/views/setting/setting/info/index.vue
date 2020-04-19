@@ -1,7 +1,6 @@
 <template>
   <cs-container :is-back="false">
     <el-form
-      v-loading="loading"
       class="form-box cs-m"
       label-width="150px"
       label-position="left">
@@ -140,8 +139,7 @@ export default {
           name: '微信支付异步URL',
           value: ''
         }
-      },
-      loading: false
+      }
     }
   },
   mounted() {
@@ -195,7 +193,6 @@ export default {
         }
       ]
 
-      this.loading = true
       batchRequests(data)
         .then(res => {
           res.data.forEach(value => {
@@ -242,9 +239,6 @@ export default {
           if (message) {
             this.$message.success(message)
           }
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     copyData(val) {

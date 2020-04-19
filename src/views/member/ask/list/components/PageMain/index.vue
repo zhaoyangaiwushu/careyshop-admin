@@ -1,7 +1,6 @@
 <template>
   <div class="cs-p">
     <el-table
-      v-loading="loading"
       :data="currentTableData"
       :highlight-current-row="true"
       @sort-change="sortChange">
@@ -102,9 +101,6 @@ import { delAskItem } from '@/api/user/ask'
 
 export default {
   props: {
-    loading: {
-      default: false
-    },
     typeList: {
       default: () => {}
     },

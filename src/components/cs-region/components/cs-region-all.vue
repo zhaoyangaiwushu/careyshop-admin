@@ -10,7 +10,6 @@
 
       <el-tree
         v-if="visible"
-        v-loading="loading"
         node-key="region_id"
         :data="treeData"
         :props="treeProps"
@@ -56,7 +55,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       visible: false,
       treeData: [],
       treeProps: {
@@ -72,14 +70,10 @@ export default {
         return
       }
 
-      this.loading = true
       getRegionSonList({ region_id: this.regionId })
         .then(res => {
           const setParent = { key: 'parent_id', value: [this.regionId] }
           this.treeData = util.formatDataToTree(res.data, 'region_id', 'parent_id', setParent)
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     // 确认提交

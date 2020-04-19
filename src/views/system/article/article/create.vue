@@ -2,7 +2,6 @@
   <cs-container>
     <page-edit
       state="create"
-      :loading="loading"
       :catList="catList"
       :catData="catData">
     </page-edit>
@@ -20,8 +19,6 @@ export default {
   },
   data() {
     return {
-      // 加载状态
-      loading: false,
       // 分类源数据
       catList: [],
       // 整理后的分类数据
@@ -33,9 +30,6 @@ export default {
       .then(res => {
         this.catList = res.data || []
         this.catData = util.formatDataToTree(this.catList, 'article_cat_id')
-      })
-      .finally(() => {
-        this.loading = false
       })
   }
 }

@@ -10,7 +10,6 @@
 
       <el-tree
         v-if="visible"
-        v-loading="loading"
         node-key="region_id"
         :props="treeProps"
         :load="loadNode"
@@ -48,7 +47,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       visible: false,
       treeProps: {
         label: 'region_name',
@@ -59,7 +57,6 @@ export default {
   methods: {
     // 动态加载节点
     loadNode(node, resolve) {
-      this.loading = node.level === 0
       this.getRegionData(node.level ? node.key : this.regionId, resolve)
     },
     // 获取节点
@@ -67,9 +64,6 @@ export default {
       getRegionList({ region_id: regionId })
         .then(res => {
           resolve(res.data || [])
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     // 确认提交

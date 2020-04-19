@@ -58,7 +58,7 @@
 
     <!-- 资源列表开始 -->
     <el-checkbox-group v-model="checkList">
-      <ul class="storage-list" v-loading="loading">
+      <ul class="storage-list">
         <li v-for="(item, index) in currentTableData" :key="index">
           <dl>
             <dt>
@@ -142,7 +142,6 @@ export default {
   data() {
     return {
       visible: false,
-      loading: false,
       loadingCollection: false,
       naviData: [],
       checkList: [],
@@ -210,7 +209,6 @@ export default {
       })
     },
     handleSubmit() {
-      this.loading = true
       getStorageList({
         ...this.form,
         type: this.storageType,
@@ -220,9 +218,6 @@ export default {
         .then(res => {
           this.currentTableData = res.data.items || []
           this.page.total = res.data['total_result']
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     handleConfirm() {

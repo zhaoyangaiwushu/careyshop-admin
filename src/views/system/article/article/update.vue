@@ -2,7 +2,6 @@
   <cs-container>
     <page-edit
       state="update"
-      :loading="loading"
       :catList="catList"
       :catData="catData"
       :formData="formData">
@@ -28,8 +27,6 @@ export default {
   },
   data() {
     return {
-      // 加载状态
-      loading: false,
       // 分类源数据
       catList: [],
       // 整理后的分类数据
@@ -87,17 +84,12 @@ export default {
       // 否则从服务器上获取数据(未加工原始数据)
       this.$nextTick(() => {
         this.formData = {}
-        this.loading = true
-
         if (this.catList.length) {
           // 分类数据已存在时
           getArticleItem(id)
             .then(res => {
               this.formBuffer[id] = this.setArticleData({ ...res.data })
               this.formData = this.formBuffer[id]
-            })
-            .finally(() => {
-              this.loading = false
             })
         } else {
           // 分类数据不存在时
@@ -113,9 +105,6 @@ export default {
               // 处理文章数据
               this.formBuffer[id] = this.setArticleData({ ...res[1].data })
               this.formData = this.formBuffer[id]
-            })
-            .finally(() => {
-              this.loading = false
             })
         }
       })

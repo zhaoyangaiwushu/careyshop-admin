@@ -43,7 +43,6 @@
 
     <el-tabs
       :value="tplCode"
-      v-loading="loading"
       @tab-click="handleClick"
       class="tab-box">
       <el-tab-pane
@@ -250,7 +249,6 @@
       :close-on-click-modal="false"
       width="760px">
       <el-form
-        v-loading="tplLoading"
         :model="tplForm"
         :rules="tplRules"
         label-width="90px"
@@ -498,7 +496,6 @@ export default {
         ]
       },
       tplVisible: false,
-      tplLoading: false,
       tplButton: false,
       tplForm: {},
       tplRules: {
@@ -770,7 +767,6 @@ export default {
 
         this.tplButton = false
         this.tplVisible = true
-        this.tplLoading = false
       })
     },
     // 请求保存模板

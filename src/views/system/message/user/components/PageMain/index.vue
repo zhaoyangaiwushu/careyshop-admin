@@ -60,7 +60,6 @@
 
     <el-tabs
       v-model="tabPane"
-      v-loading="loading"
       class="tab-box">
       <el-tab-pane
         v-for="(item, index) in typeData"

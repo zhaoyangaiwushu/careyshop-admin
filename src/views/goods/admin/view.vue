@@ -3,8 +3,7 @@
     <div class="cs-p">
       <el-card
         class="box-card"
-        shadow="never"
-        v-loading="loading">
+        shadow="never">
         <div slot="header" class="clearfix">
           <div class="gallery">
             <page-media
@@ -163,7 +162,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       activeName: 'content',
       currentPrice: 0,
       rangePrice: '',
@@ -291,18 +289,13 @@ export default {
         })
     },
     getGoodsData() {
-      this.loading = true
       this.resetGoodsData()
-
       getGoodsItem(this.goods_id)
         .then(res => {
           this.goodsData = res.data || {}
           this.currentPrice = util.getNumber(this.goodsData.shop_price)
           this.currentStore = this.goodsData.store_qty
           this.getGoodsOtherInfo()
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     selectSpec(parent, key) {

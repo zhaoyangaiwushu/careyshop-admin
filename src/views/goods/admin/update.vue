@@ -4,7 +4,6 @@
       <page-edit
         ref="update"
         state="update"
-        :loading.sync="loading"
         :confirm-loading.sync="confirmLoading"
         @close="handleClose">
       </page-edit>
@@ -15,7 +14,6 @@
             type="primary"
             size="small"
             :loading="confirmLoading"
-            :disabled="loading"
             @click="handleConfirm">确定</el-button>
 
           <el-button
@@ -43,7 +41,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       confirmLoading: false
     }
   },

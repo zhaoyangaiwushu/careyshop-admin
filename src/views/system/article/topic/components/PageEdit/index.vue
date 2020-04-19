@@ -2,8 +2,7 @@
   <div class="cs-p">
     <el-card
       class="box-card"
-      shadow="never"
-      v-loading="loading">
+      shadow="never">
       <div slot="header" class="cs-tc clearfix">
         <span>{{stateMap[state]}}</span>
       </div>
@@ -100,12 +99,6 @@ export default {
       type: Object,
       required: false,
       default: () => {}
-    },
-    // 加载状态
-    loading: {
-      type: Boolean,
-      required: false,
-      default: false
     }
   },
   data() {

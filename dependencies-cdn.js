@@ -17,7 +17,7 @@ module.exports = [
   {
     name: 'vuex',
     library: 'Vuex',
-    js: '//cdn.jsdelivr.net/npm/vuex@3.1.3/dist/vuex.min.js',
+    js: '//cdn.jsdelivr.net/npm/vuex@3.2.0/dist/vuex.min.js',
     css: ''
   },
   {
@@ -47,7 +47,7 @@ module.exports = [
   {
     name: 'fuse.js',
     library: 'Fuse',
-    js: '//cdn.jsdelivr.net/npm/fuse.js@5.1.0/dist/fuse.min.js',
+    js: '//cdn.jsdelivr.net/npm/fuse.js@5.2.1/dist/fuse.min.js',
     css: ''
   },
   {

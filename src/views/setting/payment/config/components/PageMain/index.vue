@@ -1,7 +1,6 @@
 <template>
   <div class="cs-p">
     <el-table
-      v-loading="loading"
       :data="tableData"
       :highlight-current-row="true">
       <el-table-column type="expand">
@@ -284,9 +283,6 @@ export default {
     'csStorage': () => import('@/components/cs-storage')
   },
   props: {
-    loading: {
-      default: false
-    },
     tableData: {
       default: () => []
     }

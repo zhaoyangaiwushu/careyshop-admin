@@ -2,8 +2,7 @@
   <div class="cs-p">
     <el-card
       class="box-card"
-      shadow="never"
-      v-loading="loading">
+      shadow="never">
       <div slot="header" class="cs-tc clearfix">
         <span>{{stateMap[state]}}</span>
       </div>
@@ -1000,9 +999,6 @@ export default {
     'draggable': () => import('vuedraggable')
   },
   props: {
-    loading: {
-      default: false
-    },
     confirmLoading: {
       default: false
     },
@@ -1257,10 +1253,9 @@ export default {
         this.catData = util.formatDataToTree(res[2].data, 'goods_category_id')
       })
       .then(() => {
-        this.state === 'update' && this.handleGoodsData(this.$route.params.goods_id)
-      })
-      .finally(() => {
-        this.state === 'create' && this.$emit('update:loading', false)
+        if (this.state === 'update') {
+          this.handleGoodsData(this.$route.params.goods_id)
+        }
       })
   },
   methods: {
@@ -1362,9 +1357,6 @@ export default {
               this.$refs.tinymce.setContent(currentForm.content)
             }
           })
-        })
-        .finally(() => {
-          this.$emit('update:loading', false)
         })
     },
     // 获取规格列表编辑状态

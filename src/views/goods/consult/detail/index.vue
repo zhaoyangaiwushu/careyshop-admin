@@ -1,7 +1,6 @@
 <template>
   <cs-container>
     <page-main
-      :loading="loading"
       :table-data="table"
       @reply="addReply">
     </page-main>
@@ -25,8 +24,6 @@ export default {
   },
   data() {
     return {
-      // 加载状态
-      loading: false,
       // 表格数据
       table: this.getInitData(),
       // 表格缓存数据
@@ -82,9 +79,7 @@ export default {
 
       // 否则从服务器上获取数据
       this.$nextTick(() => {
-        this.loading = true
         this.table = { ...this.getInitData() }
-
         getGoodsConsultItem(id)
           .then(res => {
             // 需要在头部插入问题正文
@@ -99,9 +94,6 @@ export default {
 
             this.tableBuffer[id] = { ...res.data }
             this.table = this.tableBuffer[id]
-          })
-          .finally(() => {
-            this.loading = false
           })
       })
     },

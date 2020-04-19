@@ -1,9 +1,6 @@
 <template>
   <cs-container>
-    <page-edit
-      state="create"
-      :loading="loading">
-    </page-edit>
+    <page-edit state="create"></page-edit>
   </cs-container>
 </template>
 
@@ -12,12 +9,6 @@ export default {
   name: 'system-topic-create',
   components: {
     'PageEdit': () => import('./components/PageEdit')
-  },
-  data() {
-    return {
-      // 加载状态
-      loading: false
-    }
   }
 }
 </script>

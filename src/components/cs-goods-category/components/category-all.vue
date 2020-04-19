@@ -10,7 +10,6 @@
 
       <el-tree
         v-if="visible"
-        v-loading="loading"
         node-key="goods_category_id"
         :data="treeData"
         :props="treeProps"
@@ -50,7 +49,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       visible: false,
       treeData: [],
       treeProps: {
@@ -66,13 +64,9 @@ export default {
         return
       }
 
-      this.loading = true
       getGoodsCategoryList(null)
         .then(res => {
           this.treeData = util.formatDataToTree(res.data, 'goods_category_id')
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     // 确认提交

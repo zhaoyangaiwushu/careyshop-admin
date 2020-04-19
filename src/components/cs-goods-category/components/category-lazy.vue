@@ -10,7 +10,6 @@
 
       <el-tree
         v-if="visible"
-        v-loading="loading"
         node-key="goods_category_id"
         :props="treeProps"
         :load="loadNode"
@@ -40,7 +39,6 @@ export default {
   name: 'category-lazy',
   data() {
     return {
-      loading: false,
       visible: false,
       treeProps: {
         label: 'name',
@@ -51,7 +49,6 @@ export default {
   methods: {
     // 动态加载节点
     loadNode(node, resolve) {
-      this.loading = node.level === 0
       this.getCategoryData(node.key, resolve)
     },
     // 获取节点
@@ -59,9 +56,6 @@ export default {
       getGoodsCategoryList({ goods_category_id: categoryId, level: 0 })
         .then(res => {
           resolve(res.data || [])
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     // 确认提交

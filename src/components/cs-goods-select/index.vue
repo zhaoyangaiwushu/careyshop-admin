@@ -44,7 +44,6 @@
 
       <!-- 资源列表开始 -->
       <el-table
-        v-loading="loading"
         ref="multipleTable"
         :data="tableData"
         row-key="goods_id"
@@ -153,7 +152,6 @@ export default {
   data() {
     return {
       visible: false,
-      loading: false,
       isCheck: false,
       isSelection: false,
       tableData: [],
@@ -191,7 +189,6 @@ export default {
       })
     },
     handleShowDlg() {
-      this.loading = false
       this.visible = true
     },
     handleOpen() {
@@ -240,7 +237,6 @@ export default {
         })
       }
 
-      this.loading = true
       getGoodsAdminList({
         ...form,
         page_no: this.page.current,
@@ -249,9 +245,6 @@ export default {
         .then(res => {
           this.tableData = res.data.items || []
           this.page.total = res.data['total_result']
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     handleSelectionChange(val) {

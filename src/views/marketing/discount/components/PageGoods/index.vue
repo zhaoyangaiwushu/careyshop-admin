@@ -1,7 +1,6 @@
 <template>
   <div>
     <el-table
-      v-loading="loading"
       :data="discountList">
       <el-table-column
         label="编号"
@@ -170,7 +169,6 @@ export default {
         '2': '固定价格，比如65则按65的价格结算',
         '3': '赠送优惠劵，订单完成后赠送指定的优惠劵给顾客'
       },
-      loading: false,
       batchValue: undefined,
       batchVisible: false,
       couponData: []
@@ -195,9 +193,7 @@ export default {
     }
   },
   mounted() {
-    this.loading = true
     let request = [getCouponSelect({ type: 3, status: 1, is_invalid: 0, is_shelf_life: 1 })]
-
     if (this.value.length && this.status === 'update') {
       let idList = []
       this.value.forEach(item => {
@@ -218,9 +214,6 @@ export default {
             this.$set(value, 'goods', goodsData)
           }
         }
-      })
-      .finally(() => {
-        this.loading = false
       })
   },
   methods: {

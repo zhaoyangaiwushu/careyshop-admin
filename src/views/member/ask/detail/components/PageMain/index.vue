@@ -2,8 +2,7 @@
   <div class="cs-p">
     <el-card
       class="box-card"
-      shadow="never"
-      v-loading="loading">
+      shadow="never">
       <div slot="header" class="box-card-header">
         <el-row class="cs-mb-10">
           <el-col :span="18">
@@ -115,9 +114,6 @@ import { replyAskItem } from '@/api/user/ask'
 
 export default {
   props: {
-    loading: {
-      default: false
-    },
     tableData: {
       default: () => []
     }

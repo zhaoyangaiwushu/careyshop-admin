@@ -3,8 +3,7 @@
     <div class="cs-p">
       <el-card
         class="box-card"
-        shadow="never"
-        v-loading="loading">
+        shadow="never">
         <el-row>
           <el-col class="order-left cs-pr" :span="9">
             <p class="card-title">订单信息</p>
@@ -680,7 +679,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       isInitial: false,
       orderData: {
         get_user: {},
@@ -809,9 +807,7 @@ export default {
     },
     // 获取订单信息
     getOrderData() {
-      this.loading = true
       let request = [getOrderItem(this.order_no, 1)]
-
       if (!this.isInitial) {
         request.push(getPaymentList({ is_select: 1, exclude_code: [4, 5, 6] }))
         request.push(getSettingList('system_shopping', ['source']))
@@ -835,9 +831,6 @@ export default {
               this.sourceMap[index] = value.name
             })
           }
-        })
-        .finally(() => {
-          this.loading = false
         })
     },
     // 订单打印

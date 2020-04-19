@@ -87,7 +87,7 @@
     </el-breadcrumb>
 
     <el-checkbox-group v-model="checkList">
-      <ul class="storage-list" v-loading="loading">
+      <ul class="storage-list">
         <li v-for="(item, index) in currentTableData" :key="index">
           <dl>
             <dt>

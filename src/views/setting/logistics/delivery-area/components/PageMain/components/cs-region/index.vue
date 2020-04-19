@@ -25,7 +25,6 @@
       <el-divider>区域选择</el-divider>
       <el-tree
         v-if="visible"
-        v-loading="treeLoading"
         class="tree-scroll"
         node-key="region_id"
         :props="treeProps"
@@ -82,7 +81,6 @@ export default {
       visible: false,
       loading: false,
       regionId: 1,
-      treeLoading: false,
       treeProps: {
         label: 'region_name',
         children: 'children'
@@ -102,7 +100,6 @@ export default {
     },
     // 动态加载节点
     loadNode(node, resolve) {
-      this.treeLoading = node.level === 0
       this.getRegionData(node.level ? node.key : this.regionId, resolve)
     },
     // 获取节点
@@ -110,9 +107,6 @@ export default {
       getRegionList({ region_id: regionId })
         .then(res => {
           resolve(res.data || [])
-        })
-        .finally(() => {
-          this.treeLoading = false
         })
     },
     // 添加区域

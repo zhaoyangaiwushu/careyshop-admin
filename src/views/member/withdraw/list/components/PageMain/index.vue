@@ -6,7 +6,6 @@
     </cs-help>
 
     <el-table
-      v-loading="loading"
       :data="currentTableData"
       :highlight-current-row="true"
       @sort-change="sortChange">
@@ -185,9 +184,6 @@ export default {
     'csPrint': () => import('@/components/cs-print')
   },
   props: {
-    loading: {
-      default: false
-    },
     tableData: {
       default: () => []
     }

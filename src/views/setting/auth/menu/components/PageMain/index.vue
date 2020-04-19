@@ -43,7 +43,7 @@
     </el-form>
 
     <el-row :gutter="20">
-      <el-col :span="10" v-loading="loading">
+      <el-col :span="10">
         <el-tree
           v-if="hackReset"
           class="tree-scroll"

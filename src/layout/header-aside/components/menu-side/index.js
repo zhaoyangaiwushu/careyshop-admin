@@ -13,7 +13,7 @@ export default {
       attrs: { class: 'cs-layout-header-aside-menu-side' }
     }, [
       createElement('el-menu', {
-        props: { collapse: this.asideCollapse, uniqueOpened: true, defaultActive: this.active, defaultOpeneds: this.openeds },
+        props: { collapse: this.asideCollapse, uniqueOpened: true, defaultActive: this.$route.fullPath },
         ref: 'menu',
         on: { select: this.handleMenuSelect }
       }, this.menuAside.map(menu => (menu.children === undefined ? elMenuItem : elSubmenu).call(this, createElement, menu))),
@@ -32,11 +32,9 @@ export default {
   },
   data() {
     return {
-      active: '',
-      asideHeight: 300,
-      menuAside: [],
-      openeds: [],
       matched: null,
+      menuAside: [],
+      asideHeight: 300,
       BS: null
     }
   },
@@ -63,24 +61,14 @@ export default {
         const pathRoute = matched[0].path ? matched[0].path : matched[1].path
         if (matched.length > 0 && pathRoute !== this.matched) {
           const _side = this.aside.find(menu => menu.path === pathRoute)
-          this.menuAside = _side && _side.children ? [..._side.children] : []
+          this.menuAside = _side && _side.children ? _side.children : []
           this.matched = pathRoute
         }
 
-        // 计算待激活菜单
+        // 记录历史菜单
         const path = fullPath.slice(0, fullPath.lastIndexOf('/'))
         const openeds = this.menuAside.find(menu => menu.path === path)
-        this.openeds = openeds ? [path] : fullPath === '/index' ? ['/index'] : []
 
-        // 调整被激活菜单
-        this.active = fullPath
-        this.$nextTick(() => {
-          if (this.aside.length > 0 && this.$refs.menu) {
-            this.$refs.menu.activeIndex = fullPath
-          }
-        })
-
-        // 记录历史菜单
         if (openeds !== undefined && openeds.children) {
           let history = openeds.children.find(menu => menu.path === fullPath)
           this.historyDataSet(history).then(() => {})
@@ -88,15 +76,24 @@ export default {
 
         // 进入"首页"时,将历史菜单压入最底部
         if (this.asideIndex === fullPath && this.history.length) {
-          let history = {
+          this.menuAside.unshift({
             path: '/index',
+            title: '首页',
+            icon: 'shouye_o'
+          })
+
+          this.menuAside.push({
+            path: '/index/history',
             title: '访问历史',
             icon: 'lishijilu_o',
-            children: [...this.history]
-          }
+            children: this.history
+          })
 
-          this.menuAside.unshift({ path: '/index', title: '首页', icon: 'shouye_o' })
-          this.menuAside.push(history)
+          this.$nextTick(() => {
+            if (this.$refs.menu) {
+              this.$refs.menu.open('/index/history')
+            }
+          })
         }
       },
       immediate: true

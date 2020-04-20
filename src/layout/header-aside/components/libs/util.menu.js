@@ -4,6 +4,7 @@ import { uniqueId } from 'lodash'
 export function elMenuItem(createElement, menu) {
   return createElement('el-menu-item',
     {
+      key: menu.path,
       props: {
         index: menu.path || uniqueId('cs-menu-empty-')
       }
@@ -33,6 +34,7 @@ export function elMenuItem(createElement, menu) {
 export function elSubmenu(createElement, menu) {
   return createElement('el-submenu',
     {
+      key: menu.path,
       props: {
         index: menu.path || uniqueId('cs-menu-empty-')
       }

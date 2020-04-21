@@ -53,7 +53,7 @@
 
     <el-form-item>
       <el-popover
-        width="397"
+        width="383"
         placement="bottom"
         trigger="click">
         <div class="more-filter">
@@ -61,7 +61,6 @@
             <el-select
               v-model="form.type"
               placeholder="请选择"
-              style="width: 100%;"
               clearable>
               <el-option
                 v-for="(item, index) in typeMap"
@@ -123,7 +122,6 @@ export default {
   methods: {
     handleFormSubmit(isRestore = false) {
       let form = {}
-      // eslint-disable-next-line no-unused-vars
       for (const index in this.form) {
         if (!this.form.hasOwnProperty(index)) {
           continue
@@ -158,10 +156,6 @@ export default {
   }
 
   .more-filter >>> label {
-    width: 82px;
-  }
-
-  .more-filter >>> .el-form-item__content {
-    margin-left: 82px;
+    width: auto;
   }
 </style>

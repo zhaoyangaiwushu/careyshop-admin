@@ -7,6 +7,7 @@
     </span>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item @click.native="$open('/')" icon="el-icon-link">打开前台</el-dropdown-item>
+      <el-dropdown-item @click.native="resetMenu" icon="el-icon-refresh">重载菜单</el-dropdown-item>
       <el-dropdown-item @click.native="clearHistory" icon="el-icon-time">清空历史</el-dropdown-item>
       <el-dropdown-item v-if="auth.cache" @click.native="clearCache" icon="el-icon-delete">清除缓存</el-dropdown-item>
       <el-dropdown-item v-if="auth.optimize" @click.native="systemOptimize" icon="el-icon-finished">优化系统</el-dropdown-item>
@@ -76,11 +77,13 @@
 </template>
 
 <script>
+import menu from '@/menu'
 import semver from 'semver'
 import { mapState, mapActions } from 'vuex'
 import { clearCacheAll, setSystemOptimize } from '@/api/index'
 import { setAdminPassword } from '@/api/user/admin'
 import { getMessageUserUnread } from '@/api/message/message'
+import { getMenuAuthList } from '@/api/auth/menu'
 
 export default {
   data() {
@@ -347,6 +350,25 @@ export default {
     handleMessage() {
       this.$router.push({ name: 'system-message-user' })
         .catch(() => {
+        })
+    },
+    /**
+     * 重新载入菜单
+     */
+    resetMenu() {
+      getMenuAuthList(null)
+        .then(res => {
+          if (res.data) {
+            this.$store.dispatch('careyshop/db/set', {
+              dbName: 'database',
+              path: '$menu.sourceData',
+              value: res.data,
+              user: true
+            })
+          }
+
+          menu.install(this.$store, res.data)
+          this.$message.success('操作成功')
         })
     }
   },

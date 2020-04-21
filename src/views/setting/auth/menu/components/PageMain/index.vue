@@ -12,6 +12,13 @@
       </el-form-item>
 
       <el-form-item>
+        <el-button
+          icon="el-icon-refresh"
+          :disabled="loading"
+          @click="handleReset">重载菜单</el-button>
+      </el-form-item>
+
+      <el-form-item>
         <el-button-group>
           <el-button
             icon="el-icon-circle-plus-outline"
@@ -281,8 +288,10 @@ import {
   addMenuItem,
   setMenuItem,
   setMenuStatus,
-  setMenuIndex
+  setMenuIndex,
+  getMenuAuthList
 } from '@/api/auth/menu'
+import menu from '@/menu'
 
 export default {
   props: {
@@ -622,6 +631,23 @@ export default {
     // 判断节点是否可移动
     allowDrag() {
       return this.auth.move
+    },
+    // 重新载入菜单
+    handleReset() {
+      getMenuAuthList(null)
+        .then(res => {
+          if (res.data) {
+            this.$store.dispatch('careyshop/db/set', {
+              dbName: 'database',
+              path: '$menu.sourceData',
+              value: res.data,
+              user: true
+            })
+          }
+
+          menu.install(this.$store, res.data)
+          this.$message.success('操作成功')
+        })
     }
   }
 }

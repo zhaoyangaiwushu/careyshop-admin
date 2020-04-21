@@ -54,6 +54,14 @@ export default {
         this.scrollInit()
       }, 500)
     },
+    aside: {
+      handler(val) {
+        if (this.matched) {
+          const _side = val.find(menu => menu.path === this.matched)
+          this.menuAside = _side && _side.children ? _side.children : []
+        }
+      }
+    },
     // 监听路由 改变侧边菜单栏
     '$route': {
       handler({ matched, fullPath }) {

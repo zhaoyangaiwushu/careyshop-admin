@@ -30,8 +30,7 @@
         v-model="form.type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="图片" value="0"/>
         <el-option label="代码" value="1"/>
       </el-select>
@@ -74,8 +73,7 @@
               placeholder="可选择广告位置，试试搜索：广告"
               style="width: 315px;"
               filterable
-              clearable
-              value="">
+              clearable>
               <el-option
                 v-for="(item, index) in positionTable"
                 :key="index"
@@ -88,8 +86,7 @@
             <el-select
               v-model="form.platform"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option
                 v-for="(item, index) in platformTable"
                 :key="index"
@@ -102,8 +99,7 @@
             <el-select
               v-model="form.status"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="启用" value="1"/>
               <el-option label="禁用" value="0"/>
             </el-select>

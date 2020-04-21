@@ -20,8 +20,7 @@
         v-model="form.ask_type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in typeList"
           :key="index"
@@ -35,8 +34,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="待回复" value="0"/>
         <el-option label="已回复" value="1"/>
       </el-select>

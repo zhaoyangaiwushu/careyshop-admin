@@ -122,8 +122,7 @@
               style="width: 105px;"
               slot="prepend"
               placeholder="请选择"
-              @change="getDeliveryCompany"
-              value="">
+              @change="getDeliveryCompany">
               <el-option label="智能识别" :value="0"/>
               <el-option label="手动获取" :value="1"/>
             </el-select>
@@ -153,8 +152,7 @@
             :filter-method="filterDelivery"
             @change="handleChange"
             @visible-change="handleVisibleChange"
-            clearable
-            value="">
+            clearable>
             <el-option
               v-for="item in companyList"
               :key="item.delivery_item_id"

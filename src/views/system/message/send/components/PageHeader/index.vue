@@ -20,8 +20,7 @@
         v-model="form.member"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in groupData"
           :key="index"
@@ -35,8 +34,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="草稿件" value="0"/>
         <el-option label="已发布" value="1"/>
       </el-select>
@@ -66,8 +64,7 @@
             <el-select
               v-model="form.is_top"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="置顶" value="1"/>
               <el-option label="普通" value="0"/>
             </el-select>
@@ -77,8 +74,7 @@
             <el-select
               v-model="form.type"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option
                 v-for="(item, index) in typeData"
                 :key="index"

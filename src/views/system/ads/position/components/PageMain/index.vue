@@ -190,8 +190,7 @@
               <el-select
                 v-model="form.display"
                 placeholder="请选择"
-                style="width: 100%;"
-                value="">
+                style="width: 100%;">
                 <el-option
                   v-for="(item, index) in displayMap"
                   :key="index"
@@ -221,8 +220,7 @@
               <el-select
                 v-model="form.platform"
                 placeholder="请选择"
-                style="width: 100%;"
-                value="">
+                style="width: 100%;">
                 <el-option
                   v-for="(item, index) in platformTable"
                   :key="index"

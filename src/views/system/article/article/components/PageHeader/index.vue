@@ -62,8 +62,7 @@
             <el-select
               v-model="form.is_top"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="置顶" value="1"/>
               <el-option label="普通" value="0"/>
             </el-select>
@@ -73,8 +72,7 @@
             <el-select
               v-model="form.status"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="启用" value="1"/>
               <el-option label="禁用" value="0"/>
             </el-select>

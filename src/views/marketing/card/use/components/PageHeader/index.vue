@@ -21,8 +21,7 @@
         v-model="form.type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="正常卡" value="normal"/>
         <el-option label="无效卡" value="invalid"/>
       </el-select>
@@ -33,8 +32,7 @@
         v-model="form.is_active"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="已激活" value="1"/>
         <el-option label="待激活" value="0"/>
       </el-select>

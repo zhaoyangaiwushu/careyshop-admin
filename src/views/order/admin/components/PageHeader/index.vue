@@ -28,8 +28,7 @@
         v-model="form.payment_code"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in toPayment"
           :key="index"

@@ -9,8 +9,7 @@
       <el-select
         v-model="form.module"
         placeholder="请选择"
-        style="width: 120px;"
-        value="">
+        style="width: 120px;">
         <el-option label="后台" value="admin"/>
         <el-option label="前台" value="home"/>
         <el-option label="API" value="api"/>
@@ -22,8 +21,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="启用" value="1"/>
         <el-option label="禁用" value="0"/>
       </el-select>
@@ -34,8 +32,7 @@
         v-model="form.is_navi"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="可见" value="1"/>
         <el-option label="隐藏" value="0"/>
       </el-select>

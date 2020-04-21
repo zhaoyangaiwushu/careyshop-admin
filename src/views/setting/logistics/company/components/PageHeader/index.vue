@@ -30,8 +30,7 @@
         v-model="form.type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in companyType"
           :key="index"
@@ -45,8 +44,7 @@
         v-model="form.company_all"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="是" value="1"/>
         <el-option label="否" value="0"/>
       </el-select>

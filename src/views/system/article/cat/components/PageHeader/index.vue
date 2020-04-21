@@ -10,8 +10,7 @@
         v-model="form.is_navi"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="可见" value="1"/>
         <el-option label="隐藏" value="0"/>
       </el-select>

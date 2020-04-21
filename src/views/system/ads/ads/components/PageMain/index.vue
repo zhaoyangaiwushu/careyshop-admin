@@ -219,8 +219,7 @@
                 v-model="form.ads_position_id"
                 placeholder="请选择"
                 style="width: 100%;"
-                @change="switchPosition"
-                value="">
+                @change="switchPosition">
                 <el-option
                   v-for="(item, index) in positionTable"
                   :key="index"

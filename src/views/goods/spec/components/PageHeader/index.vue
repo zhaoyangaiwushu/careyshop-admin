@@ -11,8 +11,7 @@
         v-show="typeData.length"
         v-model="form.goods_type_id"
         placeholder="请选择"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in typeData"
           :key="index"

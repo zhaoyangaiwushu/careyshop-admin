@@ -20,8 +20,7 @@
         v-model="form.group_id"
         placeholder="请选择"
         style="width: 140px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="item in group"
           :key="item.group_id"
@@ -35,8 +34,7 @@
         v-model="form.user_level_id"
         placeholder="请选择"
         style="width: 140px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="item in level"
           :key="item.user_level_id"
@@ -50,8 +48,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="启用" value="1"/>
         <el-option label="禁用" value="0"/>
       </el-select>

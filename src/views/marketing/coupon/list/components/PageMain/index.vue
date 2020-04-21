@@ -353,8 +353,7 @@
                 v-model="form.type"
                 placeholder="请选择"
                 :disabled="dialogStatus !== 'create'"
-                clearable
-                value="">
+                clearable>
                 <el-option
                   v-for="(item, index) in typeMap"
                   :key="index"

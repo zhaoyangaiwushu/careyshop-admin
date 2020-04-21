@@ -9,8 +9,7 @@
       <el-select
         v-model="form.type"
         placeholder="请选择"
-        clearable
-        value="">
+        clearable>
         <el-option label="用于财务充值" value="deposit"/>
         <el-option label="用于账号充值" value="inpour"/>
         <el-option label="用于订单支付" value="payment"/>

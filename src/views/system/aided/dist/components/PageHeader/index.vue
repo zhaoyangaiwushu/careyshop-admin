@@ -30,8 +30,7 @@
         v-model="form.state"
         placeholder="请选择"
         style="width: 130px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in traceState"
           :key="index"
@@ -73,8 +72,7 @@
             <el-select
               v-model="form.is_sub"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="是" value="1"/>
               <el-option label="否" value="0"/>
             </el-select>

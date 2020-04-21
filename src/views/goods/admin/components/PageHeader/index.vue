@@ -63,8 +63,7 @@
               placeholder="试试搜索：品牌"
               filterable
               multiple
-              clearable
-              value="">
+              clearable>
               <el-option
                 v-for="(item, index) in brandData"
                 :key="index"
@@ -92,8 +91,7 @@
             <el-select
               v-model="form.is_postage"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="是" value="1"/>
               <el-option label="否" value="0"/>
             </el-select>
@@ -103,8 +101,7 @@
             <el-select
               v-model="form.is_integral"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="可抵扣" value="1"/>
               <el-option label="不抵扣" value="0"/>
             </el-select>
@@ -114,8 +111,7 @@
             <el-select
               v-model="form.is_recommend"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="是" value="1"/>
               <el-option label="否" value="0"/>
             </el-select>
@@ -125,8 +121,7 @@
             <el-select
               v-model="form.is_new"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="是" value="1"/>
               <el-option label="否" value="0"/>
             </el-select>
@@ -136,8 +131,7 @@
             <el-select
               v-model="form.is_hot"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="是" value="1"/>
               <el-option label="否" value="0"/>
             </el-select>

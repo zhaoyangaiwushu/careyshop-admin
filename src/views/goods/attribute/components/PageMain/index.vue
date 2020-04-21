@@ -230,8 +230,7 @@
             v-model="form.goods_type_id"
             placeholder="请选择所属商品模型"
             style="width: 100%;"
-            clearable
-            value="">
+            clearable>
             <el-option
               v-for="(item, index) in typeData"
               :key="index"

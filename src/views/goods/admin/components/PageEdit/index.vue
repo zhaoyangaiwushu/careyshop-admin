@@ -70,8 +70,7 @@
                 placeholder="可选择商品品牌，试试搜索：品牌"
                 style="width: 320px;"
                 filterable
-                clearable
-                value="">
+                clearable>
                 <el-option
                   v-for="item in brandData"
                   :key="item.brand_id"
@@ -290,8 +289,7 @@
                 style="width: 320px;"
                 ref="typeSelect"
                 @change="selectGoodsType"
-                filterable
-                value="">
+                filterable>
                 <el-option
                   v-for="item in typeData"
                   :key="item.goods_type_id"
@@ -509,7 +507,6 @@
                               :placeholder=inputType[value.attr_input_type].value
                               style="width: 100%;"
                               size="small"
-                              value=""
                               filterable
                               allow-create
                               default-first-option

@@ -20,8 +20,7 @@
         v-model="form.to_payment"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in toPayment"
           :key="index"
@@ -35,8 +34,7 @@
         v-model="form.type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="收入" value="0"/>
         <el-option label="支出" value="1"/>
       </el-select>
@@ -104,8 +102,7 @@
             <el-select
               v-model="form.module"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="积分" value="points"/>
               <el-option label="余额" value="money"/>
               <el-option label="购物卡" value="card"/>

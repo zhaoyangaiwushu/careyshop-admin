@@ -20,8 +20,7 @@
         v-model="form.type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in typeList"
           :key="index"
@@ -35,8 +34,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="待回复" value="0"/>
         <el-option label="已回复" value="1"/>
       </el-select>
@@ -75,8 +73,7 @@
             <el-select
               v-model="form.is_show"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="显示" value="1"/>
               <el-option label="隐藏" value="0"/>
             </el-select>
@@ -85,8 +82,7 @@
           <el-form-item label="排序类型" prop="order_field">
             <el-select
               v-model="form.order_field"
-              placeholder="请选择"
-              value="">
+              placeholder="请选择">
               <el-option label="编号" value="goods_consult_id"/>
               <el-option label="类型" value="type"/>
               <el-option label="状态" value="status"/>
@@ -97,8 +93,7 @@
           <el-form-item label="排序方式" prop="order_type">
             <el-select
               v-model="form.order_type"
-              placeholder="请选择"
-              value="">
+              placeholder="请选择">
               <el-option label="升序" value="asc"/>
               <el-option label="降序" value="desc"/>
             </el-select>

@@ -20,8 +20,7 @@
         v-model="form.client_type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in group"
           :key="index"

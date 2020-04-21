@@ -220,8 +220,7 @@
             v-model="form.delivery_item_id"
             placeholder="请选择，只显示热门快递公司列表"
             style="width: 100%;"
-            clearable
-            value="">
+            clearable>
             <el-option
               v-for="item in dialogCompany"
               :key="item.delivery_item_id"

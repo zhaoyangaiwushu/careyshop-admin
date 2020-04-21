@@ -211,8 +211,7 @@
                 v-model="value.type"
                 @change="val => value.value = val !== '2' ? undefined : 0"
                 class="promotion-input"
-                placeholder="请选择"
-                value="">
+                placeholder="请选择">
                 <el-option
                   v-for="(item, index) in typeMap"
                   :key="index"

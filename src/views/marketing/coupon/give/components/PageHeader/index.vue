@@ -20,8 +20,7 @@
         v-model="form.type"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="正常" value="normal"/>
         <el-option label="无效" value="invalid"/>
         <el-option label="已使用" value="used"/>

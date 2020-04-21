@@ -49,8 +49,7 @@
         <el-select
           v-model="form.file_size.value"
           placeholder="请选择"
-          style="width: 180px;"
-          value="">
+          style="width: 180px;">
           <el-option v-for="value of fileSize" :key="value" :value="value"/>
         </el-select>
         <div class="help-block" v-html="form.file_size.help_text"></div>

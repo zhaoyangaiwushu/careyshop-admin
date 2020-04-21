@@ -30,8 +30,7 @@
         v-model="form.platform"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in platformTable"
           :key="index"
@@ -45,8 +44,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="启用" value="1"/>
         <el-option label="禁用" value="0"/>
       </el-select>

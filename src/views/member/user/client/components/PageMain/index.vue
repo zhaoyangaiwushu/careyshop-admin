@@ -409,8 +409,7 @@
           prop="group_id">
           <el-select
             v-model="form.group_id"
-            placeholder="请选择"
-            value="">
+            placeholder="请选择">
             <el-option
               v-for="item in group"
               :key="item.group_id"
@@ -499,8 +498,7 @@
             v-model="financeForm.to_payment"
             placeholder="请选择"
             clearable
-            style="width: 100%;"
-            value="">
+            style="width: 100%;">
             <el-option
               v-for="(item, index) in toPayment"
               :key="index"

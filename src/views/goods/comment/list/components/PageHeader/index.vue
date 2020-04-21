@@ -20,8 +20,7 @@
         v-model="form.score"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="好评" value="0"/>
         <el-option label="中评" value="1"/>
         <el-option label="差评" value="2"/>
@@ -33,8 +32,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="待处理" value="0"/>
         <el-option label="已处理" value="1"/>
       </el-select>
@@ -82,8 +80,7 @@
             <el-select
               v-model="form.is_append"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="主评" value="0"/>
               <el-option label="追评" value="1"/>
             </el-select>
@@ -93,8 +90,7 @@
             <el-select
               v-model="form.is_show"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="显示" value="1"/>
               <el-option label="隐藏" value="0"/>
             </el-select>
@@ -104,8 +100,7 @@
             <el-select
               v-model="form.is_top"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="置顶" value="1"/>
               <el-option label="普通" value="0"/>
             </el-select>
@@ -115,8 +110,7 @@
             <el-select
               v-model="form.is_image"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="是" value="1"/>
               <el-option label="否" value="0"/>
             </el-select>
@@ -125,8 +119,7 @@
           <el-form-item label="排序类型" prop="order_field">
             <el-select
               v-model="form.order_field"
-              placeholder="请选择"
-              value="">
+              placeholder="请选择">
               <el-option label="编号" value="goods_comment_id"/>
               <el-option label="评分" value="score"/>
               <el-option label="状态" value="status"/>
@@ -137,8 +130,7 @@
           <el-form-item label="排序方式" prop="order_type">
             <el-select
               v-model="form.order_type"
-              placeholder="请选择"
-              value="">
+              placeholder="请选择">
               <el-option label="升序" value="asc"/>
               <el-option label="降序" value="desc"/>
             </el-select>

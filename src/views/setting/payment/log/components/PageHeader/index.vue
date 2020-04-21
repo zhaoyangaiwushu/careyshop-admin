@@ -20,8 +20,7 @@
         v-model="form.to_payment"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option
           v-for="(item, index) in toPayment"
           :key="index"
@@ -35,8 +34,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="待付款" value="0"/>
         <el-option label="已完成" value="1"/>
         <el-option label="已关闭" value="2"/>
@@ -105,8 +103,7 @@
             <el-select
               v-model="form.type"
               placeholder="请选择"
-              clearable
-              value="">
+              clearable>
               <el-option label="充值" value="0"/>
               <el-option label="订单" value="1"/>
             </el-select>

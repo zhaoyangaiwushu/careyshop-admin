@@ -184,8 +184,7 @@
               <el-select
                 v-model="form.platform"
                 placeholder="请选择"
-                style="width: 100%;"
-                value="">
+                style="width: 100%;">
                 <el-option
                   v-for="(item, index) in platformTable"
                   :key="index"
@@ -213,8 +212,7 @@
                 <el-select
                   v-model="form.resize"
                   placeholder="请选择"
-                  style="width: 100%;"
-                  value="">
+                  style="width: 100%;">
                   <el-option
                     v-for="(item, index) in resizeMap"
                     :key="index"
@@ -444,8 +442,7 @@
                 <el-select
                   v-model="form.suffix"
                   placeholder="请选择"
-                  style="width: 100%;"
-                  value="">
+                  style="width: 100%;">
                   <el-option label="原图格式" value=""/>
                   <el-option
                     v-for="(item, index) in suffixMap"
@@ -526,8 +523,7 @@
                   <el-select
                     v-model="uploadModule"
                     placeholder="请选择"
-                    @change="setModule"
-                    value="">
+                    @change="setModule">
                     <el-option
                       v-for="(item, index) in uploadTable"
                       :key="index"

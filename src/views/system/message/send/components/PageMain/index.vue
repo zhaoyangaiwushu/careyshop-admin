@@ -181,8 +181,7 @@
               <el-select
                 v-model="form.type"
                 placeholder="请选择"
-                style="width: 100%;"
-                value="">
+                style="width: 100%;">
                 <el-option
                   v-for="(item, index) in typeData"
                   :key="index"
@@ -200,8 +199,7 @@
                 v-model="form.member"
                 :disabled="dialogStatus === 'update'"
                 placeholder="请选择"
-                style="width: 100%;"
-                value="">
+                style="width: 100%;">
                 <el-option
                   v-for="(item, index) in groupData"
                   :key="index"

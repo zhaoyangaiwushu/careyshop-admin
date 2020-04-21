@@ -138,8 +138,7 @@
             v-model="form.type"
             placeholder="请选择"
             style="width: 200px;"
-            clearable
-            value="">
+            clearable>
             <el-option
               v-for="(item, index) in companyType"
               :key="index"

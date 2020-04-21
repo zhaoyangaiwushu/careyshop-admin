@@ -30,8 +30,7 @@
         v-model="form.status"
         placeholder="请选择"
         style="width: 120px;"
-        clearable
-        value="">
+        clearable>
         <el-option label="待处理" value="0"/>
         <el-option label="处理中" value="1"/>
         <el-option label="已取消" value="2"/>

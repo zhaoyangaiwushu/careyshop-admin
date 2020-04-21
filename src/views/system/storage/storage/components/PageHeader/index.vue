@@ -38,8 +38,7 @@
           <el-form-item label="排序类型" prop="order_field">
             <el-select
               v-model="form.order_field"
-              placeholder="请选择"
-              value="">
+              placeholder="请选择">
               <el-option label="编号" value="storage_id"/>
               <el-option label="名称" value="name"/>
               <el-option label="类型" value="type"/>
@@ -51,8 +50,7 @@
           <el-form-item label="排序方式" prop="order_type">
             <el-select
               v-model="form.order_type"
-              placeholder="请选择"
-              value="">
+              placeholder="请选择">
               <el-option label="升序" value="asc"/>
               <el-option label="降序" value="desc"/>
             </el-select>

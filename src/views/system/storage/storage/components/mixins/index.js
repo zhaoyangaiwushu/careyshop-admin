@@ -58,7 +58,6 @@ export default {
     // 获取当前页所有资源编号
     _getStorageIdList() {
       let checkList = []
-      // eslint-disable-next-line no-unused-vars
       for (const value of this.currentTableData) {
         if (!this.isCheckDirectory) {
           if (value.type === 2) {

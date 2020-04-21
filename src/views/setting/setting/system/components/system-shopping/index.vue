@@ -155,7 +155,6 @@ export default {
       this.form = val
       this.source = []
 
-      // eslint-disable-next-line no-unused-vars
       for (const key in this.form.source.value) {
         if (this.form.source.value.hasOwnProperty(key)) {
           this.source.push({
@@ -168,7 +167,6 @@ export default {
     // 确定修改
     handleFormSubmit() {
       let data = {}
-      // eslint-disable-next-line no-unused-vars
       for (const index in this.form) {
         if (this.form.hasOwnProperty(index)) {
           data[index] = this.form[index].value
@@ -176,7 +174,6 @@ export default {
       }
 
       let source = {}
-      // eslint-disable-next-line no-unused-vars
       for (const item of this.source) {
         source[item.key] = item.value
       }

@@ -399,7 +399,6 @@ export default {
         })
       }
 
-      // eslint-disable-next-line no-unused-vars
       for (const value of files) {
         if (value.status !== 'success') {
           continue
@@ -746,7 +745,6 @@ export default {
       let cover
       const storage = this.currentTableData[this.videoCover]
 
-      // eslint-disable-next-line no-unused-vars
       for (const value of files) {
         if (value.type === 0) {
           cover = value

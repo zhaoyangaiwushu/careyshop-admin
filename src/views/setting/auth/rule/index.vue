@@ -70,7 +70,6 @@ export default {
           this.tree = []
           let mapModule = []
 
-          // eslint-disable-next-line no-unused-vars
           for (const index in this.module) {
             if (!this.module.hasOwnProperty(index)) {
               continue

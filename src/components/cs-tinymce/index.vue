@@ -184,7 +184,6 @@ export default {
     },
     _getUploadFileList(files) {
       let insert = ''
-      // eslint-disable-next-line no-unused-vars
       for (const value of files) {
         if (value.status !== 'success') {
           continue
@@ -218,7 +217,6 @@ export default {
     },
     _getStorageFileList(files) {
       let insert = ''
-      // eslint-disable-next-line no-unused-vars
       for (const value of files) {
         switch (value.type) {
           case 0:

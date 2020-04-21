@@ -1010,7 +1010,6 @@ export default {
             mobile: {}
           }
 
-          // eslint-disable-next-line no-unused-vars
           for (const key in this.scale) {
             if (!this.scale.hasOwnProperty(key)) {
               continue
@@ -1116,14 +1115,12 @@ export default {
       const data = this.currentTableData[index]
 
       let scale = {}
-      // eslint-disable-next-line no-unused-vars
       for (const key in data.scale) {
         if (!data.scale.hasOwnProperty(key)) {
           continue
         }
 
         scale[key] = {}
-        // eslint-disable-next-line no-unused-vars
         for (const item in data.scale[key]) {
           if (!data.scale[key].hasOwnProperty(item)) {
             continue

@@ -128,15 +128,17 @@ export function getOrderGoodsItem(order_goods_id) {
 
 /**
  * 获取订单各个状态合计数
+ * @param {Object} data
  * @returns
  */
-export function getOrderStatusTotal() {
+export function getOrderStatusTotal(data) {
   return request({
     url: '/v1/order',
     method: 'post',
     params: {
       method: 'get.order.status.total'
-    }
+    },
+    data
   })
 }
 

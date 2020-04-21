@@ -21,7 +21,7 @@
     "dayjs": "^1.8.25",
     "element-ui": "^2.13.1",
     "flex.css": "^1.1.7",
-    "fuse.js": "^5.2.1",
+    "fuse.js": "^5.2.3",
     "highlight.js": "^9.18.1",
     "hotkeys-js": "^3.7.6",
     "js-cookie": "^2.2.1",

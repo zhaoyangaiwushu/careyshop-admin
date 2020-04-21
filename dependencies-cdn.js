@@ -41,13 +41,13 @@ module.exports = [
   {
     name: 'dayjs',
     library: 'dayjs',
-    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.24/dayjs.min.js',
+    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.25/dayjs.min.js',
     css: ''
   },
   {
     name: 'fuse.js',
     library: 'Fuse',
-    js: '//cdn.jsdelivr.net/npm/fuse.js@5.2.1/dist/fuse.min.js',
+    js: '//cdn.jsdelivr.net/npm/fuse.js@5.2.3/dist/fuse.min.js',
     css: ''
   },
   {

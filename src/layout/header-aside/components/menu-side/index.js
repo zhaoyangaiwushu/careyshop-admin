@@ -13,7 +13,7 @@ export default {
       attrs: { class: 'cs-layout-header-aside-menu-side' }
     }, [
       h('el-menu', {
-        props: { collapse: this.asideCollapse, uniqueOpened: true, defaultActive: this.$route.fullPath },
+        props: { collapse: this.asideCollapse, collapseTransition: this.asideTransition, uniqueOpened: true, defaultActive: this.$route.fullPath },
         ref: 'menu',
         on: { select: this.handleMenuSelect }
       }, this.menuAside.map(menu => (menu.children === undefined ? elMenuItem : elSubmenu).call(this, h, menu))),
@@ -42,6 +42,7 @@ export default {
     ...mapState('careyshop/menu', [
       'aside',
       'asideCollapse',
+      'asideTransition',
       'asideIndex',
       'history'
     ])
@@ -98,7 +99,7 @@ export default {
           })
 
           this.$nextTick(() => {
-            if (this.$refs.menu) {
+            if (!this.asideCollapse && this.$refs.menu) {
               this.$refs.menu.open('/index/history')
             }
           })

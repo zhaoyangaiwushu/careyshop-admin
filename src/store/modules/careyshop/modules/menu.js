@@ -12,6 +12,8 @@ export default {
     history: [],
     // 侧边栏收缩
     asideCollapse: setting.menu.asideCollapse,
+    // 侧边栏折叠动画
+    asideTransition: setting.menu.asideTransition,
     // 侧边栏首页路径
     asideIndex: setting.page.opened[0]['fullPath'],
     // 侧边栏限制历史菜单
@@ -20,6 +22,29 @@ export default {
     sourceData: []
   },
   actions: {
+    /**
+     * @description 持久化数据加载侧边栏设置
+     * @param context
+     * @param dispatch
+     * @returns {Promise<any>}
+     */
+    asideLoad({ state, dispatch }) {
+      return new Promise(async resolve => {
+        // store 赋值
+        const menu = await dispatch('careyshop/db/get', {
+          dbName: 'sys',
+          path: 'menu',
+          defaultValue: setting.menu,
+          user: true
+        }, { root: true })
+
+        state.asideCollapse = menu.asideCollapse
+        state.asideTransition = menu.asideTransition
+
+        // end
+        resolve()
+      })
+    },
     /**
      * @description 设置侧边栏展开或者收缩
      * @param context
@@ -64,18 +89,42 @@ export default {
       })
     },
     /**
-     * @description 从持久化数据读取侧边栏展开或者收缩
+     * @description 设置侧边栏折叠动画
+     * @param context
+     * @param dispatch
+     * @param transition is transition
+     * @returns {Promise<any>}
+     */
+    asideTransitionSet({ state, dispatch }, transition) {
+      return new Promise(async resolve => {
+        // store 赋值
+        state.asideTransition = transition
+        // 持久化
+        await dispatch('careyshop/db/set', {
+          dbName: 'sys',
+          path: 'menu.asideTransition',
+          value: state.asideTransition,
+          user: true
+        }, { root: true })
+        // end
+        resolve()
+      })
+    },
+    /**
+     * @description 切换侧边栏折叠动画
      * @param context
      * @param dispatch
      * @returns {Promise<any>}
      */
-    asideCollapseLoad({ state, dispatch }) {
+    asideTransitionToggle({ state, dispatch }) {
       return new Promise(async resolve => {
         // store 赋值
-        state.asideCollapse = await dispatch('careyshop/db/get', {
+        state.asideTransition = !state.asideTransition
+        // 持久化
+        await dispatch('careyshop/db/set', {
           dbName: 'sys',
-          path: 'menu.asideCollapse',
-          defaultValue: setting.menu.asideCollapse,
+          path: 'menu.asideTransition',
+          value: state.asideTransition,
           user: true
         }, { root: true })
         // end

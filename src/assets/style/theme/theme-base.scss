@@ -88,13 +88,16 @@
 
     .cs-theme-container {
       .cs-theme-container-aside {
-        transition: width .3s;
         position: relative;
 
         .cs-layout-header-aside-menu-side {
           @extend %full;
           overflow: hidden;
         }
+      }
+
+      .cs-theme-container-transition {
+        transition: width .3s;
       }
 
       .cs-theme-container-main {
@@ -135,13 +138,16 @@
     .cs-theme-header {
       // logo区域
       .logo-group {
-        transition: width .3s;
         float: left;
         text-align: center;
 
         img {
           height: 60px;
         }
+      }
+
+      .logo-transition {
+        transition: width .3s;
       }
 
       // 折叠侧边栏切换按钮

@@ -7,10 +7,16 @@ export default {
       close: 'esc'
     }
   },
+  // 是否默认开启页面切换动画
+  transition: {
+    active: false
+  },
   // 侧边栏配置
   menu: {
     // 侧边栏默认折叠状态
     asideCollapse: false,
+    // 侧边栏折叠动画
+    asideTransition: false,
     // 访问历史收藏数
     historyCount: 15
   },
@@ -66,9 +72,5 @@ export default {
     ],
     // 默认主题
     default: 'town'
-  },
-  // 是否默认开启页面切换动画
-  transition: {
-    active: false
   }
 }

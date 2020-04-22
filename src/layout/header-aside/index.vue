@@ -17,13 +17,16 @@
       </div>
       <!-- 顶栏 -->
       <div class="cs-theme-header" :style="{'opacity': this.searchActive ? 0.5 : 1}" flex-box="0" flex>
-        <div class="logo-group" :style="{'width': asideCollapse ? asideWidthCollapse : asideWidth}" flex-box="0">
+        <div
+          :class="{'logo-group': true, 'logo-transition': asideTransition}"
+          :style="{'width': asideCollapse ? asideWidthCollapse : asideWidth}"
+          flex-box="0">
           <a target="blank" href="//www.careyshop.cn/">
             <img v-if="asideCollapse" :src="`${$publicPath}image/theme/${themeActiveSetting.name}/logo/icon-only.png`" alt="">
             <img v-else :src="`${$publicPath}image/theme/${themeActiveSetting.name}/logo/all.png`" alt="">
           </a>
         </div>
-        <div class="toggle-aside-btn" @click="handleToggleAside" flex-box="0">
+        <div class="toggle-aside-btn" @click="asideCollapseToggle()" flex-box="0">
           <i :class="`el-icon-s-${asideCollapse ? 'unfold' : 'fold'}`"/>
         </div>
         <cs-menu-header flex-box="1"/>
@@ -44,7 +47,7 @@
         <div
           flex-box="0"
           ref="aside"
-          class="cs-theme-container-aside"
+          :class="{'cs-theme-container-aside': true, 'cs-theme-container-transition': asideTransition}"
           :style="{
             'width': asideCollapse ? asideWidthCollapse : asideWidth,
             'opacity': this.searchActive ? 0.5 : 1
@@ -127,6 +130,7 @@ export default {
       grayActive: state => state.gray.active,
       transitionActive: state => state.transition.active,
       asideCollapse: state => state.menu.asideCollapse,
+      asideTransition: state => state.menu.asideTransition,
       uaData: state => state.ua.data
     }),
     ...mapGetters('careyshop', {
@@ -150,13 +154,7 @@ export default {
   methods: {
     ...mapActions('careyshop/menu', [
       'asideCollapseToggle'
-    ]),
-    /**
-     * 接收点击切换侧边栏的按钮
-     */
-    handleToggleAside() {
-      this.asideCollapseToggle()
-    }
+    ])
   }
 }
 </script>

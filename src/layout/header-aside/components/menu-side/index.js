@@ -8,23 +8,23 @@ export default {
   mixins: [
     menuMixin
   ],
-  render(createElement) {
-    return createElement('div', {
+  render(h) {
+    return h('div', {
       attrs: { class: 'cs-layout-header-aside-menu-side' }
     }, [
-      createElement('el-menu', {
+      h('el-menu', {
         props: { collapse: this.asideCollapse, uniqueOpened: true, defaultActive: this.$route.fullPath },
         ref: 'menu',
         on: { select: this.handleMenuSelect }
-      }, this.menuAside.map(menu => (menu.children === undefined ? elMenuItem : elSubmenu).call(this, createElement, menu))),
+      }, this.menuAside.map(menu => (menu.children === undefined ? elMenuItem : elSubmenu).call(this, h, menu))),
       ...this.menuAside.length === 0 && !this.asideCollapse ? [
-        createElement('div', {
+        h('div', {
           attrs: { class: 'cs-layout-header-aside-menu-empty', flex: 'dir:top main:center cross:center' }
         }, [
-          createElement('i', {
+          h('i', {
             attrs: { class: 'el-icon-s-grid' }
           }),
-          createElement('span', {
+          h('span', {
           }, '暂无侧栏菜单')
         ])
       ] : []

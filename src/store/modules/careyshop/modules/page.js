@@ -251,11 +251,7 @@ export default {
           let len = state.opened.length
           for (let i = 0; i < len; i++) {
             if (state.opened[i].fullPath === tagName) {
-              if (i < len - 1) {
-                newPage = state.opened[i + 1]
-              } else {
-                newPage = state.opened[i - 1]
-              }
+              newPage = i < len - 1 ? state.opened[i + 1] : state.opened[i - 1]
               break
             }
           }

@@ -11,7 +11,7 @@ export default {
     // 可以在多页 tab 模式下显示的页面
     pool: [],
     // 当前显示的多页面列表
-    opened: setting.page.opened,
+    opened: get(setting, 'page.opened', []),
     // 已经加载多标签页数据
     openedLoaded: false,
     // 当前页面

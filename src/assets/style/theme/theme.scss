@@ -7,7 +7,7 @@
       border-color: $theme-message-info-border-color;
     }
   }
-  
+
   .el-card {
     &.cs-card {
       border: $theme-container-border-outer;
@@ -340,10 +340,6 @@
 
                 &:hover {
                   padding: 0 20px;
-                }
-
-                .el-icon-close {
-                  display: none;
                 }
               }
             }

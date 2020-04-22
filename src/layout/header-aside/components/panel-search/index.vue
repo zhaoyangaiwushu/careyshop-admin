@@ -6,6 +6,7 @@
         class="panel-search__input"
         ref="input"
         v-model="searchText"
+        value-key="fullTitle"
         suffix-icon="el-icon-search"
         placeholder="搜索页面"
         :fetch-suggestions="querySearch"
@@ -24,7 +25,7 @@
       </div>
     </div>
     <div v-if="resultsList.length > 0" class="panel-search__results-group" flex-box="1">
-      <el-card style="border-radius: 0;">
+      <el-card shadow="never" style="border-radius: 0;">
         <div class="panel-search__results-group-inner">
           <cs-panel-search-item
             v-for="(item, index) in resultsList"
@@ -40,8 +41,8 @@
 
 <script>
 import Fuse from 'fuse.js'
-import { mapState, mapGetters } from 'vuex'
 import menuMixin from '../mixin/menu'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   mixins: [
@@ -107,11 +108,11 @@ export default {
      * @description 聚焦输入框
      */
     focus() {
-      this.input = ''
       setTimeout(() => {
         if (this.$refs.input) {
           this.$refs.input.focus()
         }
+
         // 还原
         this.searchText = ''
         this.results = []

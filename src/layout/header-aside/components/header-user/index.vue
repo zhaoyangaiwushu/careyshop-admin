@@ -256,12 +256,9 @@ export default {
       this.historyClear()
         .then(() => {
           if (this.$route.path === '/index') {
-            setTimeout(() => {
-              location.reload()
-            }, 500)
+            this.$router.replace('/refresh')
+            this.$message.success('左侧访问历史栏已清空')
           }
-
-          this.$message.success('左侧访问历史栏已清空')
         })
     },
     /**
@@ -365,10 +362,12 @@ export default {
               value: res.data,
               user: true
             })
+
+            menu.install(this.$store, res.data)
           }
 
-          menu.install(this.$store, res.data)
-          this.$message.success('操作成功')
+          this.$router.replace('/refresh')
+          this.$message.success('菜单已重新载入')
         })
     }
   },

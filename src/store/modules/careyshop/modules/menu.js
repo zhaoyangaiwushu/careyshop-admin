@@ -26,212 +26,170 @@ export default {
      * @description 持久化数据加载侧边栏设置
      * @param context
      * @param dispatch
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    asideLoad({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // store 赋值
-        const menu = await dispatch('careyshop/db/get', {
-          dbName: 'sys',
-          path: 'menu',
-          defaultValue: setting.menu,
-          user: true
-        }, { root: true })
+    async asideLoad({ state, dispatch }) {
+      // store 赋值
+      const menu = await dispatch('careyshop/db/get', {
+        dbName: 'sys',
+        path: 'menu',
+        defaultValue: setting.menu,
+        user: true
+      }, { root: true })
 
-        state.asideCollapse = menu.asideCollapse
-        state.asideTransition = menu.asideTransition
-
-        // end
-        resolve()
-      })
+      state.asideCollapse = menu.asideCollapse
+      state.asideTransition = menu.asideTransition
     },
     /**
      * @description 设置侧边栏展开或者收缩
      * @param context
      * @param dispatch
      * @param collapse is collapse
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    asideCollapseSet({ state, dispatch }, collapse) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.asideCollapse = collapse
-        // 持久化
-        await dispatch('careyshop/db/set', {
-          dbName: 'sys',
-          path: 'menu.asideCollapse',
-          value: state.asideCollapse,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async asideCollapseSet({ state, dispatch }, collapse) {
+      // store 赋值
+      state.asideCollapse = collapse
+      // 持久化
+      await dispatch('careyshop/db/set', {
+        dbName: 'sys',
+        path: 'menu.asideCollapse',
+        value: state.asideCollapse,
+        user: true
+      }, { root: true })
     },
     /**
      * @description 切换侧边栏展开和收缩
      * @param context
      * @param dispatch
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    asideCollapseToggle({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.asideCollapse = !state.asideCollapse
-        // 持久化
-        await dispatch('careyshop/db/set', {
-          dbName: 'sys',
-          path: 'menu.asideCollapse',
-          value: state.asideCollapse,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async asideCollapseToggle({ state, dispatch }) {
+      // store 赋值
+      state.asideCollapse = !state.asideCollapse
+      // 持久化
+      await dispatch('careyshop/db/set', {
+        dbName: 'sys',
+        path: 'menu.asideCollapse',
+        value: state.asideCollapse,
+        user: true
+      }, { root: true })
     },
     /**
      * @description 设置侧边栏折叠动画
      * @param context
      * @param dispatch
      * @param transition is transition
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    asideTransitionSet({ state, dispatch }, transition) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.asideTransition = transition
-        // 持久化
-        await dispatch('careyshop/db/set', {
-          dbName: 'sys',
-          path: 'menu.asideTransition',
-          value: state.asideTransition,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async asideTransitionSet({ state, dispatch }, transition) {
+      // store 赋值
+      state.asideTransition = transition
+      // 持久化
+      await dispatch('careyshop/db/set', {
+        dbName: 'sys',
+        path: 'menu.asideTransition',
+        value: state.asideTransition,
+        user: true
+      }, { root: true })
     },
     /**
      * @description 切换侧边栏折叠动画
      * @param context
      * @param dispatch
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    asideTransitionToggle({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.asideTransition = !state.asideTransition
-        // 持久化
-        await dispatch('careyshop/db/set', {
-          dbName: 'sys',
-          path: 'menu.asideTransition',
-          value: state.asideTransition,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async asideTransitionToggle({ state, dispatch }) {
+      // store 赋值
+      state.asideTransition = !state.asideTransition
+      // 持久化
+      await dispatch('careyshop/db/set', {
+        dbName: 'sys',
+        path: 'menu.asideTransition',
+        value: state.asideTransition,
+        user: true
+      }, { root: true })
     },
     /**
      * @description 从持久化数据读取菜单源数据
      * @param state state
      * @param dispatch
-     * @returns {Promise<*>}
+     * @returns {Promise<void>}
      */
     async sourceDataLoad({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // 菜单数据源持久化
-        state.sourceData = await dispatch('careyshop/db/get', {
-          dbName: 'database',
-          path: '$menu.sourceData',
-          defaultValue: [],
-          user: true
-        }, { root: true })
-        // 处理顶栏菜单、侧边菜单、功能搜索
-        menu.install(this, state.sourceData)
-        // end
-        resolve()
-      })
+      // 菜单数据源持久化
+      state.sourceData = await dispatch('careyshop/db/get', {
+        dbName: 'database',
+        path: '$menu.sourceData',
+        defaultValue: [],
+        user: true
+      }, { root: true })
+
+      // 处理顶栏菜单、侧边菜单、功能搜索
+      menu.install(this, state.sourceData)
     },
     /**
      * @description 从持久化数据读取历史菜单数据
      * @param state state
      * @param dispatch
-     * @returns {Promise<*>}
+     * @returns {Promise<void>}
      */
     async historyLoad({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // 获取历史菜单持久化
-        state.history = await dispatch('careyshop/db/get', {
-          dbName: 'database',
-          path: '$menu.history',
-          defaultValue: [],
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+      // 获取历史菜单持久化
+      state.history = await dispatch('careyshop/db/get', {
+        dbName: 'database',
+        path: '$menu.history',
+        defaultValue: [],
+        user: true
+      }, { root: true })
     },
     /**
      * 将 history 属性赋值并持久化 在这之前请先确保已经更新了 state.history
      * @param context
      * @param dispatch
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    historyDataWrite({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // 历史菜单持久化
-        dispatch('careyshop/db/set', {
-          dbName: 'database',
-          path: '$menu.history',
-          value: state.history,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async historyDataWrite({ state, dispatch }) {
+      // 历史菜单持久化
+      dispatch('careyshop/db/set', {
+        dbName: 'database',
+        path: '$menu.history',
+        value: state.history,
+        user: true
+      }, { root: true })
     },
     /**
      * 设置历史菜单数据
      * @param state
-     * @param commit
      * @param dispatch
      * @param history
-     * @returns {Promise<unknown>}
+     * @returns {Promise<void>}
      */
-    historyDataSet({ state, commit, dispatch }, history) {
-      return new Promise(async resolve => {
-        if (history) {
-          let index = state.history.findIndex(menu => menu.path === history.path)
-          if (index !== -1) {
-            state.history.splice(index, 1)
-          }
-
-          state.history.unshift(history)
-
-          if (state.history.length > state.historyCount) {
-            state.history = state.history.slice(0, state.historyCount)
-          }
-          // 持久化
-          await dispatch('historyDataWrite')
+    async historyDataSet({ state, dispatch }, history) {
+      if (history) {
+        let index = state.history.findIndex(menu => menu.path === history.path)
+        if (index !== -1) {
+          state.history.splice(index, 1)
         }
 
-        // end
-        resolve()
-      })
+        state.history.unshift(history)
+        if (state.history.length > state.historyCount) {
+          state.history = state.history.slice(0, state.historyCount)
+        }
+      }
+
+      // 持久化
+      await dispatch('historyDataWrite')
     },
     /**
      * 清空访问历史
      * @param state
      * @param dispatch
-     * @returns {Promise<unknown>}
+     * @returns {Promise<void>}
      */
-    historyClear({ state, dispatch }) {
-      return new Promise(async resolve => {
-        state.history = []
-        await dispatch('historyDataWrite')
-        // end
-        resolve()
-      })
+    async historyClear({ state, dispatch }) {
+      state.history = []
+      await dispatch('historyDataWrite')
     }
   },
   mutations: {

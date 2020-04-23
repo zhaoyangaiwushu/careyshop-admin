@@ -61,9 +61,8 @@ export default {
             util.cookies.remove('token')
             util.cookies.remove('uuid')
 
-            // 跳转路由并重新载入vue
-            // vm.$router.push({ name: 'index' }).catch(() => {})
-            location.reload()
+            // 刷新页面
+            vm.$router.replace('/refresh')
           })
           .catch(() => {
           })
@@ -81,13 +80,6 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          vm.$loading({
-            lock: true,
-            text: 'Loading',
-            spinner: 'el-icon-loading',
-            background: 'rgba(0, 0, 0, 0.7)'
-          })
-
           logout()
         })
         .catch(() => {
@@ -97,27 +89,23 @@ export default {
      * @description 用户登录后从持久化数据加载一系列的设置
      * @param {Object} context
      */
-    load({ dispatch }) {
-      return new Promise(async resolve => {
-        // DB -> store 加载用户数据
-        await dispatch('careyshop/user/load', null, { root: true })
-        // DB -> store 加载主题
-        await dispatch('careyshop/theme/load', null, { root: true })
-        // DB -> store 加载页面过渡效果设置
-        await dispatch('careyshop/transition/load', null, { root: true })
-        // DB -> store 持久化数据加载上次退出时的多页列表
-        await dispatch('careyshop/page/openedLoad', null, { root: true })
-        // DB -> store 持久化数据加载侧边栏设置
-        await dispatch('careyshop/menu/asideLoad', null, { root: true })
-        // DB -> store 持久化数据加载全局尺寸
-        await dispatch('careyshop/size/load', null, { root: true })
-        // DB -> store 持久化数据读取菜单源数据
-        await dispatch('careyshop/menu/sourceDataLoad', null, { root: true })
-        // DB -> store 持久化数据读取历史菜单数据
-        await dispatch('careyshop/menu/historyLoad', null, { root: true })
-        // end
-        resolve()
-      })
+    async load({ dispatch }) {
+      // DB -> store 加载用户数据
+      await dispatch('careyshop/user/load', null, { root: true })
+      // DB -> store 加载主题
+      await dispatch('careyshop/theme/load', null, { root: true })
+      // DB -> store 加载页面过渡效果设置
+      await dispatch('careyshop/transition/load', null, { root: true })
+      // DB -> store 持久化数据加载上次退出时的多页列表
+      await dispatch('careyshop/page/openedLoad', null, { root: true })
+      // DB -> store 持久化数据加载侧边栏设置
+      await dispatch('careyshop/menu/asideLoad', null, { root: true })
+      // DB -> store 持久化数据加载全局尺寸
+      await dispatch('careyshop/size/load', null, { root: true })
+      // DB -> store 持久化数据读取菜单源数据
+      await dispatch('careyshop/menu/sourceDataLoad', null, { root: true })
+      // DB -> store 持久化数据读取历史菜单数据
+      await dispatch('careyshop/menu/historyLoad', null, { root: true })
     }
   }
 }

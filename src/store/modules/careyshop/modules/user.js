@@ -12,41 +12,33 @@ export default {
      * @param context
      * @param dispatch
      * @param info
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    set({ state, dispatch }, info) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.info = info
-        // 持久化
-        await dispatch('careyshop/db/set', {
-          dbName: 'sys',
-          path: 'user.info',
-          value: info,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async set({ state, dispatch }, info) {
+      // store 赋值
+      state.info = info
+      // 持久化
+      await dispatch('careyshop/db/set', {
+        dbName: 'sys',
+        path: 'user.info',
+        value: info,
+        user: true
+      }, { root: true })
     },
     /**
      * @description 从数据库取用户数据
      * @param context
      * @param dispatch
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    load({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.info = await dispatch('careyshop/db/get', {
-          dbName: 'sys',
-          path: 'user.info',
-          defaultValue: {},
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async load({ state, dispatch }) {
+      // store 赋值
+      state.info = await dispatch('careyshop/db/get', {
+        dbName: 'sys',
+        path: 'user.info',
+        defaultValue: {},
+        user: true
+      }, { root: true })
     }
   },
   mutations: {

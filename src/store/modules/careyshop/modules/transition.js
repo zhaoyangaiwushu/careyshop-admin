@@ -12,41 +12,33 @@ export default {
      * @param context
      * @param dispatch
      * @param active  新的状态
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    set({ state, dispatch }, active) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.active = active
-        // 持久化
-        await dispatch('careyshop/db/set', {
-          dbName: 'sys',
-          path: 'transition.active',
-          value: state.active,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async set({ state, dispatch }, active) {
+      // store 赋值
+      state.active = active
+      // 持久化
+      await dispatch('careyshop/db/set', {
+        dbName: 'sys',
+        path: 'transition.active',
+        value: state.active,
+        user: true
+      }, { root: true })
     },
     /**
      * @description 从数据库读取页面过渡动画设置
      * @param context
      * @param dispatch
-     * @returns {Promise<any>}
+     * @returns {Promise<void>}
      */
-    load({ state, dispatch }) {
-      return new Promise(async resolve => {
-        // store 赋值
-        state.active = await dispatch('careyshop/db/get', {
-          dbName: 'sys',
-          path: 'transition.active',
-          defaultValue: setting.transition.active,
-          user: true
-        }, { root: true })
-        // end
-        resolve()
-      })
+    async load({ state, dispatch }) {
+      // store 赋值
+      state.active = await dispatch('careyshop/db/get', {
+        dbName: 'sys',
+        path: 'transition.active',
+        defaultValue: setting.transition.active,
+        user: true
+      }, { root: true })
     }
   }
 }

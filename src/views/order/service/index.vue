@@ -25,6 +25,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'order-service-list',
   components: {
@@ -36,6 +37,8 @@ export default {
     return {
       loading: false,
       table: [],
+      myService: 0,
+      total: {},
       typeMap: {
         '0': '仅退款',
         '1': '退货退款',
@@ -77,6 +80,20 @@ export default {
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit()
       })
+    },
+    // 标签页切换
+    handleTabs(val) {
+      this.myService = val
+      this.$nextTick(() => {
+        this.$refs.header.handleFormSubmit(true)
+      })
+    },
+    // 统计标签数量
+    handleTotal(form) {
+      // getOrderStatusTotal({ ...form })
+      //   .then(res => {
+      //     this.total = res.data || {}
+      //   })
     },
     // 提交查询请求
     handleSubmit(form, isRestore = false) {

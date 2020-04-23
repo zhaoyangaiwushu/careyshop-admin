@@ -1,34 +1,54 @@
 import request from '@/plugin/axios/request'
 
 /**
- * 查询一笔退款信息
- * @param {String} refund_no
+ * 添加一条售后服务单留言
+ * @param {String} service_no
+ * @param {String} message
  * @returns
  */
-export function queryRefundItem(refund_no) {
+export function addOrderServiceMessage(service_no, message) {
   return request({
-    url: '/v1/order_refund',
+    url: '/v1/order_service',
     method: 'post',
     params: {
-      method: 'query.refund.item'
+      method: 'add.order.service.message'
     },
     data: {
-      refund_no
+      service_no,
+      message
     }
   })
 }
 
 /**
- * 获取退款记录列表
+ * 获取一个售后服务单
+ * @param {String} service_no
+ * @returns
+ */
+export function getOrderServiceItem(service_no) {
+  return request({
+    url: '/v1/order_service',
+    method: 'post',
+    params: {
+      method: 'get.order.service.item'
+    },
+    data: {
+      service_no
+    }
+  })
+}
+
+/**
+ * 获取售后服务单列表
  * @param {Object} data
  * @returns
  */
-export function getRefundList(data) {
+export function getOrderServiceList(data) {
   return request({
-    url: '/v1/order_refund',
+    url: '/v1/order_service',
     method: 'post',
     params: {
-      method: 'get.refund.list'
+      method: 'get.order.service.list'
     },
     data
   })

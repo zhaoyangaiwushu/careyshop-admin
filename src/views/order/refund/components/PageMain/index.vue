@@ -206,7 +206,7 @@
 
 <script>
 import util from '@/utils/util'
-import { queryRefundItem } from '@/api/order/service'
+import { queryRefundItem } from '@/api/order/refund'
 
 export default {
   components: {

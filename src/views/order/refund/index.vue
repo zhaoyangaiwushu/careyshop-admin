@@ -25,7 +25,7 @@
 
 <script>
 import { getPaymentList } from '@/api/payment/payment'
-import { getRefundList } from '@/api/order/service'
+import { getRefundList } from '@/api/order/refund'
 
 export default {
   name: 'order-admin-refund',

@@ -50,6 +50,9 @@ export default {
      * @param {Object} payload confirm {Boolean} 是否需要确认
      */
     logout({ dispatch }, { vm, confirm = false }) {
+      // 加载遮罩
+      let loading = null
+
       // 实际注销操作
       function logout() {
         logoutAdminUser()
@@ -62,6 +65,7 @@ export default {
             util.cookies.remove('uuid')
 
             // 刷新页面
+            loading && loading.close()
             vm.$router.replace('/refresh')
           })
           .catch(() => {
@@ -80,6 +84,13 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
+          loading = vm.$loading({
+            lock: true,
+            text: 'Loading',
+            spinner: 'el-icon-loading',
+            background: 'rgba(0, 0, 0, 0.7)'
+          })
+
           logout()
         })
         .catch(() => {

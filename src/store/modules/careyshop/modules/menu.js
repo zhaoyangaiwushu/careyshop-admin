@@ -30,15 +30,20 @@ export default {
      */
     async asideLoad({ state, dispatch }) {
       // store 赋值
-      const menu = await dispatch('careyshop/db/get', {
+      const menuData = await dispatch('careyshop/db/get', {
         dbName: 'sys',
         path: 'menu',
         defaultValue: setting.menu,
         user: true
       }, { root: true })
 
-      state.asideCollapse = menu.asideCollapse
-      state.asideTransition = menu.asideTransition
+      if (menuData.asideCollapse !== undefined) {
+        state.asideCollapse = menuData.asideCollapse
+      }
+
+      if (menuData.asideTransition !== undefined) {
+        state.asideTransition = menuData.asideTransition
+      }
     },
     /**
      * @description 设置侧边栏展开或者收缩

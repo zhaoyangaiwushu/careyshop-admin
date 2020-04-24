@@ -25,13 +25,14 @@
 </template>
 
 <script>
+import { getOrderServiceList, getOrderServiceTotal } from '@/api/order/service'
 
 export default {
   name: 'order-service-list',
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     // 'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/layout/header-aside/components/footer')
+    'PageFooter': () => import('@/components/cs-footer')
   },
   data() {
     return {
@@ -90,13 +91,33 @@ export default {
     },
     // 统计标签数量
     handleTotal(form) {
-      // getOrderStatusTotal({ ...form })
-      //   .then(res => {
-      //     this.total = res.data || {}
-      //   })
+      getOrderServiceTotal({ ...form })
+        .then(res => {
+          this.total = res.data || {}
+        })
     },
     // 提交查询请求
     handleSubmit(form, isRestore = false) {
+      if (isRestore) {
+        this.page.current = 1
+      }
+
+      this.loading = true
+      this.handleTotal(form)
+
+      getOrderServiceList({
+        ...form,
+        my_service: this.myService,
+        page_no: this.page.current,
+        page_size: this.page.size
+      })
+        .then(res => {
+          this.table = res.data.items || []
+          this.page.total = res.data.total_result
+        })
+        .finally(() => {
+          this.loading = false
+        })
     }
   }
 }

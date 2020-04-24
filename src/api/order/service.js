@@ -55,6 +55,22 @@ export function getOrderServiceList(data) {
 }
 
 /**
+ * 获取"未接收"与"我的售后"的售后单计数
+ * @param {Object} data
+ * @returns
+ */
+export function getOrderServiceTotal(data) {
+  return request({
+    url: '/v1/order_service',
+    method: 'post',
+    params: {
+      method: 'get.order.service.total'
+    },
+    data
+  })
+}
+
+/**
  * 同意(接收)一个售后服务单
  * @param {String} service_no
  * @returns

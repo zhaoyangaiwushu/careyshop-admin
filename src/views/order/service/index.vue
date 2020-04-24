@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { getOrderServiceList, getOrderServiceTotal } from '@/api/order/service'
+import { getOrderServiceList } from '@/api/order/service'
 
 export default {
   name: 'order-service-list',
@@ -38,8 +38,6 @@ export default {
     return {
       loading: false,
       table: [],
-      myService: 0,
-      total: {},
       typeMap: {
         '0': '仅退款',
         '1': '退货退款',
@@ -103,17 +101,9 @@ export default {
     },
     // 标签页切换
     handleTabs(val) {
-      this.myService = val
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit(true)
       })
-    },
-    // 统计标签数量
-    handleTotal(form) {
-      getOrderServiceTotal({ ...form })
-        .then(res => {
-          this.total = res.data || {}
-        })
     },
     // 提交查询请求
     handleSubmit(form, isRestore = false) {
@@ -122,11 +112,8 @@ export default {
       }
 
       this.loading = true
-      this.handleTotal(form)
-
       getOrderServiceList({
         ...form,
-        my_service: this.myService,
         page_no: this.page.current,
         page_size: this.page.size
       })

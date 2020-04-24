@@ -63,6 +63,25 @@ export default {
     }
   },
   mounted() {
+    this.$store.dispatch('careyshop/db/databasePage', { user: true })
+      .then(res => {
+        this.page.size = res.get('size').value() || 25
+      })
+      .then(() => {
+        this.handleSubmit()
+      })
+  },
+  beforeRouteEnter(to, from, next) {
+    // 从订单详情页返回后刷新列表
+    if (from.name === 'order-service-info') {
+      next(instance => {
+        if (instance.$refs.header) {
+          instance.$refs.header.handleFormSubmit()
+        }
+      })
+    } else {
+      next()
+    }
   },
   methods: {
     // 刷新列表页面

@@ -153,7 +153,7 @@ import { getAdminList, getAdminSelect } from '@/api/user/admin'
 export default {
   name: 'cs-user-select',
   components: {
-    'PageFooter': () => import('@/layout/header-aside/components/footer')
+    'PageFooter': () => import('@/components/cs-footer')
   },
   props: {
     // 确认按钮事件

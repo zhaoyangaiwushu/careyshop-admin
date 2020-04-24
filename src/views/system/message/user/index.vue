@@ -28,7 +28,7 @@ export default {
   name: 'system-message-user',
   components: {
     'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/layout/header-aside/components/footer')
+    'PageFooter': () => import('@/components/cs-footer')
   },
   data() {
     return {

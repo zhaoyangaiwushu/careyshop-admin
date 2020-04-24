@@ -135,7 +135,7 @@ export default {
   name: 'cs-goods-select',
   components: {
     'csGoodsDrawer': () => import('@/components/cs-goods-drawer'),
-    'PageFooter': () => import('@/layout/header-aside/components/footer')
+    'PageFooter': () => import('@/components/cs-footer')
   },
   props: {
     // 确认按钮事件

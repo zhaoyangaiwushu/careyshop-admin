@@ -28,7 +28,7 @@ export default {
       hidden: true,
       component: {
         beforeRouteEnter(to, from, next) {
-          next(instance => instance.$router.replace(from.fullPath))
+          next(instance => instance.$router.replace(from.fullPath).catch(() => {}))
         },
         render: h => h()
       }

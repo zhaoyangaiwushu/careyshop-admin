@@ -1,7 +1,7 @@
 <template>
   <el-pagination
     :current-page="current"
-    :page-size="size"
+    :page-size="size || 25"
     :total="total"
     :page-sizes="sizes"
     :disabled="loading"
@@ -16,6 +16,7 @@
 import { mapActions } from 'vuex'
 
 export default {
+  name: 'cs-footer',
   props: {
     current: {
       default: 0

@@ -125,7 +125,7 @@ export default {
   name: 'cs-storage',
   mixins: [storage],
   components: {
-    'PageFooter': () => import('@/layout/header-aside/components/footer')
+    'PageFooter': () => import('@/components/cs-footer')
   },
   props: {
     // 确认按钮事件

@@ -35,7 +35,7 @@ export default {
   components: {
     'PageHeader': () => import('./components/PageHeader'),
     'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/layout/header-aside/components/footer')
+    'PageFooter': () => import('@/components/cs-footer')
   },
   data() {
     return {

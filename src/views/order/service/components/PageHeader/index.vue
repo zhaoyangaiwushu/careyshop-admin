@@ -23,20 +23,6 @@
         :clearable="true"/>
     </el-form-item>
 
-    <el-form-item label="状态" prop="status">
-      <el-select
-        v-model="form.status"
-        placeholder="请选择"
-        style="width: 120px;"
-        clearable>
-        <el-option
-          v-for="(item, index) in statusMap"
-          :key="index"
-          :label="item"
-          :value="index"/>
-      </el-select>
-    </el-form-item>
-
     <el-form-item>
       <el-button
         type="primary"
@@ -57,6 +43,20 @@
         placement="bottom"
         trigger="click">
         <div class="more-filter">
+          <el-form-item label="我的工单" prop="my_service">
+            <el-checkbox
+              v-model="form.my_service"
+              true-label="1"
+              false-label="0">仅显示我的工单</el-checkbox>
+          </el-form-item>
+
+          <el-form-item label="事件过滤" prop="new_event">
+            <el-checkbox
+              v-model="form.new_event"
+              true-label="1"
+              false-label="0">仅显示新事件</el-checkbox>
+          </el-form-item>
+
           <el-form-item label="售后类型" prop="type">
             <el-select
               v-model="form.type"
@@ -101,9 +101,6 @@ export default {
     },
     typeMap: {
       default: () => {}
-    },
-    statusMap: {
-      default: () => {}
     }
   },
   data() {
@@ -112,7 +109,8 @@ export default {
         order_code: undefined,
         account: undefined,
         type: undefined,
-        status: undefined,
+        new_event: '0',
+        my_service: '0',
         begin_time: undefined,
         end_time: undefined,
         time_period: null

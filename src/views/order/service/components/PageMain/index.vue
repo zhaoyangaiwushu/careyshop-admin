@@ -89,11 +89,31 @@
           </el-table-column>
 
           <el-table-column
-            label="售后状态">
+            label="售后状态"
+            align="center">
+            <template slot-scope="scope">
+              <div class="service-text">
+                <el-badge
+                  :hidden="!scope.row.admin_event"
+                  class="service-event"
+                  is-dot>
+                  <p class="service-button">{{statusMap[scope.row.status + 1]}}</p>
+                </el-badge>
+
+                <p>
+                  <el-link
+                    class="service-button"
+                    type="info"
+                    @click="() => {}"
+                    :underline="false">详情</el-link>
+                </p>
+              </div>
+            </template>
           </el-table-column>
 
           <el-table-column
-            label="操作">
+            label="操作"
+            align="center">
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -248,5 +268,15 @@ export default {
     margin-left: 5px;
     line-height: 0;
     vertical-align: text-bottom;
+  }
+
+  .service-button {
+    padding: 0;
+    font-size: 13px;
+  }
+
+  .service-event /deep/ .el-badge__content {
+    margin-top: 11px;
+    margin-right: -10px;
   }
 </style>

@@ -52,6 +52,11 @@ export default {
         preview: 'image/theme/line/preview@2x.png'
       },
       {
+        title: '深灰',
+        name: 'gray',
+        preview: 'image/theme/gray/preview@2x.png'
+      },
+      {
         title: '海岸',
         name: 'coastal',
         backgroundImage: 'image/theme/coastal/bg.jpg',
@@ -71,6 +76,6 @@ export default {
       }
     ],
     // 默认主题
-    default: 'town'
+    default: 'gray'
   }
 }

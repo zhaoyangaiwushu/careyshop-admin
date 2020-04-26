@@ -106,8 +106,11 @@
                 </el-image>
 
                 <div class="goods-info order-text">
-                  <p @click="handleView(goods.goods_id)">
-                    <span class="link">{{goods.goods_name}}</span>
+                  <p>
+                    <span
+                      @click="handleView(goods.goods_id)"
+                      class="link">{{goods.goods_name}}</span>
+
                     <span
                       :class="`${goods.is_service === 1 ? 'service' : 'complete'}`"
                       class="cs-pl-5">{{serviceMap[goods.is_service]}}</span>

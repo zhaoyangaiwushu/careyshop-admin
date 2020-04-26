@@ -41,12 +41,12 @@ export default {
   theme: {
     list: [
       {
-        title: '经典色',
+        title: '经典',
         name: 'careyshop',
         preview: 'image/theme/careyshop/preview@2x.png'
       },
       {
-        title: '简约线条',
+        title: '线条',
         name: 'line',
         backgroundImage: 'image/theme/line/bg.jpg',
         preview: 'image/theme/line/preview@2x.png'

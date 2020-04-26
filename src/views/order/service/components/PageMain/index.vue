@@ -11,7 +11,7 @@
         :name="index">
         <el-table v-if="index === tabPane" :data="currentTableData">
           <el-table-column
-            label="售后单"
+            label="商品"
             min-width="380">
             <template slot-scope="scope">
               <div class="service-summary cs-mb-5">
@@ -28,13 +28,48 @@
                   lazy>
                 </el-image>
 
-                <div class="goods-info order-text">
-                  <p @click="handleView(scope.row.get_order_goods.goods_id)">
-                    <span class="link">{{scope.row.get_order_goods.goods_name}}</span>
-                  </p>
+                <div class="goods-info service-text">
+                  <p
+                    @click="handleView(scope.row.get_order_goods.goods_id)"
+                    class="link">{{scope.row.get_order_goods.goods_name}}</p>
+
+                  <p class="son">
+                    订单号：<span
+                      @click="handleOrder(scope.row.order_no)"
+                      class="link">{{scope.row.order_no}}</span></p>
+
+                  <p
+                    v-if="scope.row.get_order_goods.key_value"
+                    class="son">{{scope.row.get_order_goods.key_value}}</p>
+
+                  <p class="son">{{scope.row.reason}}</p>
                 </div>
               </div>
             </template>
+          </el-table-column>
+
+          <el-table-column
+            label="类型"
+            min-width="100">
+            <template slot-scope="scope">
+              <div class="service-text">
+                <p>{{typeMap[scope.row.type]}}</p>
+                <p v-if="scope.row.goods_status" class="son">收货状态：{{goodsMap[scope.row.goods_status]}}</p>
+                <p v-if="scope.row.qty" class="son">申请数量：{{scope.row.qty}}</p>
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column
+            label="买家">
+          </el-table-column>
+
+          <el-table-column
+            label="状态">
+          </el-table-column>
+
+          <el-table-column
+            label="操作">
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -70,6 +105,11 @@ export default {
         '5': '售后中',
         '6': '已撤销',
         '7': '已完成'
+      },
+      goodsMap: {
+        '0': '未选择',
+        '1': '未收到货',
+        '2': '已收到货'
       }
     }
   },
@@ -96,8 +136,13 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
-        .then(() => {
-        })
+    },
+    // 查看订单详情
+    handleOrder(order_no) {
+      this.$router.push({
+        name: 'order-admin-info',
+        params: { order_no }
+      })
     }
   }
 }
@@ -118,6 +163,17 @@ export default {
     font-size: 13px;
   }
 
+  .service-text {
+    p {
+      margin: 0;
+    }
+
+    .son {
+      color: $color-text-sub;
+      font-size: 13px;
+    }
+  }
+
   .service-goods {
     float: left;
 
@@ -125,6 +181,18 @@ export default {
       float: left;
       width: 80px;
       height: 80px;
+    }
+
+    .goods-info {
+      padding: 0 50px 0 100px;
+
+      .link {
+        &:hover {
+          cursor: pointer;
+          color: $color-primary;
+          text-decoration: underline;
+        }
+      }
     }
   }
 </style>

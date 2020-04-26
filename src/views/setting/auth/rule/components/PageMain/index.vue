@@ -185,6 +185,7 @@
                   prop="group_id">
                   <el-select
                     v-model="form.group_id"
+                    :disabled="formStatus === 'update'"
                     placeholder="请选择"
                     style="width: 100%;">
                     <el-option

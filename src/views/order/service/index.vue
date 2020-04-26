@@ -40,10 +40,10 @@ export default {
       table: [],
       status: null,
       typeMap: {
-        '0': '仅退款',
-        '1': '退货退款',
-        '2': '换货',
-        '3': '维修'
+        0: '仅退款',
+        1: '退货退款',
+        2: '换货',
+        3: '维修'
       },
       page: {
         current: 1,
@@ -93,7 +93,7 @@ export default {
     },
     // 标签页切换
     handleTabs(val) {
-      this.status = val === '0' ? null : val - 1
+      this.status = val <= 0 ? null : val - 1
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit(true)
       })

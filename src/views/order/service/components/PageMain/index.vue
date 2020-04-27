@@ -85,6 +85,12 @@
                   </el-image>
                 </p>
 
+                <p v-if="scope.row.get_admin">
+                  <span
+                    :style="_getServiceColor(scope.row.get_admin)"
+                    class="son">{{scope.row.get_admin | getUserName}}</span>
+                </p>
+
                 <p v-if="scope.row.is_return">
                   <el-tooltip placement="top">
                     <div slot="content">
@@ -97,7 +103,7 @@
                       </template>
 
                       <template v-else>
-                        等待买家填写返件信息，可先设为“售后中”
+                        买家尚未填写返件信息
                       </template>
                     </div>
                     <span class="son">返件地址</span>
@@ -162,6 +168,7 @@
                 <p v-if="scope.row.type !== 0 && scope.row.status === 1 && !scope.row.logistic_code">
                   <el-link
                     class="service-button"
+                    type="primary"
                     @click="handleServiceSendback(scope.$index)"
                     :underline="false">{{scope.row.is_return ? '撤销寄回' : '要求寄回'}}</el-link>
                 </p>
@@ -169,14 +176,16 @@
                 <p v-if="[1, 3].includes(scope.row.status)">
                   <el-link
                     class="service-button"
-                    @click="() => {}"
+                    type="primary"
+                    @click="handleServiceAfter(scope.$index)"
                     :underline="false">设为售后中</el-link>
                 </p>
 
                 <p v-if="[1, 3, 4].includes(scope.row.status)">
                   <el-link
                     class="service-button"
-                    @click="() => {}"
+                    type="danger"
+                    @click="handleServiceCancel(scope.$index)"
                     :underline="false">撤销售后</el-link>
                 </p>
 
@@ -184,7 +193,7 @@
                   <el-link
                     class="service-button"
                     type="success"
-                    @click="() => {}"
+                    @click="handleServiceComplete(scope.$index)"
                     :underline="false">售后完成</el-link>
                 </p>
 
@@ -241,9 +250,13 @@
 
 <script>
 import {
+  setOrderServiceAfter,
   setOrderServiceAgree,
+  setOrderServiceCancel,
+  setOrderServiceComplete,
   setOrderServiceRefused,
-  setOrderServiceRemark, setOrderServiceSendback
+  setOrderServiceRemark,
+  setOrderServiceSendback
 } from '@/api/order/service'
 import util from '@/utils/util'
 
@@ -327,9 +340,20 @@ export default {
     },
     getNumber(val) {
       return util.getNumber(val)
+    },
+    getUserName(val) {
+      if (val) {
+        return val.username === util.cookies.get('uuid') ? '我的工单' : `${val.username} 的工单`
+      }
     }
   },
   methods: {
+    // 我的工单配色
+    _getServiceColor(val) {
+      if (val && val.username === util.cookies.get('uuid')) {
+        return 'color: #E6A23C;'
+      }
+    },
     // 询问提示
     _whetherToConfirm(message = null, type = 'warning') {
       let options = {
@@ -400,7 +424,9 @@ export default {
               if (this.tabPane === '0') {
                 this.$set(this.currentTableData, index, {
                   ...data,
-                  ...res.data
+                  ...res.data,
+                  admin_event: 0,
+                  get_admin: { username: util.cookies.get('uuid') } // 后端不返回get_admin,所以进行模拟
                 })
               } else {
                 this.currentTableData.splice(index, 1)
@@ -430,7 +456,8 @@ export default {
               if (this.tabPane === '0') {
                 this.$set(this.currentTableData, index, {
                   ...data,
-                  ...res.data
+                  ...res.data,
+                  admin_event: 0
                 })
               } else {
                 this.currentTableData.splice(index, 1)
@@ -440,8 +467,6 @@ export default {
               }
 
               this.$message.success('操作成功')
-            })
-            .catch(() => {
             })
         })
         .catch(() => {
@@ -456,12 +481,97 @@ export default {
 
           setOrderServiceSendback(data.service_no, isReturn)
             .then(() => {
-              this.$set(data, 'is_return', isReturn)
+              this.$set(this.currentTableData, index, {
+                ...data,
+                is_return: isReturn,
+                admin_event: 0
+              })
               this.$message.success('操作成功')
             })
         })
         .catch(() => {
         })
+    },
+    // 设为售后中
+    handleServiceAfter(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          setOrderServiceAfter(data.service_no)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  ...res.data,
+                  admin_event: 0
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  this.$emit('refresh', true)
+                }
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 撤销售后
+    handleServiceCancel(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          setOrderServiceCancel(data.service_no)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  ...res.data,
+                  admin_event: 0
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  this.$emit('refresh', true)
+                }
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 售后完成
+    handleServiceComplete(index) {
+      // this.$prompt('可输入售后单完成结果', '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消'
+      // })
+      //   .then(({ value }) => {
+      //     const data = this.currentTableData[index]
+      //     setOrderServiceComplete(data.service_no, value || '')
+      //       .then(res => {
+      //         if (this.tabPane === '0') {
+      //           this.$set(this.currentTableData, index, {
+      //             ...data,
+      //             ...res.data,
+      //             admin_event: 0
+      //           })
+      //         } else {
+      //           this.currentTableData.splice(index, 1)
+      //           if (this.currentTableData.length <= 0) {
+      //             this.$emit('refresh', true)
+      //           }
+      //         }
+      //
+      //         this.$message.success('操作成功')
+      //       })
+      //   })
+      //   .catch(() => {
+      //   })
     }
   }
 }

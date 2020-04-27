@@ -89,10 +89,16 @@
                   <el-tooltip placement="top">
                     <div slot="content">
                       返件信息<br/><br/>
-                      姓名：{{scope.row.consignee}}<br/>
-                      手机：{{scope.row.mobile}}<br/>
-                      地址：{{scope.row.address}}<br/>
-                      邮编：{{scope.row.zipcode}}
+                      <template v-if="scope.row.address">
+                        姓名：{{scope.row.consignee}}<br/>
+                        手机：{{scope.row.mobile}}<br/>
+                        地址：{{scope.row.address}}<br/>
+                        邮编：{{scope.row.zipcode}}
+                      </template>
+
+                      <template v-else>
+                        等待买家填写返件信息，可先设为“售后中”
+                      </template>
                     </div>
                     <span class="son">返件地址</span>
                   </el-tooltip>

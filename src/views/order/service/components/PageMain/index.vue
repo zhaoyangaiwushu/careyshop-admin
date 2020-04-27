@@ -84,6 +84,19 @@
                     </div>
                   </el-image>
                 </p>
+
+                <p v-if="scope.row.is_return">
+                  <el-tooltip placement="top">
+                    <div slot="content">
+                      返件信息<br/><br/>
+                      姓名：{{scope.row.consignee}}<br/>
+                      手机：{{scope.row.mobile}}<br/>
+                      地址：{{scope.row.address}}<br/>
+                      邮编：{{scope.row.zipcode}}
+                    </div>
+                    <span class="son">需要返件</span>
+                  </el-tooltip>
+                </p>
               </div>
             </template>
           </el-table-column>
@@ -226,6 +239,11 @@ export default {
     background-color: #FFFFFF !important;
   }
 
+  .service-event /deep/ .el-badge__content {
+    margin-top: 5px;
+    margin-right: -5px;
+  }
+
   .service-summary {
     color: $color-text-placehoder;
     font-size: 13px;
@@ -273,10 +291,5 @@ export default {
   .service-button {
     padding: 0;
     font-size: 13px;
-  }
-
-  .service-event /deep/ .el-badge__content {
-    margin-top: 11px;
-    margin-right: -10px;
   }
 </style>

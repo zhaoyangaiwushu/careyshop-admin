@@ -233,38 +233,49 @@
 
           <el-table-column
             label="操作"
-            align="center"
-            min-width="140">
+            align="center">
             <template slot-scope="scope">
-              <el-button
-                v-if="tabPane !== 'delete' && auth.set"
-                @click="handleEdit(scope.row.goods_id)"
-                size="small"
-                type="text">编辑</el-button>
+              <div class="goods-text">
+                <p v-if="tabPane !== 'delete' && auth.set">
+                  <el-link
+                    class="button"
+                    type="primary"
+                    @click="handleEdit(scope.row.goods_id)"
+                    :underline="false">编辑商品</el-link>
+                </p>
 
-              <el-button
-                v-if="tabPane !== 'delete' && auth.copy"
-                @click="handleCopy(scope.row.goods_id)"
-                size="small"
-                type="text">复制</el-button>
+                <p v-if="tabPane !== 'delete' && auth.copy">
+                  <el-link
+                    class="button"
+                    type="primary"
+                    @click="handleCopy(scope.row.goods_id)"
+                    :underline="false">复制商品</el-link>
+                </p>
 
-              <el-button
-                v-if="tabPane !== 'delete' && auth.shelves"
-                @click="handleStatus(scope.$index, Number(!scope.row.status))"
-                size="small"
-                type="text">{{scope.row.status ? '下架' : '上架'}}</el-button>
+                <p v-if="tabPane !== 'delete' && auth.shelves">
+                  <el-link
+                    class="button"
+                    type="primary"
+                    @click="handleStatus(scope.$index, Number(!scope.row.status))"
+                    :underline="false">{{scope.row.status ? '下架' : '上架'}}</el-link>
+                </p>
 
-              <el-button
-                v-if="auth.del"
-                @click="handleDelete(scope.$index, true)"
-                size="small"
-                type="text">{{tabPane === 'delete' ? '彻底删除' : '删除'}}</el-button>
+                <p v-if="auth.del">
+                  <el-link
+                    class="button"
+                    type="primary"
+                    @click="handleDelete(scope.$index, true)"
+                    :underline="false">{{tabPane === 'delete' ? '彻底删除' : '删除'}}</el-link>
+                </p>
 
-              <el-button
-                v-if="tabPane === 'delete' && auth.restore"
-                @click="handleDelete(scope.$index, false)"
-                size="small"
-                type="text">恢复</el-button>
+                <p v-if="tabPane === 'delete' && auth.restore">
+                  <el-link
+                    class="button"
+                    type="primary"
+                    @click="handleDelete(scope.$index, false)"
+                    :underline="false">恢复</el-link>
+                </p>
+              </div>
             </template>
           </el-table-column>
         </el-table>
@@ -1082,6 +1093,17 @@ export default {
     &:hover {
       cursor: pointer;
       color: $color-primary;
+    }
+  }
+
+  .goods-text {
+    p {
+      margin: 0;
+    }
+
+    .button {
+      padding: 0;
+      font-size: 13px;
     }
   }
 </style>

@@ -141,22 +141,22 @@
                   <el-link
                     class="service-button"
                     type="primary"
-                    @click="() => {}"
-                    :underline="false">同意处理</el-link>
+                    @click="handleServiceAgree(scope.$index)"
+                    :underline="false">接收售后</el-link>
                 </p>
 
                 <p v-if="scope.row.status === 0">
                   <el-link
                     class="service-button"
                     type="danger"
-                    @click="() => {}"
-                    :underline="false">拒绝处理</el-link>
+                    @click="handleServiceRefused(scope.$index)"
+                    :underline="false">拒绝售后</el-link>
                 </p>
 
                 <p v-if="scope.row.type !== 0 && scope.row.status === 1 && !scope.row.logistic_code">
                   <el-link
                     class="service-button"
-                    @click="() => {}"
+                    @click="handleServiceSendback(scope.$index)"
                     :underline="false">{{scope.row.is_return ? '撤销寄回' : '要求寄回'}}</el-link>
                 </p>
 
@@ -164,14 +164,14 @@
                   <el-link
                     class="service-button"
                     @click="() => {}"
-                    :underline="false">售后工单</el-link>
+                    :underline="false">设为售后中</el-link>
                 </p>
 
                 <p v-if="[1, 3, 4].includes(scope.row.status)">
                   <el-link
                     class="service-button"
                     @click="() => {}"
-                    :underline="false">撤销工单</el-link>
+                    :underline="false">撤销售后</el-link>
                 </p>
 
                 <p v-if="[1, 3, 4].includes(scope.row.status)">
@@ -179,7 +179,7 @@
                     class="service-button"
                     type="success"
                     @click="() => {}"
-                    :underline="false">完结工单</el-link>
+                    :underline="false">售后完成</el-link>
                 </p>
 
                 <p>
@@ -234,8 +234,12 @@
 </template>
 
 <script>
+import {
+  setOrderServiceAgree,
+  setOrderServiceRefused,
+  setOrderServiceRemark, setOrderServiceSendback
+} from '@/api/order/service'
 import util from '@/utils/util'
-import { setOrderServiceRemark } from '@/api/order/service'
 
 export default {
   components: {
@@ -264,7 +268,7 @@ export default {
         4: '已寄件',
         5: '售后中',
         6: '已撤销',
-        7: '已完结'
+        7: '已完成'
       },
       deliveryMap: {
         0: {
@@ -378,6 +382,79 @@ export default {
         })
         .catch(() => {
           this.formRemark.loading = false
+        })
+    },
+    // 接收售后
+    handleServiceAgree(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          setOrderServiceAgree(data.service_no)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  ...res.data
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  this.$emit('refresh', true)
+                }
+              }
+
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 拒绝售后
+    handleServiceRefused(index) {
+      this.$prompt('请输入拒绝原因', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '请输入拒绝原因'
+      })
+        .then(({ value }) => {
+          const data = this.currentTableData[index]
+          setOrderServiceRefused(data.service_no, value)
+            .then(res => {
+              if (this.tabPane === '0') {
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  ...res.data
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  this.$emit('refresh', true)
+                }
+              }
+
+              this.$message.success('操作成功')
+            })
+            .catch(() => {
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 设置是否需要寄回商家
+    handleServiceSendback(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          const isReturn = Number(!data.is_return)
+
+          setOrderServiceSendback(data.service_no, isReturn)
+            .then(() => {
+              this.$set(data, 'is_return', isReturn)
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
         })
     }
   }

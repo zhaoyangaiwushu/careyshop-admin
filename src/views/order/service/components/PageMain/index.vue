@@ -190,7 +190,7 @@
                     <el-link
                       class="service-button"
                       :type="scope.row.remark ? 'warning' : 'info'"
-                      @click="() => {}"
+                      @click="setServiceRemark(scope.$index)"
                       :underline="false">备注</el-link>
                   </el-tooltip>
                 </p>
@@ -201,12 +201,41 @@
       </el-tab-pane>
     </el-tabs>
 
+    <el-dialog
+      title="卖家备注"
+      :visible.sync="formRemark.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-input
+        v-model="formRemark.request.remark"
+        type="textarea"
+        :rows="6"
+        placeholder="编辑卖家备注，仅卖家自己可见"
+        maxlength="255"
+        show-word-limit>
+      </el-input>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formRemark.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formRemark.loading"
+          @click="handleServiceRemark"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
     <cs-delivery-dist ref="deliveryDist"/>
   </div>
 </template>
 
 <script>
 import util from '@/utils/util'
+import { setOrderServiceRemark } from '@/api/order/service'
 
 export default {
   components: {
@@ -265,6 +294,12 @@ export default {
         0: '未选择',
         1: '未收到货',
         2: '已收到货'
+      },
+      formRemark: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        request: {}
       }
     }
   },
@@ -316,6 +351,34 @@ export default {
       if (this.$refs.deliveryDist) {
         this.$refs.deliveryDist.show(value)
       }
+    },
+    // 设置卖家备注
+    setServiceRemark(index) {
+      const data = this.currentTableData[index]
+      this.formRemark = {
+        index,
+        loading: false,
+        visible: true,
+        request: {
+          service_no: data.service_no,
+          remark: data.remark
+        }
+      }
+    },
+    // 请求卖家备注
+    handleServiceRemark() {
+      this.formRemark.loading = true
+      const index = this.formRemark.index
+
+      setOrderServiceRemark(this.formRemark.request)
+        .then(() => {
+          this.currentTableData[index].remark = this.formRemark.request.remark
+          this.formRemark.visible = false
+          this.$message.success('操作成功')
+        })
+        .catch(() => {
+          this.formRemark.loading = false
+        })
     }
   }
 }

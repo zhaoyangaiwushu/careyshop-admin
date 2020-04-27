@@ -168,20 +168,16 @@ export function setOrderServiceComplete(service_no) {
 
 /**
  * 客服对售后服务单添加备注(顾客不可见)
- * @param {String} service_no
- * @param {String} remark
+ * @param {Object} data
  * @returns
  */
-export function setOrderServiceRemark(service_no, remark) {
+export function setOrderServiceRemark(data) {
   return request({
     url: '/v1/order_service',
     method: 'post',
     params: {
       method: 'set.order.service.remark'
     },
-    data: {
-      service_no,
-      remark
-    }
+    data
   })
 }

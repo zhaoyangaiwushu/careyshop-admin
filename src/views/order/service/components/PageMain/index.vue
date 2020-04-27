@@ -94,7 +94,7 @@
                       地址：{{scope.row.address}}<br/>
                       邮编：{{scope.row.zipcode}}
                     </div>
-                    <span class="son">需要返件</span>
+                    <span class="son">返件地址</span>
                   </el-tooltip>
                 </p>
               </div>
@@ -113,6 +113,14 @@
                   <p class="service-button">{{statusMap[scope.row.status + 1]}}</p>
                 </el-badge>
 
+                <p v-if="scope.row.type === 2 || scope.row.logistic_code">
+                  <el-link
+                    class="service-button"
+                    type="info"
+                    @click="handleDeliveryDist(scope.row.service_no)"
+                    :underline="false">物流信息</el-link>
+                </p>
+
                 <p>
                   <el-link
                     class="service-button"
@@ -127,10 +135,73 @@
           <el-table-column
             label="操作"
             align="center">
+            <template slot-scope="scope">
+              <div class="service-text">
+                <p v-if="scope.row.status === 0">
+                  <el-link
+                    class="service-button"
+                    type="primary"
+                    @click="() => {}"
+                    :underline="false">同意处理</el-link>
+                </p>
+
+                <p v-if="scope.row.status === 0">
+                  <el-link
+                    class="service-button"
+                    type="danger"
+                    @click="() => {}"
+                    :underline="false">拒绝处理</el-link>
+                </p>
+
+                <p v-if="scope.row.type !== 0 && scope.row.status === 1 && !scope.row.logistic_code">
+                  <el-link
+                    class="service-button"
+                    @click="() => {}"
+                    :underline="false">{{scope.row.is_return ? '撤销寄回' : '要求寄回'}}</el-link>
+                </p>
+
+                <p v-if="[1, 3].includes(scope.row.status)">
+                  <el-link
+                    class="service-button"
+                    @click="() => {}"
+                    :underline="false">售后工单</el-link>
+                </p>
+
+                <p v-if="[1, 3, 4].includes(scope.row.status)">
+                  <el-link
+                    class="service-button"
+                    @click="() => {}"
+                    :underline="false">撤销工单</el-link>
+                </p>
+
+                <p v-if="[1, 3, 4].includes(scope.row.status)">
+                  <el-link
+                    class="service-button"
+                    type="success"
+                    @click="() => {}"
+                    :underline="false">完结工单</el-link>
+                </p>
+
+                <p>
+                  <el-tooltip
+                    :disabled="scope.row.remark.length <= 0"
+                    :content="scope.row.remark"
+                    placement="left">
+                    <el-link
+                      class="service-button"
+                      :type="scope.row.remark ? 'warning' : 'info'"
+                      @click="() => {}"
+                      :underline="false">备注</el-link>
+                  </el-tooltip>
+                </p>
+              </div>
+            </template>
           </el-table-column>
         </el-table>
       </el-tab-pane>
     </el-tabs>
+
+    <cs-delivery-dist ref="deliveryDist"/>
   </div>
 </template>
 
@@ -138,6 +209,9 @@
 import util from '@/utils/util'
 
 export default {
+  components: {
+    'csDeliveryDist': () => import('@/components/cs-delivery-dist')
+  },
   props: {
     loading: {
       default: false
@@ -161,7 +235,7 @@ export default {
         4: '已寄件',
         5: '售后中',
         6: '已撤销',
-        7: '已完成'
+        7: '已完结'
       },
       deliveryMap: {
         0: {
@@ -211,6 +285,18 @@ export default {
     }
   },
   methods: {
+    // 询问提示
+    _whetherToConfirm(message = null, type = 'warning') {
+      let options = {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        closeOnClickModal: false,
+        type
+      }
+
+      let msg = message || '确定要执行该操作吗?'
+      return this.$confirm(msg, '提示', options)
+    },
     // 商品预览
     handleView(goods_id) {
       this.$router.push({
@@ -224,6 +310,12 @@ export default {
         name: 'order-admin-info',
         params: { order_no }
       })
+    },
+    // 查询配送轨迹
+    handleDeliveryDist(value) {
+      if (this.$refs.deliveryDist) {
+        this.$refs.deliveryDist.show(value)
+      }
     }
   }
 }

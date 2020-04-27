@@ -323,6 +323,13 @@ export default {
         loading: false,
         visible: false,
         request: {}
+      },
+      formComplete: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        request: {},
+        rules: {}
       }
     }
   },
@@ -546,32 +553,6 @@ export default {
     },
     // 售后完成
     handleServiceComplete(index) {
-      // this.$prompt('可输入售后单完成结果', '提示', {
-      //   confirmButtonText: '确定',
-      //   cancelButtonText: '取消'
-      // })
-      //   .then(({ value }) => {
-      //     const data = this.currentTableData[index]
-      //     setOrderServiceComplete(data.service_no, value || '')
-      //       .then(res => {
-      //         if (this.tabPane === '0') {
-      //           this.$set(this.currentTableData, index, {
-      //             ...data,
-      //             ...res.data,
-      //             admin_event: 0
-      //           })
-      //         } else {
-      //           this.currentTableData.splice(index, 1)
-      //           if (this.currentTableData.length <= 0) {
-      //             this.$emit('refresh', true)
-      //           }
-      //         }
-      //
-      //         this.$message.success('操作成功')
-      //       })
-      //   })
-      //   .catch(() => {
-      //   })
     }
   }
 }

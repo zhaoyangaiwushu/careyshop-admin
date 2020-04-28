@@ -18,7 +18,7 @@
           <el-collapse-item title="售后商品" name="goods">
           </el-collapse-item>
 
-          <el-collapse-item title="售后日志" name="log">
+          <el-collapse-item title="售后日志" name="log" id="msg-form">
             <el-timeline>
               <el-timeline-item
                 v-for="(log, index) in serviceData.get_service_log"
@@ -35,12 +35,13 @@
             <el-form
               :model="msgForm"
               :rules="msgRules"
-              ref="msgForm"
-              label-width="68px">
+              label-width="68px"
+              id="add-message"
+              ref="msgForm">
               <el-form-item prop="message">
                 <el-input
                   v-model="msgForm.message"
-                  placeholder="您可以输入内容对售后单留言，顾客在日志中可看到"
+                  placeholder="您可以输入售后单留言，顾客在日志中可看到"
                   type="textarea"
                   :autosize="{minRows: 5}"
                   :show-word-limit="true"
@@ -50,7 +51,7 @@
                   class="cs-mt-10"
                   type="primary"
                   :loading="msgLoading"
-                  @click="() => {}"
+                  @click="handleMessage"
                   size="small">提交</el-button>
               </el-form-item>
             </el-form>
@@ -62,7 +63,7 @@
 </template>
 
 <script>
-import { getOrderServiceItem } from '@/api/order/service'
+import { addOrderServiceMessage, getOrderServiceItem } from '@/api/order/service'
 
 export default {
   name: 'order-service-info',
@@ -107,11 +108,33 @@ export default {
     }
   },
   methods: {
+    // 获取售后数据
     getServiceData() {
       getOrderServiceItem(this.service_no)
         .then(res => {
           this.serviceData = res.data || {}
         })
+    },
+    // 添加售后留言
+    handleMessage() {
+      this.$refs.msgForm.validate(valid => {
+        if (valid) {
+          this.msgLoading = true
+          addOrderServiceMessage(this.service_no, this.msgForm.message)
+            .then(() => {
+              this.getServiceData()
+            })
+            .then(() => {
+              this.$nextTick(() => {
+                this.msgForm = {}
+                this.$el.querySelector('#msg-form').scrollIntoView()
+              })
+            })
+            .finally(() => {
+              this.msgLoading = false
+            })
+        }
+      })
     }
   }
 }

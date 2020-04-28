@@ -150,21 +150,17 @@ export function setOrderServiceCancel(service_no) {
 
 /**
  * 完成一个售后服务单
- * @param {String} service_no
- * @param {String} result
+ * @param {Object} data
  * @returns
  */
-export function setOrderServiceComplete(service_no, result) {
+export function setOrderServiceComplete(data) {
   return request({
     url: '/v1/order_service',
     method: 'post',
     params: {
       method: 'set.order.service.complete'
     },
-    data: {
-      service_no,
-      result
-    }
+    data
   })
 }
 

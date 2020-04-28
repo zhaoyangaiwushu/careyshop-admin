@@ -189,11 +189,11 @@
                     :underline="false">撤销售后</el-link>
                 </p>
 
-                <p v-if="[1, 3, 4].includes(scope.row.status)">
+                <p v-if="scope.row.status === 4">
                   <el-link
                     class="service-button"
                     type="success"
-                    @click="handleServiceComplete(scope.$index)"
+                    @click="setServiceComplete(scope.$index)"
                     :underline="false">售后完成</el-link>
                 </p>
 
@@ -244,6 +244,64 @@
       </div>
     </el-dialog>
 
+    <el-dialog
+      title="售后完成"
+      :visible.sync="formComplete.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      @open="handleOpenDelivery"
+      width="600px">
+      <el-form
+        :model="formComplete.request"
+        :rules="rules.complete"
+        ref="formComplete"
+        label-width="80px">
+        <el-form-item
+          label="处理结果"
+          prop="result">
+          <el-input
+            v-model="formComplete.request.result"
+            placeholder="可输入售后处理结果"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          v-if="[2, 3].includes(formComplete.request.type)"
+          label="快递单号"
+          prop="logistic_code">
+          <el-input
+            v-model="formComplete.request.logistic_code"
+            class="input-with-select"
+            placeholder="请输入售后完成后寄回商品的快递单号"
+            :clearable="true">
+            <el-select
+              v-model="formComplete.request.delivery_item_id"
+              style="width: 150px;"
+              placeholder="请选择"
+              slot="prepend">
+              <el-option
+                v-for="(item, index) in delivery"
+                :key="index"
+                :label="item.name"
+                :value="item.delivery_item_id"/>
+            </el-select>
+          </el-input>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formComplete.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formComplete.loading"
+          @click="handleServiceComplete"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
     <cs-delivery-dist ref="deliveryDist"/>
   </div>
 </template>
@@ -259,6 +317,7 @@ import {
   setOrderServiceSendback
 } from '@/api/order/service'
 import util from '@/utils/util'
+import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
   components: {
@@ -279,6 +338,30 @@ export default {
     return {
       currentTableData: [],
       tabPane: 0,
+      delivery: [],
+      rules: {
+        complete: {
+          result: [
+            {
+              max: 100,
+              message: '长度不能大于 100 个字符',
+              trigger: 'blur'
+            }
+          ],
+          logistic_code: [
+            {
+              required: true,
+              message: '快递单号不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ]
+        }
+      },
       statusMap: {
         0: '全部',
         1: '待处理',
@@ -328,8 +411,7 @@ export default {
         index: undefined,
         loading: false,
         visible: false,
-        request: {},
-        rules: {}
+        request: {}
       }
     }
   },
@@ -372,6 +454,15 @@ export default {
 
       let msg = message || '确定要执行该操作吗?'
       return this.$confirm(msg, '提示', options)
+    },
+    // 获取快递公司列表
+    handleOpenDelivery() {
+      if (!this.delivery.length) {
+        getDeliveryCompanySelect(0)
+          .then(res => {
+            this.delivery = res.data || []
+          })
+      }
     },
     // 商品预览
     handleView(goods_id) {
@@ -552,7 +643,64 @@ export default {
         })
     },
     // 售后完成
-    handleServiceComplete(index) {
+    setServiceComplete(index) {
+      const data = this.currentTableData[index]
+      this.formComplete = {
+        index,
+        loading: false,
+        visible: false,
+        request: {
+          type: data.type,
+          service_no: data.service_no,
+          delivery_item_id: undefined,
+          logistic_code: undefined,
+          result: undefined
+        }
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.formComplete) {
+          this.$refs.formComplete.clearValidate()
+        }
+
+        this.formComplete.visible = true
+      })
+    },
+    // 请求售后完成
+    handleServiceComplete() {
+      this.$refs.formComplete.validate(valid => {
+        if (valid) {
+          const request = this.formComplete.request
+          const index = this.formComplete.index
+
+          if ([2, 3].includes(request.type) && !request.delivery_item_id) {
+            this.$message.error('请选择快递公司')
+            return
+          }
+
+          this.formComplete.loading = true
+          setOrderServiceComplete(request)
+            .then(res => {
+              if (this.tabPane === '0') {
+                const data = this.currentTableData[index]
+
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  ...res.data,
+                  admin_event: 0
+                })
+              } else {
+                this.currentTableData.splice(index, 1)
+                if (this.currentTableData.length <= 0) {
+                  this.$emit('refresh', true)
+                }
+              }
+
+              this.formComplete.visible = false
+              this.$message.success('操作成功')
+            })
+        }
+      })
     }
   }
 }
@@ -566,6 +714,10 @@ export default {
 
   .el-table /deep/ td {
     background-color: #FFFFFF !important;
+  }
+
+  .input-with-select /deep/ .el-input-group__prepend {
+    background-color: #FFF;
   }
 
   .service-event /deep/ .el-badge__content {

@@ -347,7 +347,7 @@
                 :type="log.client_type ? 'danger' : 'primary'"
                 :timestamp="log.create_time">
                 <div class="order-log">
-                  <li><span>[{{clientMap[log.client_type]}}]</span> {{`${log.action}`}}</li>
+                  <li><span>[{{clientMap[log.client_type]}}]</span> {{log.action}}</li>
                   <li>{{`${log.description}：${log.comment}`}}</li>
                 </div>
               </el-timeline-item>

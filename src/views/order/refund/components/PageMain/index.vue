@@ -150,67 +150,16 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog
-      title="退款信息"
-      :visible.sync="queryVisible"
-      :append-to-body="true"
-      :close-on-click-modal="false"
-      width="650px">
-      <el-form
-        label-width="165px"
-        label-position="left"
-        style="margin-top: -25px;">
-        <cs-print ref="print">
-          <el-form-item label="退款金额：">
-            <span>{{queryData.refund_amount | getNumber}}</span>
-          </el-form-item>
-
-          <el-form-item label="退款状态：">
-            <span>{{queryData.refund_status}}</span>
-          </el-form-item>
-
-          <el-form-item label="退款入账账户：">
-            <span>{{queryData.refund_recv_accout}}</span>
-          </el-form-item>
-
-          <el-form-item label="退款单号(流水号)：">
-            <span>{{queryData.refund_no}}</span>
-          </el-form-item>
-
-          <el-form-item label="支付单号(交易流水号)：">
-            <span>{{queryData.payment_no}}</span>
-          </el-form-item>
-
-          <el-form-item label="退款交易号：">
-            <span>{{queryData.out_trade_no}}</span>
-          </el-form-item>
-        </cs-print>
-      </el-form>
-
-      <div slot="footer" class="dialog-footer">
-        <div class="cs-fl">
-          <el-button
-            icon="el-icon-printer"
-            @click="$refs.print.toPrint()"
-            size="small">打印</el-button>
-        </div>
-
-        <el-button
-          type="primary"
-          @click="queryVisible = false"
-          size="small">确定</el-button>
-      </div>
-    </el-dialog>
+    <cs-order-refund v-model="visible" :refund-no="refundNo"/>
   </div>
 </template>
 
 <script>
 import util from '@/utils/util'
-import { queryRefundItem } from '@/api/order/refund'
 
 export default {
   components: {
-    'csPrint': () => import('@/components/cs-print')
+    'csOrderRefund': () => import('@/components/cs-order-refund')
   },
   props: {
     toPayment: {
@@ -222,8 +171,8 @@ export default {
   },
   data() {
     return {
-      queryData: {},
-      queryVisible: false,
+      refundNo: '',
+      visible: false,
       auth: {
         query: false
       },
@@ -280,11 +229,8 @@ export default {
         return
       }
 
-      queryRefundItem(val)
-        .then(res => {
-          this.queryData = res.data || {}
-          this.queryVisible = true
-        })
+      this.refundNo = val
+      this.visible = true
     },
     handleOrder(order_no) {
       this.$router.push({

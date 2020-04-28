@@ -296,6 +296,13 @@
                 <td class="pre-text">{{information}}</td>
               </tr>
             </table>
+
+            <table>
+              <tr>
+                <td><img :src="item.order_no | getBarcode" alt=""></td>
+                <td style="float: right;"><img :src="item.order_no | getQrcode" alt=""></td>
+              </tr>
+            </table>
           </div>
         </template>
       </cs-print>

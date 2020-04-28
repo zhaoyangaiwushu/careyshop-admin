@@ -167,7 +167,9 @@ export default {
     }
 
     .comment {
-      white-space: pre;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      word-break: break-all;
     }
   }
 

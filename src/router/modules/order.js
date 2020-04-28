@@ -43,6 +43,13 @@ export default {
       name: `${pre}service-list`,
       meta: { ...meta, cache: true, title: '售后列表' },
       component: () => import('@/views/order/service')
+    },
+    {
+      path: 'service/info/:service_no',
+      name: `${pre}service-info`,
+      props: true,
+      meta: { ...meta, title: '售后详情' },
+      component: () => import('@/views/order/service/info')
     }
   ])('order-')
 }

@@ -133,11 +133,17 @@
                     :underline="false">物流信息</el-link>
                 </p>
 
+                <p v-if="scope.row.result">
+                  <el-tooltip :content="scope.row.result" placement="top">
+                    <span class="son">处理结果</span>
+                  </el-tooltip>
+                </p>
+
                 <p>
                   <el-link
                     class="service-button"
                     type="info"
-                    @click="() => {}"
+                    @click="handleService(scope.row.service_no)"
                     :underline="false">详情</el-link>
                 </p>
               </div>
@@ -339,6 +345,8 @@ export default {
       currentTableData: [],
       tabPane: 0,
       delivery: [],
+      auth: {
+      },
       rules: {
         complete: {
           result: [
@@ -476,6 +484,13 @@ export default {
       this.$router.push({
         name: 'order-admin-info',
         params: { order_no }
+      })
+    },
+    // 查看售后详情
+    handleService(service_no) {
+      this.$router.push({
+        name: 'order-service-info',
+        params: { service_no }
       })
     },
     // 查询配送轨迹
@@ -671,21 +686,19 @@ export default {
       this.$refs.formComplete.validate(valid => {
         if (valid) {
           const request = this.formComplete.request
-          const index = this.formComplete.index
-
           if ([2, 3].includes(request.type) && !request.delivery_item_id) {
             this.$message.error('请选择快递公司')
             return
           }
 
           this.formComplete.loading = true
+          const index = this.formComplete.index
+
           setOrderServiceComplete(request)
             .then(res => {
               if (this.tabPane === '0') {
-                const data = this.currentTableData[index]
-
                 this.$set(this.currentTableData, index, {
-                  ...data,
+                  ...this.currentTableData[index],
                   ...res.data,
                   admin_event: 0
                 })

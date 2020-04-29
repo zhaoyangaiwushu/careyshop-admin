@@ -16,6 +16,49 @@
 
         <el-collapse :value="['goods', 'log']">
           <el-collapse-item title="售后商品" name="goods">
+            <el-table
+              style="margin-top: -15px;"
+              :data="serviceData.get_order_goods">
+              <el-table-column label="商品" min-width="300">
+                <template slot-scope="scope">
+                  <el-image
+                    class="goods-image"
+                    @click="handleView(scope.row.goods_id)"
+                    :src="scope.row.goods_image | getPreviewUrl"
+                    fit="contain"
+                    lazy>
+                  </el-image>
+
+                  <div class="goods-info">
+                    <span
+                      :title="scope.row.goods_name"
+                      @click="handleView(scope.row.goods_id)"
+                      class="name">{{scope.row.goods_name}}</span>
+                    <span
+                      :style="{'color': deliveryMap[scope.row.status].color}"
+                      class="delivery cs-pl-5">{{deliveryMap[scope.row.status].text}}</span>
+
+                    <p class="specs">{{scope.row.key_value}}</p>
+                  </div>
+                </template>
+              </el-table-column>
+
+              <el-table-column label="申请数量">
+                <span>{{serviceData.qty}}</span>
+              </el-table-column>
+
+              <el-table-column label="申请金额">
+                <span>{{serviceData.refund_fee | getNumber}}</span>
+              </el-table-column>
+
+              <el-table-column label="类型">
+                <span>{{typeMap[serviceData.type]}}</span>
+              </el-table-column>
+
+              <el-table-column label="状态">
+                <span>{{statusMap[serviceData.status + 1]}}</span>
+              </el-table-column>
+            </el-table>
           </el-collapse-item>
 
           <el-collapse-item title="售后日志" name="log" id="msg-form">
@@ -63,10 +106,14 @@
 </template>
 
 <script>
+import serviceMixins from './components/mixins/service'
 import { addOrderServiceMessage, getOrderServiceItem } from '@/api/order/service'
 
 export default {
   name: 'order-service-info',
+  mixins: [
+    serviceMixins
+  ],
   props: {
     service_no: {
       type: String,
@@ -92,6 +139,12 @@ export default {
           }
         ]
       },
+      typeMap: {
+        '0': '仅退款',
+        '1': '退货退款',
+        '2': '换货',
+        '3': '维修'
+      },
       clientMap: {
         '-1': '游客',
         '0': '顾客',
@@ -112,7 +165,10 @@ export default {
     getServiceData() {
       getOrderServiceItem(this.service_no)
         .then(res => {
-          this.serviceData = res.data || {}
+          let service = res.data || {}
+          service.get_order_goods = service.get_order_goods ? [service.get_order_goods] : []
+
+          this.serviceData = service
         })
     },
     // 添加售后留言
@@ -170,6 +226,44 @@ export default {
       white-space: pre-wrap;
       word-wrap: break-word;
       word-break: break-all;
+    }
+  }
+
+  .goods-image {
+    float: left;
+    width: 60px;
+    height: 60px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .goods-info {
+    float: left;
+    width: 80%;
+    margin-left: 10px;
+
+    .name {
+      height: 36px;
+      line-height: 18px;
+      overflow: hidden;
+
+      &:hover {
+        cursor: pointer;
+        color: $color-primary;
+        text-decoration: underline;
+      }
+    }
+
+    .specs {
+      margin: 0;
+      font-size: 12px;
+      color: $color-info;
+    }
+
+    .delivery {
+      font-size: 13px;
     }
   }
 

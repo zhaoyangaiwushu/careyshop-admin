@@ -43,14 +43,14 @@ export default {
     }
   },
   filters: {
-    getPreviewUrl(val) {
-      return val ? util.getImageCodeUrl(val, 'goods_image_x80') : ''
+    getPreviewUrl(val, code = 'goods_image_x80') {
+      return val ? util.getImageCodeUrl(val, code) : ''
     },
     getNumber(val) {
       return util.getNumber(val)
     },
     getUserName(val) {
-      if (val) {
+      if (val.username) {
         return val.username === util.cookies.get('uuid') ? '我的工单' : `${val.username} 的工单`
       }
     }

@@ -7,6 +7,88 @@
         <el-row>
           <el-col class="service-left cs-pr" :span="9">
             <p class="card-title">售后信息</p>
+            <div class="service-info">
+              <div class="dt">创建日期</div>
+              <div class="dd">{{serviceData.create_time}}</div>
+            </div>
+
+            <div class="service-info">
+              <div class="dt">售后单号</div>
+              <div class="dd">{{serviceData.service_no}}</div>
+            </div>
+
+            <div class="service-info">
+              <div class="dt">订单号</div>
+              <div class="dd">
+                <span
+                  @click="handleOrder(serviceData.order_no)"
+                  class="link">{{serviceData.order_no}}</span>
+              </div>
+            </div>
+
+            <div class="service-info" v-if="serviceData.refund_no">
+              <div class="dt">退款单号</div>
+              <div class="dd">
+                <span
+                  @click="handleRefund(serviceData.refund_no)"
+                  class="link">{{serviceData.refund_no}}</span>
+              </div>
+            </div>
+
+            <div class="service-info" v-if="serviceData.get_admin">
+              <div class="dt">处理人员</div>
+              <div class="dd">
+                <span :style="_getServiceColor(serviceData.get_admin)">
+                  {{serviceData.get_admin | getUserName}}
+                </span>
+              </div>
+            </div>
+
+            <div class="service-info">
+              <div class="dt">买家</div>
+              <div class="dd">
+                <span>{{serviceData.get_user.username}}</span>
+                <el-image
+                  v-if="serviceData.get_user.level_icon"
+                  class="level-icon"
+                  :src="serviceData.get_user.level_icon"
+                  fit="fill">
+                  <div slot="error" class="image-slot">
+                    <i class="el-icon-picture-outline"/>
+                  </div>
+                </el-image>
+              </div>
+            </div>
+
+            <div class="service-info" v-if="serviceData.goods_status">
+              <div class="dt">收货状态</div>
+              <div class="dd">{{goodsMap[serviceData.goods_status]}}</div>
+            </div>
+
+            <div class="service-info">
+              <div class="dt">售后原因</div>
+              <div class="dd">{{serviceData.reason}}</div>
+            </div>
+
+            <div class="service-info" v-if="serviceData.description">
+              <div class="dt">详细说明</div>
+              <div class="dd">{{serviceData.description}}</div>
+            </div>
+
+            <div class="service-info" v-if="serviceData.image.length">
+              <div class="dt">凭证照片</div>
+              <div class="dd" style="line-height: 0;">
+                <el-image
+                  v-for="(item, index) in serviceData.image"
+                  :key="index"
+                  :src="item.source | getPreviewUrl('comment_thumb_x40')"
+                  @click.stop="$preview(serviceData.image, index)"
+                  class="image_thumb"
+                  fit="cover"/>
+              </div>
+            </div>
+
+            <el-divider></el-divider>
           </el-col>
 
           <el-col class="cs-pl" :span="15">
@@ -137,6 +219,8 @@
         </el-collapse>
       </el-card>
     </div>
+
+    <cs-order-refund v-model="refundVisible" :refund-no="refundNo"/>
   </cs-container>
 </template>
 
@@ -149,6 +233,9 @@ export default {
   mixins: [
     serviceMixins
   ],
+  components: {
+    'csOrderRefund': () => import('@/components/cs-order-refund')
+  },
   props: {
     service_no: {
       type: String,
@@ -158,9 +245,10 @@ export default {
   data() {
     return {
       serviceData: {
+        image: [],
         refund_detail: {},
         get_user: {},
-        get_admin: {},
+        get_admin: null,
         get_order_goods: [],
         get_service_log: []
       },
@@ -190,7 +278,9 @@ export default {
         '-1': '游客',
         '0': '顾客',
         '1': '商家'
-      }
+      },
+      refundNo: '',
+      refundVisible: false
     }
   },
   watch: {
@@ -250,6 +340,11 @@ export default {
             })
         }
       })
+    },
+    // 查看退款单信息
+    handleRefund(val) {
+      this.refundNo = val
+      this.refundVisible = true
     }
   }
 }
@@ -282,6 +377,14 @@ export default {
       .number {
         width: 150px;
         text-align: right;
+      }
+
+      .link {
+        &:hover {
+          cursor: pointer;
+          color: $color-primary;
+          text-decoration: underline;
+        }
       }
     }
   }
@@ -341,6 +444,21 @@ export default {
       font-size: 12px;
       color: $color-info;
     }
+  }
+
+  .image_thumb {
+    width: 40px;
+    height: 40px;
+    margin: 5px 5px 0 0;
+  }
+
+  .image_thumb /deep/ img {
+    cursor: pointer;
+  }
+
+  .image_thumb /deep/ .el-image__error {
+    text-align: center;
+    line-height: 1.4;
   }
 
   .el-collapse /deep/ .el-collapse-item__header {

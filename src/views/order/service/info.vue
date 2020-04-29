@@ -26,15 +26,6 @@
               </div>
             </div>
 
-            <div class="service-info" v-if="serviceData.refund_no">
-              <div class="dt">退款单号</div>
-              <div class="dd">
-                <span
-                  @click="handleRefund(serviceData.refund_no)"
-                  class="link">{{serviceData.refund_no}}</span>
-              </div>
-            </div>
-
             <div class="service-info" v-if="serviceData.get_admin">
               <div class="dt">处理人员</div>
               <div class="dd">
@@ -89,6 +80,22 @@
             </div>
 
             <el-divider></el-divider>
+
+            <template v-if="serviceData.is_return">
+              <div class="service-info">
+                <div class="dt">是否寄回</div>
+                <div class="dd">需要寄回给商家</div>
+              </div>
+            </template>
+
+            <div class="service-info" v-if="serviceData.refund_no">
+              <div class="dt">退款单号</div>
+              <div class="dd">
+                <span
+                  @click="handleRefund(serviceData.refund_no)"
+                  class="link">{{serviceData.refund_no}}</span>
+              </div>
+            </div>
           </el-col>
 
           <el-col class="cs-pl" :span="15">

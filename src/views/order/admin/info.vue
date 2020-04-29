@@ -860,14 +860,17 @@ export default {
       display: table;
       font-size: 14px;
       line-height: 28px;
+
       .dt {
         float: left;
         width: 100px;
         color: #99A9BF;
       }
+
       .dd {
         padding-left: 100px;
       }
+
       .number {
         width: 150px;
         text-align: right;

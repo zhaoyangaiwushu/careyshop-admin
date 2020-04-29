@@ -34,21 +34,22 @@
                       :title="scope.row.goods_name"
                       @click="handleView(scope.row.goods_id)"
                       class="name">{{scope.row.goods_name}}</span>
-                    <span
-                      :style="{'color': deliveryMap[scope.row.status].color}"
-                      class="delivery cs-pl-5">{{deliveryMap[scope.row.status].text}}</span>
 
                     <p class="specs">{{scope.row.key_value}}</p>
                   </div>
                 </template>
               </el-table-column>
 
-              <el-table-column label="申请数量">
-                <span>{{serviceData.qty}}</span>
+              <el-table-column label="商品状态">
+                <template slot-scope="scope">
+                  <span :style="{'color': deliveryMap[scope.row.status].color}">
+                    {{deliveryMap[scope.row.status].text}}
+                  </span>
+                </template>
               </el-table-column>
 
-              <el-table-column label="申请金额">
-                <span>{{serviceData.refund_fee | getNumber}}</span>
+              <el-table-column label="申请数量">
+                <span>{{serviceData.qty}}</span>
               </el-table-column>
 
               <el-table-column label="类型">
@@ -59,6 +60,40 @@
                 <span>{{statusMap[serviceData.status + 1]}}</span>
               </el-table-column>
             </el-table>
+
+            <div class="cs-fr cs-p">
+              <div :class="{'service-info': true, 'cs-pb': isRefundOther()}">
+                <div class="dt">申请金额</div>
+                <div class="dd number">{{serviceData.refund_fee | getNumber}}</div>
+              </div>
+
+              <template v-if="serviceData.refund_detail">
+                <div v-if="serviceData.refund_detail.money_amount" class="service-info">
+                  <div class="dt">退回余额</div>
+                  <div class="dd number">{{serviceData.refund_detail.money_amount | getNumber}}</div>
+                </div>
+
+                <div v-if="serviceData.refund_detail.integral_amount" class="service-info">
+                  <div class="dt">退回积分</div>
+                  <div class="dd number">{{serviceData.refund_detail.integral_amount | getNumber}}</div>
+                </div>
+
+                <div v-if="serviceData.refund_detail.card_amount" class="service-info">
+                  <div class="dt">退回购物卡</div>
+                  <div class="dd number">{{serviceData.refund_detail.card_amount | getNumber}}</div>
+                </div>
+
+                <div v-if="serviceData.refund_detail.payment_amount" class="service-info">
+                  <div class="dt">退回在线支付</div>
+                  <div class="dd number">{{serviceData.refund_detail.payment_amount | getNumber}}</div>
+                </div>
+              </template>
+
+              <div v-if="serviceData.delivery_fee" class="service-info">
+                <div class="dt">退回运费</div>
+                <div class="dd number">{{serviceData.delivery_fee | getNumber}}</div>
+              </div>
+            </div>
           </el-collapse-item>
 
           <el-collapse-item title="售后日志" name="log" id="msg-form">
@@ -122,7 +157,13 @@ export default {
   },
   data() {
     return {
-      serviceData: {},
+      serviceData: {
+        refund_detail: {},
+        get_user: {},
+        get_admin: {},
+        get_order_goods: [],
+        get_service_log: []
+      },
       msgForm: {},
       msgLoading: false,
       msgRules: {
@@ -161,6 +202,24 @@ export default {
     }
   },
   methods: {
+    // 是否返回其他退款信息
+    isRefundOther() {
+      if (this.serviceData.delivery_fee > 0) {
+        return true
+      }
+
+      for (let key in this.serviceData.refund_detail) {
+        if (!this.serviceData.refund_detail.hasOwnProperty(key)) {
+          continue
+        }
+
+        if (this.serviceData.refund_detail[key] > 0) {
+          return true
+        }
+      }
+
+      return false
+    },
     // 获取售后数据
     getServiceData() {
       getOrderServiceItem(this.service_no)
@@ -203,6 +262,27 @@ export default {
 
     .card-title {
       margin-top: 0;
+    }
+
+    .service-info {
+      display: table;
+      font-size: 14px;
+      line-height: 28px;
+
+      .dt {
+        float: left;
+        width: 100px;
+        color: #99A9BF;
+      }
+
+      .dd {
+        padding-left: 100px;
+      }
+
+      .number {
+        width: 150px;
+        text-align: right;
+      }
     }
   }
 
@@ -260,10 +340,6 @@ export default {
       margin: 0;
       font-size: 12px;
       color: $color-info;
-    }
-
-    .delivery {
-      font-size: 13px;
     }
   }
 

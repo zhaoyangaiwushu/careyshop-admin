@@ -89,6 +89,8 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
+        .then(() => {
+        })
     },
     // 查看订单详情
     handleOrder(order_no) {
@@ -96,6 +98,8 @@ export default {
         name: 'order-admin-info',
         params: { order_no }
       })
+        .then(() => {
+        })
     }
   }
 }

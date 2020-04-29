@@ -106,7 +106,12 @@
                         买家尚未填写返件信息
                       </template>
                     </div>
-                    <span class="son">返件地址</span>
+
+                    <el-link
+                      class="service-button"
+                      type="info"
+                      @click="handleDist(scope.row.service_no, scope.row.logistic_code)"
+                      :underline="false">返件地址</el-link>
                   </el-tooltip>
                 </p>
               </div>
@@ -125,18 +130,18 @@
                   <p class="service-button">{{statusMap[scope.row.status + 1]}}</p>
                 </el-badge>
 
-                <p v-if="scope.row.type === 2 || scope.row.logistic_code">
-                  <el-link
-                    class="service-button"
-                    type="info"
-                    @click="handleDeliveryDist(scope.row.service_no)"
-                    :underline="false">物流信息</el-link>
-                </p>
-
                 <p v-if="scope.row.result">
                   <el-tooltip :content="scope.row.result" placement="top">
                     <span class="son">处理结果</span>
                   </el-tooltip>
+                </p>
+
+                <p v-if="[2, 3].includes(scope.row.type)">
+                  <el-link
+                    class="service-button"
+                    type="info"
+                    @click="handleDist(scope.row.service_no, null, scope.row.logistic_code)"
+                    :underline="false">寄回物流</el-link>
                 </p>
 
                 <p>
@@ -401,9 +406,13 @@ export default {
       })
     },
     // 查询配送轨迹
-    handleDeliveryDist(value) {
+    handleDist(code, logistic = null, exclude = []) {
       if (this.$refs.deliveryDist) {
-        this.$refs.deliveryDist.show(value)
+        if (typeof exclude === 'string') {
+          exclude = exclude ? [exclude] : []
+        }
+
+        this.$refs.deliveryDist.show(code, logistic, exclude)
       }
     },
     // 设置卖家备注

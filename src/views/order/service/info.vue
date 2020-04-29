@@ -61,7 +61,7 @@
               </el-table-column>
             </el-table>
 
-            <div class="cs-fr cs-p">
+            <div v-if="serviceData.refund_fee" class="cs-fr cs-p">
               <div :class="{'service-info': true, 'cs-pb': isRefundOther()}">
                 <div class="dt">申请金额</div>
                 <div class="dd number">{{serviceData.refund_fee | getNumber}}</div>

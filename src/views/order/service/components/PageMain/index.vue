@@ -94,7 +94,7 @@
                 <p v-if="scope.row.is_return">
                   <el-tooltip placement="top">
                     <div slot="content">
-                      返件信息<br/><br/>
+                      快递单号：{{scope.row.logistic_code}}<br/><br/>
                       <template v-if="scope.row.address">
                         姓名：{{scope.row.consignee}}<br/>
                         手机：{{scope.row.mobile}}<br/>
@@ -141,7 +141,7 @@
                     class="service-button"
                     type="info"
                     @click="handleDist(scope.row.service_no, null, scope.row.logistic_code)"
-                    :underline="false">寄回物流</el-link>
+                    :underline="false">物流信息</el-link>
                 </p>
 
                 <p>
@@ -324,7 +324,6 @@ import {
   setOrderServiceCancel,
   setOrderServiceComplete,
   setOrderServiceRefused,
-  setOrderServiceRemark,
   setOrderServiceSendback
 } from '@/api/order/service'
 import util from '@/utils/util'
@@ -347,46 +346,7 @@ export default {
   },
   data() {
     return {
-      currentTableData: [],
-      tabPane: 0,
-      delivery: [],
-      auth: {
-      },
-      rules: {
-        complete: {
-          result: [
-            {
-              max: 100,
-              message: '长度不能大于 100 个字符',
-              trigger: 'blur'
-            }
-          ],
-          logistic_code: [
-            {
-              required: true,
-              message: '快递单号不能为空',
-              trigger: 'blur'
-            },
-            {
-              max: 50,
-              message: '长度不能大于 50 个字符',
-              trigger: 'blur'
-            }
-          ]
-        }
-      },
-      formRemark: {
-        index: undefined,
-        loading: false,
-        visible: false,
-        request: {}
-      },
-      formComplete: {
-        index: undefined,
-        loading: false,
-        visible: false,
-        request: {}
-      }
+      tabPane: 0
     }
   },
   watch: {
@@ -404,44 +364,6 @@ export default {
         name: 'order-service-info',
         params: { service_no }
       })
-    },
-    // 查询配送轨迹
-    handleDist(code, logistic = null, exclude = []) {
-      if (this.$refs.deliveryDist) {
-        if (typeof exclude === 'string') {
-          exclude = exclude ? [exclude] : []
-        }
-
-        this.$refs.deliveryDist.show(code, logistic, exclude)
-      }
-    },
-    // 设置卖家备注
-    setServiceRemark(index) {
-      const data = this.currentTableData[index]
-      this.formRemark = {
-        index,
-        loading: false,
-        visible: true,
-        request: {
-          service_no: data.service_no,
-          remark: data.remark
-        }
-      }
-    },
-    // 请求卖家备注
-    handleServiceRemark() {
-      this.formRemark.loading = true
-      const index = this.formRemark.index
-
-      setOrderServiceRemark(this.formRemark.request)
-        .then(() => {
-          this.currentTableData[index].remark = this.formRemark.request.remark
-          this.formRemark.visible = false
-          this.$message.success('操作成功')
-        })
-        .catch(() => {
-          this.formRemark.loading = false
-        })
     },
     // 接收售后
     handleServiceAgree(index) {

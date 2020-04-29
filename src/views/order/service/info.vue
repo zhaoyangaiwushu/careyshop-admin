@@ -84,8 +84,41 @@
             <template v-if="serviceData.is_return">
               <div class="service-info">
                 <div class="dt">是否寄回</div>
-                <div class="dd">需要寄回给商家</div>
+                <div class="dd">
+                  <template v-if="serviceData.logistic_code">
+                    <span>快递单号：</span>
+                    <span
+                      @click="handleDist(serviceData.service_no, serviceData.logistic_code)"
+                      class="link">{{serviceData.logistic_code}}</span>
+                  </template>
+
+                  <template v-else>
+                    买家尚未填写返件信息
+                  </template>
+                </div>
               </div>
+
+              <template v-if="serviceData.address">
+                <div class="service-info">
+                  <div class="dt">寄件人</div>
+                  <div class="dd">{{serviceData.consignee}}</div>
+                </div>
+
+                <div class="service-info">
+                  <div class="dt">手机号</div>
+                  <div class="dd">{{serviceData.mobile}}</div>
+                </div>
+
+                <div class="service-info">
+                  <div class="dt">寄件地址</div>
+                  <div class="dd">{{serviceData.address}}</div>
+                </div>
+
+                <div class="service-info">
+                  <div class="dt">邮编</div>
+                  <div class="dd">{{serviceData.zipcode}}</div>
+                </div>
+              </template>
             </template>
 
             <div class="service-info" v-if="serviceData.refund_no">
@@ -96,10 +129,48 @@
                   class="link">{{serviceData.refund_no}}</span>
               </div>
             </div>
+
+            <div class="service-info" v-if="serviceData.result">
+              <div class="dt">处理结果</div>
+              <div class="dd">{{serviceData.result}}</div>
+            </div>
+
+            <div class="service-info">
+              <div class="dt">卖家备注</div>
+              <div class="dd">{{serviceData.remark}}</div>
+            </div>
           </el-col>
 
           <el-col class="cs-pl" :span="15">
             <p class="card-title">售后状态</p>
+            <el-steps
+              :active="tradeStatus.active"
+              :process-status="tradeStatus.process_status"
+              :finish-status="tradeStatus.finish_status"
+              :align-center="true">
+              <el-step
+                v-for="(value, index) of tradeStatus.step"
+                :key="index"
+                :title="value.title"
+                :icon="value.icon"/>
+            </el-steps>
+
+            <el-divider></el-divider>
+
+            <div style="display: inline-flex;">
+              <el-button
+                @click="toMessage"
+                size="small">留言</el-button>
+
+              <el-button
+                @click="setServiceRemark(0)"
+                size="small">备注</el-button>
+
+              <el-button
+                v-if="[2, 3].includes(serviceData.type)"
+                @click="handleDist(serviceData.service_no, null, serviceData.logistic_code)"
+                size="small">物流信息</el-button>
+            </div>
           </el-col>
         </el-row>
 
@@ -227,7 +298,37 @@
       </el-card>
     </div>
 
+    <el-dialog
+      title="卖家备注"
+      :visible.sync="formRemark.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      width="600px">
+      <el-input
+        v-model="formRemark.request.remark"
+        type="textarea"
+        :rows="6"
+        placeholder="编辑卖家备注，仅卖家自己可见"
+        maxlength="255"
+        show-word-limit>
+      </el-input>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formRemark.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formRemark.loading"
+          @click="handleServiceRemark"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
     <cs-order-refund v-model="refundVisible" :refund-no="refundNo"/>
+
+    <cs-delivery-dist ref="deliveryDist"/>
   </cs-container>
 </template>
 
@@ -287,7 +388,8 @@ export default {
         '1': '商家'
       },
       refundNo: '',
-      refundVisible: false
+      refundVisible: false,
+      tradeStatus: {}
     }
   },
   watch: {
@@ -299,6 +401,62 @@ export default {
     }
   },
   methods: {
+    // 处理售后单状态数据
+    _setTradeStatus() {
+      // 初始化数据
+      this.tradeStatus = {
+        active: 1,
+        step: [
+          {
+            'icon': 'el-icon-edit-outline',
+            'title': '申请售后'
+          },
+          {
+            'icon': 'el-icon-user',
+            'title': '等待处理'
+          },
+          {
+            'icon': 'el-icon-loading',
+            'title': '售后中'
+          },
+          {
+            'icon': 'el-icon-time',
+            'title': '售后完成'
+          }
+        ]
+      }
+
+      // 处理状态显示
+      switch (this.serviceData.status) {
+        case 2:
+          this.tradeStatus.process_status = 'wait'
+          this.tradeStatus.finish_status = 'wait'
+          break
+        case 5:
+        case 6:
+          this.tradeStatus.process_status = 'finish'
+          this.tradeStatus.finish_status = 'finish'
+          break
+        default:
+          this.tradeStatus.process_status = 'process'
+          this.tradeStatus.finish_status = 'finish'
+      }
+
+      // 计算进步
+      switch (this.serviceData.status) {
+        case 6:
+        case 5:
+          this.tradeStatus.active = 3
+          break
+        case 4:
+        case 3:
+        case 1:
+          this.tradeStatus.active = 2
+          break
+        default:
+          this.tradeStatus.active = 1
+      }
+    },
     // 是否返回其他退款信息
     isRefundOther() {
       if (this.serviceData.delivery_fee > 0) {
@@ -325,6 +483,8 @@ export default {
           service.get_order_goods = service.get_order_goods ? [service.get_order_goods] : []
 
           this.serviceData = service
+          this.currentTableData = [this.serviceData]
+          this._setTradeStatus()
         })
     },
     // 添加售后留言
@@ -352,6 +512,12 @@ export default {
     handleRefund(val) {
       this.refundNo = val
       this.refundVisible = true
+    },
+    // 返回到留言处
+    toMessage() {
+      this.$nextTick(() => {
+        this.$el.querySelector('#add-message').scrollIntoView()
+      })
     }
   }
 }

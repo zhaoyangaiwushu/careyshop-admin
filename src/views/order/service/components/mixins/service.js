@@ -1,5 +1,6 @@
 import util from '@/utils/util'
 import { getDeliveryCompanySelect } from '@/api/logistics/company'
+import { setOrderServiceRemark } from '@/api/order/service'
 
 export default {
   components: {
@@ -7,6 +8,9 @@ export default {
   },
   data() {
     return {
+      currentTableData: [],
+      auth: {},
+      delivery: [],
       statusMap: {
         0: '全部',
         1: '待处理',
@@ -39,6 +43,41 @@ export default {
         0: '未选择',
         1: '未收到货',
         2: '已收到货'
+      },
+      rules: {
+        complete: {
+          result: [
+            {
+              max: 100,
+              message: '长度不能大于 100 个字符',
+              trigger: 'blur'
+            }
+          ],
+          logistic_code: [
+            {
+              required: true,
+              message: '快递单号不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 50,
+              message: '长度不能大于 50 个字符',
+              trigger: 'blur'
+            }
+          ]
+        }
+      },
+      formRemark: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        request: {}
+      },
+      formComplete: {
+        index: undefined,
+        loading: false,
+        visible: false,
+        request: {}
       }
     }
   },
@@ -99,6 +138,44 @@ export default {
         params: { order_no }
       })
         .then(() => {
+        })
+    },
+    // 查询配送轨迹
+    handleDist(code, logistic = null, exclude = []) {
+      if (this.$refs.deliveryDist) {
+        if (typeof exclude === 'string') {
+          exclude = exclude ? [exclude] : []
+        }
+
+        this.$refs.deliveryDist.show(code, logistic, exclude)
+      }
+    },
+    // 设置卖家备注
+    setServiceRemark(index) {
+      const data = this.currentTableData[index]
+      this.formRemark = {
+        index,
+        loading: false,
+        visible: true,
+        request: {
+          service_no: data.service_no,
+          remark: data.remark
+        }
+      }
+    },
+    // 请求卖家备注
+    handleServiceRemark() {
+      this.formRemark.loading = true
+      const index = this.formRemark.index
+
+      setOrderServiceRemark(this.formRemark.request)
+        .then(() => {
+          this.currentTableData[index].remark = this.formRemark.request.remark
+          this.formRemark.visible = false
+          this.$message.success('操作成功')
+        })
+        .catch(() => {
+          this.formRemark.loading = false
         })
     }
   }

@@ -167,9 +167,39 @@
                 size="small">备注</el-button>
 
               <el-button
-                v-if="[2, 3].includes(serviceData.type)"
+                v-if="[2, 3].includes(serviceData.type) && serviceData.status === 6"
                 @click="handleDist(serviceData.service_no, null, serviceData.logistic_code)"
                 size="small">物流信息</el-button>
+
+              <el-button
+                v-if="serviceData.status === 0"
+                @click="handleServiceAgree(0)"
+                size="small">接收售后</el-button>
+
+              <el-button
+                v-if="serviceData.status === 0"
+                @click="handleServiceRefused(0)"
+                size="small">拒绝售后</el-button>
+
+              <el-button
+                v-if="serviceData.type !== 0 && serviceData.status === 1 && !serviceData.logistic_code"
+                @click="handleServiceSendback(0)"
+                size="small">{{serviceData.is_return ? '撤销寄回' : '要求寄回'}}</el-button>
+
+              <el-button
+                v-if="[1, 3].includes(serviceData.status)"
+                @click="handleServiceAfter(0)"
+                size="small">设为售后中</el-button>
+
+              <el-button
+                v-if="[1, 3, 4].includes(serviceData.status)"
+                @click="handleServiceCancel(0)"
+                size="small">撤销售后</el-button>
+
+              <el-button
+                v-if="serviceData.status === 4"
+                @click="setServiceComplete(0)"
+                size="small">售后完成</el-button>
             </div>
           </el-col>
         </el-row>
@@ -322,6 +352,64 @@
           type="primary"
           :loading="formRemark.loading"
           @click="handleServiceRemark"
+          size="small">确定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog
+      title="售后完成"
+      :visible.sync="formComplete.visible"
+      :append-to-body="true"
+      :close-on-click-modal="false"
+      @open="handleOpenDelivery"
+      width="600px">
+      <el-form
+        :model="formComplete.request"
+        :rules="rules.complete"
+        ref="formComplete"
+        label-width="80px">
+        <el-form-item
+          label="处理结果"
+          prop="result">
+          <el-input
+            v-model="formComplete.request.result"
+            placeholder="可输入售后处理结果"
+            :clearable="true"/>
+        </el-form-item>
+
+        <el-form-item
+          v-if="[2, 3].includes(formComplete.request.type)"
+          label="快递单号"
+          prop="logistic_code">
+          <el-input
+            v-model="formComplete.request.logistic_code"
+            class="input-with-select"
+            placeholder="请输入售后完成后寄回商品的快递单号"
+            :clearable="true">
+            <el-select
+              v-model="formComplete.request.delivery_item_id"
+              style="width: 150px;"
+              placeholder="请选择"
+              slot="prepend">
+              <el-option
+                v-for="(item, index) in delivery"
+                :key="index"
+                :label="item.name"
+                :value="item.delivery_item_id"/>
+            </el-select>
+          </el-input>
+        </el-form-item>
+      </el-form>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button
+          @click="formComplete.visible = false"
+          size="small">取消</el-button>
+
+        <el-button
+          type="primary"
+          :loading="formComplete.loading"
+          @click="handleServiceComplete"
           size="small">确定</el-button>
       </div>
     </el-dialog>

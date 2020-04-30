@@ -1,6 +1,14 @@
+import {
+  setOrderServiceAfter,
+  setOrderServiceAgree,
+  setOrderServiceCancel,
+  setOrderServiceComplete,
+  setOrderServiceRefused,
+  setOrderServiceRemark,
+  setOrderServiceSendback
+} from '@/api/order/service'
 import util from '@/utils/util'
 import { getDeliveryCompanySelect } from '@/api/logistics/company'
-import { setOrderServiceRemark } from '@/api/order/service'
 
 export default {
   components: {
@@ -177,6 +185,224 @@ export default {
         .catch(() => {
           this.formRemark.loading = false
         })
+    },
+    // 接收售后
+    handleServiceAgree(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          setOrderServiceAgree(data.service_no)
+            .then(res => {
+              if (this.$options.name !== 'order-service-info') {
+                if (this.tabPane === '0') {
+                  this.$set(this.currentTableData, index, {
+                    ...data,
+                    ...res.data,
+                    admin_event: 0,
+                    get_admin: { username: util.cookies.get('uuid') } // 后端不返回get_admin,所以进行模拟
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    this.$emit('refresh', true)
+                  }
+                }
+              } else {
+                this.getServiceData()
+              }
+            })
+            .then(() => {
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 拒绝售后
+    handleServiceRefused(index) {
+      this.$prompt('请输入拒绝原因', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /\S/,
+        inputErrorMessage: '请输入拒绝原因'
+      })
+        .then(({ value }) => {
+          const data = this.currentTableData[index]
+          setOrderServiceRefused(data.service_no, value)
+            .then(res => {
+              if (this.$options.name !== 'order-service-info') {
+                if (this.tabPane === '0') {
+                  this.$set(this.currentTableData, index, {
+                    ...data,
+                    ...res.data,
+                    admin_event: 0
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    this.$emit('refresh', true)
+                  }
+                }
+              } else {
+                this.getServiceData()
+              }
+            })
+            .then(() => {
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 设置是否需要寄回商家
+    handleServiceSendback(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          const isReturn = Number(!data.is_return)
+
+          setOrderServiceSendback(data.service_no, isReturn)
+            .then(() => {
+              if (this.$options.name !== 'order-service-info') {
+                this.$set(this.currentTableData, index, {
+                  ...data,
+                  is_return: isReturn,
+                  admin_event: 0
+                })
+              } else {
+                this.getServiceData()
+              }
+            })
+            .then(() => {
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 设为售后中
+    handleServiceAfter(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          setOrderServiceAfter(data.service_no)
+            .then(res => {
+              if (this.$options.name !== 'order-service-info') {
+                if (this.tabPane === '0') {
+                  this.$set(this.currentTableData, index, {
+                    ...data,
+                    ...res.data,
+                    admin_event: 0
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    this.$emit('refresh', true)
+                  }
+                }
+              } else {
+                this.getServiceData()
+              }
+            })
+            .then(() => {
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 撤销售后
+    handleServiceCancel(index) {
+      this._whetherToConfirm()
+        .then(() => {
+          const data = this.currentTableData[index]
+          setOrderServiceCancel(data.service_no)
+            .then(res => {
+              if (this.$options.name !== 'order-service-info') {
+                if (this.tabPane === '0') {
+                  this.$set(this.currentTableData, index, {
+                    ...data,
+                    ...res.data,
+                    admin_event: 0
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    this.$emit('refresh', true)
+                  }
+                }
+              } else {
+                this.getServiceData()
+              }
+            })
+            .then(() => {
+              this.$message.success('操作成功')
+            })
+        })
+        .catch(() => {
+        })
+    },
+    // 售后完成
+    setServiceComplete(index) {
+      const data = this.currentTableData[index]
+      this.formComplete = {
+        index,
+        loading: false,
+        visible: false,
+        request: {
+          type: data.type,
+          service_no: data.service_no,
+          delivery_item_id: undefined,
+          logistic_code: undefined,
+          result: undefined
+        }
+      }
+
+      this.$nextTick(() => {
+        if (this.$refs.formComplete) {
+          this.$refs.formComplete.clearValidate()
+        }
+
+        this.formComplete.visible = true
+      })
+    },
+    // 请求售后完成
+    handleServiceComplete() {
+      this.$refs.formComplete.validate(valid => {
+        if (valid) {
+          const request = this.formComplete.request
+          if ([2, 3].includes(request.type) && !request.delivery_item_id) {
+            this.$message.error('请选择快递公司')
+            return
+          }
+
+          this.formComplete.loading = true
+          const index = this.formComplete.index
+
+          setOrderServiceComplete(request)
+            .then(res => {
+              if (this.$options.name !== 'order-service-info') {
+                if (this.tabPane === '0') {
+                  this.$set(this.currentTableData, index, {
+                    ...this.currentTableData[index],
+                    ...res.data,
+                    admin_event: 0
+                  })
+                } else {
+                  this.currentTableData.splice(index, 1)
+                  if (this.currentTableData.length <= 0) {
+                    this.$emit('refresh', true)
+                  }
+                }
+              } else {
+                this.getServiceData()
+              }
+
+              this.formComplete.visible = false
+              this.$message.success('操作成功')
+            })
+        }
+      })
     }
   }
 }

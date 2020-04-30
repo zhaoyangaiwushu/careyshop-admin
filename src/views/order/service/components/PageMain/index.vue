@@ -165,7 +165,7 @@
                     class="service-button"
                     type="primary"
                     @click="handleServiceAgree(scope.$index)"
-                    :underline="false">接收售后</el-link>
+                    :underline="false">同意售后</el-link>
                 </p>
 
                 <p v-if="scope.row.status === 0">
@@ -184,7 +184,7 @@
                     :underline="false">{{scope.row.is_return ? '撤销寄回' : '要求寄回'}}</el-link>
                 </p>
 
-                <p v-if="[1, 3].includes(scope.row.status)">
+                <p v-if="(scope.row.type === 0 && scope.row.status === 1) || scope.row.status === 3">
                   <el-link
                     class="service-button"
                     type="primary"

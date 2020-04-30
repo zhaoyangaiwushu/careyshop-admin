@@ -186,7 +186,7 @@ export default {
           this.formRemark.loading = false
         })
     },
-    // 接收售后
+    // 同意售后
     handleServiceAgree(index) {
       this._whetherToConfirm()
         .then(() => {

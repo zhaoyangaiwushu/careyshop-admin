@@ -174,7 +174,7 @@
               <el-button
                 v-if="serviceData.status === 0"
                 @click="handleServiceAgree(0)"
-                size="small">接收售后</el-button>
+                size="small">同意售后</el-button>
 
               <el-button
                 v-if="serviceData.status === 0"
@@ -187,7 +187,7 @@
                 size="small">{{serviceData.is_return ? '撤销寄回' : '要求寄回'}}</el-button>
 
               <el-button
-                v-if="[1, 3].includes(serviceData.status)"
+                v-if="(serviceData.type === 0 && serviceData.status === 1) || serviceData.status === 3"
                 @click="handleServiceAfter(0)"
                 size="small">设为售后中</el-button>
 
@@ -724,5 +724,9 @@ export default {
 
   .el-collapse /deep/ .el-collapse-item__header {
     font-size: 16px;
+  }
+
+  .input-with-select /deep/ .el-input-group__prepend {
+    background-color: #FFF;
   }
 </style>

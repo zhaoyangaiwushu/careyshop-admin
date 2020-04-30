@@ -199,7 +199,7 @@ export default {
                     ...data,
                     ...res.data,
                     admin_event: 0,
-                    get_admin: { username: util.cookies.get('uuid') } // 后端不返回get_admin,所以进行模拟
+                    get_admin: { username: util.cookies.get('uuid') } // 后端不返回get_admin,进行模拟
                   })
                 } else {
                   this.currentTableData.splice(index, 1)
@@ -235,7 +235,8 @@ export default {
                   this.$set(this.currentTableData, index, {
                     ...data,
                     ...res.data,
-                    admin_event: 0
+                    admin_event: 0,
+                    get_admin: { username: util.cookies.get('uuid') } // 后端不返回get_admin,进行模拟
                   })
                 } else {
                   this.currentTableData.splice(index, 1)

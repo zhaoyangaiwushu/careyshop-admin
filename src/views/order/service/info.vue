@@ -159,10 +159,12 @@
 
             <div style="display: inline-flex;">
               <el-button
+                v-if="auth.message"
                 @click="toMessage"
                 size="small">留言</el-button>
 
               <el-button
+                v-if="auth.remark"
                 @click="setServiceRemark(0)"
                 size="small">备注</el-button>
 
@@ -172,32 +174,32 @@
                 size="small">物流信息</el-button>
 
               <el-button
-                v-if="serviceData.status === 0"
+                v-if="serviceData.status === 0 && auth.agree"
                 @click="handleServiceAgree(0)"
                 size="small">同意售后</el-button>
 
               <el-button
-                v-if="serviceData.status === 0"
+                v-if="serviceData.status === 0 && auth.refused"
                 @click="handleServiceRefused(0)"
                 size="small">拒绝售后</el-button>
 
               <el-button
-                v-if="serviceData.type !== 0 && serviceData.status === 1 && !serviceData.logistic_code"
+                v-if="serviceData.type !== 0 && serviceData.status === 1 && !serviceData.logistic_code && auth.sendback"
                 @click="handleServiceSendback(0)"
                 size="small">{{serviceData.is_return ? '撤销寄回' : '要求寄回'}}</el-button>
 
               <el-button
-                v-if="(serviceData.type === 0 && serviceData.status === 1) || serviceData.status === 3"
+                v-if="((serviceData.type === 0 && serviceData.status === 1) || serviceData.status === 3) && auth.after"
                 @click="handleServiceAfter(0)"
                 size="small">设为售后中</el-button>
 
               <el-button
-                v-if="[1, 3, 4].includes(serviceData.status)"
+                v-if="[1, 3, 4].includes(serviceData.status) && auth.cancel"
                 @click="handleServiceCancel(0)"
                 size="small">撤销售后</el-button>
 
               <el-button
-                v-if="serviceData.status === 4"
+                v-if="serviceData.status === 4 && auth.complete"
                 @click="setServiceComplete(0)"
                 size="small">售后完成</el-button>
             </div>

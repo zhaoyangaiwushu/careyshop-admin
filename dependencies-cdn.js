@@ -41,7 +41,7 @@ module.exports = [
   {
     name: 'dayjs',
     library: 'dayjs',
-    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.25/dayjs.min.js',
+    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.26/dayjs.min.js',
     css: ''
   },
   {

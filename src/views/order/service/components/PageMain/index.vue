@@ -160,7 +160,7 @@
             align="center">
             <template slot-scope="scope">
               <div class="service-text">
-                <p v-if="scope.row.status === 0">
+                <p v-if="scope.row.status === 0 && auth.agree">
                   <el-link
                     class="service-button"
                     type="primary"
@@ -168,7 +168,7 @@
                     :underline="false">同意售后</el-link>
                 </p>
 
-                <p v-if="scope.row.status === 0">
+                <p v-if="scope.row.status === 0 && auth.refused">
                   <el-link
                     class="service-button"
                     type="danger"
@@ -176,7 +176,7 @@
                     :underline="false">拒绝售后</el-link>
                 </p>
 
-                <p v-if="scope.row.type !== 0 && scope.row.status === 1 && !scope.row.logistic_code">
+                <p v-if="scope.row.type !== 0 && scope.row.status === 1 && !scope.row.logistic_code && auth.sendback">
                   <el-link
                     class="service-button"
                     type="primary"
@@ -184,7 +184,7 @@
                     :underline="false">{{scope.row.is_return ? '撤销寄回' : '要求寄回'}}</el-link>
                 </p>
 
-                <p v-if="(scope.row.type === 0 && scope.row.status === 1) || scope.row.status === 3">
+                <p v-if="((scope.row.type === 0 && scope.row.status === 1) || scope.row.status === 3) && auth.after">
                   <el-link
                     class="service-button"
                     type="primary"
@@ -192,7 +192,7 @@
                     :underline="false">设为售后中</el-link>
                 </p>
 
-                <p v-if="[1, 3, 4].includes(scope.row.status)">
+                <p v-if="[1, 3, 4].includes(scope.row.status) && auth.cancel">
                   <el-link
                     class="service-button"
                     type="danger"
@@ -200,7 +200,7 @@
                     :underline="false">撤销售后</el-link>
                 </p>
 
-                <p v-if="scope.row.status === 4">
+                <p v-if="scope.row.status === 4 && auth.complete">
                   <el-link
                     class="service-button"
                     type="success"
@@ -208,7 +208,7 @@
                     :underline="false">售后完成</el-link>
                 </p>
 
-                <p>
+                <p v-if="auth.remark">
                   <el-tooltip
                     :disabled="scope.row.remark.length <= 0"
                     :content="scope.row.remark"

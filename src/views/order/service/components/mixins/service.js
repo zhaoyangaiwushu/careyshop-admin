@@ -17,7 +17,16 @@ export default {
   data() {
     return {
       currentTableData: [],
-      auth: {},
+      auth: {
+        message: false,
+        agree: false,
+        refused: false,
+        sendback: false,
+        after: false,
+        cancel: false,
+        complete: false,
+        remark: false
+      },
       delivery: [],
       statusMap: {
         0: '全部',
@@ -102,7 +111,21 @@ export default {
       }
     }
   },
+  mounted() {
+    this._validationAuth()
+  },
   methods: {
+    // 验证权限
+    _validationAuth() {
+      this.auth.message = this.$permission('/order/service/list/message')
+      this.auth.agree = this.$permission('/order/service/list/agree')
+      this.auth.refused = this.$permission('/order/service/list/refused')
+      this.auth.sendback = this.$permission('/order/service/list/sendback')
+      this.auth.after = this.$permission('/order/service/list/after')
+      this.auth.cancel = this.$permission('/order/service/list/cancel')
+      this.auth.complete = this.$permission('/order/service/list/complete')
+      this.auth.remark = this.$permission('/order/service/list/remark')
+    },
     // 我的工单配色
     _getServiceColor(val) {
       if (val && val.username === util.cookies.get('uuid')) {

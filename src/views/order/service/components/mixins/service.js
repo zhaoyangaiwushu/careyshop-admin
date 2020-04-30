@@ -126,6 +126,7 @@ export default {
       this.auth.cancel = this.$permission('/order/service/list/cancel')
       this.auth.complete = this.$permission('/order/service/list/complete')
       this.auth.remark = this.$permission('/order/service/list/remark')
+      this.auth.dist = this.$permission('/order/service/list/dist')
     },
     // 我的工单配色
     _getServiceColor(val) {

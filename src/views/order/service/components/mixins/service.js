@@ -25,7 +25,8 @@ export default {
         after: false,
         cancel: false,
         complete: false,
-        remark: false
+        remark: false,
+        dist: false
       },
       delivery: [],
       statusMap: {

@@ -136,7 +136,7 @@
                   </el-tooltip>
                 </p>
 
-                <p v-if="[2, 3].includes(scope.row.type) && scope.row.status === 6">
+                <p v-if="[2, 3].includes(scope.row.type) && scope.row.status === 6 && auth.dist">
                   <el-link
                     class="service-button"
                     type="info"

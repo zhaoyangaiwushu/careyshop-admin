@@ -169,7 +169,7 @@
                 size="small">备注</el-button>
 
               <el-button
-                v-if="[2, 3].includes(serviceData.type) && serviceData.status === 6"
+                v-if="[2, 3].includes(serviceData.type) && serviceData.status === 6 && auth.dist"
                 @click="handleDist(serviceData.service_no, null, serviceData.logistic_code)"
                 size="small">物流信息</el-button>
 

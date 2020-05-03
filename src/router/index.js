@@ -37,13 +37,8 @@ router.beforeEach(async(to, from, next) => {
 
   // 检测当前路由是否需要验证
   if (to.matched.some(r => r.meta.auth)) {
-    // 验证用户是否已登陆
     if (token && token !== 'undefined') {
-      if (Vue.prototype.$permission(to.path)) {
-        next()
-      } else {
-        next({ name: '404' })
-      }
+      next()
     } else {
       next({
         name: 'login',

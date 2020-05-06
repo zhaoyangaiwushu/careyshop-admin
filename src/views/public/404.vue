@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <img src="~@/assets/image/404@2x.png" alt="404">
+    <p class="page_title">404 Not found</p>
     <el-button class="cs-mt" @click="$router.replace({ path: '/' })">
       返回首页
     </el-button>

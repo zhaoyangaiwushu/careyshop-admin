@@ -1,5 +1,4 @@
 import util from '@/utils/util'
-import { getMenuAuthList } from '@/api/auth/menu'
 import { loginAdminUser, logoutAdminUser } from '@/api/user/admin'
 
 export default {
@@ -11,37 +10,24 @@ export default {
      * @param {Object} payload login 登录数据
      * @param {Object} payload remember 是否保持登录
      */
-    login({ dispatch }, { login, remember }) {
-      return new Promise((resolve, reject) => {
-        loginAdminUser({ ...login })
-          .then(res => {
-            let cookieSetting = remember ? { expires: 365 } : { expires: null }
-            util.cookies.set('uuid', res.data.admin.username, cookieSetting)
-            util.cookies.set('token', res.data.token.token, cookieSetting)
-            dispatch('careyshop/user/set', {
-              name: res.data.admin.nickname,
-              admin: res.data.admin,
-              token: res.data.token
-            }, { root: true })
+    async login({ dispatch }, { login, remember }) {
+      // 请求登录
+      const res = await loginAdminUser({ ...login })
 
-            // 请求get.menu.list,并且由下个then处理
-            return getMenuAuthList(null)
-          })
-          .then(menu => {
-            dispatch('careyshop/db/set', {
-              dbName: 'database',
-              path: '$menu.sourceData',
-              value: menu.data,
-              user: true
-            }, { root: true })
-            resolve()
-          })
-          .catch(err => {
-            util.cookies.remove('token')
-            util.cookies.remove('uuid')
-            reject(err)
-          })
-      })
+      // 保存用户数据
+      let cookieSetting = remember ? { expires: 365 } : { expires: null }
+      util.cookies.set('uuid', res.data.admin.username, cookieSetting)
+      util.cookies.set('token', res.data.token.token, cookieSetting)
+
+      // 设置 vuex 用户信息
+      await dispatch('careyshop/user/set', {
+        name: res.data.admin.nickname,
+        admin: res.data.admin,
+        token: res.data.token
+      }, { root: true })
+
+      // 用户登录后从持久化数据加载一系列的设置
+      await dispatch('load')
     },
     /**
      * @description 注销用户并返回登录页面
@@ -57,6 +43,14 @@ export default {
       function logout() {
         logoutAdminUser()
           .finally(() => {
+            // 删除sourceData
+            dispatch('careyshop/db/set', {
+              dbName: 'database',
+              path: '$menu.sourceData',
+              value: [],
+              user: true
+            }, { root: true })
+
             // 删除info
             dispatch('careyshop/user/set', {}, { root: true })
 

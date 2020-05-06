@@ -352,23 +352,27 @@ export default {
     /**
      * 重新载入菜单
      */
-    resetMenu() {
-      getMenuAuthList(null)
-        .then(res => {
-          if (res.data) {
-            this.$store.dispatch('careyshop/db/set', {
-              dbName: 'database',
-              path: '$menu.sourceData',
-              value: res.data,
-              user: true
-            })
+    async resetMenu() {
+      const res = await getMenuAuthList(null)
+      await this.$store.dispatch('careyshop/db/set', {
+        dbName: 'database',
+        path: '$menu.sourceData',
+        value: res.data || [],
+        user: true
+      })
 
-            menu.install(this.$store, res.data)
-          }
+      // 重新初始化菜单数据
+      menu.install(this.$store, res.data || [])
 
-          this.$router.replace('/refresh')
-          this.$message.success('菜单已重新载入')
-        })
+      /**
+       * 清空页面缓存设置，将导致页面上的缓存数据丢失，但会实时载入权限
+       * 如果将其注释，那么已打开页面需要关闭之后，在下次打开页面时生效。
+       * 请根据实际需要而自行选择
+       */
+      this.$store.commit('careyshop/page/keepAliveClean')
+
+      await this.$router.replace('/refresh')
+      this.$message.success('菜单(包括权限)已重新载入')
     }
   },
   beforeDestroy() {

@@ -1,5 +1,7 @@
 import setting from '@/setting'
 import menu from '@/menu'
+import util from '@/utils/util'
+import { getMenuAuthList } from '@/api/auth/menu'
 
 export default {
   namespaced: true,
@@ -18,6 +20,8 @@ export default {
     asideIndex: setting.page.opened[0]['fullPath'],
     // 侧边栏限制历史菜单
     historyCount: setting.menu.historyCount,
+    // 权限字典
+    authKey: {},
     // 菜单源数据
     sourceData: []
   },
@@ -122,13 +126,27 @@ export default {
      * @returns {Promise<void>}
      */
     async sourceDataLoad({ state, dispatch }) {
-      // 菜单数据源持久化
+      // 加载菜单数据源
       state.sourceData = await dispatch('careyshop/db/get', {
         dbName: 'database',
         path: '$menu.sourceData',
         defaultValue: [],
         user: true
       }, { root: true })
+
+      // 处理菜单源不存在,并且用户已登录
+      if (!state.sourceData.length && util.cookies.get('token')) {
+        const res = await getMenuAuthList(null)
+
+        // 持久化
+        state.sourceData = res.data || []
+        await dispatch('careyshop/db/set', {
+          dbName: 'database',
+          path: '$menu.sourceData',
+          value: state.sourceData,
+          user: true
+        }, { root: true })
+      }
 
       // 处理顶栏菜单、侧边菜单、功能搜索
       menu.install(this, state.sourceData)
@@ -198,6 +216,23 @@ export default {
     }
   },
   mutations: {
+    /**
+     * @description 设置权限字典
+     * @param {Object} state state
+     * @param {Array} source source setting
+     */
+    headerAuth(state, source) {
+      if (source.length > 0) {
+        let auth = {}
+        source.forEach(value => {
+          if (value.url) {
+            auth[value.url] = value.name
+          }
+        })
+
+        state.authKey = auth
+      }
+    },
     /**
      * @description 设置顶栏菜单
      * @param {Object} state state

@@ -38,7 +38,12 @@ router.beforeEach(async(to, from, next) => {
   // 检测当前路由是否需要验证
   if (to.matched.some(r => r.meta.auth)) {
     if (token && token !== 'undefined') {
-      next()
+      if (to.path === '/401' || Vue.prototype.$permission(to.path)) {
+        next()
+      } else {
+        next({ path: '/401' })
+        NProgress.done()
+      }
     } else {
       next({
         name: 'login',

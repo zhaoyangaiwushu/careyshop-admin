@@ -44,6 +44,8 @@ function getMenuData(arr) {
 
 export default {
   install(vm, source) {
+    vm.commit('careyshop/menu/headerAuth', source)
+
     const { header, aside } = getMenuData(source)
     vm.commit('careyshop/menu/headerSet', header)
     vm.commit('careyshop/menu/asideSet', aside)

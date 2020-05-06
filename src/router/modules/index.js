@@ -14,6 +14,12 @@ export default {
       meta: { title: '首页', auth: true },
       component: () => import('@/views/index/index')
     },
+    {
+      path: '401',
+      name: 'page401',
+      meta: { title: '权限不足', auth: true },
+      component: () => import('@/views/public/401')
+    },
     // 系统 前端日志
     {
       path: 'log',

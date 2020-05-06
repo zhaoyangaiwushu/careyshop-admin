@@ -111,7 +111,7 @@ export default {
      * @description 是否显示实际密码
      */
     showPassword() {
-      this.passwordType === '' ? (this.passwordType = 'password') : (this.passwordType = '')
+      this.passwordType = !this.passwordType ? 'password' : ''
     },
     /**
      * @description 正式登录
@@ -122,10 +122,12 @@ export default {
           this.loading = true
           this.loginForm.session_id = this.sessionId
 
-          this.login({ login: this.loginForm, remember: this.remember })
+          this.login({
+            login: this.loginForm,
+            remember: this.remember
+          })
             .then(() => {
               this.captcha = false
-              this.$store.dispatch('careyshop/account/load')
               this.$router.replace(this.$route.query.redirect || '/')
             })
             .catch(() => {

@@ -589,7 +589,7 @@ export default {
     // 验证权限
     _validationAuth() {
       this.auth.add = this.$permission('/goods/admin/list/add')
-      this.auth.set = this.$permission('/goods/admin/list/set')
+      this.auth.set = this.$permission('/goods/admin/update')
       this.auth.del = this.$permission('/goods/admin/list/del')
       this.auth.restore = this.$permission('/goods/admin/list/restore')
       this.auth.copy = this.$permission('/goods/admin/list/copy')

@@ -31,11 +31,7 @@ export default {
       'clean'
     ]),
     handleClick() {
-      this.$router.push({
-        name: 'log'
-      })
-        .catch(() => {
-        })
+      this.$router.push({ name: 'log' })
     }
   }
 }

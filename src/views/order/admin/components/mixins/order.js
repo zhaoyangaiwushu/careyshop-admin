@@ -206,7 +206,7 @@ export default {
   methods: {
     // 验证权限
     _validationAuth() {
-      this.auth.print = this.$permission('/order/admin/list/print')
+      this.auth.print = this.$permission('/order/admin/print')
       this.auth.start_picking = this.$permission('/order/admin/list/start_picking')
       this.auth.cancel_picking = this.$permission('/order/admin/list/cancel_picking')
       this.auth.delivery = this.$permission('/order/admin/list/delivery')
@@ -268,8 +268,6 @@ export default {
         name: 'goods-admin-view',
         params: { goods_id }
       })
-        .then(() => {
-        })
     },
     // 设置卖家备注
     setSellersRemark(index) {

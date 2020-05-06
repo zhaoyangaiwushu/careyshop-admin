@@ -8,6 +8,17 @@ import routes from './routes'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
+// fix vue-router NavigationDuplicated
+const VueRouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return VueRouterPush.call(this, location).catch(err => err)
+}
+
+const VueRouterReplace = VueRouter.prototype.replace
+VueRouter.prototype.replace = function replace(location) {
+  return VueRouterReplace.call(this, location).catch(err => err)
+}
+
 Vue.use(VueRouter)
 NProgress.configure({ showSpinner: false })
 
@@ -38,7 +49,7 @@ router.beforeEach(async(to, from, next) => {
   // 检测当前路由是否需要验证
   if (to.matched.some(r => r.meta.auth)) {
     if (token && token !== 'undefined') {
-      if (to.path === '/401' || Vue.prototype.$permission(to.path)) {
+      if (to.path === '/401' || Vue.prototype.$permission(to, 'router')) {
         next()
       } else {
         next({ path: '/401' })

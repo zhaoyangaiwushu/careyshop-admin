@@ -346,8 +346,6 @@ export default {
      */
     handleMessage() {
       this.$router.push({ name: 'system-message-user' })
-        .catch(() => {
-        })
     },
     /**
      * 重新载入菜单

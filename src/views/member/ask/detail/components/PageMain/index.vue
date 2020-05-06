@@ -82,7 +82,7 @@
       </el-timeline>
 
       <el-form
-        v-permission="'/member/ask/list/detail'"
+        v-permission="'/member/ask/detail'"
         :model="form"
         :rules="rules"
         ref="form"

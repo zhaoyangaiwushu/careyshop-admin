@@ -91,8 +91,8 @@
                 <i class="el-icon-link"/>
               </el-tooltip>
               <span
-                @click="openMessage(scope.$index)"
-                :class="`message-title ${scope.row.is_read ? 'read' : ''}`">
+                :class="{'message-title': auth.view, 'read': scope.row.is_read}"
+                @click="openMessage(scope.$index)">
                 {{scope.row.title}}
               </span>
               <el-badge v-if="scope.row.is_top" value="Top"/>
@@ -170,7 +170,8 @@ export default {
         read: false,
         read_all: false,
         del: false,
-        del_all: false
+        del_all: false,
+        view: false
       }
     }
   },
@@ -216,6 +217,7 @@ export default {
       this.auth.read_all = this.$permission('/system/message/user/read_all')
       this.auth.del = this.$permission('/system/message/user/del')
       this.auth.del_all = this.$permission('/system/message/user/del_all')
+      this.auth.view = this.$permission('/system/message/user/view')
     },
     // 获取列表中的编号
     _getIdList(val) {
@@ -260,6 +262,10 @@ export default {
     },
     // 打开消息
     openMessage(index) {
+      if (!this.auth.view) {
+        return
+      }
+
       let message = this.currentTableData[index]
       if (!message.is_read) {
         this.setMessageRead(index)

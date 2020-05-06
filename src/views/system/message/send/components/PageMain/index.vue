@@ -37,7 +37,9 @@
         min-width="350"
         :show-overflow-tooltip="true">
         <template slot-scope="scope">
-          <span class="link" @click="handleView(scope.$index)">{{scope.row.title}}</span>
+          <span
+            @click="handleView(scope.$index)"
+            :class="{'link': auth.view}">{{scope.row.title}}</span>
         </template>
       </el-table-column>
 
@@ -598,6 +600,10 @@ export default {
     },
     // 预览消息
     handleView(index) {
+      if (!this.auth.view) {
+        return
+      }
+
       if (this.currentTableData[index].url) {
         this.$open(this.currentTableData[index].url)
         return

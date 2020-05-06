@@ -187,7 +187,7 @@ export default {
     _validationAuth() {
       this.auth.add = this.$permission('/system/topic/admin/add')
       this.auth.del = this.$permission('/system/topic/admin/del')
-      this.auth.set = this.$permission('/system/topic/admin/set')
+      this.auth.set = this.$permission('/system/topic/update')
       this.auth.enable = this.$permission('/system/topic/admin/enable')
       this.auth.disable = this.$permission('/system/topic/admin/disable')
     },

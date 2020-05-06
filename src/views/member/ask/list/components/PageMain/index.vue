@@ -152,7 +152,7 @@ export default {
     // 验证权限
     _validationAuth() {
       this.auth.del = this.$permission('/member/ask/list/del')
-      this.auth.detail = this.$permission('/member/ask/list/detail')
+      this.auth.detail = this.$permission('/member/ask/detail')
     },
     // 获取排序字段
     sortChange({ column, prop, order }) {
@@ -194,9 +194,7 @@ export default {
     openAskDetail(ask_id) {
       this.$router.push({
         name: 'member-ask-detail',
-        params: {
-          ask_id
-        }
+        params: { ask_id }
       })
     }
   }

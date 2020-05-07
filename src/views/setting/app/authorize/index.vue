@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import semverLte from 'semver/functions/lte'
+import semver from 'semver'
 import { getKernelVersion } from '@/api/index'
 
 export default {
@@ -81,7 +81,7 @@ export default {
       this.$open('https://careyshop.cn/pricing')
     },
     checkVersion(a, b) {
-      return semverLte(a, b) ? 'info' : 'danger'
+      return semver.lte(a, b) ? 'info' : 'danger'
     },
     getAuthorizeData() {
       getKernelVersion()

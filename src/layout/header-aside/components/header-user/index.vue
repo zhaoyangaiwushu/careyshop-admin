@@ -78,7 +78,7 @@
 
 <script>
 import menu from '@/menu'
-import semverLt from 'semver/functions/lt'
+import semver from 'semver'
 import { mapState, mapActions } from 'vuex'
 import { clearCacheAll, setSystemOptimize } from '@/api/index'
 import { setAdminPassword } from '@/api/user/admin'
@@ -222,7 +222,7 @@ export default {
             return
           }
 
-          if (semverLt(process.env.VUE_APP_VERSION, data.ver)) {
+          if (semver.lt(process.env.VUE_APP_VERSION, data.ver)) {
             const h = this.$createElement
             this.$notify.info({
               title: '版本更新',

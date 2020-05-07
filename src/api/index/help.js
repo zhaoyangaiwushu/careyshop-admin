@@ -3,7 +3,7 @@ import axios from 'axios'
 export function getHelpRouter(router) {
   let host = serverConfig.BASE_API
   if (process.env.NODE_ENV !== 'development') {
-    host = 'https://api.careyshop.cn/api'
+    host = 'https://careyshop.cn/api'
   }
 
   return new Promise(resolve => {

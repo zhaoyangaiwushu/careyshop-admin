@@ -114,6 +114,12 @@ export default {
       name: `${pre}app-app_install`,
       meta: { ...meta, cache: true, title: 'App安装包' },
       component: () => import('@/views/setting/app/app_install')
+    },
+    {
+      path: 'app/authorize',
+      name: `${pre}app-authorize`,
+      meta: { ...meta, cache: true, title: '商业授权' },
+      component: () => import('@/views/setting/app/authorize')
     }
   ])('setting-')
 }

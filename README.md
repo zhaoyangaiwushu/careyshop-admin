@@ -84,7 +84,7 @@ npm run test:unit
 之后将配置修改为您的环境，具体配置如下：
 ```js
 const serverConfig = {
-  BASE_API: '//api.careyshop.cn/api',               // API 接口访问地址
+  BASE_API: '//careyshop.cn/api',                   // API 接口访问地址
   APP_KEY: '86757125',                              // 后端获取的 App应用 钥匙
   APP_SECRET: 'ea1bd533d001fd73b09944f04c96a6fc'    // 后端获取的 App应用 密钥
 }

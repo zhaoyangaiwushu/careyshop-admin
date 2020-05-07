@@ -4,24 +4,6 @@
       class="form-box cs-m"
       label-width="150px"
       label-position="left">
-      <el-form-item class="action" :label="version.name">
-        <span>{{version.value}}</span>
-        <el-button
-          class="form-button active"
-          type="text"
-          size="small"
-          @click="copyData(version.value)">复制</el-button>
-      </el-form-item>
-
-      <el-form-item class="action" :label="admin.name">
-        <span>{{admin.value}}</span>
-        <el-button
-          class="form-button active"
-          type="text"
-          size="small"
-          @click="copyData(admin.value)">复制</el-button>
-      </el-form-item>
-
       <el-form-item class="action" :label="delivery.name">
         <span>{{delivery.value}}</span>
         <el-button
@@ -100,14 +82,6 @@ export default {
   name: 'setting-setting-info',
   data() {
     return {
-      version: {
-        name: '框架内核版本号',
-        value: ''
-      },
-      admin: {
-        name: '后台管理版本号',
-        value: process.env.VUE_APP_VERSION
-      },
       delivery: {
         name: '快递鸟推送回调URL',
         value: ''
@@ -148,11 +122,6 @@ export default {
   methods: {
     getInfoData(message = null) {
       let data = [
-        {
-          version: 'v1',
-          controller: 'index',
-          method: 'get.system.version'
-        },
         {
           version: 'v1',
           controller: 'delivery_dist',
@@ -198,10 +167,6 @@ export default {
           res.data.forEach(value => {
             if (value.status === 200) {
               switch (value.method) {
-                case 'get.system.version':
-                  this.version.value = value.data.version
-                  break
-
                 case 'get.delivery.dist.callback':
                   this.delivery.value = value.data.callback_url
                   break

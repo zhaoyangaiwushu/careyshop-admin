@@ -29,6 +29,20 @@ export function setSystemOptimize() {
 }
 
 /**
+ * 获取内核版本号
+ * @returns
+ */
+export function getKernelVersion() {
+  return request({
+    url: '/v1/index',
+    method: 'post',
+    params: {
+      method: 'get.system.version'
+    }
+  })
+}
+
+/**
  * 批量调用
  * @param {Array} data
  * @returns

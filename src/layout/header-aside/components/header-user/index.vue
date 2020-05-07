@@ -78,7 +78,7 @@
 
 <script>
 import menu from '@/menu'
-import semver from 'semver'
+import semverLt from 'semver/functions/lt'
 import { mapState, mapActions } from 'vuex'
 import { clearCacheAll, setSystemOptimize } from '@/api/index'
 import { setAdminPassword } from '@/api/user/admin'
@@ -197,7 +197,7 @@ export default {
     checkUpdate() {
       let host = this.$baseConfig.BASE_API
       if (process.env.NODE_ENV !== 'development') {
-        host = 'https://api.careyshop.cn/api'
+        host = 'https://careyshop.cn/api'
       }
 
       this.$axios({
@@ -222,7 +222,7 @@ export default {
             return
           }
 
-          if (semver.lt(process.env.VUE_APP_VERSION, data.ver)) {
+          if (semverLt(process.env.VUE_APP_VERSION, data.ver)) {
             const h = this.$createElement
             this.$notify.info({
               title: '版本更新',
@@ -252,14 +252,13 @@ export default {
     /**
      * 清除历史
      */
-    clearHistory() {
-      this.historyClear()
-        .then(() => {
-          if (this.$route.path === '/index') {
-            this.$router.replace('/refresh')
-            this.$message.success('左侧访问历史栏已清空')
-          }
-        })
+    async clearHistory() {
+      await this.historyClear()
+      if (this.$route.path === '/index') {
+        await this.$router.replace('/refresh')
+      }
+
+      this.$message.success('左侧访问历史栏已清空')
     },
     /**
      * 清空缓存

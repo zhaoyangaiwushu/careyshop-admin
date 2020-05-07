@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import CsContainerFullBs from '@/components/cs-container/components/cs-container-full-bs.vue'
+
+config.showDeprecationWarnings = false
 
 describe('cs-container-full-bs', () => {
   // 存在且是Vue组件实例

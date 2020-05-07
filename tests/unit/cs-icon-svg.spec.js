@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import CsIconSvg from '@/components/cs-icon-svg/index.vue'
+
+config.showDeprecationWarnings = false
 
 describe('cs-icon-svg', () => {
   // 存在且是Vue组件实例

@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import CsContainerFrame from '@/components/cs-container-frame/index.vue'
+
+config.showDeprecationWarnings = false
 
 describe('cs-container-frame', () => {
   // 存在且是Vue组件实例

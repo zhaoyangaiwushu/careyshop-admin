@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import CsContainerCard from '@/components/cs-container/components/cs-container-card.vue'
+
+config.showDeprecationWarnings = false
 
 describe('cs-container-card', () => {
   // 存在且是Vue组件实例

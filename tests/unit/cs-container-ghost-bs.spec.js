@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import CsContainerGhostBs from '@/components/cs-container/components/cs-container-ghost-bs.vue'
+
+config.showDeprecationWarnings = false
 
 describe('cs-container-ghost-bs', () => {
   // 存在且是Vue组件实例

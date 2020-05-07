@@ -1,5 +1,7 @@
-import { mount } from '@vue/test-utils'
+import { mount, config } from '@vue/test-utils'
 import CsIcon from '@/components/cs-icon/index.vue'
+
+config.showDeprecationWarnings = false
 
 describe('cs-icon', () => {
   // 存在且是Vue组件实例

@@ -690,8 +690,8 @@ export default {
       toPayment: {},
       clientMap: {
         '-1': '游客',
-        '0': '顾客',
-        '1': '商家'
+        0: '顾客',
+        1: '商家'
       }
     }
   },
@@ -725,29 +725,29 @@ export default {
         active: 1,
         step: [
           {
-            'icon': 'el-icon-edit-outline',
-            'title': '创建订单',
-            'description': this.orderData.create_time
+            icon: 'el-icon-edit-outline',
+            title: '创建订单',
+            description: this.orderData.create_time
           },
           {
-            'icon': 'el-icon-bank-card',
-            'title': '付款',
-            'description': this.orderData.payment_time
+            icon: 'el-icon-bank-card',
+            title: '付款',
+            description: this.orderData.payment_time
           },
           {
-            'icon': 'el-icon-receiving',
-            'title': '配货',
-            'description': this.orderData.picking_time
+            icon: 'el-icon-receiving',
+            title: '配货',
+            description: this.orderData.picking_time
           },
           {
-            'icon': 'el-icon-truck',
-            'title': '发货',
-            'description': this.orderData.delivery_time
+            icon: 'el-icon-truck',
+            title: '发货',
+            description: this.orderData.delivery_time
           },
           {
-            'icon': 'el-icon-time',
-            'title': '完成',
-            'description': this.orderData.finished_time
+            icon: 'el-icon-time',
+            title: '完成',
+            description: this.orderData.finished_time
           }
         ]
       }
@@ -827,7 +827,7 @@ export default {
           }
 
           if (res[2] && res[2].data) {
-            res[2].data['source']['value'].forEach((value, index) => {
+            res[2].data.source.value.forEach((value, index) => {
               this.sourceMap[index] = value.name
             })
           }

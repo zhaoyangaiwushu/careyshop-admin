@@ -134,8 +134,8 @@ import { getGoodsAdminList, getGoodsSelect } from '@/api/goods/goods'
 export default {
   name: 'cs-goods-select',
   components: {
-    'csGoodsDrawer': () => import('@/components/cs-goods-drawer'),
-    'PageFooter': () => import('@/components/cs-footer')
+    csGoodsDrawer: () => import('@/components/cs-goods-drawer'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   props: {
     // 确认按钮事件
@@ -170,8 +170,8 @@ export default {
   filters: {
     getPreviewUrl(val) {
       if (Array.isArray(val) && val.length > 0) {
-        if (val[0]['source']) {
-          return util.getImageCodeUrl(val[0]['source'], 'goods_image_x80')
+        if (val[0].source) {
+          return util.getImageCodeUrl(val[0].source, 'goods_image_x80')
         }
       }
 
@@ -195,7 +195,7 @@ export default {
       if (!this.isCheck && this.checkList.length) {
         let idList = []
         for (let value of this.checkList) {
-          if (value.hasOwnProperty('goods_id')) {
+          if (Object.prototype.hasOwnProperty.call(value, 'goods_id')) {
             idList.push(value.goods_id)
           }
         }
@@ -244,7 +244,7 @@ export default {
       })
         .then(res => {
           this.tableData = res.data.items || []
-          this.page.total = res.data['total_result']
+          this.page.total = res.data.total_result
         })
     },
     handleSelectionChange(val) {

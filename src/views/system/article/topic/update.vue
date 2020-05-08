@@ -13,7 +13,7 @@ import { getTopicItem } from '@/api/article/topic'
 export default {
   name: 'system-topic-update',
   components: {
-    'PageEdit': () => import('./components/PageEdit')
+    PageEdit: () => import('./components/PageEdit')
   },
   props: {
     topic_id: {

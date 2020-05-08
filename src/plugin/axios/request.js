@@ -99,7 +99,7 @@ function refreshToken(config) {
     'login.admin.user'
   ]
 
-  if (whiteList.indexOf(config.params['method']) >= 0) {
+  if (whiteList.indexOf(config.params.method) >= 0) {
     return
   }
 
@@ -156,11 +156,11 @@ function setDefaultParams(config) {
     config.data = {}
   }
 
-  config.data['token'] = token
-  config.data['appkey'] = serverConfig.APP_KEY
-  config.data['timestamp'] = Math.round(new Date() / 1000) + 100
-  config.data['format'] = 'json'
-  config.data['sign'] = util.getSign(Object.assign(config.data, config.params))
+  config.data.token = token
+  config.data.appkey = serverConfig.APP_KEY
+  config.data.timestamp = Math.round(new Date() / 1000) + 100
+  config.data.format = 'json'
+  config.data.sign = util.getSign(Object.assign(config.data, config.params))
 }
 
 export default service

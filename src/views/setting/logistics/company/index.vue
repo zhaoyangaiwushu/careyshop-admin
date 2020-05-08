@@ -30,9 +30,9 @@ import { getDeliveryCompanyList } from '@/api/logistics/company'
 export default {
   name: 'setting-logistics-company',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {

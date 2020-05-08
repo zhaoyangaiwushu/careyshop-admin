@@ -30,19 +30,19 @@ import { getCouponList } from '@/api/marketing/coupon'
 export default {
   name: 'marketing-coupon-list',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {
       loading: false,
       table: [],
       typeMap: {
-        '0': '指定会员',
-        '1': '批量生成',
-        '2': '主动领取',
-        '3': '营销赠送'
+        0: '指定会员',
+        1: '批量生成',
+        2: '主动领取',
+        3: '营销赠送'
       },
       page: {
         current: 1,

@@ -33,9 +33,9 @@ import { getGoodsSpecPage } from '@/api/goods/spec'
 export default {
   name: 'goods-setting-spec',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   props: {
     goods_type_id: {

@@ -15,7 +15,7 @@ import { getGoodsCategoryList } from '@/api/goods/category'
 export default {
   name: 'goods-setting-category',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

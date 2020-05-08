@@ -389,8 +389,8 @@ import {
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     loading: {
@@ -686,7 +686,7 @@ export default {
                   continue
                 }
 
-                const sonData = data[i]['get_attribute']
+                const sonData = data[i].get_attribute
                 if (sonData.length > 0) {
                   for (let n = sonData.length - 1; n >= 0; n--) {
                     if (attr_id.indexOf(sonData[n].goods_attribute_id) !== -1) {

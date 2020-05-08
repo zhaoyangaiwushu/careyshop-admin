@@ -33,9 +33,9 @@ import { getUserLevelList } from '@/api/user/level'
 export default {
   name: 'member-user-client',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {

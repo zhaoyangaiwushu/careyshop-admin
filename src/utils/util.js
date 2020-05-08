@@ -104,13 +104,13 @@ util.formatDataToTree = (data, key = 'menu_id', pid = 'parent_id', parent = {}) 
 
   let tree = []
   for (let id in data) {
-    if (!data.hasOwnProperty(id)) {
+    if (!Object.prototype.hasOwnProperty.call(data, id)) {
       continue
     }
 
     // 对应索引
     const index = data[id][key]
-    if (!map.hasOwnProperty(index)) {
+    if (!Object.prototype.hasOwnProperty.call(map, index)) {
       continue
     }
 
@@ -120,11 +120,11 @@ util.formatDataToTree = (data, key = 'menu_id', pid = 'parent_id', parent = {}) 
         continue
       }
 
-      if (!map[map[index][pid]].hasOwnProperty('children')) {
-        map[map[index][pid]]['children'] = []
+      if (!Object.prototype.hasOwnProperty.call(map[map[index][pid]], 'children')) {
+        map[map[index][pid]].children = []
       }
 
-      map[map[index][pid]]['children'].push(map[index])
+      map[map[index][pid]].children.push(map[index])
       continue
     }
 
@@ -143,7 +143,7 @@ util.formatDataToTree = (data, key = 'menu_id', pid = 'parent_id', parent = {}) 
 util.dataReplace = (data, replace) => {
   for (let value of data) {
     for (let key in value) {
-      if (!value.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(value, key)) {
         continue
       }
 
@@ -172,8 +172,8 @@ util.stringToByte = (value) => {
   const size = result[1]
   const suffix = result[2].toLocaleUpperCase()
 
-  const a = { 'B': 0, 'KB': 1, 'MB': 2, 'GB': 3, 'TB': 4, 'PB': 5 }
-  const b = { 'B': 0, 'K': 1, 'M': 2, 'G': 3, 'T': 4, 'P': 5 }
+  const a = { B: 0, KB: 1, MB: 2, GB: 3, TB: 4, PB: 5 }
+  const b = { B: 0, K: 1, M: 2, G: 3, T: 4, P: 5 }
 
   const pos = a.hasOwnProperty(suffix) && a[suffix] !== 0 ? a[suffix] : b[suffix]
   return Math.round(size * Math.pow(1024, pos))
@@ -279,7 +279,7 @@ util.getImageStyleUrl = (url, style = '') => {
 util.getQrcodeUrl = (text, expand = {}) => {
   let data = serverConfig.BASE_API
   data += '/v1/qrcode/method/get.qrcode.item?text='
-  data += encodeURI(expand.hasOwnProperty('text') ? expand['text'] : text)
+  data += encodeURI(expand.hasOwnProperty('text') ? expand.text : text)
 
   for (const key in expand) {
     if (key === 'text' || expand[key] === '') {
@@ -306,7 +306,7 @@ util.getQrcodeUrl = (text, expand = {}) => {
 util.getBarcodeUrl = (text, expand = {}) => {
   let data = serverConfig.BASE_API
   data += '/v1/barcode/method/get.barcode.item?text='
-  data += encodeURI(expand.hasOwnProperty('text') ? expand['text'] : text)
+  data += encodeURI(expand.hasOwnProperty('text') ? expand.text : text)
 
   for (const key in expand) {
     if (key === 'text' || expand[key] === '') {
@@ -389,7 +389,7 @@ util.setImageSrcList = (srcList, index) => {
 
   let imageList = []
   image.forEach(value => {
-    imageList.push(value['url'])
+    imageList.push(value.url)
   })
 
   return imageList

@@ -25,7 +25,7 @@ import util from '@/utils/util'
 export default {
   name: 'preview',
   components: {
-    'ElImageViewer': () => {
+    ElImageViewer: () => {
       return !util.isIE() ? import('element-ui/packages/image/src/image-viewer') : null
     }
   },
@@ -65,7 +65,7 @@ export default {
       this.$nextTick(() => {
         const temp = this.getImageList(image)
         if (this.isIE) {
-          this.imageUrl = temp.hasOwnProperty(index)
+          this.imageUrl = Object.prototype.hasOwnProperty.call(temp, index)
             ? temp[index]
             : temp[0]
         } else {

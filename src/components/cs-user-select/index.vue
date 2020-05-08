@@ -153,7 +153,7 @@ import { getAdminList, getAdminSelect } from '@/api/user/admin'
 export default {
   name: 'cs-user-select',
   components: {
-    'PageFooter': () => import('@/components/cs-footer')
+    PageFooter: () => import('@/components/cs-footer')
   },
   props: {
     // 确认按钮事件
@@ -221,7 +221,7 @@ export default {
         let idList = []
         for (let value of this.checkList) {
           const typeId = this.typeUser === 'client' ? 'user_id' : 'admin_id'
-          if (value.hasOwnProperty(typeId)) {
+          if (Object.prototype.hasOwnProperty.call(value, typeId)) {
             idList.push(value[typeId])
           }
         }
@@ -276,7 +276,7 @@ export default {
       })
         .then(res => {
           this.tableData = res.data.items || []
-          this.page.total = res.data['total_result']
+          this.page.total = res.data.total_result
         })
     },
     handleSelectionChange(val) {

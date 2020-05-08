@@ -247,7 +247,7 @@ import { delCouponGiveList, recCouponGiveList } from '@/api/marketing/coupon_giv
 
 export default {
   components: {
-    'csPrint': () => import('@/components/cs-print')
+    csPrint: () => import('@/components/cs-print')
   },
   props: {
     loading: {
@@ -274,10 +274,10 @@ export default {
         rec: false
       },
       typeMap: {
-        '0': '指定会员',
-        '1': '批量生成',
-        '2': '主动领取',
-        '3': '营销赠送'
+        0: '指定会员',
+        1: '批量生成',
+        2: '主动领取',
+        3: '营销赠送'
       },
       invalidMap: {
         0: {

@@ -178,7 +178,7 @@ export default {
   },
   methods: {
     getToPayment(val) {
-      return val !== '' ? this.toPayment[val]['name'] : ''
+      return val !== '' ? this.toPayment[val].name : ''
     },
     sortChange({ column, prop, order }) {
       let sort = {

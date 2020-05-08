@@ -14,9 +14,9 @@ import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
   components: {
-    'csRegionSelect': () => import('@/components/cs-region-select'),
-    'csDeliveryDist': () => import('@/components/cs-delivery-dist'),
-    'csGoodsDrawer': () => import('@/components/cs-goods-drawer')
+    csRegionSelect: () => import('@/components/cs-region-select'),
+    csDeliveryDist: () => import('@/components/cs-delivery-dist'),
+    csGoodsDrawer: () => import('@/components/cs-goods-drawer')
   },
   data() {
     return {
@@ -149,8 +149,8 @@ export default {
       },
       sourceMap: {},
       serviceMap: {
-        '1': '售后中',
-        '2': '已售后'
+        1: '售后中',
+        2: '已售后'
       },
       statusMap: {
         0: '待发货',
@@ -196,7 +196,7 @@ export default {
       return util.getNumber(val)
     },
     getDelivery(val) {
-      return val ? val['alias'] : ''
+      return val ? val.alias : ''
     }
   },
   mounted() {
@@ -239,7 +239,7 @@ export default {
     // 获取付款方式
     _getPaymentType(code) {
       if (this.toPayment.hasOwnProperty(code)) {
-        return this.toPayment[code]['name']
+        return this.toPayment[code].name
       }
 
       return ''
@@ -537,8 +537,8 @@ export default {
                 if (this.tabPane === '0' || res.data.delivery_status !== 1) {
                   this.formDelivery.goods.forEach(item => {
                     if (orderGoods.includes(item.order_goods_id)) {
-                      item['is_service'] = 0
-                      item['status'] = 1
+                      item.is_service = 0
+                      item.status = 1
                     }
                   })
 

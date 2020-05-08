@@ -29,20 +29,20 @@ import { getPromotionList } from '@/api/marketing/promotion'
 export default {
   name: 'marketing-marketing-promotion',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {
       loading: false,
       table: [],
       typeMap: {
-        '0': '减价',
-        '1': '打折',
-        '2': '免邮',
-        '3': '送积分',
-        '4': '送优惠劵'
+        0: '减价',
+        1: '打折',
+        2: '免邮',
+        3: '送积分',
+        4: '送优惠劵'
       },
       page: {
         current: 1,

@@ -107,7 +107,7 @@ export default {
       }
 
       return new Promise(resolve => {
-        if (state.list.hasOwnProperty(name) && state.list[name].length > 0) {
+        if (Object.prototype.hasOwnProperty.call(state.list, name) && state.list[name].length > 0) {
           state.list[name].forEach(value => {
             setSourceData(value)
           })

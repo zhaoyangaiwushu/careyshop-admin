@@ -595,8 +595,8 @@ import { getPaymentList, setPaymentFinance } from '@/api/payment/payment'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     loading: {

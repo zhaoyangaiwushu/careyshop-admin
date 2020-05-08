@@ -29,7 +29,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'goods-admin-create',
   components: {
-    'PageEdit': () => import('./components/PageEdit')
+    PageEdit: () => import('./components/PageEdit')
   },
   data() {
     return {

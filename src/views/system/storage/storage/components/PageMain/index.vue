@@ -294,8 +294,8 @@ import {
 export default {
   mixins: [storage],
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     tableData: {
@@ -425,19 +425,19 @@ export default {
     openStorage(index) {
       // 当前资源对象
       const storage = this.currentTableData[index]
-      switch (storage['type']) {
+      switch (storage.type) {
         case 0:
           if (!isNaN(Number(document.documentMode))) {
-            this.$preview(storage['url'])
+            this.$preview(storage.url)
           } else {
             let imageList = []
             this.currentTableData.forEach(value => {
               if (value.type === 0) {
-                imageList.push(value['url'])
+                imageList.push(value.url)
               }
             })
 
-            this.$preview(imageList, imageList.lastIndexOf(storage['url']))
+            this.$preview(imageList, imageList.lastIndexOf(storage.url))
           }
           break
 
@@ -446,11 +446,11 @@ export default {
           break
 
         case 2:
-          this.switchFolder(storage['storage_id'])
+          this.switchFolder(storage.storage_id)
           break
 
         case 3:
-          this.$player(storage['url'], storage['mime'], storage['cover'])
+          this.$player(storage.url, storage.mime, storage.cover)
           break
 
         default:
@@ -577,8 +577,8 @@ export default {
     },
     handleRename(index) {
       this.nameForm = {
-        name: this.currentTableData[index]['name'],
-        storage_id: this.currentTableData[index]['storage_id'],
+        name: this.currentTableData[index].name,
+        storage_id: this.currentTableData[index].storage_id,
         index
       }
 
@@ -661,7 +661,7 @@ export default {
       const storage = this.currentTableData[index]
       clearStorageCover(storage.storage_id)
         .then(() => {
-          storage['cover'] = ''
+          storage.cover = ''
           this.$message.success('操作成功')
         })
     },
@@ -755,7 +755,7 @@ export default {
       if (cover) {
         setStorageCover(cover.storage_id, storage.storage_id)
           .then(() => {
-            storage['cover'] = cover.url
+            storage.cover = cover.url
             this.$message.success('操作成功')
           })
       }

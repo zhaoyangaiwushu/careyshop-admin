@@ -282,7 +282,7 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csTinymce': () => import('@/components/cs-tinymce')
+    csTinymce: () => import('@/components/cs-tinymce')
   },
   props: {
     loading: {

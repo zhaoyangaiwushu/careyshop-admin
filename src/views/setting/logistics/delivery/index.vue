@@ -20,8 +20,8 @@ import { getDeliveryList } from '@/api/logistics/delivery'
 export default {
   name: 'setting-logistics-delivery',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

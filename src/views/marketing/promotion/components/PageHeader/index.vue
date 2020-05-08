@@ -81,8 +81,8 @@ export default {
         // 时间段处理
         if (index === 'time_period') {
           if (this.form[index] && this.form[index].length === 2) {
-            form['begin_time'] = this.form[index][0].toUTCString()
-            form['end_time'] = this.form[index][1].toUTCString()
+            form.begin_time = this.form[index][0].toUTCString()
+            form.end_time = this.form[index][1].toUTCString()
           }
 
           continue

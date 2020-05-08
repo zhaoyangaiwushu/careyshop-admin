@@ -17,8 +17,8 @@ import { getDeliveryCompanyItem } from '@/api/logistics/company'
 export default {
   name: 'setting-logistics-delivery-area',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   computed: {
     changeData() {

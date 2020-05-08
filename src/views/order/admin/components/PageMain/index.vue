@@ -650,21 +650,21 @@ export default {
     return {
       tabPane: '0',
       tabList: {
-        '0': '全部',
-        '1': '未付款',
-        '2': '已付款',
-        '3': '待发货',
-        '4': '已发货',
-        '5': '已完成',
-        '6': '已取消',
-        '8': '回收站'
+        0: '全部',
+        1: '未付款',
+        2: '已付款',
+        3: '待发货',
+        4: '已发货',
+        5: '已完成',
+        6: '已取消',
+        8: '回收站'
       },
       // 键名与"tabList"对应
       totalMap: {
-        '1': 'not_paid',
-        '2': 'paid',
-        '3': 'not_shipped',
-        '4': 'shipped'
+        1: 'not_paid',
+        2: 'paid',
+        3: 'not_shipped',
+        4: 'shipped'
       }
     }
   },
@@ -702,7 +702,7 @@ export default {
       getSettingList('system_shopping', ['source'])
         .then(res => {
           if (res.data) {
-            res.data['source']['value'].forEach((value, index) => {
+            res.data.source.value.forEach((value, index) => {
               this.sourceMap[index] = value.icon
             })
           }

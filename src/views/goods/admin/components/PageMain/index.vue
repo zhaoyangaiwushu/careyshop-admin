@@ -488,23 +488,23 @@ export default {
         store: false
       },
       tabPane: 'sale',
-      tabList: { 'sale': '出售中', 'stock': '已下架', 'delete': '回收站' },
+      tabList: { sale: '出售中', stock: '已下架', delete: '回收站' },
       goodsTab: {
-        'is_postage': {
-          'type': '',
-          'name': '包邮'
+        is_postage: {
+          type: '',
+          name: '包邮'
         },
-        'is_recommend': {
-          'type': 'success',
-          'name': '推荐'
+        is_recommend: {
+          type: 'success',
+          name: '推荐'
         },
-        'is_new': {
-          'type': 'danger',
-          'name': '新品'
+        is_new: {
+          type: 'danger',
+          name: '新品'
         },
-        'is_hot': {
-          'type': 'warning',
-          'name': '热卖'
+        is_hot: {
+          type: 'warning',
+          name: '热卖'
         }
       },
       dialogLoading: false,
@@ -552,8 +552,8 @@ export default {
   filters: {
     getPreviewUrl(val) {
       if (Array.isArray(val) && val.length > 0) {
-        if (val[0]['source']) {
-          return util.getImageCodeUrl(val[0]['source'], 'goods_image_x80')
+        if (val[0].source) {
+          return util.getImageCodeUrl(val[0].source, 'goods_image_x80')
         }
       }
 
@@ -950,7 +950,7 @@ export default {
               specCombo.push({
                 ...res.data[key],
                 alter: 0,
-                real_store: res.data[key]['store_qty']
+                real_store: res.data[key].store_qty
               })
             }
           } else {
@@ -980,14 +980,14 @@ export default {
       let formData = { goods_id: this.sellForm.goods_id }
 
       if (this.sellForm.empty_spec) {
-        formData['shop_price'] = data[0]['price']
-        formData['store_qty'] = data[0]['real_store']
+        formData.shop_price = data[0].price
+        formData.store_qty = data[0].real_store
       } else {
-        formData['spec_combo'] = []
+        formData.spec_combo = []
         data.forEach(value => {
-          formData['spec_combo'].push({
+          formData.spec_combo.push({
             ...value,
-            store_qty: value['real_store']
+            store_qty: value.real_store
           })
         })
       }

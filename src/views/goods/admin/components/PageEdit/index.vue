@@ -987,13 +987,13 @@ import { getGoodsAttributeList } from '@/api/goods/attribute'
 
 export default {
   components: {
-    'PageSpec': () => import('../PageSpec'),
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage'),
-    'csTinymce': () => import('@/components/cs-tinymce'),
-    'csVideo': () => import('@/components/cs-video'),
-    'csPhoto': () => import('@/components/cs-photo'),
-    'draggable': () => import('vuedraggable')
+    PageSpec: () => import('../PageSpec'),
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage'),
+    csTinymce: () => import('@/components/cs-tinymce'),
+    csVideo: () => import('@/components/cs-video'),
+    csPhoto: () => import('@/components/cs-photo'),
+    draggable: () => import('vuedraggable')
   },
   props: {
     confirmLoading: {
@@ -1327,9 +1327,9 @@ export default {
       ])
         .then(res => {
           let currentForm = res[0].data || {}
-          currentForm['attr_config'] = res[1].data.attr_config || []
-          currentForm['spec_config'] = res[2].data.spec_config || []
-          currentForm['spec_combo'] = res[2].data.spec_combo || []
+          currentForm.attr_config = res[1].data.attr_config || []
+          currentForm.spec_config = res[2].data.spec_config || []
+          currentForm.spec_combo = res[2].data.spec_combo || []
 
           this.activeAttr = res[1].data.attr_key || []
           this.activeSpec = res[2].data.spec_key || []
@@ -1507,11 +1507,11 @@ export default {
 
       Promise.all(request)
         .then(res => {
-          this.activeAttr = res[0].data['attr_key'] || []
-          this.activeSpec = res[1].data['spec_key'] || []
-          this.currentForm.attr_config = res[0].data['attr_config'] || []
-          this.currentForm.spec_combo = res[1].data['spec_combo'] || []
-          this.currentForm.spec_config = res[1].data['spec_config'] || []
+          this.activeAttr = res[0].data.attr_key || []
+          this.activeSpec = res[1].data.spec_key || []
+          this.currentForm.attr_config = res[0].data.attr_config || []
+          this.currentForm.spec_combo = res[1].data.spec_combo || []
+          this.currentForm.spec_config = res[1].data.spec_config || []
         })
         .finally(() => {
           this.typeLoading = false
@@ -1519,7 +1519,7 @@ export default {
     },
     // 设置商品属性为默认值
     setAttrDefaultValue(parent, key) {
-      let data = this.currentForm.attr_config[parent]['get_attribute'][key]
+      let data = this.currentForm.attr_config[parent].get_attribute[key]
       if (!data || !data.attr_values[0]) {
         this.$message.info('该属性项不存在默认值')
         return
@@ -1584,7 +1584,7 @@ export default {
     // 完成规格图片编辑
     confirmSpecImage() {
       const { parent, key } = this.specImageKey
-      let data = this.currentForm.spec_config[parent]['spec_item'][key]
+      let data = this.currentForm.spec_config[parent].spec_item[key]
 
       this.$set(data, 'image', this.specImage)
       this.specImageVisible = false
@@ -1673,7 +1673,7 @@ export default {
 
         value.spec_item.forEach(item => {
           const isContact = data.spec_id === value.spec_id ? 1 : 0
-          data['spec_item'].push({
+          data.spec_item.push({
             ...item,
             is_contact: isContact,
             spec_item_id: isContact !== 1 ? -util.randomLenNum(6) : item.spec_item_id
@@ -1775,8 +1775,8 @@ export default {
             node.item.push(item.item_name)
 
             treeTable.index[item.spec_item_id] = {
-              'specName': value.name,
-              'itemName': item.item_name
+              specName: value.name,
+              itemName: item.item_name
             }
           }
         })
@@ -1808,7 +1808,7 @@ export default {
       // 数据变动前保留之前的数据
       if (!this.isNotTable) {
         this.currentForm.spec_combo.forEach(combo => {
-          let key = combo['key_name'].sort().join('_')
+          let key = combo.key_name.sort().join('_')
           oldCombo[key] = combo
         })
       }
@@ -1873,7 +1873,7 @@ export default {
         }
 
         if (this.isNotTable && this.currentForm.spec_combo) {
-          this.currentForm.spec_combo[index]['id'] = [index]
+          this.currentForm.spec_combo[index].id = [index]
         }
 
         treeTable.edit[index] = {

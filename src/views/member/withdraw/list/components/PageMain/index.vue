@@ -181,7 +181,7 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csPrint': () => import('@/components/cs-print')
+    csPrint: () => import('@/components/cs-print')
   },
   props: {
     tableData: {

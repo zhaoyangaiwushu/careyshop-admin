@@ -20,8 +20,8 @@ import { getNavigationList } from '@/api/config/navi'
 export default {
   name: 'setting-setting-navi',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

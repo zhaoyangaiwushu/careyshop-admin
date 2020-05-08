@@ -61,7 +61,7 @@ import { queryRefundItem } from '@/api/order/refund'
 export default {
   name: 'cs-order-refund',
   components: {
-    'csPrint': () => import('@/components/cs-print')
+    csPrint: () => import('@/components/cs-print')
   },
   props: {
     // 外部v-model值

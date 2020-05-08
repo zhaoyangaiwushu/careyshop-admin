@@ -85,7 +85,7 @@ import { addTopicItem, setTopicItem } from '@/api/article/topic'
 
 export default {
   components: {
-    'csTinymce': () => import('@/components/cs-tinymce')
+    csTinymce: () => import('@/components/cs-tinymce')
   },
   props: {
     // 编辑状态

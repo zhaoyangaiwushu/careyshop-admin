@@ -499,7 +499,7 @@ export default {
           this.formLoading = true
           addMenuItem({
             ...this.form,
-            'module': this.module
+            module: this.module
           })
             .then(res => {
               if (!this.isExpandAll) {

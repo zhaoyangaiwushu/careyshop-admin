@@ -17,8 +17,8 @@ import { getWithdrawUserList } from '@/api/user/withdraw_user'
 export default {
   name: 'member-user-withdraw',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   props: {
     client_id: {

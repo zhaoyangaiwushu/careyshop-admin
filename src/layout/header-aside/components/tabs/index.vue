@@ -51,8 +51,8 @@ import Sortable from 'sortablejs'
 
 export default {
   components: {
-    'CsContextmenu': () => import('../contextmenu'),
-    'CsContextmenuList': () => import('../contextmenu/components/contentmenuList')
+    CsContextmenu: () => import('../contextmenu'),
+    CsContextmenuList: () => import('../contextmenu/components/contentmenuList')
   },
   data() {
     return {

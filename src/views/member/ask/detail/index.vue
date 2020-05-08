@@ -14,7 +14,7 @@ import { getAskItem } from '@/api/user/ask'
 export default {
   name: 'member-ask-detail',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   props: {
     ask_id: {

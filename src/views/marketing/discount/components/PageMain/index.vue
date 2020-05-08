@@ -254,8 +254,8 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'PageGoods': () => import('../PageGoods'),
-    'csGoodsSelect': () => import('@/components/cs-goods-select')
+    PageGoods: () => import('../PageGoods'),
+    csGoodsSelect: () => import('@/components/cs-goods-select')
   },
   props: {
     loading: {

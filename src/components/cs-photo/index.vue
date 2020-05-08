@@ -38,7 +38,7 @@ import util from '@/utils/util'
 export default {
   name: 'cs-photo',
   components: {
-    'draggable': () => import('vuedraggable')
+    draggable: () => import('vuedraggable')
   },
   props: {
     // 外部v-model值

@@ -16,8 +16,8 @@ import { plugins, toolbar } from './config/config'
 export default {
   name: 'cs-tinymce',
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     // 外部v-model值
@@ -203,10 +203,11 @@ export default {
             case 1:
               insert += `<p><a href="${util.getDownloadUrl(file, this.code)}">附件：${file.name}</a></p>`
               break
-            case 3:
-              let cover = file.cover ? util.getImageCodeUrl(file.cover) : ''
+            case 3: {
+              const cover = file.cover ? util.getImageCodeUrl(file.cover) : ''
               insert += `<video poster="${cover}" controls="controls"><source src="//${file.url}" /></video>`
               break
+            }
           }
         }
       }
@@ -225,10 +226,11 @@ export default {
           case 1:
             insert += `<p><a href="${util.getDownloadUrl(value, this.code)}">附件：${value.name}</a></p>`
             break
-          case 3:
-            let cover = value.cover ? util.getImageCodeUrl(value.cover) : ''
+          case 3: {
+            const cover = value.cover ? util.getImageCodeUrl(value.cover) : ''
             insert += `<video poster="${cover}" controls="controls"><source src="//${value.url}" /></video>`
             break
+          }
         }
       }
 

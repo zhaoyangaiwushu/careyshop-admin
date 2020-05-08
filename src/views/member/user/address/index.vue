@@ -18,8 +18,8 @@ import { getUserAddressList } from '@/api/user/address'
 export default {
   name: 'member-user-address',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   props: {
     client_id: {

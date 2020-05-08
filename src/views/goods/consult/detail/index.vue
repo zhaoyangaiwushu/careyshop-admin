@@ -14,7 +14,7 @@ import { getGoodsConsultItem } from '@/api/goods/consult'
 export default {
   name: 'goods-opinion-consult-detail',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   props: {
     goods_consult_id: {

@@ -65,7 +65,7 @@ export default {
             ...this.$attrs
           },
           on: {
-            'confirm': res => {
+            confirm: res => {
               this.$emit('input', res)
               this.$refs.category.visible = false
             }

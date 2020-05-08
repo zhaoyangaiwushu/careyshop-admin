@@ -332,7 +332,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          delete this.form['parent_id']
+          delete this.form.parent_id
 
           setRegionItem({ ...this.form })
             .then(res => {

@@ -27,8 +27,8 @@ import { getMessageUserList } from '@/api/message/message'
 export default {
   name: 'system-message-user',
   components: {
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {

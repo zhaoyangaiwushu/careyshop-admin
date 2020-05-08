@@ -73,11 +73,11 @@ export default {
   components: {
     'system-info': systemInfo,
     'system-shopping': systemShopping,
-    'service': service,
-    'payment': payment,
-    'delivery': delivery,
+    service: service,
+    payment: payment,
+    delivery: delivery,
     'delivery-dist': deliveryDist,
-    'upload': upload
+    upload: upload
   },
   data() {
     return {

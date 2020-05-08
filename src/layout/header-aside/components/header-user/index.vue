@@ -178,17 +178,17 @@ export default {
 
       getMessageUserUnread(null)
         .then(res => {
-          if (res.data['total'] > this.unreadMessage) {
+          if (res.data.total > this.unreadMessage) {
             const h = this.$createElement
             this.$notify.info({
               title: '消息提示',
-              message: h('p', { 'class': 'cs-cp' }, '您有新的消息，请注意查收。'),
+              message: h('p', { class: 'cs-cp' }, '您有新的消息，请注意查收。'),
               position: 'bottom-right',
               onClick: () => { this.handleMessage() }
             })
           }
 
-          this.$store.commit('careyshop/user/setMessage', res.data['total'])
+          this.$store.commit('careyshop/user/setMessage', res.data.total)
         })
     },
     /**
@@ -226,7 +226,7 @@ export default {
             const h = this.$createElement
             this.$notify.info({
               title: '版本更新',
-              message: h('p', { 'class': 'cs-cp' }, `发现最新版本号： ${data.ver}，点击查看。`),
+              message: h('p', { class: 'cs-cp' }, `发现最新版本号： ${data.ver}，点击查看。`),
               position: 'bottom-right',
               duration: 0,
               onClick: () => { this.$open(data.url) }

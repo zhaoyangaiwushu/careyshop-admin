@@ -15,7 +15,7 @@
 export default {
   name: 'cs-goods-drawer',
   components: {
-    'csGoodsView': () => import('@/views/goods/admin/view')
+    csGoodsView: () => import('@/views/goods/admin/view')
   },
   data() {
     return {

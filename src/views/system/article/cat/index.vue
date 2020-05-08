@@ -21,8 +21,8 @@ import { getArticleCatList } from '@/api/article/cat'
 export default {
   name: 'system-article-cat',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

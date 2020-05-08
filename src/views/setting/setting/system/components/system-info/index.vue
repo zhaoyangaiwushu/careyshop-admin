@@ -466,9 +466,9 @@ import { setSystemList } from '@/api/config/setting'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage'),
-    'csUserSelect': () => import('@/components/cs-user-select')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage'),
+    csUserSelect: () => import('@/components/cs-user-select')
   },
   data() {
     return {
@@ -547,8 +547,8 @@ export default {
       for (const key in this.form.platform.value) {
         if (this.form.platform.value.hasOwnProperty(key)) {
           this.platforms.push({
-            'key': key,
-            'value': this.form.platform.value[key]
+            key: key,
+            value: this.form.platform.value[key]
           })
         }
       }
@@ -568,7 +568,7 @@ export default {
       }
 
       this.loading = true
-      data['platform'] = JSON.stringify(platform)
+      data.platform = JSON.stringify(platform)
 
       setSystemList(data)
         .then(() => {

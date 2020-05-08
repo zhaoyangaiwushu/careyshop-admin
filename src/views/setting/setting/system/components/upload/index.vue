@@ -204,7 +204,7 @@ import { getUploadModule } from '@/api/upload/upload'
 
 export default {
   components: {
-    'csTabEdit': () => import('@/components/cs-tab-edit')
+    csTabEdit: () => import('@/components/cs-tab-edit')
   },
   data() {
     return {
@@ -239,8 +239,8 @@ export default {
       }
 
       this.loading = true
-      data['image_ext'] = this.imageExt.join(',')
-      data['file_ext'] = this.fileExt.join(',')
+      data.image_ext = this.imageExt.join(',')
+      data.file_ext = this.fileExt.join(',')
 
       setUploadList(data)
         .then(() => {

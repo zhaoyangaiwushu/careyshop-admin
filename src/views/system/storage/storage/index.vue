@@ -30,9 +30,9 @@ import { getStorageNavi, getStorageList } from '@/api/upload/storage'
 export default {
   name: 'system-storage-storage',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {
@@ -71,7 +71,7 @@ export default {
     // 刷新列表页面
     handleRefresh(storageId = null, isRestore = false) {
       this.$nextTick(() => {
-        this.$refs.header.form['storage_id'] = storageId || 0
+        this.$refs.header.form.storage_id = storageId || 0
         this.$refs.header.handleFormSubmit(isRestore)
       })
     },
@@ -100,7 +100,7 @@ export default {
       })
         .then(res => {
           this.table = res.data.items || []
-          this.page.total = res.data['total_result']
+          this.page.total = res.data.total_result
         })
         .finally(() => {
           this.loading = false

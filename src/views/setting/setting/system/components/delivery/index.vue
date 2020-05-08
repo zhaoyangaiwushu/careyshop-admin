@@ -145,7 +145,7 @@ import { setDeliveryList } from '@/api/config/setting'
 
 export default {
   components: {
-    'csRegion': () => import('@/components/cs-region')
+    csRegion: () => import('@/components/cs-region')
   },
   data() {
     return {

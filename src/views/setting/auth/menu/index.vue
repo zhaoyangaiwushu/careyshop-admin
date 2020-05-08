@@ -22,8 +22,8 @@ import { getMenuList } from '@/api/auth/menu'
 export default {
   name: 'setting-auth-menu',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

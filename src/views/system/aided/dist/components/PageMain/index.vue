@@ -308,7 +308,7 @@ export default {
 
       getDeliveryDistTrace({ ...this.traceForm })
         .then(res => {
-          this.traceData = res.data['trace']
+          this.traceData = res.data.trace
         })
         .finally(() => {
           this.traceLoading = false
@@ -328,9 +328,9 @@ export default {
         .then(res => {
           res.data.shippers.forEach(value => {
             data.push({
-              'value': queryString,
-              'name': value.shipper_name,
-              'code': value.shipper_code
+              value: queryString,
+              name: value.shipper_name,
+              code: value.shipper_code
             })
           })
         })

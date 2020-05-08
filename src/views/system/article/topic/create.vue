@@ -8,7 +8,7 @@
 export default {
   name: 'system-topic-create',
   components: {
-    'PageEdit': () => import('./components/PageEdit')
+    PageEdit: () => import('./components/PageEdit')
   }
 }
 </script>

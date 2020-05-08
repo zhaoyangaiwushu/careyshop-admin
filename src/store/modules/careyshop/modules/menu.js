@@ -17,7 +17,7 @@ export default {
     // 侧边栏折叠动画
     asideTransition: setting.menu.asideTransition,
     // 侧边栏首页路径
-    asideIndex: setting.page.opened[0]['fullPath'],
+    asideIndex: setting.page.opened[0].fullPath,
     // 侧边栏限制历史菜单
     historyCount: setting.menu.historyCount,
     // 权限字典

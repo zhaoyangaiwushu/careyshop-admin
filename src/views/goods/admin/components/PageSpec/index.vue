@@ -116,7 +116,7 @@ export default {
       this.checkedCities = []
 
       const idx = key.split('-')
-      this.specItem = this.specList[idx[0]]['item'][idx[1]]
+      this.specItem = this.specList[idx[0]].item[idx[1]]
     },
     handleCheckAllChange(val) {
       if (!this.specItem.spec_item) {

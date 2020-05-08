@@ -13,22 +13,22 @@ export default {
       const path = process.env.BASE_URL
       let imageUrl = path + 'image/storage/file.png'
 
-      switch (val['type']) {
+      switch (val.type) {
         case 0:
-          imageUrl = val['url'] ? util.getImageCodeUrl(val['url'], 'storage_lists') : ''
+          imageUrl = val.url ? util.getImageCodeUrl(val.url, 'storage_lists') : ''
           break
 
         case 2:
-          if (val['cover']) {
-            imageUrl = util.getImageCodeUrl(val['cover'], 'storage_lists')
+          if (val.cover) {
+            imageUrl = util.getImageCodeUrl(val.cover, 'storage_lists')
           } else {
-            imageUrl = path + (val['is_default'] ? 'image/storage/default.png' : 'image/storage/folder.png')
+            imageUrl = path + (val.is_default ? 'image/storage/default.png' : 'image/storage/folder.png')
           }
           break
 
         case 3:
-          if (val['cover']) {
-            imageUrl = util.getImageCodeUrl(val['cover'], 'storage_lists')
+          if (val.cover) {
+            imageUrl = util.getImageCodeUrl(val.cover, 'storage_lists')
           } else {
             imageUrl = path + 'image/storage/video.png'
           }

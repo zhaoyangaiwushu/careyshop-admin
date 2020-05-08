@@ -279,8 +279,8 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     tableData: {
@@ -434,7 +434,7 @@ export default {
     // 请求编辑
     update() {
       this.updateLoading = true
-      delete this.updateForm['setting']
+      delete this.updateForm.setting
 
       setPaymentItem(this.updateForm)
         .then(res => {

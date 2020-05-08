@@ -13,7 +13,7 @@ import { getNoticeTplList } from '@/api/notice/template'
 export default {
   name: 'setting-setting-template',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

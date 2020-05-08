@@ -18,7 +18,7 @@ export default {
         exportData = [...this.multipleSelection]
         this.dataProcessing(exportData)
       } else {
-        getOrderList({ 'is_export': 1 })
+        getOrderList({ is_export: 1 })
           .then(res => {
             exportData = res.data.items || []
             this.dataProcessing(exportData)

@@ -189,9 +189,9 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage'),
-    'csTinymce': () => import('@/components/cs-tinymce')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage'),
+    csTinymce: () => import('@/components/cs-tinymce')
   },
   props: {
     // 编辑状态

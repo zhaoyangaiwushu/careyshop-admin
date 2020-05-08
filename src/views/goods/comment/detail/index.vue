@@ -14,7 +14,7 @@ import { getGoodsCommentItem } from '@/api/goods/comment'
 export default {
   name: 'goods-opinion-comment-detail',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   props: {
     goods_comment_id: {

@@ -56,7 +56,7 @@ export default {
       }, 500)
     },
     // 监听路由 改变侧边菜单栏
-    '$route': {
+    $route: {
       handler({ matched, fullPath }) {
         // 路由父级发生变化时菜单数据将发生改变
         const pathRoute = matched[0].path ? matched[0].path : matched[1].path

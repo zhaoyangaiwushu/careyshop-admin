@@ -17,7 +17,7 @@ import { getArticleItem } from '@/api/article/article'
 export default {
   name: 'system-article-update',
   components: {
-    'PageEdit': () => import('./components/PageEdit')
+    PageEdit: () => import('./components/PageEdit')
   },
   props: {
     article_id: {

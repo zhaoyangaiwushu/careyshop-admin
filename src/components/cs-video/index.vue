@@ -79,8 +79,8 @@ export default {
         return
       }
 
-      this.playerOptions.poster = util.getImageStyleUrl(sources['cover'])
-      this.playerOptions.sources = [{ src: util.checkUrl(sources['url']), type: sources['mime'] }]
+      this.playerOptions.poster = util.getImageStyleUrl(sources.cover)
+      this.playerOptions.sources = [{ src: util.checkUrl(sources.url), type: sources.mime }]
     },
     // 移除视频源
     delSources() {

@@ -295,8 +295,8 @@ import { replyGoodsCommentItem } from '@/api/goods/comment'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     tableData: {
@@ -396,11 +396,11 @@ export default {
         }
 
         if (response.data) {
-          if (response.data[0]['type'] === 0) {
+          if (response.data[0].type === 0) {
             insert.push({
-              name: response.data[0]['name'],
-              source: response.data[0]['url'],
-              url: '//' + response.data[0]['url']
+              name: response.data[0].name,
+              source: response.data[0].url,
+              url: '//' + response.data[0].url
             })
           }
         }
@@ -412,11 +412,11 @@ export default {
     _getStorageFileList(files) {
       let insert = []
       files.forEach(value => {
-        if (value['type'] === 0) {
+        if (value.type === 0) {
           insert.push({
-            name: value['name'],
-            source: value['url'],
-            url: '//' + value['url']
+            name: value.name,
+            source: value.url,
+            url: '//' + value.url
           })
         }
       })

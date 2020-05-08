@@ -158,8 +158,8 @@ export default {
       for (const key in this.form.source.value) {
         if (this.form.source.value.hasOwnProperty(key)) {
           this.source.push({
-            'key': key,
-            'value': this.form.source.value[key]
+            key: key,
+            value: this.form.source.value[key]
           })
         }
       }
@@ -179,7 +179,7 @@ export default {
       }
 
       this.loading = true
-      data['source'] = JSON.stringify(source)
+      data.source = JSON.stringify(source)
 
       setShoppingList(data)
         .then(() => {

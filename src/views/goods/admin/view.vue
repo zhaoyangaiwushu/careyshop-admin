@@ -190,7 +190,7 @@ export default {
     }
   },
   components: {
-    'PageMedia': () => import('./components/PageMedia')
+    PageMedia: () => import('./components/PageMedia')
   },
   methods: {
     resetGoodsData() {
@@ -215,8 +215,8 @@ export default {
         getGoodsAttributeData(this.goodsData.goods_type_id, 1)
       ])
         .then(res => {
-          this.specCombo = res[0].data ? res[0].data['spec_combo'] : {}
-          this.specConfig = res[0].data ? res[0].data['spec_config'] : []
+          this.specCombo = res[0].data ? res[0].data.spec_combo : {}
+          this.specConfig = res[0].data ? res[0].data.spec_config : []
 
           // 规格项只有一列时通过库存设置禁用状态
           if (size(this.specConfig) === 1) {
@@ -238,8 +238,8 @@ export default {
                 continue
               }
 
-              lowPrice = Math.min(lowPrice, this.specCombo[combo]['price'])
-              highPrice = Math.max(highPrice, this.specCombo[combo]['price'])
+              lowPrice = Math.min(lowPrice, this.specCombo[combo].price)
+              highPrice = Math.max(highPrice, this.specCombo[combo].price)
             }
 
             lowPrice = util.getNumber(lowPrice)
@@ -261,8 +261,8 @@ export default {
               }
 
               let pos = this.attrConfig.push({
-                goods_attribute_id: parentData['goods_attribute_id'],
-                attr_name: parentData['attr_name'],
+                goods_attribute_id: parentData.goods_attribute_id,
+                attr_name: parentData.attr_name,
                 is_parent: true,
                 get_attribute: []
               })
@@ -271,18 +271,18 @@ export default {
             }
 
             const attrData = res[2].data[value.goods_attribute_id]
-            if (attrData['is_important'] === 1) {
+            if (attrData.is_important === 1) {
               this.attrImportant.push({
-                goods_attribute_id: attrData['goods_attribute_id'],
-                attr_name: attrData['attr_name'],
+                goods_attribute_id: attrData.goods_attribute_id,
+                attr_name: attrData.attr_name,
                 attr_value: value.attr_value
               })
             }
 
             this.attrConfig[key[value.parent_id]].get_attribute.push({
-              goods_attribute_id: attrData['goods_attribute_id'],
-              description: attrData['description'],
-              attr_name: attrData['attr_name'],
+              goods_attribute_id: attrData.goods_attribute_id,
+              description: attrData.description,
+              attr_name: attrData.attr_name,
               attr_value: value.attr_value
             })
           }
@@ -300,7 +300,7 @@ export default {
     },
     selectSpec(parent, key) {
       const parentData = this.specConfig[parent]
-      const itemData = this.specConfig[parent]['spec_item'][key]
+      const itemData = this.specConfig[parent].spec_item[key]
       if (itemData.disabled) {
         return
       }

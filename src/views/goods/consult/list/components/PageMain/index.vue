@@ -145,8 +145,8 @@ export default {
   filters: {
     getPreviewUrl(val) {
       if (Array.isArray(val) && val.length > 0) {
-        if (val[0]['source']) {
-          return util.getImageCodeUrl(val[0]['source'], 'goods_image_x80')
+        if (val[0].source) {
+          return util.getImageCodeUrl(val[0].source, 'goods_image_x80')
         }
       }
 

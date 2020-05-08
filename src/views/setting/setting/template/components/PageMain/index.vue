@@ -345,7 +345,7 @@ import { setNoticeTplItem, setNoticeTplStatus } from '@/api/notice/template'
 
 export default {
   components: {
-    'csTinymce': () => import('@/components/cs-tinymce')
+    csTinymce: () => import('@/components/cs-tinymce')
   },
   props: {
     loading: {
@@ -370,8 +370,8 @@ export default {
         tpl: false
       },
       tplType: {
-        'sms': '短信模板',
-        'email': '邮件模板'
+        sms: '短信模板',
+        email: '邮件模板'
       },
       statusMap: {
         0: {

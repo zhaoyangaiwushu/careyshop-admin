@@ -125,7 +125,7 @@ export default {
   name: 'cs-storage',
   mixins: [storage],
   components: {
-    'PageFooter': () => import('@/components/cs-footer')
+    PageFooter: () => import('@/components/cs-footer')
   },
   props: {
     // 确认按钮事件
@@ -217,7 +217,7 @@ export default {
       })
         .then(res => {
           this.currentTableData = res.data.items || []
-          this.page.total = res.data['total_result']
+          this.page.total = res.data.total_result
         })
     },
     handleConfirm() {

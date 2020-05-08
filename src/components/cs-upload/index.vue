@@ -70,7 +70,7 @@ export default {
           ref: 'upload',
           props: this.$attrs,
           on: {
-            'upload': file => {
+            upload: file => {
               if (this.type === 'comp') {
                 this.$emit('input', this.getUploadData(file))
               }
@@ -79,7 +79,7 @@ export default {
                 this.fileList = file
               }
             },
-            'confirm': () => {
+            confirm: () => {
               if (this.type === 'slot') {
                 this.$emit('confirm', this.fileList, this.source)
                 this.fileList = []
@@ -96,9 +96,9 @@ export default {
       fileList.forEach(val => {
         if (val.response) {
           data.push({
-            name: val.response.data[0]['name'],
-            source: val.response.data[0]['url'],
-            url: '//' + val.response.data[0]['url']
+            name: val.response.data[0].name,
+            source: val.response.data[0].url,
+            url: '//' + val.response.data[0].url
           })
         } else {
           data.push({

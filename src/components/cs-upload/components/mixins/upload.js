@@ -27,7 +27,7 @@ export default {
     getToken() {
       // 检测Token是否过期
       const nowTime = Math.round(new Date() / 1000) + 100
-      if (this.token['expires'] !== 0 && nowTime > this.token['expires']) {
+      if (this.token.expires !== 0 && nowTime > this.token.expires) {
         this.updateToken = true
       }
 
@@ -42,7 +42,7 @@ export default {
           replaceUploadItem(this.replaceId)
             .then(res => {
               this.token = res.data || {}
-              this.uploadUrl = this.token['token']['upload_url']['upload_url']
+              this.uploadUrl = this.token.token.upload_url.upload_url
               this.updateToken = false
               resolve()
             })
@@ -50,7 +50,7 @@ export default {
           getUploadToken(this.moduleName)
             .then(res => {
               this.token = res.data || {}
-              this.uploadUrl = this.token['token']['upload_url']['upload_url']
+              this.uploadUrl = this.token.token.upload_url.upload_url
               this.updateToken = false
               resolve()
             })
@@ -73,8 +73,8 @@ export default {
     handlePreview(file) {
       if (file.status === 'success') {
         const response = file.response.data
-        if (response.length && response[0]['type'] === 0) {
-          this.$preview(response[0]['url'])
+        if (response.length && response[0].type === 0) {
+          this.$preview(response[0].url)
           return
         }
       }
@@ -88,29 +88,29 @@ export default {
         return false
       }
 
-      const fielMaxSize = util.stringToByte(this.token['file_size'])
+      const fielMaxSize = util.stringToByte(this.token.file_size)
       if (fielMaxSize > 0 && file.size > fielMaxSize) {
-        this.$message.error(`上传资源大小不能超过 ${this.token['file_size']}`)
+        this.$message.error(`上传资源大小不能超过 ${this.token.file_size}`)
         return false
       }
 
       const suffix = file.name.toLowerCase().split('.').splice(-1).toString()
-      const checkSuffix = this.token['file_ext'] + ',' + this.token['image_ext']
+      const checkSuffix = this.token.file_ext + ',' + this.token.image_ext
       if (checkSuffix.indexOf(suffix) === -1) {
         this.$message.error('上传资源的文件后缀不允许上传')
         return false
       }
 
       // 生成上传请求参数
-      let param = this.token['token']['upload_url']['param']
+      let param = this.token.token.upload_url.param
       param.forEach(value => {
         if (value.name === 'file') {
           return
         }
 
         // 填入接口返回的参数
-        this.params[value.name] = this.token['token'].hasOwnProperty(value.name)
-          ? this.token['token'][value.name]
+        this.params[value.name] = Object.prototype.hasOwnProperty.call(this.token.token, value.name)
+          ? this.token.token[value.name]
           : value.default
 
         /**
@@ -133,19 +133,19 @@ export default {
 
           if (value.name === 'key') {
             const fileName = util.guid()
-            this.params['key'] = `${this.token['token']['dir']}${fileName}.${suffix}`
+            this.params.key = `${this.token.token.dir}${fileName}.${suffix}`
           }
         }
       })
 
       // 本地上传所需要的权限参数
-      if (this.token['token']['upload_url']['module'] === 'careyshop') {
-        this.params['token'] = util.cookies.get('token')
-        this.params['appkey'] = this.$baseConfig.APP_KEY
-        this.params['timestamp'] = Math.round(new Date() / 1000) + 100
-        this.params['format'] = 'json'
-        this.params['method'] = 'add.upload.list'
-        this.params['sign'] = util.getSign({ ...this.params })
+      if (this.token.token.upload_url.module === 'careyshop') {
+        this.params.token = util.cookies.get('token')
+        this.params.appkey = this.$baseConfig.APP_KEY
+        this.params.timestamp = Math.round(new Date() / 1000) + 100
+        this.params.format = 'json'
+        this.params.method = 'add.upload.list'
+        this.params.sign = util.getSign({ ...this.params })
       }
 
       // 自动上传时,"确定"按钮将改变状态
@@ -156,8 +156,8 @@ export default {
     // 文件上传成功时的钩子
     handleSuccess(response, file, fileList) {
       if (response.status === 200 && response.data) {
-        if (response.data[0]['status'] !== 200) {
-          this.handleError(response.data[0]['message'], file, fileList)
+        if (response.data[0].status !== 200) {
+          this.handleError(response.data[0].message, file, fileList)
           return
         }
 

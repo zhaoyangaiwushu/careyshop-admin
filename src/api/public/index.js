@@ -5,8 +5,8 @@
 export function getClientType() {
   return new Promise(resolve => {
     resolve({
-      '1': '管理组',
-      '0': '顾客组',
+      1: '管理组',
+      0: '顾客组',
       '-1': '游客组'
     })
   })
@@ -19,8 +19,8 @@ export function getClientType() {
 export function getMember() {
   return new Promise(resolve => {
     resolve({
-      '1': '顾客人员',
-      '2': '管理人员'
+      1: '顾客人员',
+      2: '管理人员'
     })
   })
 }
@@ -32,10 +32,10 @@ export function getMember() {
 export function getMessageType() {
   return new Promise(resolve => {
     resolve({
-      '0': '系统通知',
-      '1': '公告消息',
-      '2': '活动公告',
-      '3': '其他消息'
+      0: '系统通知',
+      1: '公告消息',
+      2: '活动公告',
+      3: '其他消息'
     })
   })
 }
@@ -47,13 +47,13 @@ export function getMessageType() {
 export function getNoticeType() {
   return new Promise(resolve => {
     resolve({
-      '0': '通用验证',
-      '1': '注册成功',
-      '2': '充值成功',
-      '3': '确认订单',
-      '4': '付款成功',
-      '5': '下单成功',
-      '6': '订单发货'
+      0: '通用验证',
+      1: '注册成功',
+      2: '充值成功',
+      3: '确认订单',
+      4: '付款成功',
+      5: '下单成功',
+      6: '订单发货'
     })
   })
 }

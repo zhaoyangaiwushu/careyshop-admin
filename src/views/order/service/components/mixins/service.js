@@ -12,7 +12,7 @@ import { getDeliveryCompanySelect } from '@/api/logistics/company'
 
 export default {
   components: {
-    'csDeliveryDist': () => import('@/components/cs-delivery-dist')
+    csDeliveryDist: () => import('@/components/cs-delivery-dist')
   },
   data() {
     return {

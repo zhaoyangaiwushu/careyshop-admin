@@ -34,9 +34,9 @@ import { getAdsPositionSelect } from '@/api/ads/position'
 export default {
   name: 'system-ads-ads',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {
@@ -63,7 +63,7 @@ export default {
     ])
       .then(res => {
         this.positionTable = res[0].data || []
-        this.platformTable = res[1].data ? res[1].data['platform']['value'] : []
+        this.platformTable = res[1].data ? res[1].data.platform.value : []
         this.page.size = res[2].get('size').value() || 25
       })
       .then(() => {

@@ -99,9 +99,9 @@ export default {
   methods: {
     show(orderCode, logisticCode = null, excludeCode = []) {
       const request = {
-        'order_code': orderCode,
-        'logistic_code': logisticCode,
-        'exclude_code': excludeCode
+        order_code: orderCode,
+        logistic_code: logisticCode,
+        exclude_code: excludeCode
       }
 
       this.visible = true

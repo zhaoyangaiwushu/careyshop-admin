@@ -125,7 +125,7 @@ import { getGoodsSelect } from '@/api/goods/goods'
 
 export default {
   components: {
-    'csGoodsDrawer': () => import('@/components/cs-goods-drawer')
+    csGoodsDrawer: () => import('@/components/cs-goods-drawer')
   },
   props: {
     // 外部v-model值
@@ -164,10 +164,10 @@ export default {
   data() {
     return {
       typeHelp: {
-        '0': '打折额度，比如65表示按6.5折结算',
-        '1': '减多少额度，比如65表示在原价的基础上减去65',
-        '2': '固定价格，比如65则按65的价格结算',
-        '3': '赠送优惠劵，订单完成后赠送指定的优惠劵给顾客'
+        0: '打折额度，比如65表示按6.5折结算',
+        1: '减多少额度，比如65表示在原价的基础上减去65',
+        2: '固定价格，比如65则按65的价格结算',
+        3: '赠送优惠劵，订单完成后赠送指定的优惠劵给顾客'
       },
       batchValue: undefined,
       batchVisible: false,
@@ -189,7 +189,7 @@ export default {
         return ''
       }
 
-      return val['name']
+      return val.name
     }
   },
   mounted() {

@@ -31,7 +31,7 @@ import { mapActions } from 'vuex'
 export default {
   name: 'goods-admin-update',
   components: {
-    'PageEdit': () => import('./components/PageEdit')
+    PageEdit: () => import('./components/PageEdit')
   },
   props: {
     goods_id: {

@@ -604,7 +604,7 @@ import { debounce } from 'lodash'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload')
+    csUpload: () => import('@/components/cs-upload')
   },
   props: {
     tableData: {
@@ -832,8 +832,8 @@ export default {
       const data = response.data[0]
       if (data.type === 0) {
         this.imageInfo = `大小: ${util.bytesFormatter(data.size)} `
-        this.imageInfo += `宽: ${data['pixel']['width']} PX `
-        this.imageInfo += `高: ${data['pixel']['height']} PX`
+        this.imageInfo += `宽: ${data.pixel.width} PX `
+        this.imageInfo += `高: ${data.pixel.height} PX`
         this.imageUrl = data.url
       }
     },
@@ -1020,14 +1020,14 @@ export default {
 
             order.forEach(value => {
               if (this.form.resize === 'proportion' && value === 'size') {
-                scale[key]['size'] = [temp['slider']]
+                scale[key].size = [temp.slider]
               } else {
-                scale[key][value] = [temp[value]['width'], temp[value]['height']]
+                scale[key][value] = [temp[value].width, temp[value].height]
               }
             })
 
-            scale[key]['slider'] = temp['slider']
-            scale[key]['order'] = temp['order']
+            scale[key].slider = temp.slider
+            scale[key].order = temp.order
           }
 
           this.dialogLoading = true
@@ -1083,22 +1083,22 @@ export default {
 
         order.forEach(value => {
           if (this.form.resize === 'proportion' && value === 'size') {
-            data['size'] = [scale['slider']]
+            data.size = [scale.slider]
           } else {
-            data[value] = [scale[value]['width'], scale[value]['height']]
+            data[value] = [scale[value].width, scale[value].height]
           }
         })
       }
 
       this.imageLoading = true
-      this.imageResult['url_prefix'] = ''
+      this.imageResult.url_prefix = ''
 
       getStorageThumbUrl({ ...data })
         .then(res => {
           this.imageResult = res.data || {}
         })
         .then(() => {
-          getStorageThumbInfo(this.imageResult['url_prefix'], this.imageResult['source'])
+          getStorageThumbInfo(this.imageResult.url_prefix, this.imageResult.source)
             .then(res => {
               this.imageResultInfo = `大小: ${util.bytesFormatter(res.data.size)} `
               this.imageResultInfo += `宽: ${res.data.width} PX `

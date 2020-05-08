@@ -13,7 +13,7 @@ import { getUserLevelList } from '@/api/user/level'
 export default {
   name: 'member-user-level',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

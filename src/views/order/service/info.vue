@@ -432,7 +432,7 @@ export default {
     serviceMixins
   ],
   components: {
-    'csOrderRefund': () => import('@/components/cs-order-refund')
+    csOrderRefund: () => import('@/components/cs-order-refund')
   },
   props: {
     service_no: {
@@ -467,15 +467,15 @@ export default {
         ]
       },
       typeMap: {
-        '0': '仅退款',
-        '1': '退货退款',
-        '2': '换货',
-        '3': '维修'
+        0: '仅退款',
+        1: '退货退款',
+        2: '换货',
+        3: '维修'
       },
       clientMap: {
         '-1': '游客',
-        '0': '顾客',
-        '1': '商家'
+        0: '顾客',
+        1: '商家'
       },
       refundNo: '',
       refundVisible: false,
@@ -498,20 +498,20 @@ export default {
         active: 1,
         step: [
           {
-            'icon': 'el-icon-edit-outline',
-            'title': '申请售后'
+            icon: 'el-icon-edit-outline',
+            title: '申请售后'
           },
           {
-            'icon': 'el-icon-user',
-            'title': '等待处理'
+            icon: 'el-icon-user',
+            title: '等待处理'
           },
           {
-            'icon': 'el-icon-loading',
-            'title': '售后中'
+            icon: 'el-icon-loading',
+            title: '售后中'
           },
           {
-            'icon': 'el-icon-time',
-            'title': '售后完成'
+            icon: 'el-icon-time',
+            title: '售后完成'
           }
         ]
       }

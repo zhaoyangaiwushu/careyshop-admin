@@ -15,7 +15,7 @@ import { getRegionSonList } from '@/api/logistics/region'
 export default {
   name: 'setting-logistics-region',
   components: {
-    'PageMain': () => import('./components/PageMain')
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

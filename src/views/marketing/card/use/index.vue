@@ -29,9 +29,9 @@ import { getCardUseList } from '@/api/marketing/card_use'
 export default {
   name: 'marketing-card-use',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   props: {
     card_id: {

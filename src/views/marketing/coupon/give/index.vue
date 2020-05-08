@@ -30,9 +30,9 @@ import { getCouponGiveList } from '@/api/marketing/coupon_give'
 export default {
   name: 'marketing-coupon-give',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   props: {
     coupon_id: {

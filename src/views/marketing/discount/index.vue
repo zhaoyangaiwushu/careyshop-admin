@@ -30,19 +30,19 @@ import { getDiscountList } from '@/api/marketing/discount'
 export default {
   name: 'marketing-marketing-discount',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {
       loading: false,
       table: [],
       typeMap: {
-        '0': '打折',
-        '1': '减价',
-        '2': '固定价格',
-        '3': '送优惠劵'
+        0: '打折',
+        1: '减价',
+        2: '固定价格',
+        3: '送优惠劵'
       },
       page: {
         current: 1,

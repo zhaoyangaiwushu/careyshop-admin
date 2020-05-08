@@ -422,10 +422,10 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage'),
-    'csPhoto': () => import('@/components/cs-photo'),
-    'csTinymce': () => import('@/components/cs-tinymce')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage'),
+    csPhoto: () => import('@/components/cs-photo'),
+    csTinymce: () => import('@/components/cs-tinymce')
   },
   props: {
     tableData: {
@@ -609,11 +609,11 @@ export default {
         }
 
         if (response.data) {
-          if (response.data[0]['type'] === 0) {
+          if (response.data[0].type === 0) {
             this.content.image.push({
-              name: response.data[0]['name'],
-              source: response.data[0]['url'],
-              url: '//' + response.data[0]['url']
+              name: response.data[0].name,
+              source: response.data[0].url,
+              url: '//' + response.data[0].url
             })
           }
         }

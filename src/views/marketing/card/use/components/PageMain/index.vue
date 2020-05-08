@@ -193,7 +193,7 @@ import { setCardUseInvalid } from '@/api/marketing/card_use'
 
 export default {
   components: {
-    'csPrint': () => import('@/components/cs-print')
+    csPrint: () => import('@/components/cs-print')
   },
   props: {
     loading: {

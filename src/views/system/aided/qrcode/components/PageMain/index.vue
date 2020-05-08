@@ -290,8 +290,8 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csUpload': () => import('@/components/cs-upload'),
-    'csStorage': () => import('@/components/cs-storage')
+    csUpload: () => import('@/components/cs-upload'),
+    csStorage: () => import('@/components/cs-storage')
   },
   props: {
     loading: {
@@ -418,7 +418,7 @@ export default {
     this._validationAuth()
     getQrcodeCallurl()
       .then(res => {
-        this.qrcodeUrl = res.data['call_url']
+        this.qrcodeUrl = res.data.call_url
       })
   },
   methods: {

@@ -20,8 +20,8 @@ import { getFriendlinkList } from '@/api/aided/friendlink'
 export default {
   name: 'system-aided-friendlink',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

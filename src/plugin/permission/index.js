@@ -17,7 +17,7 @@ export default {
           break
       }
 
-      return !!(path && auth.hasOwnProperty(path))
+      return !!(path && Object.prototype.hasOwnProperty.call(auth, path))
     }
   }
 }

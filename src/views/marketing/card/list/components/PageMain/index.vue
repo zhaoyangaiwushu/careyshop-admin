@@ -294,7 +294,7 @@ import { getCardUseExport } from '@/api/marketing/card_use'
 
 export default {
   components: {
-    'csGoodsCategory': () => import('@/components/cs-goods-category')
+    csGoodsCategory: () => import('@/components/cs-goods-category')
   },
   props: {
     loading: {

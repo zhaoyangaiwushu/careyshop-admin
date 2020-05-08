@@ -31,9 +31,9 @@ import { getStorageStyleList } from '@/api/upload/style'
 export default {
   name: 'system-storage-style',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain'),
-    'PageFooter': () => import('@/components/cs-footer')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain'),
+    PageFooter: () => import('@/components/cs-footer')
   },
   data() {
     return {
@@ -57,7 +57,7 @@ export default {
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])
       .then(res => {
-        this.platformTable = res[0].data ? res[0].data['platform']['value'] : []
+        this.platformTable = res[0].data ? res[0].data.platform.value : []
         this.page.size = res[1].get('size').value() || 25
       })
       .then(() => {

@@ -32,8 +32,8 @@ function getMenuData(arr) {
     }
 
     // 处理子节点数据
-    arrElem['menu_id'] = value.menu_id
-    arrElem['parent_id'] = value.parent_id
+    arrElem.menu_id = value.menu_id
+    arrElem.parent_id = value.parent_id
 
     tree.aside.push(arrElem)
   })

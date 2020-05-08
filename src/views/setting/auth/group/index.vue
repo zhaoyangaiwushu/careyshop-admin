@@ -19,8 +19,8 @@ import { getAuthGroupList } from '@/api/auth/group'
 export default {
   name: 'setting-auth-group',
   components: {
-    'PageHeader': () => import('./components/PageHeader'),
-    'PageMain': () => import('./components/PageMain')
+    PageHeader: () => import('./components/PageHeader'),
+    PageMain: () => import('./components/PageMain')
   },
   data() {
     return {

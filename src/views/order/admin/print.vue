@@ -334,7 +334,7 @@ import { getPaymentList } from '@/api/payment/payment'
 export default {
   name: 'order-admin-print',
   components: {
-    'csPrint': () => import('@/components/cs-print')
+    csPrint: () => import('@/components/cs-print')
   },
   computed: {
     outPrint() {
@@ -427,11 +427,11 @@ export default {
             }
 
             if (key === 'logo') {
-              this.logo = util.checkUrl(res[0].data[key]['value'])
+              this.logo = util.checkUrl(res[0].data[key].value)
               continue
             }
 
-            this[key] = res[0].data[key]['value']
+            this[key] = res[0].data[key].value
           }
         }
 

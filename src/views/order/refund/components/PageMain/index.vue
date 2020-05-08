@@ -159,7 +159,7 @@ import util from '@/utils/util'
 
 export default {
   components: {
-    'csOrderRefund': () => import('@/components/cs-order-refund')
+    csOrderRefund: () => import('@/components/cs-order-refund')
   },
   props: {
     toPayment: {
@@ -209,7 +209,7 @@ export default {
       this.auth.query = this.$permission('/order/admin/refund/query')
     },
     getToPayment(val) {
-      return val !== '' ? this.toPayment[val]['name'] : ''
+      return val !== '' ? this.toPayment[val].name : ''
     },
     sortChange({ column, prop, order }) {
       let sort = {

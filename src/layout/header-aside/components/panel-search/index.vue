@@ -68,27 +68,12 @@ export default {
     // 这份数据是展示在搜索面板下面的
     resultsList() {
       return (this.results.length === 0 && this.searchText === '')
-        ? this.pool.map(e => ({ ...e }))
+        ? this.pool.map(e => ({ value: e.fullTitle, ...e }))
         : this.results
-    }
-  },
-  methods: {
-    /**
-     * @description 过滤选项 这个方法在每次输入框的值发生变化时会触发
-     */
-    querySearch(queryString, callback) {
-      let pool = this.pool
-      const results = this.query(queryString ? pool : [], queryString)
-      this.results = results
-      callback(results)
     },
-    /**
-     * @description 指定的数据源中根据指定的查询字符串过滤数据
-     * @param {Object} pool 需要过滤的数据
-     * @param {String} queryString 查询字符串
-     */
-    query(pool, queryString) {
-      return new Fuse(pool, {
+    // 根据 pool 更新 fuse 实例
+    fuse() {
+      return new Fuse(this.pool, {
         shouldSort: true,
         tokenize: true,
         threshold: 0.6,
@@ -101,8 +86,16 @@ export default {
           'path'
         ]
       })
-        .search(queryString)
-        .map(e => ({ ...e.item }))
+    }
+  },
+  methods: {
+    /**
+     * @description 过滤选项 这个方法在每次输入框的值发生变化时会触发
+     */
+    querySearch(queryString, callback) {
+      const results = this.fuse.search(queryString).map(e => e.item)
+      this.results = results
+      callback(results)
     },
     /**
      * @description 聚焦输入框

@@ -456,4 +456,30 @@ util.isIE = () => {
   return !isNaN(Number(document.documentMode))
 }
 
+/**
+ * 版本号比较
+ * @param curV
+ * @param reqV
+ * @returns {boolean}
+ */
+util.compareVersion = (curV, reqV) => {
+  if (!curV || !reqV) {
+    return false
+  }
+
+  const arr1 = curV.split('.')
+  const arr2 = reqV.split('.')
+  const minLength = Math.min(arr1.length, arr2.length)
+
+  let position = 0
+  let diff = 0
+
+  while (position < minLength && ((diff = parseInt(arr1[position]) - parseInt(arr2[position])) === 0)) {
+    position++
+  }
+
+  diff = (diff !== 0) ? diff : (arr1.length - arr2.length)
+  return diff > 0
+}
+
 export default util

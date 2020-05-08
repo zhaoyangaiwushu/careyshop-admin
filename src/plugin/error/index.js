@@ -13,17 +13,15 @@ export default {
             meta: { error, vm }
           })
 
-          if (process.env.NODE_ENV !== 'development') {
-            return
+          if (process.env.NODE_ENV === 'development') {
+            util.log.capsule('CareyShop', 'ErrorHandler', logType)
+            util.log.danger('>>>>>> 错误信息 >>>>>>')
+            console.log(info)
+            util.log.danger('>>>>>> Vue 实例 >>>>>>')
+            console.log(vm)
+            util.log.danger('>>>>>> Error >>>>>>')
+            console.log(error)
           }
-
-          util.log.capsule('CareyShop', 'ErrorHandler', logType)
-          util.log.danger('>>>>>> 错误信息 >>>>>>')
-          console.log(info)
-          util.log.danger('>>>>>> Vue 实例 >>>>>>')
-          console.log(vm)
-          util.log.danger('>>>>>> Error >>>>>>')
-          console.log(error)
         })
       }
     }

@@ -75,12 +75,6 @@ module.exports = [
     css: ''
   },
   {
-    name: 'mockjs',
-    library: 'Mock',
-    js: '//cdn.jsdelivr.net/npm/mockjs@1.1.0/dist/mock.min.js',
-    css: ''
-  },
-  {
     name: 'nprogress',
     library: 'NProgress',
     js: '//cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js',

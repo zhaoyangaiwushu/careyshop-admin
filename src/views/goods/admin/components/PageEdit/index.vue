@@ -399,7 +399,7 @@
                                   @click.native="setSpecImage(parent, key, value.image)"
                                   :src="value.image[0] | getPreviewUrl('goods_image_x80')"
                                   :size="27">
-                                  <img src="image/setting/image.png" alt=""/>
+                                  <img :src="`${$publicPath}image/setting/image.png`" alt=""/>
                                 </el-avatar>
                               </el-popover>
                             </div>

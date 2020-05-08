@@ -127,7 +127,7 @@ export default {
     initTinymce() {
       const self = this
       // https://juejin.im/entry/5be91af8f265da614f6fd529
-      window.tinymce.baseURL = 'static/tinymce'
+      window.tinymce.baseURL = this.$publicPath + 'static/tinymce'
       window.tinymce.init({
         // 默认配置
         ...this.defaultConfig,

@@ -12,7 +12,7 @@
             class="print-order">
             <table style="border-top: none; padding: 0;">
               <tr>
-                <th><img :src="logo || './image/print/logo.png'" alt=""></th>
+                <th><img :src="logo || `${$publicPath}image/print/logo.png`" alt=""></th>
                 <th style="width: 280px;" valign="bottom">买家账号：{{item.get_user.username}}</th>
               </tr>
             </table>

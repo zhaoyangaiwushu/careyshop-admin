@@ -131,7 +131,7 @@
                 width="150"
                 placement="top"
                 trigger="hover">
-                <div class="popover-image">
+                <div class="popover-image" style="text-align: center;">
                   <el-image
                     :src="updateForm.image | getPreviewUrl"
                     @click.stop="$preview(updateForm.image)"
@@ -513,7 +513,6 @@ export default {
   }
 
   .popover-image {
-    text-align: center;
     max-width: 150px;
     line-height: 0;
   }

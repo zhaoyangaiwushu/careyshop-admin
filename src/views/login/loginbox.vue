@@ -53,8 +53,8 @@ export default {
       codeUrl: '',
       sessionId: '',
       loginForm: {
-        username: 'admin',
-        password: 'admin888',
+        username: '',
+        password: '',
         appkey: this.$baseConfig.APP_KEY,
         login_code: '',
         session_id: ''
@@ -78,6 +78,7 @@ export default {
     if (process.env.VUE_APP_ISDEMO === 'true') {
       const number = Math.floor(Math.random() * (45 - 1 + 1) + 1)
       this.loginForm.username = `admin${number}`
+      this.loginForm.password = 'admin888'
     }
 
     getAppCaptcha(this.$baseConfig.APP_KEY)

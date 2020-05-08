@@ -10,7 +10,9 @@ export default {
   filters: {
     // 获取图片缩略图
     getImageThumb(val) {
-      let imageUrl = 'image/storage/file.png'
+      const path = process.env.BASE_URL
+      let imageUrl = path + 'image/storage/file.png'
+
       switch (val['type']) {
         case 0:
           imageUrl = val['url'] ? util.getImageCodeUrl(val['url'], 'storage_lists') : ''
@@ -20,7 +22,7 @@ export default {
           if (val['cover']) {
             imageUrl = util.getImageCodeUrl(val['cover'], 'storage_lists')
           } else {
-            imageUrl = val['is_default'] ? 'image/storage/default.png' : 'image/storage/folder.png'
+            imageUrl = path + (val['is_default'] ? 'image/storage/default.png' : 'image/storage/folder.png')
           }
           break
 
@@ -28,7 +30,7 @@ export default {
           if (val['cover']) {
             imageUrl = util.getImageCodeUrl(val['cover'], 'storage_lists')
           } else {
-            imageUrl = 'image/storage/video.png'
+            imageUrl = path + 'image/storage/video.png'
           }
           break
       }

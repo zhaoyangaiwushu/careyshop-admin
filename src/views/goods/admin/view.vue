@@ -234,7 +234,7 @@ export default {
             let highPrice = 0
 
             for (let combo in this.specCombo) {
-              if (!this.specCombo.hasOwnProperty(combo)) {
+              if (!Object.prototype.hasOwnProperty.call(this.specCombo, combo)) {
                 continue
               }
 
@@ -328,7 +328,7 @@ export default {
         let disabled = []
 
         for (let active in activeList) {
-          if (!activeList.hasOwnProperty(active) || !activeList[active]) {
+          if (!Object.prototype.hasOwnProperty.call(activeList, active) || !activeList[active]) {
             continue
           }
 
@@ -371,7 +371,7 @@ export default {
 
       // 更新售价与库存
       const strActive = activeList.join('_')
-      if (this.specCombo.hasOwnProperty(strActive)) {
+      if (Object.prototype.hasOwnProperty.call(this.specCombo, strActive)) {
         this.currentStore = this.specCombo[strActive].store_qty
         this.currentPrice = util.getNumber(this.specCombo[strActive].price)
       } else {

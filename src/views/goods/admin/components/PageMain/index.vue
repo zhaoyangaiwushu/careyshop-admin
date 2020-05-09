@@ -943,7 +943,7 @@ export default {
         .then(res => {
           if (res.data) {
             for (let key in res.data) {
-              if (!res.data.hasOwnProperty(key)) {
+              if (!Object.prototype.hasOwnProperty.call(res.data, key)) {
                 continue
               }
 

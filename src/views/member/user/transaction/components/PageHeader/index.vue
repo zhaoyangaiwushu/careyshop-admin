@@ -151,7 +151,7 @@ export default {
     handleFormSubmit(isRestore = false) {
       let form = {}
       for (const index in this.form) {
-        if (!this.form.hasOwnProperty(index)) {
+        if (!Object.prototype.hasOwnProperty.call(this.form, index)) {
           continue
         }
 

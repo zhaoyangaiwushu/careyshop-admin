@@ -1362,7 +1362,7 @@ export default {
         return false
       }
 
-      if (!this.specTable.edit.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(this.specTable.edit, key)) {
         return false
       }
 
@@ -1711,7 +1711,7 @@ export default {
     batchTableSpec() {
       const data = this.currentForm.spec_combo
       for (let key in data) {
-        if (data.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
           data[key][this.specBatch.type] = this.specBatch.value
         }
       }
@@ -1728,7 +1728,7 @@ export default {
     countTableSpec() {
       const data = this.currentForm.spec_combo
       for (let key in data) {
-        if (data.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
           let total = data[key][this.specCount.type] + this.specCount.value
           data[key][this.specCount.type] = total >= 0 ? total : 0
         }
@@ -1791,7 +1791,7 @@ export default {
       const getKeyValue = function(keyName) {
         let name = ''
         keyName.forEach(key => {
-          if (treeTable.index.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(treeTable.index, key)) {
             let idx = treeTable.index[key]
             name += ` ${idx.specName}:${idx.itemName}`
           }
@@ -1849,7 +1849,7 @@ export default {
           const isArrayOfCombo = Array.isArray(combo)
           const key = isArrayOfCombo ? [...combo].sort().join('_') : combo
 
-          if (oldCombo.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(oldCombo, key)) {
             temp = {
               price: oldCombo[key].price,
               store_qty: oldCombo[key].store_qty,

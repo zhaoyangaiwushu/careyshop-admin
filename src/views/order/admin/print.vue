@@ -422,7 +422,7 @@ export default {
       .then(res => {
         if (res[0]) {
           for (let key in res[0].data) {
-            if (!res[0].data.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(res[0].data, key)) {
               continue
             }
 
@@ -465,7 +465,7 @@ export default {
       this.orderData.forEach(item => {
         for (const goods of item.get_order_goods) {
           let key = `${goods.goods_id}-${goods.key_name}`
-          if (goodsList.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(goodsList, key)) {
             goodsList[key].qty += goods.qty
             if (!goodsList[key].order_no.includes(goods.order_no)) {
               goodsList[key].order_no.push(goods.order_no)

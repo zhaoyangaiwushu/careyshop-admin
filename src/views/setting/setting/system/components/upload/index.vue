@@ -233,7 +233,7 @@ export default {
     handleFormSubmit() {
       let data = {}
       for (const index in this.form) {
-        if (this.form.hasOwnProperty(index)) {
+        if (Object.prototype.hasOwnProperty.call(this.form, index)) {
           data[index] = this.form[index].value
         }
       }

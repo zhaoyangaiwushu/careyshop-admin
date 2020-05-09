@@ -87,7 +87,7 @@ export default {
   filters: {
     getSpecType(type) {
       const typeMap = { 0: '文字', 1: '图片', 2: '颜色' }
-      if (typeMap.hasOwnProperty(type)) {
+      if (Object.prototype.hasOwnProperty.call(typeMap, type)) {
         return typeMap[type]
       }
 
@@ -137,7 +137,7 @@ export default {
       if (this.checkedCities.length > 0) {
         let specItem = []
         this.checkedCities.forEach(value => {
-          if (this.specItem.spec_item.hasOwnProperty(value)) {
+          if (Object.prototype.hasOwnProperty.call(this.specItem.spec_item, value)) {
             specItem.push(this.specItem.spec_item[value])
           }
         })

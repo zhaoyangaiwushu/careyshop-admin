@@ -156,7 +156,7 @@ export default {
       this.source = []
 
       for (const key in this.form.source.value) {
-        if (this.form.source.value.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(this.form.source.value, key)) {
           this.source.push({
             key: key,
             value: this.form.source.value[key]
@@ -168,7 +168,7 @@ export default {
     handleFormSubmit() {
       let data = {}
       for (const index in this.form) {
-        if (this.form.hasOwnProperty(index)) {
+        if (Object.prototype.hasOwnProperty.call(this.form, index)) {
           data[index] = this.form[index].value
         }
       }

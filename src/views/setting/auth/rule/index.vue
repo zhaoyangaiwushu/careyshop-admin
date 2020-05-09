@@ -71,7 +71,7 @@ export default {
           let mapModule = []
 
           for (const index in this.module) {
-            if (!this.module.hasOwnProperty(index)) {
+            if (!Object.prototype.hasOwnProperty.call(this.module, index)) {
               continue
             }
 

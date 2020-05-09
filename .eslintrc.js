@@ -3,7 +3,7 @@ module.exports = {
   env: {
     node: true
   },
-  'extends': [
+  extends: [
     'plugin:vue/essential',
     '@vue/standard'
   ],
@@ -22,7 +22,7 @@ module.exports = {
     }
   ],
   globals: {
-    'serverConfig': false
+    serverConfig: false
   },
   rules: {
     'accessor-pairs': 2,

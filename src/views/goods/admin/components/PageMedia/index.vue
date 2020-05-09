@@ -228,7 +228,7 @@ export default {
     },
     // 切换图片
     tabPicture: debounce(function(index) {
-      if (this.imageList.hasOwnProperty(index)) {
+      if (Object.prototype.hasOwnProperty.call(this.imageList, index)) {
         this.currentIndex = index
         this.currentImage = this.imageList[index]
       }

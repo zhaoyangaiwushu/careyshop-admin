@@ -406,7 +406,7 @@ export default {
     },
     // 获取模块名称
     getModuleName(val) {
-      if (!this.module.hasOwnProperty(val)) {
+      if (!Object.prototype.hasOwnProperty.call(this.module, val)) {
         return ''
       }
 
@@ -442,7 +442,7 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          const list = key.filter(item => !this.module.hasOwnProperty(item))
+          const list = key.filter(item => !Object.prototype.hasOwnProperty.call(this.module, item))
           delAuthRuleList(list)
             .then(() => {
               list.forEach(value => {
@@ -478,7 +478,7 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          const list = key.filter(item => !this.module.hasOwnProperty(item))
+          const list = key.filter(item => !Object.prototype.hasOwnProperty.call(this.module, item))
           setAuthRuleStatus(list, val)
             .then(() => {
               list.forEach(value => {
@@ -526,13 +526,13 @@ export default {
       }
 
       // 处理el-select项不存在的bug
-      if (!this.group.hasOwnProperty(this.form.group_id)) {
+      if (!Object.prototype.hasOwnProperty.call(this.group, this.form.group_id)) {
         this.form.group_id = undefined
       }
     },
     // 判断节点是否能被拖动
     allowDrag(draggingNode) {
-      return !this.module.hasOwnProperty(draggingNode.key) && this.auth.move
+      return !Object.prototype.hasOwnProperty.call(this.module, draggingNode.key) && this.auth.move
     },
     // 拖拽时判定目标节点能否被放置
     allowDrop(draggingNode, dropNode, type) {

@@ -238,7 +238,7 @@ export default {
     },
     // 获取付款方式
     _getPaymentType(code) {
-      if (this.toPayment.hasOwnProperty(code)) {
+      if (Object.prototype.hasOwnProperty.call(this.toPayment, code)) {
         return this.toPayment[code].name
       }
 
@@ -351,7 +351,7 @@ export default {
 
       let region = ['province', 'city', 'district']
       region.forEach(item => {
-        if (this.formOrder.request.hasOwnProperty(item)) {
+        if (Object.prototype.hasOwnProperty.call(this.formOrder.request, item)) {
           if (this.formOrder.request[item] > 0) {
             this.formOrder.request.region.push(this.formOrder.request[item])
           }
@@ -372,7 +372,7 @@ export default {
         if (valid) {
           let region = ['province', 'city', 'district']
           region.forEach((item, index) => {
-            if (this.formOrder.request.hasOwnProperty(item)) {
+            if (Object.prototype.hasOwnProperty.call(this.formOrder.request, item)) {
               if (this.formOrder.request[item] > 0) {
                 this.formOrder.request[item] = this.formOrder.request.region[index]
               }

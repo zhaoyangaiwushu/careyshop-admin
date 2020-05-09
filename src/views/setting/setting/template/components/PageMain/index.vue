@@ -602,7 +602,7 @@ export default {
         .then(res => {
           const data = res.data.value
           for (const key in data) {
-            if (data.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
               this.smsForm[key] = data[key].value
             }
           }
@@ -656,7 +656,7 @@ export default {
         .then(res => {
           const data = res.data.value
           for (const key in data) {
-            if (data.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(data, key)) {
               this.emailForm[key] = data[key].value
             }
           }

@@ -769,7 +769,7 @@ export default {
       }
 
       // 处理el-select项不存在的bug
-      if (!this.platformTable.hasOwnProperty(this.form.platform)) {
+      if (!Object.prototype.hasOwnProperty.call(this.platformTable, this.form.platform)) {
         this.form.platform = undefined
       }
 

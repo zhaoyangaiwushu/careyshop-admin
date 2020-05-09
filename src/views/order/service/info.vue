@@ -554,7 +554,7 @@ export default {
       }
 
       for (let key in this.serviceData.refund_detail) {
-        if (!this.serviceData.refund_detail.hasOwnProperty(key)) {
+        if (!Object.prototype.hasOwnProperty.call(this.serviceData.refund_detail, key)) {
           continue
         }
 

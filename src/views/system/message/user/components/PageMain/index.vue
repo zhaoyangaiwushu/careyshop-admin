@@ -191,7 +191,7 @@ export default {
     },
     tabPane: {
       handler(index) {
-        if (!this.typeData.hasOwnProperty(index)) {
+        if (!Object.prototype.hasOwnProperty.call(this.typeData, index)) {
           return
         }
 
@@ -203,7 +203,7 @@ export default {
   },
   filters: {
     getTabPaneName(value, unread) {
-      if (!unread.hasOwnProperty(value.value) || unread[value.value] <= 0) {
+      if (!Object.prototype.hasOwnProperty.call(unread, value.value) || unread[value.value] <= 0) {
         return value.name
       }
 

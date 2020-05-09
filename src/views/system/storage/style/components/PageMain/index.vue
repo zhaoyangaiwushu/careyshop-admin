@@ -1011,7 +1011,7 @@ export default {
           }
 
           for (const key in this.scale) {
-            if (!this.scale.hasOwnProperty(key)) {
+            if (!Object.prototype.hasOwnProperty.call(this.scale, key)) {
               continue
             }
 
@@ -1116,13 +1116,13 @@ export default {
 
       let scale = {}
       for (const key in data.scale) {
-        if (!data.scale.hasOwnProperty(key)) {
+        if (!Object.prototype.hasOwnProperty.call(data.scale, key)) {
           continue
         }
 
         scale[key] = {}
         for (const item in data.scale[key]) {
-          if (!data.scale[key].hasOwnProperty(item)) {
+          if (!Object.prototype.hasOwnProperty.call(data.scale[key], item)) {
             continue
           }
 
@@ -1171,7 +1171,7 @@ export default {
       }
 
       // 处理el-select项不存在的bug
-      if (!this.platformTable.hasOwnProperty(this.form.platform)) {
+      if (!Object.prototype.hasOwnProperty.call(this.platformTable, this.form.platform)) {
         this.form.platform = undefined
       }
 

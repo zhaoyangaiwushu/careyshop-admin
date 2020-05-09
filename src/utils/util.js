@@ -147,7 +147,7 @@ util.dataReplace = (data, replace) => {
         continue
       }
 
-      if (replace.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(replace, key)) {
         value[key] = replace[key][value[key]]
       }
     }
@@ -175,7 +175,7 @@ util.stringToByte = (value) => {
   const a = { B: 0, KB: 1, MB: 2, GB: 3, TB: 4, PB: 5 }
   const b = { B: 0, K: 1, M: 2, G: 3, T: 4, P: 5 }
 
-  const pos = a.hasOwnProperty(suffix) && a[suffix] !== 0 ? a[suffix] : b[suffix]
+  const pos = Object.prototype.hasOwnProperty.call(a, suffix) && a[suffix] !== 0 ? a[suffix] : b[suffix]
   return Math.round(size * Math.pow(1024, pos))
 }
 
@@ -279,7 +279,7 @@ util.getImageStyleUrl = (url, style = '') => {
 util.getQrcodeUrl = (text, expand = {}) => {
   let data = serverConfig.BASE_API
   data += '/v1/qrcode/method/get.qrcode.item?text='
-  data += encodeURI(expand.hasOwnProperty('text') ? expand.text : text)
+  data += encodeURI(Object.prototype.hasOwnProperty.call(expand, 'text') ? expand.text : text)
 
   for (const key in expand) {
     if (key === 'text' || expand[key] === '') {
@@ -306,7 +306,7 @@ util.getQrcodeUrl = (text, expand = {}) => {
 util.getBarcodeUrl = (text, expand = {}) => {
   let data = serverConfig.BASE_API
   data += '/v1/barcode/method/get.barcode.item?text='
-  data += encodeURI(expand.hasOwnProperty('text') ? expand.text : text)
+  data += encodeURI(Object.prototype.hasOwnProperty.call(expand, 'text') ? expand.text : text)
 
   for (const key in expand) {
     if (key === 'text' || expand[key] === '') {

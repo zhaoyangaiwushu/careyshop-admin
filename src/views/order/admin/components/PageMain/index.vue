@@ -683,11 +683,11 @@ export default {
   methods: {
     // 数字化标签名称
     getTabPaneName(key, value) {
-      if (!this.totalMap.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(this.totalMap, key)) {
         return value
       }
 
-      if (!this.orderTotal.hasOwnProperty(this.totalMap[key])) {
+      if (!Object.prototype.hasOwnProperty.call(this.orderTotal, this.totalMap[key])) {
         return value
       }
 

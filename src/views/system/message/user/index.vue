@@ -67,7 +67,7 @@ export default {
 
         if (res[0]) {
           for (const index in res[0]) {
-            if (!res[0].hasOwnProperty(index)) {
+            if (!Object.prototype.hasOwnProperty.call(res[0], index)) {
               continue
             }
 
@@ -132,7 +132,7 @@ export default {
     minusUnread(key, total) {
       const newKey = ['total', key]
       newKey.forEach(value => {
-        if (this.unread.hasOwnProperty(value)) {
+        if (Object.prototype.hasOwnProperty.call(this.unread, value)) {
           this.unread[value] = (this.unread[value] - total) <= 0 ? 0 : this.unread[value] - total
         }
       })

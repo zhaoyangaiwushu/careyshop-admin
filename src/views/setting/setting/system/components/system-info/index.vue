@@ -545,7 +545,7 @@ export default {
       this.platforms = []
 
       for (const key in this.form.platform.value) {
-        if (this.form.platform.value.hasOwnProperty(key)) {
+        if (Object.prototype.hasOwnProperty.call(this.form.platform.value, key)) {
           this.platforms.push({
             key: key,
             value: this.form.platform.value[key]
@@ -557,7 +557,7 @@ export default {
     handleFormSubmit() {
       let data = {}
       for (const index in this.form) {
-        if (this.form.hasOwnProperty(index)) {
+        if (Object.prototype.hasOwnProperty.call(this.form, index)) {
           data[index] = this.form[index].value
         }
       }

@@ -425,8 +425,8 @@
 
         <el-form-item
           label="收货区域"
-          prop="region">
-          <cs-region-select v-model="formOrder.request.region"/>
+          prop="region_list">
+          <cs-region-select v-model="formOrder.request.region_list"/>
         </el-form-item>
 
         <el-form-item

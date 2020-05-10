@@ -108,9 +108,9 @@
 
         <el-form-item
           label="所在地区"
-          prop="regions">
+          prop="region_list">
           <el-cascader
-            v-model="form.regions"
+            v-model="form.region_list"
             placeholder="请选择所在地区"
             :options="treeData"
             :props="treeProps"
@@ -224,7 +224,7 @@ export default {
       form: {
         client_id: undefined,
         consignee: undefined,
-        regions: undefined,
+        region_list: undefined,
         address: undefined,
         zipcode: undefined,
         tel: undefined,
@@ -244,7 +244,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        regions: [
+        region_list: [
           {
             required: true,
             message: '所在地区不能为空',
@@ -363,7 +363,7 @@ export default {
           this.form = {
             client_id: this.$route.params.client_id,
             consignee: undefined,
-            regions: undefined,
+            region_list: undefined,
             address: undefined,
             zipcode: undefined,
             tel: undefined,
@@ -389,21 +389,6 @@ export default {
     create() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          // 将地区数组拆分为对应字段
-          this.form.regions.forEach((value, index) => {
-            switch (index) {
-              case 0:
-                this.form.province = value
-                break
-              case 1:
-                this.form.city = value
-                break
-              case 2:
-                this.form.district = value
-                break
-            }
-          })
-
           this.dialogLoading = true
           addUserAddressItem({ ...this.form })
             .then(res => {
@@ -429,12 +414,6 @@ export default {
         client_id: this.$route.params.client_id
       }
 
-      this.form.regions = [
-        this.form.province || 0,
-        this.form.city || 0,
-        this.form.district || 0
-      ]
-
       this.$nextTick(() => {
         if (this.$refs.form) {
           this.$refs.form.clearValidate()
@@ -449,21 +428,6 @@ export default {
     update() {
       this.$refs.form.validate(valid => {
         if (valid) {
-          // 将地区数组拆分为对应字段
-          this.form.regions.forEach((value, index) => {
-            switch (index) {
-              case 0:
-                this.form.province = value
-                break
-              case 1:
-                this.form.city = value
-                break
-              case 2:
-                this.form.district = value
-                break
-            }
-          })
-
           this.dialogLoading = true
           setUserAddressItem({ ...this.form })
             .then(res => {

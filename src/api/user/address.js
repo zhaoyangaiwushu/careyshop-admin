@@ -90,7 +90,7 @@ export function setUserAddressItem(data) {
 
 /**
  * 批量删除收货地址
- * @param {Number} client_id
+ * @param {Number|String} client_id
  * @param {Array} user_address_id
  * @returns
  */
@@ -128,7 +128,7 @@ export function setUserAddressDefault(user_address_id) {
 
 /**
  * 检测是否超出最大添加数量
- * @param {Number} client_id
+ * @param {Number|String} client_id
  * @returns
  */
 export function isUserAddressMaximum(client_id) {

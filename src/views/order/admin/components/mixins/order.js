@@ -77,7 +77,7 @@ export default {
               trigger: 'blur'
             }
           ],
-          region: [
+          region_list: [
             {
               required: true,
               message: '收货区域不能为空',
@@ -343,20 +343,8 @@ export default {
         index,
         loading: false,
         visible: false,
-        request: {
-          ...this.currentTableData[index],
-          region: []
-        }
+        request: { ...this.currentTableData[index] }
       }
-
-      let region = ['province', 'city', 'district']
-      region.forEach(item => {
-        if (Object.prototype.hasOwnProperty.call(this.formOrder.request, item)) {
-          if (this.formOrder.request[item] > 0) {
-            this.formOrder.request.region.push(this.formOrder.request[item])
-          }
-        }
-      })
 
       this.$nextTick(() => {
         if (this.$refs.formOrder) {
@@ -370,15 +358,6 @@ export default {
     handleSetOrder() {
       this.$refs.formOrder.validate(valid => {
         if (valid) {
-          let region = ['province', 'city', 'district']
-          region.forEach((item, index) => {
-            if (Object.prototype.hasOwnProperty.call(this.formOrder.request, item)) {
-              if (this.formOrder.request[item] > 0) {
-                this.formOrder.request[item] = this.formOrder.request.region[index]
-              }
-            }
-          })
-
           this.formOrder.loading = true
           setOrderItem(this.formOrder.request)
             .then(res => {

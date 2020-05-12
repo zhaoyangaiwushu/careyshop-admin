@@ -17,7 +17,7 @@ module.exports = [
   {
     name: 'vuex',
     library: 'Vuex',
-    js: '//cdn.jsdelivr.net/npm/vuex@3.3.0/dist/vuex.min.js',
+    js: '//cdn.jsdelivr.net/npm/vuex@3.4.0/dist/vuex.min.js',
     css: ''
   },
   {

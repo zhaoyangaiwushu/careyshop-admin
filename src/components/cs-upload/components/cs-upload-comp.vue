@@ -26,8 +26,8 @@
       v-model="parentId"
       :options="parentData"
       :props="parentProps"
-      filterable
-      :style="`width: ${fileWidth}`">
+      :style="`width: ${fileWidth}`"
+      filterable>
     </el-cascader>
   </div>
 </template>

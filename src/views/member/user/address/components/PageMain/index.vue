@@ -90,7 +90,6 @@
       :visible.sync="dialogFormVisible"
       :append-to-body="true"
       :close-on-click-modal="false"
-      @open="openDialog"
       width="600px">
       <el-form
         :model="form"
@@ -109,13 +108,9 @@
         <el-form-item
           label="所在地区"
           prop="region_list">
-          <el-cascader
+          <cs-region-select
             v-model="form.region_list"
-            placeholder="请选择所在地区"
-            :options="treeData"
-            :props="treeProps"
-            style="width: 100%;"
-            clearable/>
+            placeholder="请选择所在地区"/>
         </el-form-item>
 
         <el-form-item
@@ -196,10 +191,11 @@ import {
   setUserAddressDefault,
   setUserAddressItem
 } from '@/api/user/address'
-import util from '@/utils/util'
-import { getRegionSonList } from '@/api/logistics/region'
 
 export default {
+  components: {
+    csRegionSelect: () => import('@/components/cs-region-select')
+  },
   props: {
     loading: {
       default: false
@@ -290,12 +286,6 @@ export default {
             trigger: 'blur'
           }
         ]
-      },
-      treeData: [],
-      treeProps: {
-        value: 'region_id',
-        label: 'region_name',
-        children: 'children'
       }
     }
   },
@@ -345,16 +335,6 @@ export default {
         })
         .catch(() => {
         })
-    },
-    // 初始化对话框
-    openDialog() {
-      if (!this.treeData.length) {
-        getRegionSonList({ region_id: 1 })
-          .then(res => {
-            const setParent = { key: 'parent_id', value: [1] }
-            this.treeData = util.formatDataToTree(res.data, 'region_id', 'parent_id', setParent)
-          })
-      }
     },
     // 弹出创建对话框
     handleCreate() {

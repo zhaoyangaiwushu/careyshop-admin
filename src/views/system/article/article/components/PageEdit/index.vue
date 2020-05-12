@@ -28,6 +28,7 @@
           <el-cascader
             v-model="currentForm.article_cat_id"
             placeholder="请选择文章分类 试试搜索：首页"
+            :key="currentForm.article_cat_id"
             :options="catData"
             :props="cascaderProps"
             style="width: 100%;"

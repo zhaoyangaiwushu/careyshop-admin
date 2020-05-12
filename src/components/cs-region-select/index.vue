@@ -1,7 +1,8 @@
 <template>
   <el-cascader
     v-model="result"
-    placeholder="试试搜索：浙江"
+    :placeholder="placeholder"
+    :key="isResouceShow"
     :options="regionData"
     :props="cascaderProps"
     style="width: 100%;"
@@ -21,10 +22,15 @@ export default {
     value: {
       type: Array,
       default: () => []
+    },
+    placeholder: {
+      type: String,
+      default: '试试搜索：浙江'
     }
   },
   data() {
     return {
+      isResouceShow: 0,
       regionData: [],
       cascaderProps: {
         value: 'region_id',
@@ -51,6 +57,13 @@ export default {
           const setParent = { key: 'parent_id', value: [1] }
           this.regionData = util.formatDataToTree(res.data, 'region_id', 'parent_id', setParent)
         })
+    }
+  },
+  watch: {
+    value: {
+      handler() {
+        ++this.isResouceShow
+      }
     }
   }
 }

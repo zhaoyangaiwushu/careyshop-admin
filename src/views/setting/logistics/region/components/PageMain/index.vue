@@ -124,6 +124,7 @@
                 v-model="form.parent_id"
                 placeholder="不选择表示顶层区域 试试搜索：浙江"
                 :disabled="formStatus === 'update'"
+                :key="form.parent_id"
                 :options="treeData"
                 :props="cascaderProps"
                 style="width: 100%;"

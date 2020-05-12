@@ -200,6 +200,7 @@
           <el-cascader
             v-model="form.goods_category_id"
             placeholder="可选择品牌所属的分类 试试搜索：手机"
+            :key="catProps.key"
             :options="catData"
             :props="catProps"
             style="width: 100%;"
@@ -404,6 +405,7 @@ export default {
         create: '新增品牌'
       },
       catProps: {
+        key: 0,
         value: 'goods_category_id',
         label: 'name',
         children: 'children',
@@ -576,6 +578,7 @@ export default {
     },
     // 弹出新建对话框
     handleCreate() {
+      ++this.catProps.key
       this.form = {
         goods_category_id: 0,
         name: '',
@@ -624,6 +627,7 @@ export default {
     },
     // 弹出编辑对话框
     handleUpdate(index) {
+      ++this.catProps.key
       this.currentIndex = index
       this.form = { ...this.currentTableData[index] }
 

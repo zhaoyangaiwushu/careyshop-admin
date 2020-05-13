@@ -195,24 +195,23 @@ export default {
      * 检测版本更新
      */
     checkUpdate() {
-      let host = this.$baseConfig.BASE_API
-      if (process.env.NODE_ENV !== 'development') {
-        host = 'https://careyshop.cn/api'
-      }
+      let host = process.env.NODE_ENV === 'development'
+        ? this.$baseConfig.BASE_API + '/v1/app_install'
+        : 'https://careyshop.cn/api/v1/app.php'
 
       this.$axios({
         /**
          * 版本更新检查使用远程官方接口,便于版本号统一
          * 如二次开发有所需求,可修改 host 参数
          */
-        url: host + '/v1/app_install',
+        url: host,
         method: 'post',
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         params: {
           method: 'query.app.install.updated'
         },
         data: {
-          user_agent: 'vue',
+          user_agent: 'careyshop-admin',
           ver: process.env.VUE_APP_VERSION
         }
       })

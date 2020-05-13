@@ -823,6 +823,7 @@ export default {
 
     .goods-info {
       padding: 0 50px 0 100px;
+      min-width: 405px;
 
       .goods-name {
         height: 36px;

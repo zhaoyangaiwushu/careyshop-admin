@@ -41,19 +41,19 @@ module.exports = [
   {
     name: 'dayjs',
     library: 'dayjs',
-    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.26/dayjs.min.js',
+    js: '//cdn.jsdelivr.net/npm/dayjs@1.8.27/dayjs.min.js',
     css: ''
   },
   {
     name: 'fuse.js',
     library: 'Fuse',
-    js: '//cdn.jsdelivr.net/npm/fuse.js@5.2.3/dist/fuse.min.js',
+    js: '//cdn.jsdelivr.net/npm/fuse.js@6.0.0/dist/fuse.min.js',
     css: ''
   },
   {
     name: 'hotkeys-js',
     library: 'hotkeys',
-    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.7.6/dist/hotkeys.min.js',
+    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.8.0/dist/hotkeys.min.js',
     css: ''
   },
   {

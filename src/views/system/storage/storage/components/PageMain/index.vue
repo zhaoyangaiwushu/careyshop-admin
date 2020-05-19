@@ -623,17 +623,10 @@ export default {
         })
     },
     getLink(index) {
-      let link = ''
-      const storage = this.currentTableData[index]
-
-      switch (storage.type) {
-        case 0:
-        case 3:
-          link = storage.url
-          break
-        case 1:
-          link = util.getDownloadUrl(storage, '')
-          break
+      let link = this.currentTableData[index].url
+      const reg = /^((https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/
+      if (!reg.test(link)) {
+        link = document.location.protocol + '//' + this.currentTableData[index].url
       }
 
       clipboard.writeText(link)

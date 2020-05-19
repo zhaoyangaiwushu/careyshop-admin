@@ -51,7 +51,7 @@ export default {
           token: util.cookies.get('token'),
           // 当前地址
           url: get(window, 'location.href', ''),
-          // 用户设置
+          // 附带的信息
           ...meta
         }
       })

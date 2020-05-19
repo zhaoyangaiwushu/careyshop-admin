@@ -5,33 +5,32 @@ import { Message, MessageBox } from 'element-ui'
 
 // 创建一个错误
 function errorCreate(msg) {
-  const err = new Error(msg)
-  errorLog(err)
+  const error = new Error(msg)
+  errorLog(error)
+  throw error
 }
 
 // 记录和显示错误
-function errorLog(err) {
-  // 显示提示
-  Message({
-    message: err.message,
-    type: 'error',
-    duration: 5 * 1000
-  })
-
+function errorLog(error) {
   // 添加到日志
   store.dispatch('careyshop/log/push', {
-    type: 'error',
+    type: 'danger',
     info: '数据请求异常',
-    message: err.message
+    meta: { error }
   })
-    .then(() => {
-    })
 
   // 打印到控制台
   if (process.env.NODE_ENV === 'development') {
     util.log.danger('>>>>>> Error >>>>>>')
-    console.log(err)
+    console.log(error)
   }
+
+  // 显示提示
+  Message({
+    message: error.message,
+    type: 'error',
+    duration: 5 * 1000
+  })
 }
 
 // 创建一个axios实例
@@ -39,7 +38,7 @@ const service = axios.create({
   // api的base_url
   baseURL: serverConfig.BASE_API,
   // request timeout
-  timeout: 30000,
+  timeout: 5000,
   // 默认使用简单请求,避免复杂请求(多一次OPTIONS请求)
   // 如有特殊需求或协议不同,可修改为例如"application/json; charset=utf-8"
   headers: { 'Content-Type': 'text/plain; charset=utf-8' }
@@ -53,35 +52,69 @@ service.interceptors.request.use(
     setDefaultParams(config)
     refreshToken(config)
     return config
-  }, err => {
-    errorLog(err)
-    return Promise.resolve(err)
+  },
+  error => {
+    errorLog(error)
+    return Promise.resolve(error)
   }
 )
 
 // 响应拦截器
 service.interceptors.response.use(
   response => {
+    // dataAxios 是 axios 返回数据中的 data
     const dataAxios = response.data
-    const { status } = dataAxios // response.data.status
+    // 这个状态码是和后端约定的
+    const { status, message } = dataAxios
 
-    if (status === 200 || response.config.responseType === 'blob') {
+    // 状态码不存在则非后端请求接口
+    if (status === undefined) {
       return dataAxios
-    } else {
-      status === 401 ? reAuthorize() : errorCreate(dataAxios.message)
-      return Promise.reject(dataAxios.message ? dataAxios.message : response)
+    }
+
+    // 处理后端状态码
+    switch (status) {
+      case 200:
+        return dataAxios
+
+      case 401:
+        reAuthorize()
+        break
+
+      default:
+        errorCreate(message)
     }
   },
   error => {
-    if (error.response) {
-      error.message = error.response.data.message
-      if (error.response.status === 401) {
-        reAuthorize()
-      }
-    }
-
-    errorLog(error)
-    return Promise.reject(error.response ? error.response.data : error)
+    console.dir(error)
+    // if (!error.response) {
+    //   // 错误并非来自后端
+    //   switch (error.request.status) {
+    //     case 400: error.message = '请求错误'; break
+    //     case 401: error.message = '未授权，请登录'; break
+    //     case 403: error.message = '拒绝访问'; break
+    //     case 404: error.message = '请求地址不存在'; break
+    //     case 408: error.message = '请求超时'; break
+    //     case 500: error.message = '服务器内部错误'; break
+    //     case 501: error.message = '服务未实现'; break
+    //     case 502: error.message = '网关错误'; break
+    //     case 503: error.message = '服务不可用'; break
+    //     case 504: error.message = '网关超时'; break
+    //     case 505: error.message = 'HTTP版本不受支持'; break
+    //     default: break
+    //   }
+    // } else {
+    //   // 错误来自后端
+    //   const { status, message } = error.response.data
+    //   if (status === 401) {
+    //     reAuthorize()
+    //   } else {
+    //     error.message = message
+    //   }
+    // }
+    //
+    // errorLog(error)
+    // return Promise.reject(error)
   }
 )
 

@@ -35,8 +35,8 @@ module.exports = [
   {
     name: 'element-ui',
     library: 'ELEMENT',
-    js: '//cdn.jsdelivr.net/npm/element-ui@2.13.1/lib/index.min.js',
-    css: '//cdn.jsdelivr.net/npm/element-ui@2.13.1/lib/theme-chalk/index.css'
+    js: '//cdn.jsdelivr.net/npm/element-ui@2.13.2/lib/index.min.js',
+    css: '//cdn.jsdelivr.net/npm/element-ui@2.13.2/lib/theme-chalk/index.css'
   },
   {
     name: 'dayjs',
@@ -53,7 +53,7 @@ module.exports = [
   {
     name: 'hotkeys-js',
     library: 'hotkeys',
-    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.8.0/dist/hotkeys.min.js',
+    js: '//cdn.jsdelivr.net/npm/hotkeys-js@3.8.1/dist/hotkeys.min.js',
     css: ''
   },
   {
@@ -119,7 +119,7 @@ module.exports = [
   {
     name: '@careyshop/vue-table-export',
     library: 'VueTableExport',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.16/dist/export.min.js',
+    js: '//cdn.jsdelivr.net/npm/@careyshop/vue-table-export@1.0.17/dist/export.min.js',
     css: ''
   }
 ]

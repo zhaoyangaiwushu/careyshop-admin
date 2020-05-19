@@ -16,6 +16,7 @@ function errorLog(error) {
   store.dispatch('careyshop/log/push', {
     type: 'danger',
     info: '数据请求异常',
+    message: error.message,
     meta: { error }
   })
 
@@ -55,7 +56,7 @@ service.interceptors.request.use(
   },
   error => {
     errorLog(error)
-    return Promise.resolve(error)
+    return Promise.reject(error)
   }
 )
 
@@ -84,11 +85,13 @@ service.interceptors.response.use(
       default:
         errorCreate(message)
     }
+
+    return Promise.reject(response)
   },
   error => {
     console.dir(error)
     // if (!error.response) {
-    //   // 错误并非来自后端
+    //   // 来自服务端
     //   switch (error.request.status) {
     //     case 400: error.message = '请求错误'; break
     //     case 401: error.message = '未授权，请登录'; break
@@ -104,12 +107,12 @@ service.interceptors.response.use(
     //     default: break
     //   }
     // } else {
-    //   // 错误来自后端
+    //   // 来自API接口
     //   const { status, message } = error.response.data
+    //   error.message = message
+    //
     //   if (status === 401) {
     //     reAuthorize()
-    //   } else {
-    //     error.message = message
     //   }
     // }
     //

@@ -1,7 +1,7 @@
 /**
  * 项目依赖的各项CDN静态资源,如果不在此列表中表示从本地库中生成调用资源
+ * 可在".env"配置项中的"VUE_APP_CDN"进行设置,默认为使用本地依赖
  */
-
 let cdn = []
 if (process.env.VUE_APP_CDN === 'true') {
   cdn = [
@@ -14,7 +14,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'vue-router',
       library: 'VueRouter',
-      js: '//cdn.jsdelivr.net/npm/vue-router@3.1.6/dist/vue-router.min.js',
+      js: '//cdn.jsdelivr.net/npm/vue-router@3.2.0/dist/vue-router.min.js',
       css: ''
     },
     {
@@ -121,15 +121,6 @@ if (process.env.VUE_APP_CDN === 'true') {
     }
   ]
 }
-
-cdn.push(
-  {
-    name: '@careyshop/stats',
-    library: 'StatsCS',
-    js: '//cdn.jsdelivr.net/npm/@careyshop/stats@1.0.11/dist/stats.min.js',
-    css: ''
-  }
-)
 
 module.exports = [
   ...cdn

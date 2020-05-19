@@ -124,6 +124,7 @@ export default {
   },
   mounted() {
     // 初始化判断
+    require('@careyshop/stats')
     // 默认判断父元素和子元素的大小，以确定初始情况是否显示滚动
     window.addEventListener('load', this.checkScroll)
     // 全局窗口变化监听，判断父元素和子元素的大小，从而控制isScroll的开关

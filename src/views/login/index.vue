@@ -12,7 +12,9 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 import loginBox from './loginbox'
+
 export default {
   name: 'login',
   components: {
@@ -22,6 +24,9 @@ export default {
     return {
       activeName: 'user'
     }
+  },
+  created() {
+    util.cookies.set('block', 'false')
   }
 }
 </script>

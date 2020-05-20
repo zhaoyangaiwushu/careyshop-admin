@@ -42,15 +42,15 @@ export default {
       }
     }
   },
+  mounted() {
+    // 将菜单放置到body下
+    document.querySelector('body').appendChild(this.$el)
+  },
   methods: {
     watchContextmenu(event) {
       if (!this.$el.contains(event.target) || event.button !== 0) this.flag = false
       window.removeEventListener('mousedown', this.watchContextmenu)
     }
-  },
-  mounted() {
-    // 将菜单放置到body下
-    document.querySelector('body').appendChild(this.$el)
   }
 }
 </script>

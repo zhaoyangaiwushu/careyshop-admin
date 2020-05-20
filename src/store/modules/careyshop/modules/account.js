@@ -14,10 +14,11 @@ export default {
       // 请求登录
       const res = await loginAdminUser({ ...login })
 
-      // 保存用户数据
+      // 设置用户数据
       let cookieSetting = remember ? { expires: 365 } : { expires: null }
       util.cookies.set('uuid', res.data.admin.username, cookieSetting)
       util.cookies.set('token', res.data.token.token, cookieSetting)
+      util.cookies.set('block', 'false', cookieSetting)
 
       // 设置 vuex 用户信息
       await dispatch('careyshop/user/set', {
@@ -41,6 +42,7 @@ export default {
 
       // 实际注销操作
       function logout() {
+        util.cookies.set('block', 'true')
         logoutAdminUser()
           .finally(() => {
             // 删除sourceData

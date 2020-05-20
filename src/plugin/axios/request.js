@@ -12,6 +12,10 @@ function errorCreate(msg) {
 
 // 记录和显示错误
 function errorLog(error) {
+  if (util.cookies.get('block') === 'true') {
+    return
+  }
+
   // 添加到日志
   store.dispatch('careyshop/log/push', {
     type: 'danger',
@@ -89,35 +93,34 @@ service.interceptors.response.use(
     return Promise.reject(response)
   },
   error => {
-    console.dir(error)
-    // if (!error.response) {
-    //   // 来自服务端
-    //   switch (error.request.status) {
-    //     case 400: error.message = '请求错误'; break
-    //     case 401: error.message = '未授权，请登录'; break
-    //     case 403: error.message = '拒绝访问'; break
-    //     case 404: error.message = '请求地址不存在'; break
-    //     case 408: error.message = '请求超时'; break
-    //     case 500: error.message = '服务器内部错误'; break
-    //     case 501: error.message = '服务未实现'; break
-    //     case 502: error.message = '网关错误'; break
-    //     case 503: error.message = '服务不可用'; break
-    //     case 504: error.message = '网关超时'; break
-    //     case 505: error.message = 'HTTP版本不受支持'; break
-    //     default: break
-    //   }
-    // } else {
-    //   // 来自API接口
-    //   const { status, message } = error.response.data
-    //   error.message = message
-    //
-    //   if (status === 401) {
-    //     reAuthorize()
-    //   }
-    // }
-    //
-    // errorLog(error)
-    // return Promise.reject(error)
+    if (!error.response) {
+      // 来自服务端或游览器
+      switch (error.request.status) {
+        case 400: error.message = '请求错误'; break
+        case 401: error.message = '未授权，请登录'; break
+        case 403: error.message = '拒绝访问'; break
+        case 404: error.message = '请求地址不存在'; break
+        case 408: error.message = '请求超时'; break
+        case 500: error.message = '服务器内部错误'; break
+        case 501: error.message = '服务未实现'; break
+        case 502: error.message = '网关错误'; break
+        case 503: error.message = '服务不可用'; break
+        case 504: error.message = '网关超时'; break
+        case 505: error.message = 'HTTP版本不受支持'; break
+        default: break
+      }
+    } else {
+      // 来自API接口
+      const { status, message } = error.response.data
+      if (status === 401) {
+        reAuthorize()
+      }
+
+      error.message = message
+    }
+
+    errorLog(error)
+    return Promise.reject(error)
   }
 )
 
@@ -166,6 +169,11 @@ function refreshToken(config) {
 
 // 重新授权确认
 function reAuthorize() {
+  if (util.cookies.get('block') === 'true') {
+    return
+  }
+
+  util.cookies.set('block', 'true')
   MessageBox.confirm('您的授权已过期或在其他地方登录，是否重新登录？', '授权过期', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
@@ -174,9 +182,11 @@ function reAuthorize() {
     .then(() => {
       util.cookies.remove('token')
       util.cookies.remove('uuid')
+      util.cookies.remove('block')
       location.reload()
     })
     .catch(() => {
+      util.cookies.set('block', 'false')
     })
 }
 

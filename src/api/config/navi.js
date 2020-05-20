@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/navigation.html'
+
 /**
  * 添加一个导航
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addNavigationItem(data) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'add.navigation.item'
-    },
-    data
+    data: {
+      method: 'add.navigation.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addNavigationItem(data) {
  */
 export function setNavigationItem(data) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'set.navigation.item'
-    },
-    data
+    data: {
+      method: 'set.navigation.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setNavigationItem(data) {
  */
 export function delNavigationList(navigation_id) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'del.navigation.list'
-    },
     data: {
+      method: 'del.navigation.list',
       navigation_id
     }
   })
@@ -57,12 +57,10 @@ export function delNavigationList(navigation_id) {
  */
 export function getNavigationItem(navigation_id) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'get.navigation.item'
-    },
     data: {
+      method: 'get.navigation.item',
       navigation_id
     }
   })
@@ -75,12 +73,12 @@ export function getNavigationItem(navigation_id) {
  */
 export function getNavigationList(data) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'get.navigation.list'
-    },
-    data
+    data: {
+      method: 'get.navigation.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getNavigationList(data) {
  */
 export function setNavigationTarget(navigation_id, target) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'set.navigation.target'
-    },
     data: {
+      method: 'set.navigation.target',
       navigation_id,
       target
     }
@@ -112,12 +108,10 @@ export function setNavigationTarget(navigation_id, target) {
  */
 export function setNavigationStatus(navigation_id, status) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'set.navigation.status'
-    },
     data: {
+      method: 'set.navigation.status',
       navigation_id,
       status
     }
@@ -132,12 +126,10 @@ export function setNavigationStatus(navigation_id, status) {
  */
 export function setNavigationSort(navigation_id, sort) {
   return request({
-    url: '/v1/navigation',
+    url,
     method: 'post',
-    params: {
-      method: 'set.navigation.sort'
-    },
     data: {
+      method: 'set.navigation.sort',
       navigation_id,
       sort
     }

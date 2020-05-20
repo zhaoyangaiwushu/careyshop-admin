@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods_attribute.html'
+
 /**
  * 添加一个商品属性主体
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addGoodsAttributeBodyItem(data) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'add.goods.attribute.body.item'
-    },
-    data
+    data: {
+      method: 'add.goods.attribute.body.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addGoodsAttributeBodyItem(data) {
  */
 export function setGoodsAttributeBodyItem(data) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.attribute.body.item'
-    },
-    data
+    data: {
+      method: 'set.goods.attribute.body.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setGoodsAttributeBodyItem(data) {
  */
 export function getGoodsAttributeBodyItem(goods_attribute_id) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attribute.body.item'
-    },
     data: {
+      method: 'get.goods.attribute.body.item',
       goods_attribute_id
     }
   })
@@ -58,12 +58,10 @@ export function getGoodsAttributeBodyItem(goods_attribute_id) {
  */
 export function getGoodsAttributeBodyList(goods_type_id, attribute_all = 0) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attribute.body.list'
-    },
     data: {
+      method: 'get.goods.attribute.body.list',
       goods_type_id,
       attribute_all
     }
@@ -77,12 +75,12 @@ export function getGoodsAttributeBodyList(goods_type_id, attribute_all = 0) {
  */
 export function addGoodsAttributeItem(data) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'add.goods.attribute.item'
-    },
-    data
+    data: {
+      method: 'add.goods.attribute.item',
+      ...data
+    }
   })
 }
 
@@ -93,12 +91,12 @@ export function addGoodsAttributeItem(data) {
  */
 export function setGoodsAttributeItem(data) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.attribute.item'
-    },
-    data
+    data: {
+      method: 'set.goods.attribute.item',
+      ...data
+    }
   })
 }
 
@@ -109,12 +107,10 @@ export function setGoodsAttributeItem(data) {
  */
 export function getGoodsAttributeItem(goods_attribute_id) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attribute.item'
-    },
     data: {
+      method: 'get.goods.attribute.item',
       goods_attribute_id
     }
   })
@@ -127,12 +123,12 @@ export function getGoodsAttributeItem(goods_attribute_id) {
  */
 export function getGoodsAttributePage(data) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attribute.page'
-    },
-    data
+    data: {
+      method: 'get.goods.attribute.page',
+      ...data
+    }
   })
 }
 
@@ -144,12 +140,10 @@ export function getGoodsAttributePage(data) {
  */
 export function getGoodsAttributeList(goods_type_id, attribute_all = 0) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attribute.list'
-    },
     data: {
+      method: 'get.goods.attribute.list',
       goods_type_id,
       attribute_all
     }
@@ -164,12 +158,10 @@ export function getGoodsAttributeList(goods_type_id, attribute_all = 0) {
  */
 export function setGoodsAttributeKey(goods_attribute_id, attr_index) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.attribute.key'
-    },
     data: {
+      method: 'set.goods.attribute.key',
       goods_attribute_id,
       attr_index
     }
@@ -184,12 +176,10 @@ export function setGoodsAttributeKey(goods_attribute_id, attr_index) {
  */
 export function setGoodsAttributeImportant(goods_attribute_id, is_important) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.attribute.important'
-    },
     data: {
+      method: 'set.goods.attribute.important',
       goods_attribute_id,
       is_important
     }
@@ -204,12 +194,10 @@ export function setGoodsAttributeImportant(goods_attribute_id, is_important) {
  */
 export function setGoodsAttributeSort(goods_attribute_id, sort) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.attribute.sort'
-    },
     data: {
+      method: 'set.goods.attribute.sort',
       goods_attribute_id,
       sort
     }
@@ -223,12 +211,10 @@ export function setGoodsAttributeSort(goods_attribute_id, sort) {
  */
 export function delGoodsAttributeList(goods_attribute_id) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.attribute.list'
-    },
     data: {
+      method: 'del.goods.attribute.list',
       goods_attribute_id
     }
   })
@@ -242,12 +228,10 @@ export function delGoodsAttributeList(goods_attribute_id) {
  */
 export function getGoodsAttributeData(goods_type_id, attribute_all = 0) {
   return request({
-    url: '/v1/goods_attribute',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attribute.data'
-    },
     data: {
+      method: 'get.goods.attribute.data',
       goods_type_id,
       attribute_all
     }

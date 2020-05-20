@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods_reply.html'
+
 /**
  * 批量删除商品评价的回复
  * @param {Array} goods_reply_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function delGoodsReplyList(goods_reply_id) {
   return request({
-    url: '/v1/goods_reply',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.reply.list'
-    },
     data: {
+      method: 'del.goods.reply.list',
       goods_reply_id
     }
   })
@@ -25,11 +25,11 @@ export function delGoodsReplyList(goods_reply_id) {
  */
 export function getGoodsReplyList(data) {
   return request({
-    url: '/v1/goods_reply',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.reply.list'
-    },
-    data
+    data: {
+      method: 'get.goods.reply.list',
+      ...data
+    }
   })
 }

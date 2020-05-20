@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/brand.html'
+
 /**
  * 添加一个品牌
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addBrandItem(data) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'add.brand.item'
-    },
-    data
+    data: {
+      method: 'add.brand.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addBrandItem(data) {
  */
 export function setBrandItem(data) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'set.brand.item'
-    },
-    data
+    data: {
+      method: 'set.brand.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setBrandItem(data) {
  */
 export function delBrandList(brand_id) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'del.brand.list'
-    },
     data: {
+      method: 'del.brand.list',
       brand_id
     }
   })
@@ -58,12 +58,10 @@ export function delBrandList(brand_id) {
  */
 export function setBrandStatus(brand_id, status) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'set.brand.status'
-    },
     data: {
+      method: 'set.brand.status',
       brand_id,
       status
     }
@@ -77,12 +75,12 @@ export function setBrandStatus(brand_id, status) {
  */
 export function uniqueBrandName(data) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'unique.brand.name'
-    },
-    data
+    data: {
+      method: 'unique.brand.name',
+      ...data
+    }
   })
 }
 
@@ -93,12 +91,10 @@ export function uniqueBrandName(data) {
  */
 export function getBrandItem(brand_id) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'get.brand.item'
-    },
     data: {
+      method: 'get.brand.item',
       brand_id
     }
   })
@@ -111,12 +107,12 @@ export function getBrandItem(brand_id) {
  */
 export function getBrandList(data) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'get.brand.list'
-    },
-    data
+    data: {
+      method: 'get.brand.list',
+      ...data
+    }
   })
 }
 
@@ -127,12 +123,12 @@ export function getBrandList(data) {
  */
 export function getBrandSelect(data) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'get.brand.select'
-    },
-    data
+    data: {
+      method: 'get.brand.select',
+      ...data
+    }
   })
 }
 
@@ -144,12 +140,10 @@ export function getBrandSelect(data) {
  */
 export function setBrandSort(brand_id, sort) {
   return request({
-    url: '/v1/brand',
+    url,
     method: 'post',
-    params: {
-      method: 'set.brand.sort'
-    },
     data: {
+      method: 'set.brand.sort',
       brand_id,
       sort
     }

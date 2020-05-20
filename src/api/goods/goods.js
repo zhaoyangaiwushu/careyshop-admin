@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods.html'
+
 /**
  * 检测商品货号是否唯一
  * @param {String} goods_code
@@ -8,12 +10,10 @@ import request from '@/plugin/axios/request'
  */
 export function uniqueGoodsCode(goods_code, exclude_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'unique.goods.code'
-    },
     data: {
+      method: 'unique.goods.code',
       goods_code,
       exclude_id
     }
@@ -27,12 +27,12 @@ export function uniqueGoodsCode(goods_code, exclude_id) {
  */
 export function addGoodsItem(data) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'add.goods.item'
-    },
-    data
+    data: {
+      method: 'add.goods.item',
+      ...data
+    }
   })
 }
 
@@ -43,12 +43,12 @@ export function addGoodsItem(data) {
  */
 export function setGoodsItem(data) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.item'
-    },
-    data
+    data: {
+      method: 'set.goods.item',
+      ...data
+    }
   })
 }
 
@@ -59,12 +59,10 @@ export function setGoodsItem(data) {
  */
 export function getGoodsItem(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.item'
-    },
     data: {
+      method: 'get.goods.item',
       goods_id
     }
   })
@@ -78,12 +76,10 @@ export function getGoodsItem(goods_id) {
  */
 export function delGoodsList(goods_id, is_delete) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.list'
-    },
     data: {
+      method: 'del.goods.list',
       goods_id,
       is_delete
     }
@@ -97,12 +93,10 @@ export function delGoodsList(goods_id, is_delete) {
  */
 export function getGoodsSelect(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.select'
-    },
     data: {
+      method: 'get.goods.select',
       goods_id
     }
   })
@@ -116,12 +110,10 @@ export function getGoodsSelect(goods_id) {
  */
 export function setIntegralGoodsList(goods_id, is_integral) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.integral.goods.list'
-    },
     data: {
+      method: 'set.integral.goods.list',
       goods_id,
       is_integral
     }
@@ -136,12 +128,10 @@ export function setIntegralGoodsList(goods_id, is_integral) {
  */
 export function setRecommendGoodsList(goods_id, is_recommend) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.recommend.goods.list'
-    },
     data: {
+      method: 'set.recommend.goods.list',
       goods_id,
       is_recommend
     }
@@ -156,12 +146,10 @@ export function setRecommendGoodsList(goods_id, is_recommend) {
  */
 export function setNewGoodsList(goods_id, is_new) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.new.goods.list'
-    },
     data: {
+      method: 'set.new.goods.list',
       goods_id,
       is_new
     }
@@ -176,12 +164,10 @@ export function setNewGoodsList(goods_id, is_new) {
  */
 export function setHotGoodsList(goods_id, is_hot) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.hot.goods.list'
-    },
     data: {
+      method: 'set.hot.goods.list',
       goods_id,
       is_hot
     }
@@ -196,12 +182,10 @@ export function setHotGoodsList(goods_id, is_hot) {
  */
 export function setShelvesGoodsList(goods_id, status) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.shelves.goods.list'
-    },
     data: {
+      method: 'set.shelves.goods.list',
       goods_id,
       status
     }
@@ -215,12 +199,10 @@ export function setShelvesGoodsList(goods_id, status) {
  */
 export function getGoodsAttrList(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attr.list'
-    },
     data: {
+      method: 'get.goods.attr.list',
       goods_id
     }
   })
@@ -233,12 +215,10 @@ export function getGoodsAttrList(goods_id) {
  */
 export function getGoodsSpecList(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.list'
-    },
     data: {
+      method: 'get.goods.spec.list',
       goods_id
     }
   })
@@ -251,12 +231,10 @@ export function getGoodsSpecList(goods_id) {
  */
 export function getGoodsSpecImage(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.image'
-    },
     data: {
+      method: 'get.goods.spec.image',
       goods_id
     }
   })
@@ -269,12 +247,12 @@ export function getGoodsSpecImage(goods_id) {
  */
 export function getGoodsAdminList(data) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.admin.list'
-    },
-    data
+    data: {
+      method: 'get.goods.admin.list',
+      ...data
+    }
   })
 }
 
@@ -286,12 +264,10 @@ export function getGoodsAdminList(data) {
  */
 export function setGoodsSort(goods_id, sort) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.sort'
-    },
     data: {
+      method: 'set.goods.sort',
       goods_id,
       sort
     }
@@ -305,12 +281,10 @@ export function setGoodsSort(goods_id, sort) {
  */
 export function getGoodsKeywordsSuggest(keywords) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.keywords.suggest'
-    },
     data: {
+      method: 'get.goods.keywords.suggest',
       keywords
     }
   })
@@ -323,12 +297,10 @@ export function getGoodsKeywordsSuggest(keywords) {
  */
 export function copyGoodsItem(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'copy.goods.item'
-    },
     data: {
+      method: 'copy.goods.item',
       goods_id
     }
   })
@@ -341,12 +313,10 @@ export function copyGoodsItem(goods_id) {
  */
 export function getGoodsAttrConfig(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.attr.config'
-    },
     data: {
+      method: 'get.goods.attr.config',
       goods_id
     }
   })
@@ -360,12 +330,10 @@ export function getGoodsAttrConfig(goods_id) {
  */
 export function getGoodsSpecConfig(goods_id, key_to_array = 0) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.config'
-    },
     data: {
+      method: 'get.goods.spec.config',
       goods_id,
       key_to_array
     }
@@ -379,12 +347,10 @@ export function getGoodsSpecConfig(goods_id, key_to_array = 0) {
  */
 export function getGoodsSpecMenu(goods_id) {
   return request({
-    url: '/v1/goods',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.menu'
-    },
     data: {
+      method: 'get.goods.spec.menu',
       goods_id
     }
   })

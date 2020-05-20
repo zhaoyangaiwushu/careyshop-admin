@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods_type.html'
+
 /**
  * 添加一个商品模型
  * @param {String} type_name
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function addGoodsTypeItem(type_name) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'add.goods.type.item'
-    },
     data: {
+      method: 'add.goods.type.item',
       type_name
     }
   })
@@ -25,12 +25,12 @@ export function addGoodsTypeItem(type_name) {
  */
 export function setGoodsTypeItem(data) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.type.item'
-    },
-    data
+    data: {
+      method: 'set.goods.type.item',
+      ...data
+    }
   })
 }
 
@@ -41,12 +41,10 @@ export function setGoodsTypeItem(data) {
  */
 export function delGoodsTypeList(goods_type_id) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.type.list'
-    },
     data: {
+      method: 'del.goods.type.list',
       goods_type_id
     }
   })
@@ -60,12 +58,10 @@ export function delGoodsTypeList(goods_type_id) {
  */
 export function uniqueGoodsTypeName(type_name, exclude_id) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'unique.goods.type.name'
-    },
     data: {
+      method: 'unique.goods.type.name',
       type_name,
       exclude_id
     }
@@ -79,12 +75,10 @@ export function uniqueGoodsTypeName(type_name, exclude_id) {
  */
 export function getGoodsTypeItem(goods_type_id) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.type.item'
-    },
     data: {
+      method: 'get.goods.type.item',
       goods_type_id
     }
   })
@@ -97,12 +91,12 @@ export function getGoodsTypeItem(goods_type_id) {
  */
 export function getGoodsTypeList(data) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.type.list'
-    },
-    data
+    data: {
+      method: 'get.goods.type.list',
+      ...data
+    }
   })
 }
 
@@ -113,11 +107,11 @@ export function getGoodsTypeList(data) {
  */
 export function getGoodsTypeSelect(data) {
   return request({
-    url: '/v1/goods_type',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.type.select'
-    },
-    data
+    data: {
+      method: 'get.goods.type.select',
+      ...data
+    }
   })
 }

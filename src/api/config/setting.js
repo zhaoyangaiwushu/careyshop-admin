@@ -1,20 +1,20 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/setting.html'
+
 /**
- * 通用的接口获取
+ * 通用的接口设置
  * @param {Object} data
  * @param {String} method
  * @returns
  */
-function getRequest(data, method) {
+function setRequest(data, method) {
   return request({
-    url: '/v1/setting',
+    url,
     method: 'post',
-    params: {
-      method: method
-    },
     data: {
-      data
+      method: method,
+      ...data
     }
   })
 }
@@ -27,12 +27,10 @@ function getRequest(data, method) {
  */
 export function getSettingList(module, code = []) {
   return request({
-    url: '/v1/setting',
+    url,
     method: 'post',
-    params: {
-      method: 'get.setting.list'
-    },
     data: {
+      method: 'get.setting.list',
       module,
       code
     }
@@ -45,7 +43,7 @@ export function getSettingList(module, code = []) {
  * @returns
  */
 export function setDeliveryDistList(data) {
-  return getRequest(data, 'set.delivery.dist.list')
+  return setRequest(data, 'set.delivery.dist.list')
 }
 
 /**
@@ -54,7 +52,7 @@ export function setDeliveryDistList(data) {
  * @returns
  */
 export function setPaymentList(data) {
-  return getRequest(data, 'set.payment.list')
+  return setRequest(data, 'set.payment.list')
 }
 
 /**
@@ -63,7 +61,7 @@ export function setPaymentList(data) {
  * @returns
  */
 export function setDeliveryList(data) {
-  return getRequest(data, 'set.delivery.list')
+  return setRequest(data, 'set.delivery.list')
 }
 
 /**
@@ -72,7 +70,7 @@ export function setDeliveryList(data) {
  * @returns
  */
 export function setShoppingList(data) {
-  return getRequest(data, 'set.shopping.list')
+  return setRequest(data, 'set.shopping.list')
 }
 
 /**
@@ -81,7 +79,7 @@ export function setShoppingList(data) {
  * @returns
  */
 export function setServiceList(data) {
-  return getRequest(data, 'set.service.list')
+  return setRequest(data, 'set.service.list')
 }
 
 /**
@@ -90,7 +88,7 @@ export function setServiceList(data) {
  * @returns
  */
 export function setSystemList(data) {
-  return getRequest(data, 'set.system.list')
+  return setRequest(data, 'set.system.list')
 }
 
 /**
@@ -99,5 +97,5 @@ export function setSystemList(data) {
  * @returns
  */
 export function setUploadList(data) {
-  return getRequest(data, 'set.upload.list')
+  return setRequest(data, 'set.upload.list')
 }

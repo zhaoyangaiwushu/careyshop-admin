@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/spec.html'
+
 /**
  * 添加一个商品规格
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addGoodsSpecItem(data) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'add.goods.spec.item'
-    },
-    data
+    data: {
+      method: 'add.goods.spec.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addGoodsSpecItem(data) {
  */
 export function setGoodsSpecItem(data) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.spec.item'
-    },
-    data
+    data: {
+      method: 'set.goods.spec.item',
+      ...data
+    }
   })
 }
 
@@ -39,13 +41,11 @@ export function setGoodsSpecItem(data) {
  */
 export function getGoodsSpecItem(data) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.item'
-    },
     data: {
-      data
+      method: 'get.goods.spec.item',
+      ...data
     }
   })
 }
@@ -57,12 +57,12 @@ export function getGoodsSpecItem(data) {
  */
 export function getGoodsSpecPage(data) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.page'
-    },
-    data
+    data: {
+      method: 'get.goods.spec.page',
+      ...data
+    }
   })
 }
 
@@ -73,12 +73,10 @@ export function getGoodsSpecPage(data) {
  */
 export function getGoodsSpecList(goods_type_id) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.spec.list'
-    },
     data: {
+      method: 'get.goods.spec.list',
       goods_type_id
     }
   })
@@ -90,9 +88,9 @@ export function getGoodsSpecList(goods_type_id) {
  */
 export function getGoodsSpecAll() {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.goods.spec.all'
     }
   })
@@ -105,12 +103,10 @@ export function getGoodsSpecAll() {
  */
 export function delGoodsSpecList(spec_id) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.spec.list'
-    },
     data: {
+      method: 'del.goods.spec.list',
       spec_id
     }
   })
@@ -124,12 +120,10 @@ export function delGoodsSpecList(spec_id) {
  */
 export function setGoodsSpecKey(spec_id, spec_index) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.spec.key'
-    },
     data: {
+      method: 'set.goods.spec.key',
       spec_id,
       spec_index
     }
@@ -144,12 +138,10 @@ export function setGoodsSpecKey(spec_id, spec_index) {
  */
 export function setGoodsSpecSort(spec_id, sort) {
   return request({
-    url: '/v1/spec',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.spec.sort'
-    },
     data: {
+      method: 'set.goods.spec.sort',
       spec_id,
       sort
     }

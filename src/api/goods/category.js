@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods_category.html'
+
 /**
  * 添加一个商品分类
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addGoodsCategoryItem(data) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'add.goods.category.item'
-    },
-    data
+    data: {
+      method: 'add.goods.category.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addGoodsCategoryItem(data) {
  */
 export function setGoodsCategoryItem(data) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.category.item'
-    },
-    data
+    data: {
+      method: 'set.goods.category.item',
+      ...data
+    }
   })
 }
 
@@ -40,12 +42,10 @@ export function setGoodsCategoryItem(data) {
  */
 export function delGoodsCategoryList(goods_category_id, not_empty = 0) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.category.list'
-    },
     data: {
+      method: 'del.goods.category.list',
       goods_category_id,
       not_empty
     }
@@ -59,12 +59,10 @@ export function delGoodsCategoryList(goods_category_id, not_empty = 0) {
  */
 export function getGoodsCategoryItem(goods_category_id) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.category.item'
-    },
     data: {
+      method: 'get.goods.category.item',
       goods_category_id
     }
   })
@@ -77,12 +75,12 @@ export function getGoodsCategoryItem(goods_category_id) {
  */
 export function getGoodsCategoryList(data) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.category.list'
-    },
-    data
+    data: {
+      method: 'get.goods.category.list',
+      ...data
+    }
   })
 }
 
@@ -93,12 +91,12 @@ export function getGoodsCategoryList(data) {
  */
 export function getGoodsCategorySon(data) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.category.son'
-    },
-    data
+    data: {
+      method: 'get.goods.category.son',
+      ...data
+    }
   })
 }
 
@@ -109,12 +107,12 @@ export function getGoodsCategorySon(data) {
  */
 export function getGoodsCategoryNavi(data) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.category.navi'
-    },
-    data
+    data: {
+      method: 'get.goods.category.navi',
+      ...data
+    }
   })
 }
 
@@ -126,12 +124,10 @@ export function getGoodsCategoryNavi(data) {
  */
 export function setGoodsCategoryStatus(goods_category_id, status) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.category.status'
-    },
     data: {
+      method: 'set.goods.category.status',
       goods_category_id,
       status
     }
@@ -146,12 +142,10 @@ export function setGoodsCategoryStatus(goods_category_id, status) {
  */
 export function setGoodsCategorySort(goods_category_id, sort) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.category.sort'
-    },
     data: {
+      method: 'set.goods.category.sort',
       goods_category_id,
       sort
     }
@@ -166,12 +160,10 @@ export function setGoodsCategorySort(goods_category_id, sort) {
  */
 export function setGoodsCategoryNavi(goods_category_id, is_navi) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.category.navi'
-    },
     data: {
+      method: 'set.goods.category.navi',
       goods_category_id,
       is_navi
     }
@@ -185,12 +177,10 @@ export function setGoodsCategoryNavi(goods_category_id, is_navi) {
  */
 export function setGoodsCategoryIndex(goods_category_id) {
   return request({
-    url: '/v1/goods_category',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.category.index'
-    },
     data: {
+      method: 'set.goods.category.index',
       goods_category_id
     }
   })

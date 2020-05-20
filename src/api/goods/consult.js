@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods_consult.html'
+
 /**
  * 批量删除商品咨询
  * @param {Array} goods_consult_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function delGoodsConsultList(goods_consult_id) {
   return request({
-    url: '/v1/goods_consult',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.consult.list'
-    },
     data: {
+      method: 'del.goods.consult.list',
       goods_consult_id
     }
   })
@@ -26,12 +26,10 @@ export function delGoodsConsultList(goods_consult_id) {
  */
 export function setGoodsConsultShow(goods_consult_id, is_show) {
   return request({
-    url: '/v1/goods_consult',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.consult.show'
-    },
     data: {
+      method: 'set.goods.consult.show',
       goods_consult_id,
       is_show
     }
@@ -46,12 +44,10 @@ export function setGoodsConsultShow(goods_consult_id, is_show) {
  */
 export function replyGoodsConsultItem(goods_consult_id, content) {
   return request({
-    url: '/v1/goods_consult',
+    url,
     method: 'post',
-    params: {
-      method: 'reply.goods.consult.item'
-    },
     data: {
+      method: 'reply.goods.consult.item',
       goods_consult_id,
       content
     }
@@ -65,12 +61,10 @@ export function replyGoodsConsultItem(goods_consult_id, content) {
  */
 export function getGoodsConsultItem(goods_consult_id) {
   return request({
-    url: '/v1/goods_consult',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.consult.item'
-    },
     data: {
+      method: 'get.goods.consult.item',
       goods_consult_id
     }
   })
@@ -83,11 +77,11 @@ export function getGoodsConsultItem(goods_consult_id) {
  */
 export function getGoodsConsultList(data) {
   return request({
-    url: '/v1/goods_consult',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.consult.list'
-    },
-    data
+    data: {
+      method: 'get.goods.consult.list',
+      ...data
+    }
   })
 }

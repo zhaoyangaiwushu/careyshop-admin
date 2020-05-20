@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/goods_comment.html'
+
 /**
  * 顾客对商品的评价管理组成员可对其进行回复，可回复多条（追加评价）。
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function replyGoodsCommentItem(data) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'reply.goods.comment.item'
-    },
-    data
+    data: {
+      method: 'reply.goods.comment.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,10 @@ export function replyGoodsCommentItem(data) {
  */
 export function delGoodsCommentItem(goods_comment_id) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'del.goods.comment.item'
-    },
     data: {
+      method: 'del.goods.comment.item',
       goods_comment_id
     }
   })
@@ -41,12 +41,10 @@ export function delGoodsCommentItem(goods_comment_id) {
  */
 export function getGoodsCommentScore(goods_id) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.comment.score'
-    },
     data: {
+      method: 'get.goods.comment.score',
       goods_id
     }
   })
@@ -60,12 +58,10 @@ export function getGoodsCommentScore(goods_id) {
  */
 export function setGoodsCommentShow(goods_comment_id, is_show) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.comment.show'
-    },
     data: {
+      method: 'set.goods.comment.show',
       goods_comment_id,
       is_show
     }
@@ -80,12 +76,10 @@ export function setGoodsCommentShow(goods_comment_id, is_show) {
  */
 export function setGoodsCommentTop(goods_comment_id, is_top) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.comment.top'
-    },
     data: {
+      method: 'set.goods.comment.top',
       goods_comment_id,
       is_top
     }
@@ -100,12 +94,10 @@ export function setGoodsCommentTop(goods_comment_id, is_top) {
  */
 export function setGoodsCommentStatus(goods_comment_id, status) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.goods.comment.status'
-    },
     data: {
+      method: 'set.goods.comment.status',
       goods_comment_id,
       status
     }
@@ -119,12 +111,10 @@ export function setGoodsCommentStatus(goods_comment_id, status) {
  */
 export function getGoodsCommentCount(goods_id) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.comment.count'
-    },
     data: {
+      method: 'get.goods.comment.count',
       goods_id
     }
   })
@@ -137,12 +127,10 @@ export function getGoodsCommentCount(goods_id) {
  */
 export function getGoodsCommentItem(goods_comment_id) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.comment.item'
-    },
     data: {
+      method: 'get.goods.comment.item',
       goods_comment_id
     }
   })
@@ -155,11 +143,11 @@ export function getGoodsCommentItem(goods_comment_id) {
  */
 export function getGoodsCommentList(data) {
   return request({
-    url: '/v1/goods_comment',
+    url,
     method: 'post',
-    params: {
-      method: 'get.goods.comment.list'
-    },
-    data
+    data: {
+      method: 'get.goods.comment.list',
+      ...data
+    }
   })
 }

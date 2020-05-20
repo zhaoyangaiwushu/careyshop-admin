@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/auth_rule.html'
+
 /**
  * 添加一条规则
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addAuthRuleItem(data) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'add.auth.rule.item'
-    },
-    data
+    data: {
+      method: 'add.auth.rule.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,10 @@ export function addAuthRuleItem(data) {
  */
 export function getAuthRuleItem(rule_id) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'get.auth.rule.item'
-    },
     data: {
+      method: 'get.auth.rule.item',
       rule_id
     }
   })
@@ -41,12 +41,12 @@ export function getAuthRuleItem(rule_id) {
  */
 export function setAuthRuleItem(data) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.rule.item'
-    },
-    data
+    data: {
+      method: 'set.auth.rule.item',
+      ...data
+    }
   })
 }
 
@@ -57,12 +57,10 @@ export function setAuthRuleItem(data) {
  */
 export function delAuthRuleList(rule_id) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'del.auth.rule.list'
-    },
     data: {
+      method: 'del.auth.rule.list',
       rule_id
     }
   })
@@ -75,12 +73,12 @@ export function delAuthRuleList(rule_id) {
  */
 export function getAuthRuleList(data) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'get.auth.rule.list'
-    },
-    data
+    data: {
+      method: 'get.auth.rule.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getAuthRuleList(data) {
  */
 export function setAuthRuleStatus(rule_id, status) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.rule.status'
-    },
     data: {
+      method: 'set.auth.rule.status',
       rule_id,
       status
     }
@@ -112,12 +108,10 @@ export function setAuthRuleStatus(rule_id, status) {
  */
 export function setAuthRuleSort(rule_id, sort) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.rule.sort'
-    },
     data: {
+      method: 'set.auth.rule.sort',
       rule_id,
       sort
     }
@@ -131,12 +125,10 @@ export function setAuthRuleSort(rule_id, sort) {
  */
 export function setAuthRuleIndex(rule_id) {
   return request({
-    url: '/v1/auth_rule',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.rule.index'
-    },
     data: {
+      method: 'set.auth.rule.index',
       rule_id
     }
   })

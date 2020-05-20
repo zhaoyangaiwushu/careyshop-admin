@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/ads.html'
+
 /**
  * 添加一个广告
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addAdsItem(data) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'add.ads.item'
-    },
-    data
+    data: {
+      method: 'add.ads.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addAdsItem(data) {
  */
 export function setAdsItem(data) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'set.ads.item'
-    },
-    data
+    data: {
+      method: 'set.ads.item',
+      ...data
+    }
   })
 }
 
@@ -40,12 +42,10 @@ export function setAdsItem(data) {
  */
 export function setAdsSort(ads_id, sort) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'set.ads.sort'
-    },
     data: {
+      method: 'set.ads.sort',
       ads_id,
       sort
     }
@@ -59,12 +59,10 @@ export function setAdsSort(ads_id, sort) {
  */
 export function delAdsList(ads_id) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'del.ads.list'
-    },
     data: {
+      method: 'del.ads.list',
       ads_id
     }
   })
@@ -78,12 +76,10 @@ export function delAdsList(ads_id) {
  */
 export function setAdsStatus(ads_id, status) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'set.ads.status'
-    },
     data: {
+      method: 'set.ads.status',
       ads_id,
       status
     }
@@ -97,12 +93,10 @@ export function setAdsStatus(ads_id, status) {
  */
 export function getAdsItem(ads_id) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ads.item'
-    },
     data: {
+      method: 'get.ads.item',
       ads_id
     }
   })
@@ -115,11 +109,11 @@ export function getAdsItem(ads_id) {
  */
 export function getAdsList(data) {
   return request({
-    url: '/v1/ads',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ads.list'
-    },
-    data
+    data: {
+      method: 'get.ads.list',
+      ...data
+    }
   })
 }

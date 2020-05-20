@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/action_log.html'
+
 /**
  * 获取一条操作日志
  * @param {Number} action_log_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getActionLogItem(action_log_id) {
   return request({
-    url: '/v1/action_log',
+    url,
     method: 'post',
-    params: {
-      method: 'get.action.log.item'
-    },
     data: {
+      method: 'get.action.log.item',
       action_log_id
     }
   })
@@ -25,11 +25,11 @@ export function getActionLogItem(action_log_id) {
  */
 export function getActionLogList(data) {
   return request({
-    url: '/v1/action_log',
+    url,
     method: 'post',
-    params: {
-      method: 'get.action.log.list'
-    },
-    data
+    data: {
+      method: 'get.action.log.list',
+      ...data
+    }
   })
 }

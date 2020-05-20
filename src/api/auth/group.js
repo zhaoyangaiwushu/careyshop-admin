@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/auth_group.html'
+
 /**
  * 添加一个用户组
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addAuthGroupItem(data) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'add.auth.group.item'
-    },
-    data
+    data: {
+      method: 'add.auth.group.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addAuthGroupItem(data) {
  */
 export function setAuthGroupItem(data) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.group.item'
-    },
-    data
+    data: {
+      method: 'set.auth.group.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setAuthGroupItem(data) {
  */
 export function getAuthGroupItem(group_id) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'get.auth.group.item'
-    },
     data: {
+      method: 'get.auth.group.item',
       group_id
     }
   })
@@ -57,12 +57,10 @@ export function getAuthGroupItem(group_id) {
  */
 export function delAuthGroupItem(group_id) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'del.auth.group.item'
-    },
     data: {
+      method: 'del.auth.group.item',
       group_id
     }
   })
@@ -75,12 +73,12 @@ export function delAuthGroupItem(group_id) {
  */
 export function getAuthGroupList(data) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'get.auth.group.list'
-    },
-    data
+    data: {
+      method: 'get.auth.group.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getAuthGroupList(data) {
  */
 export function setAuthGroupStatus(group_id, status) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.group.status'
-    },
     data: {
+      method: 'set.auth.group.status',
       group_id,
       status
     }
@@ -112,12 +108,10 @@ export function setAuthGroupStatus(group_id, status) {
  */
 export function setAuthGroupSort(group_id, sort) {
   return request({
-    url: '/v1/auth_group',
+    url,
     method: 'post',
-    params: {
-      method: 'set.auth.group.sort'
-    },
     data: {
+      method: 'set.auth.group.sort',
       group_id,
       sort
     }

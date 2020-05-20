@@ -1,14 +1,16 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/qrcode.html'
+
 /**
  * 获取二维码调用地址
  * @returns
  */
 export function getQrcodeCallurl() {
   return request({
-    url: '/v1/qrcode',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.qrcode.callurl'
     }
   })
@@ -21,12 +23,12 @@ export function getQrcodeCallurl() {
  */
 export function addQrcodeItem(data) {
   return request({
-    url: '/v1/qrcode',
+    url,
     method: 'post',
-    params: {
-      method: 'add.qrcode.item'
-    },
-    data
+    data: {
+      method: 'add.qrcode.item',
+      ...data
+    }
   })
 }
 
@@ -37,12 +39,12 @@ export function addQrcodeItem(data) {
  */
 export function setQrcodeItem(data) {
   return request({
-    url: '/v1/qrcode',
+    url,
     method: 'post',
-    params: {
-      method: 'set.qrcode.item'
-    },
-    data
+    data: {
+      method: 'set.qrcode.item',
+      ...data
+    }
   })
 }
 
@@ -53,12 +55,10 @@ export function setQrcodeItem(data) {
  */
 export function getQrcodeConfig(qrcode_id) {
   return request({
-    url: '/v1/qrcode',
+    url,
     method: 'post',
-    params: {
-      method: 'get.qrcode.config'
-    },
     data: {
+      method: 'get.qrcode.config',
       qrcode_id
     }
   })
@@ -71,12 +71,12 @@ export function getQrcodeConfig(qrcode_id) {
  */
 export function getQrcodeList(data) {
   return request({
-    url: '/v1/qrcode',
+    url,
     method: 'post',
-    params: {
-      method: 'get.qrcode.list'
-    },
-    data
+    data: {
+      method: 'get.qrcode.list',
+      ...data
+    }
   })
 }
 
@@ -87,12 +87,10 @@ export function getQrcodeList(data) {
  */
 export function delQrcodeList(qrcode_id) {
   return request({
-    url: '/v1/qrcode',
+    url,
     method: 'post',
-    params: {
-      method: 'del.qrcode.list'
-    },
     data: {
+      method: 'del.qrcode.list',
       qrcode_id
     }
   })

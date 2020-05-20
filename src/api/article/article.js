@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/article.html'
+
 /**
  * 添加一篇文章
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addArticleItem(data) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'add.article.item'
-    },
-    data
+    data: {
+      method: 'add.article.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addArticleItem(data) {
  */
 export function setArticleItem(data) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.item'
-    },
-    data
+    data: {
+      method: 'set.article.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setArticleItem(data) {
  */
 export function delArticleList(article_id) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'del.article.list'
-    },
     data: {
+      method: 'del.article.list',
       article_id
     }
   })
@@ -57,12 +57,10 @@ export function delArticleList(article_id) {
  */
 export function getArticleItem(article_id) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'get.article.item'
-    },
     data: {
+      method: 'get.article.item',
       article_id
     }
   })
@@ -75,12 +73,12 @@ export function getArticleItem(article_id) {
  */
 export function getArticleList(data) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'get.article.list'
-    },
-    data
+    data: {
+      method: 'get.article.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getArticleList(data) {
  */
 export function setArticleTop(article_id, is_top) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.top'
-    },
     data: {
+      method: 'set.article.top',
       article_id,
       is_top
     }
@@ -112,12 +108,10 @@ export function setArticleTop(article_id, is_top) {
  */
 export function setArticleStatus(article_id, status) {
   return request({
-    url: '/v1/article',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.status'
-    },
     data: {
+      method: 'set.article.status',
       article_id,
       status
     }

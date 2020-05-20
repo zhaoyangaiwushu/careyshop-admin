@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/support.html'
+
 /**
  * 添加一名客服
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addSupportItem(data) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'add.support.item'
-    },
-    data
+    data: {
+      method: 'add.support.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addSupportItem(data) {
  */
 export function setSupportItem(data) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'set.support.item'
-    },
-    data
+    data: {
+      method: 'set.support.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setSupportItem(data) {
  */
 export function delSupportList(support_id) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'del.support.list'
-    },
     data: {
+      method: 'del.support.list',
       support_id
     }
   })
@@ -57,12 +57,10 @@ export function delSupportList(support_id) {
  */
 export function getSupportItem(support_id) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'get.support.item'
-    },
     data: {
+      method: 'get.support.item',
       support_id
     }
   })
@@ -75,12 +73,12 @@ export function getSupportItem(support_id) {
  */
 export function getSupportList(data) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'get.support.list'
-    },
-    data
+    data: {
+      method: 'get.support.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getSupportList(data) {
  */
 export function setSupportStatus(support_id, status) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'set.support.status'
-    },
     data: {
+      method: 'set.support.status',
       support_id,
       status
     }
@@ -112,12 +108,10 @@ export function setSupportStatus(support_id, status) {
  */
 export function setSupportSort(support_id, sort) {
   return request({
-    url: '/v1/support',
+    url,
     method: 'post',
-    params: {
-      method: 'set.support.sort'
-    },
     data: {
+      method: 'set.support.sort',
       support_id,
       sort
     }

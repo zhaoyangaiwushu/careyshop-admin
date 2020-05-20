@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/app.html'
+
 /**
  * 添加一个应用
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addAppItem(data) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'add.app.item'
-    },
-    data
+    data: {
+      method: 'add.app.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addAppItem(data) {
  */
 export function setAppItem(data) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'set.app.item'
-    },
-    data
+    data: {
+      method: 'set.app.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setAppItem(data) {
  */
 export function getAppItem(app_id) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'get.app.item'
-    },
     data: {
+      method: 'get.app.item',
       app_id
     }
   })
@@ -57,12 +57,12 @@ export function getAppItem(app_id) {
  */
 export function getAppList(data) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'get.app.list'
-    },
-    data
+    data: {
+      method: 'get.app.list',
+      ...data
+    }
   })
 }
 
@@ -73,12 +73,10 @@ export function getAppList(data) {
  */
 export function delAppList(app_id) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'del.app.list'
-    },
     data: {
+      method: 'del.app.list',
       app_id
     }
   })
@@ -92,12 +90,10 @@ export function delAppList(app_id) {
  */
 export function uniqueAppName(app_name, exclude_id) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'unique.app.name'
-    },
     data: {
+      method: 'unique.app.name',
       app_name,
       exclude_id
     }
@@ -111,12 +107,10 @@ export function uniqueAppName(app_name, exclude_id) {
  */
 export function replaceAppSecret(app_id) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'replace.app.secret'
-    },
     data: {
+      method: 'replace.app.secret',
       app_id
     }
   })
@@ -130,12 +124,10 @@ export function replaceAppSecret(app_id) {
  */
 export function setAppCaptcha(app_id, captcha) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'set.app.captcha'
-    },
     data: {
+      method: 'set.app.captcha',
       app_id,
       captcha
     }
@@ -150,12 +142,10 @@ export function setAppCaptcha(app_id, captcha) {
  */
 export function setAppStatus(app_id, status) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'set.app.status'
-    },
     data: {
+      method: 'set.app.status',
       app_id,
       status
     }
@@ -169,12 +159,10 @@ export function setAppStatus(app_id, status) {
  */
 export function getAppCaptcha(app_key) {
   return request({
-    url: '/v1/app',
+    url,
     method: 'post',
-    params: {
-      method: 'get.app.captcha'
-    },
     data: {
+      method: 'get.app.captcha',
       appkey: app_key
     }
   })

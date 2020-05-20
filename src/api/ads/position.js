@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/ads_position.html'
+
 /**
  * 添加一个广告位置
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addAdsPositionItem(data) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'add.ads.position.item'
-    },
-    data
+    data: {
+      method: 'add.ads.position.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addAdsPositionItem(data) {
  */
 export function setAdsPositionItem(data) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'set.ads.position.item'
-    },
-    data
+    data: {
+      method: 'set.ads.position.item',
+      ...data
+    }
   })
 }
 
@@ -40,12 +42,10 @@ export function setAdsPositionItem(data) {
  */
 export function delAdsPositionList(position_id, not_empty = 0) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'del.ads.position.list'
-    },
     data: {
+      method: 'del.ads.position.list',
       ads_position_id: position_id,
       not_empty
     }
@@ -60,12 +60,10 @@ export function delAdsPositionList(position_id, not_empty = 0) {
  */
 export function setAdsPositionStatus(position_id, status) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'set.ads.position.status'
-    },
     data: {
+      method: 'set.ads.position.status',
       ads_position_id: position_id,
       status
     }
@@ -79,12 +77,10 @@ export function setAdsPositionStatus(position_id, status) {
  */
 export function getAdsPositionItem(position_id) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ads.position.item'
-    },
     data: {
+      method: 'get.ads.position.item',
       ads_position_id: position_id
     }
   })
@@ -97,12 +93,12 @@ export function getAdsPositionItem(position_id) {
  */
 export function getAdsPositionList(data) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ads.position.list'
-    },
-    data
+    data: {
+      method: 'get.ads.position.list',
+      ...data
+    }
   })
 }
 
@@ -113,11 +109,11 @@ export function getAdsPositionList(data) {
  */
 export function getAdsPositionSelect(data) {
   return request({
-    url: '/v1/ads_position',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ads.position.select'
-    },
-    data
+    data: {
+      method: 'get.ads.position.select',
+      ...data
+    }
   })
 }

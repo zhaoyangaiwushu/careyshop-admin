@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/article_cat.html'
+
 /**
  * 添加一个文章分类
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addArticleCatItem(data) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'add.article.cat.item'
-    },
-    data
+    data: {
+      method: 'add.article.cat.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addArticleCatItem(data) {
  */
 export function setArticleCatItem(data) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.cat.item'
-    },
-    data
+    data: {
+      method: 'set.article.cat.item',
+      ...data
+    }
   })
 }
 
@@ -40,12 +42,10 @@ export function setArticleCatItem(data) {
  */
 export function delArticleCatList(article_cat_id, not_empty = 0) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'del.article.cat.list'
-    },
     data: {
+      method: 'del.article.cat.list',
       article_cat_id,
       not_empty
     }
@@ -59,12 +59,10 @@ export function delArticleCatList(article_cat_id, not_empty = 0) {
  */
 export function getArticleCatItem(article_cat_id) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'get.article.cat.item'
-    },
     data: {
+      method: 'get.article.cat.item',
       article_cat_id
     }
   })
@@ -77,12 +75,12 @@ export function getArticleCatItem(article_cat_id) {
  */
 export function getArticleCatList(data) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'get.article.cat.list'
-    },
-    data
+    data: {
+      method: 'get.article.cat.list',
+      ...data
+    }
   })
 }
 
@@ -94,12 +92,10 @@ export function getArticleCatList(data) {
  */
 export function getArticleCatNavi(article_cat_id = 0, is_layer = 1) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'get.article.cat.navi'
-    },
     data: {
+      method: 'get.article.cat.navi',
       article_cat_id,
       is_layer
     }
@@ -114,12 +110,10 @@ export function getArticleCatNavi(article_cat_id = 0, is_layer = 1) {
  */
 export function setArticleCatSort(article_cat_id, sort) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.cat.sort'
-    },
     data: {
+      method: 'set.article.cat.sort',
       article_cat_id,
       sort
     }
@@ -134,12 +128,10 @@ export function setArticleCatSort(article_cat_id, sort) {
  */
 export function setArticleCatNavi(article_cat_id, is_navi) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.cat.navi'
-    },
     data: {
+      method: 'set.article.cat.navi',
       article_cat_id,
       is_navi
     }
@@ -153,12 +145,10 @@ export function setArticleCatNavi(article_cat_id, is_navi) {
  */
 export function setArticleCatIndex(article_cat_id) {
   return request({
-    url: '/v1/article_cat',
+    url,
     method: 'post',
-    params: {
-      method: 'set.article.cat.index'
-    },
     data: {
+      method: 'set.article.cat.index',
       article_cat_id
     }
   })

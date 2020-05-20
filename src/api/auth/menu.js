@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/menu.html'
+
 /**
  * 获取菜单所属模块
  * @returns {Promise<any>}
@@ -21,13 +23,13 @@ export function getMenuModule() {
  */
 export function getMenuAuthList(data) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.menu.auth.list',
-      module: 'admin'
-    },
-    data
+      module: 'admin',
+      ...data
+    }
   })
 }
 
@@ -38,12 +40,10 @@ export function getMenuAuthList(data) {
  */
 export function getMenuItem(menu_id) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'get.menu.item'
-    },
     data: {
+      method: 'get.menu.item',
       menu_id
     }
   })
@@ -56,12 +56,12 @@ export function getMenuItem(menu_id) {
  */
 export function addMenuItem(data) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'add.menu.item'
-    },
-    data
+    data: {
+      method: 'add.menu.item',
+      ...data
+    }
   })
 }
 
@@ -72,12 +72,12 @@ export function addMenuItem(data) {
  */
 export function setMenuItem(data) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'set.menu.item'
-    },
-    data
+    data: {
+      method: 'set.menu.item',
+      ...data
+    }
   })
 }
 
@@ -88,12 +88,10 @@ export function setMenuItem(data) {
  */
 export function delMenuItem(menu_id) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'del.menu.item'
-    },
     data: {
+      method: 'del.menu.item',
       menu_id
     }
   })
@@ -106,12 +104,12 @@ export function delMenuItem(menu_id) {
  */
 export function getMenuList(data) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'get.menu.list'
-    },
-    data
+    data: {
+      method: 'get.menu.list',
+      ...data
+    }
   })
 }
 
@@ -123,12 +121,10 @@ export function getMenuList(data) {
  */
 export function getMenuIdNavi(menu_id, is_layer = 1) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'get.menu.id.navi'
-    },
     data: {
+      method: 'get.menu.id.navi',
       menu_id,
       is_layer
     }
@@ -143,12 +139,10 @@ export function getMenuIdNavi(menu_id, is_layer = 1) {
  */
 export function getMenuUrlNavi(url, is_layer = 1) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'get.menu.url.navi'
-    },
     data: {
+      method: 'get.menu.url.navi',
       url,
       is_layer
     }
@@ -163,12 +157,10 @@ export function getMenuUrlNavi(url, is_layer = 1) {
  */
 export function setMenuNavi(menu_id, is_navi) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'set.menu.navi'
-    },
     data: {
+      method: 'set.menu.navi',
       menu_id,
       is_navi
     }
@@ -183,12 +175,10 @@ export function setMenuNavi(menu_id, is_navi) {
  */
 export function setMenuSort(menu_id, sort) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'set.menu.sort'
-    },
     data: {
+      method: 'set.menu.sort',
       menu_id,
       sort
     }
@@ -202,12 +192,10 @@ export function setMenuSort(menu_id, sort) {
  */
 export function setMenuIndex(menu_id) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'set.menu.index'
-    },
     data: {
+      method: 'set.menu.index',
       menu_id
     }
   })
@@ -221,12 +209,10 @@ export function setMenuIndex(menu_id) {
  */
 export function setMenuStatus(menu_id, status) {
   return request({
-    url: '/v1/menu',
+    url,
     method: 'post',
-    params: {
-      method: 'set.menu.status'
-    },
     data: {
+      method: 'set.menu.status',
       menu_id,
       status
     }

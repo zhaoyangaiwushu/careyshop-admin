@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/topic.html'
+
 /**
  * 添加一个专题
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addTopicItem(data) {
   return request({
-    url: '/v1/topic',
+    url,
     method: 'post',
-    params: {
-      method: 'add.topic.item'
-    },
-    data
+    data: {
+      method: 'add.topic.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addTopicItem(data) {
  */
 export function setTopicItem(data) {
   return request({
-    url: '/v1/topic',
+    url,
     method: 'post',
-    params: {
-      method: 'set.topic.item'
-    },
-    data
+    data: {
+      method: 'set.topic.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setTopicItem(data) {
  */
 export function delTopicList(topic_id) {
   return request({
-    url: '/v1/topic',
+    url,
     method: 'post',
-    params: {
-      method: 'del.topic.list'
-    },
     data: {
+      method: 'del.topic.list',
       topic_id
     }
   })
@@ -57,12 +57,10 @@ export function delTopicList(topic_id) {
  */
 export function getTopicItem(topic_id) {
   return request({
-    url: '/v1/topic',
+    url,
     method: 'post',
-    params: {
-      method: 'get.topic.item'
-    },
     data: {
+      method: 'get.topic.item',
       topic_id
     }
   })
@@ -75,12 +73,12 @@ export function getTopicItem(topic_id) {
  */
 export function getTopicList(data) {
   return request({
-    url: '/v1/topic',
+    url,
     method: 'post',
-    params: {
-      method: 'get.topic.list'
-    },
-    data
+    data: {
+      method: 'get.topic.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getTopicList(data) {
  */
 export function setTopicStatus(topic_id, status) {
   return request({
-    url: '/v1/topic',
+    url,
     method: 'post',
-    params: {
-      method: 'set.topic.status'
-    },
     data: {
+      method: 'set.topic.status',
       topic_id,
       status
     }

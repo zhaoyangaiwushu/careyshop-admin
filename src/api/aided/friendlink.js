@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/friend_link.html'
+
 /**
  * 添加一个友情链接
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addFriendlinkItem(data) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'add.friendlink.item'
-    },
-    data
+    data: {
+      method: 'add.friendlink.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addFriendlinkItem(data) {
  */
 export function setFriendlinkItem(data) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'set.friendlink.item'
-    },
-    data
+    data: {
+      method: 'set.friendlink.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setFriendlinkItem(data) {
  */
 export function getFriendlinkItem(friend_link_id) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'get.friendlink.item'
-    },
     data: {
+      method: 'get.friendlink.item',
       friend_link_id
     }
   })
@@ -57,12 +57,12 @@ export function getFriendlinkItem(friend_link_id) {
  */
 export function getFriendlinkList(data) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'get.friendlink.list'
-    },
-    data
+    data: {
+      method: 'get.friendlink.list',
+      ...data
+    }
   })
 }
 
@@ -73,12 +73,10 @@ export function getFriendlinkList(data) {
  */
 export function delFriendlinkList(friend_link_id) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'del.friendlink.list'
-    },
     data: {
+      method: 'del.friendlink.list',
       friend_link_id
     }
   })
@@ -92,12 +90,10 @@ export function delFriendlinkList(friend_link_id) {
  */
 export function setFriendlinkStatus(friend_link_id, status) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'set.friendlink.status'
-    },
     data: {
+      method: 'set.friendlink.status',
       friend_link_id,
       status
     }
@@ -112,12 +108,10 @@ export function setFriendlinkStatus(friend_link_id, status) {
  */
 export function setFriendlinkSort(friend_link_id, sort) {
   return request({
-    url: '/v1/friend_link',
+    url,
     method: 'post',
-    params: {
-      method: 'set.friendlink.sort'
-    },
     data: {
+      method: 'set.friendlink.sort',
       friend_link_id,
       sort
     }

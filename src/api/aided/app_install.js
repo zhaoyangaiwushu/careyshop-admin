@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/app_install.html'
+
 /**
  * 添加一个应用安装包
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addAppInstallItem(data) {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
-      method: 'add.app.install.item'
-    },
-    data
+    data: {
+      method: 'add.app.install.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addAppInstallItem(data) {
  */
 export function setAppInstallItem(data) {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
-      method: 'set.app.install.item'
-    },
-    data
+    data: {
+      method: 'set.app.install.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setAppInstallItem(data) {
  */
 export function getAppInstallItem(app_install_id) {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
-      method: 'get.app.install.item'
-    },
     data: {
+      method: 'get.app.install.item',
       app_install_id
     }
   })
@@ -57,12 +57,10 @@ export function getAppInstallItem(app_install_id) {
  */
 export function delAppInstallList(app_install_id) {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
-      method: 'del.app.install.list'
-    },
     data: {
+      method: 'del.app.install.list',
       app_install_id
     }
   })
@@ -75,12 +73,12 @@ export function delAppInstallList(app_install_id) {
  */
 export function getAppInstallList(data) {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
-      method: 'get.app.install.list'
-    },
-    data
+    data: {
+      method: 'get.app.install.list',
+      ...data
+    }
   })
 }
 
@@ -92,12 +90,10 @@ export function getAppInstallList(data) {
  */
 export function queryAppInstallUpdated(user_agent, ver) {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
-      method: 'query.app.install.updated'
-    },
     data: {
+      method: 'query.app.install.updated',
       user_agent,
       ver
     }
@@ -110,9 +106,9 @@ export function queryAppInstallUpdated(user_agent, ver) {
  */
 export function requestAppInstallItem() {
   return request({
-    url: '/v1/app_install',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'request.app.install.item'
     }
   })

@@ -2,8 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import store from '@/store'
-import util from '@/utils/util'
 import routes from './routes'
+import util from '@/utils/util'
 
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'

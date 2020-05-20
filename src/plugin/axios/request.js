@@ -43,7 +43,7 @@ const service = axios.create({
   // api的base_url
   baseURL: serverConfig.BASE_API,
   // request timeout
-  timeout: 5000,
+  timeout: 30000,
   // 默认使用简单请求,避免复杂请求(多一次OPTIONS请求)
   // 如有特殊需求或协议不同,可修改为例如"application/json; charset=utf-8"
   headers: { 'Content-Type': 'text/plain; charset=utf-8' }
@@ -120,7 +120,7 @@ service.interceptors.response.use(
     }
 
     errorLog(error)
-    return Promise.reject(error)
+    return Promise.reject(error.response ? error.response.data : error)
   }
 )
 

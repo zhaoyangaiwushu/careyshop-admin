@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/payment.html'
+
 /**
  * 获取支付配置列表
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function getPaymentList(data) {
   return request({
-    url: '/v1/payment',
+    url,
     method: 'post',
-    params: {
-      method: 'get.payment.list'
-    },
-    data
+    data: {
+      method: 'get.payment.list',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function getPaymentList(data) {
  */
 export function setPaymentItem(data) {
   return request({
-    url: '/v1/payment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.payment.item'
-    },
-    data
+    data: {
+      method: 'set.payment.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setPaymentItem(data) {
  */
 export function getPaymentItem(payment_id) {
   return request({
-    url: '/v1/payment',
+    url,
     method: 'post',
-    params: {
-      method: 'get.payment.item'
-    },
     data: {
+      method: 'get.payment.item',
       payment_id
     }
   })
@@ -58,12 +58,10 @@ export function getPaymentItem(payment_id) {
  */
 export function setPaymentSort(payment_id, sort) {
   return request({
-    url: '/v1/payment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.payment.sort'
-    },
     data: {
+      method: 'set.payment.sort',
       payment_id,
       sort
     }
@@ -78,12 +76,10 @@ export function setPaymentSort(payment_id, sort) {
  */
 export function setPaymentStatus(payment_id, status) {
   return request({
-    url: '/v1/payment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.payment.status'
-    },
     data: {
+      method: 'set.payment.status',
       payment_id,
       status
     }
@@ -97,11 +93,11 @@ export function setPaymentStatus(payment_id, status) {
  */
 export function setPaymentFinance(data) {
   return request({
-    url: '/v1/payment',
+    url,
     method: 'post',
-    params: {
-      method: 'set.payment.finance'
-    },
-    data
+    data: {
+      method: 'set.payment.finance',
+      ...data
+    }
   })
 }

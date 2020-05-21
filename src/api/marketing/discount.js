@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/discount.html'
+
 /**
  * 添加一个商品折扣
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addDiscountItem(data) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'add.discount.item'
-    },
-    data
+    data: {
+      method: 'add.discount.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addDiscountItem(data) {
  */
 export function setDiscountItem(data) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'set.discount.item'
-    },
-    data
+    data: {
+      method: 'set.discount.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setDiscountItem(data) {
  */
 export function getDiscountItem(discount_id) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'get.discount.item'
-    },
     data: {
+      method: 'get.discount.item',
       discount_id
     }
   })
@@ -57,12 +57,10 @@ export function getDiscountItem(discount_id) {
  */
 export function delDiscountList(discount_id) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'del.discount.list'
-    },
     data: {
+      method: 'del.discount.list',
       discount_id
     }
   })
@@ -76,12 +74,10 @@ export function delDiscountList(discount_id) {
  */
 export function setDiscountStatus(discount_id, status) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'set.discount.status'
-    },
     data: {
+      method: 'set.discount.status',
       discount_id,
       status
     }
@@ -95,12 +91,12 @@ export function setDiscountStatus(discount_id, status) {
  */
 export function getDiscountList(data) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'get.discount.list'
-    },
-    data
+    data: {
+      method: 'get.discount.list',
+      ...data
+    }
   })
 }
 
@@ -111,12 +107,10 @@ export function getDiscountList(data) {
  */
 export function getDiscountGoodsInfo(goods_id) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'get.discount.goods.info'
-    },
     data: {
+      method: 'get.discount.goods.info',
       goods_id
     }
   })
@@ -129,12 +123,10 @@ export function getDiscountGoodsInfo(goods_id) {
  */
 export function getDiscountGoodsList(discount_id) {
   return request({
-    url: '/v1/discount',
+    url,
     method: 'post',
-    params: {
-      method: 'get.discount.goods.list'
-    },
     data: {
+      method: 'get.discount.goods.list',
       discount_id
     }
   })

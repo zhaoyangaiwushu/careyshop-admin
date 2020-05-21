@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/coupon.html'
+
 /**
  * 添加一张优惠劵
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addCouponItem(data) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'add.coupon.item'
-    },
-    data
+    data: {
+      method: 'add.coupon.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addCouponItem(data) {
  */
 export function setCouponItem(data) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'set.coupon.item'
-    },
-    data
+    data: {
+      method: 'set.coupon.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setCouponItem(data) {
  */
 export function getCouponItem(coupon_id) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'get.coupon.item'
-    },
     data: {
+      method: 'get.coupon.item',
       coupon_id
     }
   })
@@ -57,12 +57,12 @@ export function getCouponItem(coupon_id) {
  */
 export function getCouponList(data) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'get.coupon.list'
-    },
-    data
+    data: {
+      method: 'get.coupon.list',
+      ...data
+    }
   })
 }
 
@@ -73,12 +73,12 @@ export function getCouponList(data) {
  */
 export function getCouponSelect(data) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'get.coupon.select'
-    },
-    data
+    data: {
+      method: 'get.coupon.select',
+      ...data
+    }
   })
 }
 
@@ -89,12 +89,10 @@ export function getCouponSelect(data) {
  */
 export function delCouponList(coupon_id) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'del.coupon.list'
-    },
     data: {
+      method: 'del.coupon.list',
       coupon_id
     }
   })
@@ -108,12 +106,10 @@ export function delCouponList(coupon_id) {
  */
 export function setCouponStatus(coupon_id, status) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'set.coupon.status'
-    },
     data: {
+      method: 'set.coupon.status',
       coupon_id,
       status
     }
@@ -128,12 +124,10 @@ export function setCouponStatus(coupon_id, status) {
  */
 export function setCouponInvalid(coupon_id, is_invalid) {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
-      method: 'set.coupon.invalid'
-    },
     data: {
+      method: 'set.coupon.invalid',
       coupon_id,
       is_invalid
     }
@@ -146,9 +140,9 @@ export function setCouponInvalid(coupon_id, is_invalid) {
  */
 export function getCouponActive() {
   return request({
-    url: '/v1/coupon',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.coupon.active'
     }
   })

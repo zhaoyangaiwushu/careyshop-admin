@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/withdraw_user.html'
+
 /**
  * 添加一个提现账号
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addWithdrawUserItem(data) {
   return request({
-    url: '/v1/withdraw_user',
+    url,
     method: 'post',
-    params: {
-      method: 'add.withdraw.user.item'
-    },
-    data
+    data: {
+      method: 'add.withdraw.user.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addWithdrawUserItem(data) {
  */
 export function setWithdrawUserItem(data) {
   return request({
-    url: '/v1/withdraw_user',
+    url,
     method: 'post',
-    params: {
-      method: 'set.withdraw.user.item'
-    },
-    data
+    data: {
+      method: 'set.withdraw.user.item',
+      ...data
+    }
   })
 }
 
@@ -40,12 +42,10 @@ export function setWithdrawUserItem(data) {
  */
 export function delWithdrawUserList(withdraw_user_id, client_id) {
   return request({
-    url: '/v1/withdraw_user',
+    url,
     method: 'post',
-    params: {
-      method: 'del.withdraw.user.list'
-    },
     data: {
+      method: 'del.withdraw.user.list',
       withdraw_user_id,
       client_id
     }
@@ -60,12 +60,10 @@ export function delWithdrawUserList(withdraw_user_id, client_id) {
  */
 export function getWithdrawUserItem(withdraw_user_id, client_id) {
   return request({
-    url: '/v1/withdraw_user',
+    url,
     method: 'post',
-    params: {
-      method: 'get.withdraw.user.item'
-    },
     data: {
+      method: 'get.withdraw.user.item',
       withdraw_user_id,
       client_id
     }
@@ -79,12 +77,10 @@ export function getWithdrawUserItem(withdraw_user_id, client_id) {
  */
 export function getWithdrawUserList(client_id) {
   return request({
-    url: '/v1/withdraw_user',
+    url,
     method: 'post',
-    params: {
-      method: 'get.withdraw.user.list'
-    },
     data: {
+      method: 'get.withdraw.user.list',
       client_id
     }
   })
@@ -97,12 +93,10 @@ export function getWithdrawUserList(client_id) {
  */
 export function isWithdrawUserMaximum(client_id) {
   return request({
-    url: '/v1/withdraw_user',
+    url,
     method: 'post',
-    params: {
-      method: 'is.withdraw.user.maximum'
-    },
     data: {
+      method: 'is.withdraw.user.maximum',
       client_id
     }
   })

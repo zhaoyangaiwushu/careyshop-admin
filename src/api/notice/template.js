@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/notice_tpl.html'
+
 /**
  * 获取一个通知系统模板
  * @param {Number} notice_tpl_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getNoticeTplItem(notice_tpl_id) {
   return request({
-    url: '/v1/notice_tpl',
+    url,
     method: 'post',
-    params: {
-      method: 'get.notice.tpl.item'
-    },
     data: {
+      method: 'get.notice.tpl.item',
       notice_tpl_id
     }
   })
@@ -25,12 +25,10 @@ export function getNoticeTplItem(notice_tpl_id) {
  */
 export function getNoticeTplList(code) {
   return request({
-    url: '/v1/notice_tpl',
+    url,
     method: 'post',
-    params: {
-      method: 'get.notice.tpl.list'
-    },
     data: {
+      method: 'get.notice.tpl.list',
       code
     }
   })
@@ -43,12 +41,12 @@ export function getNoticeTplList(code) {
  */
 export function setNoticeTplItem(data) {
   return request({
-    url: '/v1/notice_tpl',
+    url,
     method: 'post',
-    params: {
-      method: 'set.notice.tpl.item'
-    },
-    data
+    data: {
+      method: 'set.notice.tpl.item',
+      ...data
+    }
   })
 }
 
@@ -60,12 +58,10 @@ export function setNoticeTplItem(data) {
  */
 export function setNoticeTplStatus(notice_tpl_id, status) {
   return request({
-    url: '/v1/notice_tpl',
+    url,
     method: 'post',
-    params: {
-      method: 'set.notice.tpl.status'
-    },
     data: {
+      method: 'set.notice.tpl.status',
       notice_tpl_id,
       status
     }

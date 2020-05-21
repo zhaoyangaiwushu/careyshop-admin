@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/user.html'
+
 /**
  * 验证账号是否合法
  * @param {String} username
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function checkUserUsername(username) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'check.user.username'
-    },
     data: {
+      method: 'check.user.username',
       username
     }
   })
@@ -25,12 +25,10 @@ export function checkUserUsername(username) {
  */
 export function checkUserMobile(mobile) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'check.user.mobile'
-    },
     data: {
+      method: 'check.user.mobile',
       mobile
     }
   })
@@ -43,12 +41,10 @@ export function checkUserMobile(mobile) {
  */
 export function checkUserNickname(nickname) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'check.user.nickname'
-    },
     data: {
+      method: 'check.user.nickname',
       nickname
     }
   })
@@ -61,12 +57,12 @@ export function checkUserNickname(nickname) {
  */
 export function addUserItem(data) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'add.user.item'
-    },
-    data
+    data: {
+      method: 'add.user.item',
+      ...data
+    }
   })
 }
 
@@ -77,12 +73,12 @@ export function addUserItem(data) {
  */
 export function setUserItem(data) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'set.user.item'
-    },
-    data
+    data: {
+      method: 'set.user.item',
+      ...data
+    }
   })
 }
 
@@ -94,12 +90,10 @@ export function setUserItem(data) {
  */
 export function setUserStatus(client_id, status) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'set.user.status'
-    },
     data: {
+      method: 'set.user.status',
       client_id,
       status
     }
@@ -115,12 +109,10 @@ export function setUserStatus(client_id, status) {
  */
 export function setUserPassword(client_id, password, password_confirm) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'set.user.password'
-    },
     data: {
+      method: 'set.user.password',
       client_id,
       password,
       password_confirm
@@ -135,12 +127,10 @@ export function setUserPassword(client_id, password, password_confirm) {
  */
 export function delUserList(client_id) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'del.user.list'
-    },
     data: {
+      method: 'del.user.list',
       client_id
     }
   })
@@ -153,12 +143,10 @@ export function delUserList(client_id) {
  */
 export function getUserItem(client_id) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.item'
-    },
     data: {
+      method: 'get.user.item',
       client_id
     }
   })
@@ -171,12 +159,10 @@ export function getUserItem(client_id) {
  */
 export function getUserInfo(client_id) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.info'
-    },
     data: {
+      method: 'get.user.info',
       client_id
     }
   })
@@ -189,12 +175,12 @@ export function getUserInfo(client_id) {
  */
 export function getUserList(data) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.list'
-    },
-    data
+    data: {
+      method: 'get.user.list',
+      ...data
+    }
   })
 }
 
@@ -205,12 +191,10 @@ export function getUserList(data) {
  */
 export function getUserSelect(client_id) {
   return request({
-    url: '/v1/user',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.select'
-    },
     data: {
+      method: 'get.user.select',
       client_id
     }
   })

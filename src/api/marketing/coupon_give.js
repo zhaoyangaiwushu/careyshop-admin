@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/coupon_give.html'
+
 /**
  * 向指定用户发放优惠劵
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function giveCouponUser(data) {
   return request({
-    url: '/v1/coupon_give',
+    url,
     method: 'post',
-    params: {
-      method: 'give.coupon.user'
-    },
-    data
+    data: {
+      method: 'give.coupon.user',
+      ...data
+    }
   })
 }
 
@@ -24,12 +26,10 @@ export function giveCouponUser(data) {
  */
 export function giveCouponLive(coupon_id, give_number) {
   return request({
-    url: '/v1/coupon_give',
+    url,
     method: 'post',
-    params: {
-      method: 'give.coupon.live'
-    },
     data: {
+      method: 'give.coupon.live',
       coupon_id,
       give_number
     }
@@ -43,12 +43,12 @@ export function giveCouponLive(coupon_id, give_number) {
  */
 export function getCouponGiveList(data) {
   return request({
-    url: '/v1/coupon_give',
+    url,
     method: 'post',
-    params: {
-      method: 'get.coupon.give.list'
-    },
-    data
+    data: {
+      method: 'get.coupon.give.list',
+      ...data
+    }
   })
 }
 
@@ -59,12 +59,10 @@ export function getCouponGiveList(data) {
  */
 export function delCouponGiveList(coupon_give_id) {
   return request({
-    url: '/v1/coupon_give',
+    url,
     method: 'post',
-    params: {
-      method: 'del.coupon.give.list'
-    },
     data: {
+      method: 'del.coupon.give.list',
       coupon_give_id
     }
   })
@@ -77,12 +75,10 @@ export function delCouponGiveList(coupon_give_id) {
  */
 export function recCouponGiveList(coupon_give_id) {
   return request({
-    url: '/v1/coupon_give',
+    url,
     method: 'post',
-    params: {
-      method: 'rec.coupon.give.list'
-    },
     data: {
+      method: 'rec.coupon.give.list',
       coupon_give_id
     }
   })
@@ -95,12 +91,10 @@ export function recCouponGiveList(coupon_give_id) {
  */
 export function getCouponGiveExport(coupon_id) {
   return request({
-    url: '/v1/coupon_give',
+    url,
     method: 'post',
-    params: {
-      method: 'get.coupon.give.export'
-    },
     data: {
+      method: 'get.coupon.give.export',
       coupon_id
     }
   })

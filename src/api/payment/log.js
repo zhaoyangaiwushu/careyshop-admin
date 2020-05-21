@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/payment_log.html'
+
 /**
  * 获取一笔充值记录
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function getPaymentLogItem(data) {
   return request({
-    url: '/v1/payment_log',
+    url,
     method: 'post',
-    params: {
-      method: 'get.payment.log.item'
-    },
-    data
+    data: {
+      method: 'get.payment.log.item',
+      ...data
+    }
   })
 }
 
@@ -23,11 +25,11 @@ export function getPaymentLogItem(data) {
  */
 export function getPaymentLogList(data) {
   return request({
-    url: '/v1/payment_log',
+    url,
     method: 'post',
-    params: {
-      method: 'get.payment.log.list'
-    },
-    data
+    data: {
+      method: 'get.payment.log.list',
+      ...data
+    }
   })
 }

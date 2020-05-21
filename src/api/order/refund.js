@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/order_refund.html'
+
 /**
  * 查询一笔退款信息
  * @param {String} refund_no
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function queryRefundItem(refund_no) {
   return request({
-    url: '/v1/order_refund',
+    url,
     method: 'post',
-    params: {
-      method: 'query.refund.item'
-    },
     data: {
+      method: 'query.refund.item',
       refund_no
     }
   })
@@ -25,11 +25,11 @@ export function queryRefundItem(refund_no) {
  */
 export function getRefundList(data) {
   return request({
-    url: '/v1/order_refund',
+    url,
     method: 'post',
-    params: {
-      method: 'get.refund.list'
-    },
-    data
+    data: {
+      method: 'get.refund.list',
+      ...data
+    }
   })
 }

@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/admin.html'
+
 /**
  * 账号登录，并且获取授权码
  * @param {Object} data
@@ -7,13 +9,13 @@ import request from '@/plugin/axios/request'
  */
 export function loginAdminUser(data) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'login.admin.user',
-      platform: 'admin'
-    },
-    data
+      platform: 'admin',
+      ...data
+    }
   })
 }
 
@@ -23,9 +25,9 @@ export function loginAdminUser(data) {
  */
 export function logoutAdminUser() {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'logout.admin.user'
     }
   })
@@ -38,12 +40,12 @@ export function logoutAdminUser() {
  */
 export function setAdminPassword(data) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'set.admin.password'
-    },
-    data
+    data: {
+      method: 'set.admin.password',
+      ...data
+    }
   })
 }
 
@@ -54,12 +56,10 @@ export function setAdminPassword(data) {
  */
 export function checkAdminUsername(username) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'check.admin.username'
-    },
     data: {
+      method: 'check.admin.username',
       username
     }
   })
@@ -72,12 +72,10 @@ export function checkAdminUsername(username) {
  */
 export function checkAdminNickname(nickname) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'check.admin.nickname'
-    },
     data: {
+      method: 'check.admin.nickname',
       nickname
     }
   })
@@ -90,12 +88,12 @@ export function checkAdminNickname(nickname) {
  */
 export function addAdminItem(data) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'add.admin.item'
-    },
-    data
+    data: {
+      method: 'add.admin.item',
+      ...data
+    }
   })
 }
 
@@ -106,12 +104,12 @@ export function addAdminItem(data) {
  */
 export function setAdminItem(data) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'set.admin.item'
-    },
-    data
+    data: {
+      method: 'set.admin.item',
+      ...data
+    }
   })
 }
 
@@ -123,12 +121,10 @@ export function setAdminItem(data) {
  */
 export function setAdminStatus(client_id, status) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'set.admin.status'
-    },
     data: {
+      method: 'set.admin.status',
       client_id,
       status
     }
@@ -142,12 +138,10 @@ export function setAdminStatus(client_id, status) {
  */
 export function resetAdminItem(client_id) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'reset.admin.item'
-    },
     data: {
+      method: 'reset.admin.item',
       client_id
     }
   })
@@ -160,12 +154,10 @@ export function resetAdminItem(client_id) {
  */
 export function delAdminList(client_id) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'del.admin.list'
-    },
     data: {
+      method: 'del.admin.list',
       client_id
     }
   })
@@ -178,12 +170,10 @@ export function delAdminList(client_id) {
  */
 export function getAdminItem(client_id) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'get.admin.item'
-    },
     data: {
+      method: 'get.admin.item',
       client_id
     }
   })
@@ -196,12 +186,12 @@ export function getAdminItem(client_id) {
  */
 export function getAdminList(data) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'get.admin.list'
-    },
-    data
+    data: {
+      method: 'get.admin.list',
+      ...data
+    }
   })
 }
 
@@ -212,12 +202,10 @@ export function getAdminList(data) {
  */
 export function getAdminSelect(client_id) {
   return request({
-    url: '/v1/admin',
+    url,
     method: 'post',
-    params: {
-      method: 'get.admin.select'
-    },
     data: {
+      method: 'get.admin.select',
       client_id
     }
   })

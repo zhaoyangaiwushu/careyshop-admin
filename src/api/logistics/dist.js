@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/delivery_dist.html'
+
 /**
  * 添加一条配送轨迹
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addDeliveryDistItem(data) {
   return request({
-    url: '/v1/delivery_dist',
+    url,
     method: 'post',
-    params: {
-      method: 'add.delivery.dist.item'
-    },
-    data
+    data: {
+      method: 'add.delivery.dist.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addDeliveryDistItem(data) {
  */
 export function getDeliveryDistCode(data) {
   return request({
-    url: '/v1/delivery_dist',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.dist.code'
-    },
-    data
+    data: {
+      method: 'get.delivery.dist.code',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,12 @@ export function getDeliveryDistCode(data) {
  */
 export function getDeliveryDistList(data) {
   return request({
-    url: '/v1/delivery_dist',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.dist.list'
-    },
-    data
+    data: {
+      method: 'get.delivery.dist.list',
+      ...data
+    }
   })
 }
 
@@ -55,12 +57,12 @@ export function getDeliveryDistList(data) {
  */
 export function getDeliveryDistTrace(data) {
   return request({
-    url: '/v1/delivery_dist',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.dist.trace'
-    },
-    data
+    data: {
+      method: 'get.delivery.dist.trace',
+      ...data
+    }
   })
 }
 
@@ -70,9 +72,9 @@ export function getDeliveryDistTrace(data) {
  */
 export function getDeliveryDistCallback() {
   return request({
-    url: '/v1/delivery_dist',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.delivery.dist.callback'
     }
   })

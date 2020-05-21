@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const url = '/v1/help.html'
+
 export function getHelpRouter(router) {
   let host = serverConfig.BASE_API
   if (process.env.NODE_ENV !== 'development') {
@@ -13,16 +15,15 @@ export function getHelpRouter(router) {
        * 如二次开发后文档与实际内容不一致,那么可以将
        * url 修改为 /v1/help ,表示使用本地接口
        */
-      url: host + '/v1/help',
+      baseURL: host,
+      url: url,
       method: 'post',
       headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-      params: {
-        method: 'get.help.router'
-      },
       data: {
-        router,
+        method: 'get.help.router',
         ver: '1.0.1',
-        module: 'admin'
+        module: 'admin',
+        router
       }
     })
       .then(res => {

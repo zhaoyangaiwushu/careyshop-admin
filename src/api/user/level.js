@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/user_level.html'
+
 /**
  * 获取一个账号等级
  * @param {Number} user_level_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getUserLevelItem(user_level_id) {
   return request({
-    url: '/v1/user_level',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.level.item'
-    },
     data: {
+      method: 'get.user.level.item',
       user_level_id
     }
   })
@@ -24,9 +24,9 @@ export function getUserLevelItem(user_level_id) {
  */
 export function getUserLevelList() {
   return request({
-    url: '/v1/user_level',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.user.level.list'
     }
   })
@@ -39,12 +39,12 @@ export function getUserLevelList() {
  */
 export function addUserLevelItem(data) {
   return request({
-    url: '/v1/user_level',
+    url,
     method: 'post',
-    params: {
-      method: 'add.user.level.item'
-    },
-    data
+    data: {
+      method: 'add.user.level.item',
+      ...data
+    }
   })
 }
 
@@ -55,12 +55,12 @@ export function addUserLevelItem(data) {
  */
 export function setUserLevelItem(data) {
   return request({
-    url: '/v1/user_level',
+    url,
     method: 'post',
-    params: {
-      method: 'set.user.level.item'
-    },
-    data
+    data: {
+      method: 'set.user.level.item',
+      ...data
+    }
   })
 }
 
@@ -71,12 +71,10 @@ export function setUserLevelItem(data) {
  */
 export function delUserLevelList(user_level_id) {
   return request({
-    url: '/v1/user_level',
+    url,
     method: 'post',
-    params: {
-      method: 'del.user.level.list'
-    },
     data: {
+      method: 'del.user.level.list',
       user_level_id
     }
   })

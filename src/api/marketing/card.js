@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/card.html'
+
 /**
  * 添加一条购物卡
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addCardItem(data) {
   return request({
-    url: '/v1/card',
+    url,
     method: 'post',
-    params: {
-      method: 'add.card.item'
-    },
-    data
+    data: {
+      method: 'add.card.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addCardItem(data) {
  */
 export function setCardItem(data) {
   return request({
-    url: '/v1/card',
+    url,
     method: 'post',
-    params: {
-      method: 'set.card.item'
-    },
-    data
+    data: {
+      method: 'set.card.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setCardItem(data) {
  */
 export function getCardItem(card_id) {
   return request({
-    url: '/v1/card',
+    url,
     method: 'post',
-    params: {
-      method: 'get.card.item'
-    },
     data: {
+      method: 'get.card.item',
       card_id
     }
   })
@@ -58,12 +58,10 @@ export function getCardItem(card_id) {
  */
 export function setCardStatus(card_id, status) {
   return request({
-    url: '/v1/card',
+    url,
     method: 'post',
-    params: {
-      method: 'set.card.status'
-    },
     data: {
+      method: 'set.card.status',
       card_id,
       status
     }
@@ -77,12 +75,10 @@ export function setCardStatus(card_id, status) {
  */
 export function delCardList(card_id) {
   return request({
-    url: '/v1/card',
+    url,
     method: 'post',
-    params: {
-      method: 'del.card.list'
-    },
     data: {
+      method: 'del.card.list',
       card_id
     }
   })
@@ -95,11 +91,11 @@ export function delCardList(card_id) {
  */
 export function getCardList(data) {
   return request({
-    url: '/v1/card',
+    url,
     method: 'post',
-    params: {
-      method: 'get.card.list'
-    },
-    data
+    data: {
+      method: 'get.card.list',
+      ...data
+    }
   })
 }

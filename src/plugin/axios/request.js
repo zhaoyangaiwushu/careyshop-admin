@@ -2,6 +2,7 @@ import axios from 'axios'
 import util from '@/utils/util'
 import store from '@/store/index'
 import { Message, MessageBox } from 'element-ui'
+import { get } from 'lodash'
 
 // 创建一个错误
 function errorCreate(msg) {
@@ -95,7 +96,7 @@ service.interceptors.response.use(
   error => {
     if (!error.response) {
       // 来自服务端或游览器
-      switch (error.request.status) {
+      switch (get(error, 'request.status')) {
         case 400: error.message = '请求错误'; break
         case 401: error.message = '未授权，请登录'; break
         case 403: error.message = '拒绝访问'; break
@@ -111,16 +112,16 @@ service.interceptors.response.use(
       }
     } else {
       // 来自API接口
-      const { status, message } = error.response.data
+      const { status, message } = get(error, 'response.data')
+      error.message = message || get(error, 'response.statusText')
+
       if (status === 401) {
         reAuthorize()
       }
-
-      error.message = message
     }
 
     errorLog(error)
-    return Promise.reject(error.response ? error.response.data : error)
+    return Promise.reject(error)
   }
 )
 
@@ -138,7 +139,7 @@ function refreshToken(config) {
     'login.admin.user'
   ]
 
-  if (whiteList.indexOf(config.params.method) >= 0) {
+  if (whiteList.indexOf(get(config, 'data.method')) >= 0) {
     return
   }
 
@@ -149,10 +150,8 @@ function refreshToken(config) {
     service({
       method: 'post',
       url: '/v1/admin/',
-      params: {
-        method: 'refresh.admin.token'
-      },
       data: {
+        method: 'refresh.admin.token',
         refresh: userInfo.token.refresh
       }
     })
@@ -206,7 +205,7 @@ function setDefaultParams(config) {
   config.data.appkey = serverConfig.APP_KEY
   config.data.timestamp = Math.round(new Date() / 1000) + 100
   config.data.format = 'json'
-  config.data.sign = util.getSign(Object.assign(config.data, config.params))
+  config.data.sign = util.getSign(config.data)
 }
 
 export default service

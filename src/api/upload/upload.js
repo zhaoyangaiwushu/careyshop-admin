@@ -1,14 +1,16 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/upload.html'
+
 /**
  * 获取上传模块列表
  * @returns
  */
 export function getUploadModule() {
   return request({
-    url: '/v1/upload',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.upload.module'
     }
   })
@@ -21,12 +23,10 @@ export function getUploadModule() {
  */
 export function getUploadUrl(module = undefined) {
   return request({
-    url: '/v1/upload',
+    url,
     method: 'post',
-    params: {
-      method: 'get.upload.url'
-    },
     data: {
+      method: 'get.upload.url',
       module
     }
   })
@@ -40,12 +40,10 @@ export function getUploadUrl(module = undefined) {
  */
 export function getUploadToken(module = undefined, type = 'web') {
   return request({
-    url: '/v1/upload',
+    url,
     method: 'post',
-    params: {
-      method: 'get.upload.token'
-    },
     data: {
+      method: 'get.upload.token',
       module,
       type
     }
@@ -59,12 +57,10 @@ export function getUploadToken(module = undefined, type = 'web') {
  */
 export function replaceUploadItem(storage_id) {
   return request({
-    url: '/v1/upload',
+    url,
     method: 'post',
-    params: {
-      method: 'replace.upload.item'
-    },
     data: {
+      method: 'replace.upload.item',
       storage_id
     }
   })

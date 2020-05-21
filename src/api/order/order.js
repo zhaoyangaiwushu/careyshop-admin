@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/order.html'
+
 /**
  * 获取一个订单
  * @param {String} order_no
@@ -8,12 +10,10 @@ import request from '@/plugin/axios/request'
  */
 export function getOrderItem(order_no, is_get_log = 0) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.item'
-    },
     data: {
+      method: 'get.order.item',
       order_no,
       is_get_log
     }
@@ -27,12 +27,10 @@ export function getOrderItem(order_no, is_get_log = 0) {
  */
 export function getOrderLog(order_no) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.log'
-    },
     data: {
+      method: 'get.order.log',
       order_no
     }
   })
@@ -45,12 +43,12 @@ export function getOrderLog(order_no) {
  */
 export function getOrderList(data) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.list'
-    },
-    data
+    data: {
+      method: 'get.order.list',
+      ...data
+    }
   })
 }
 
@@ -61,12 +59,12 @@ export function getOrderList(data) {
  */
 export function setOrderItem(data) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.item'
-    },
-    data
+    data: {
+      method: 'set.order.item',
+      ...data
+    }
   })
 }
 
@@ -77,12 +75,10 @@ export function setOrderItem(data) {
  */
 export function cancelOrderItem(order_no) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'cancel.order.item'
-    },
     data: {
+      method: 'cancel.order.item',
       order_no
     }
   })
@@ -96,12 +92,10 @@ export function cancelOrderItem(order_no) {
  */
 export function recycleOrderItem(order_no, is_recycle) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'recycle.order.item'
-    },
     data: {
+      method: 'recycle.order.item',
       order_no,
       is_recycle
     }
@@ -115,12 +109,10 @@ export function recycleOrderItem(order_no, is_recycle) {
  */
 export function getOrderGoodsItem(order_goods_id) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.goods.item'
-    },
     data: {
+      method: 'get.order.goods.item',
       order_goods_id
     }
   })
@@ -133,12 +125,12 @@ export function getOrderGoodsItem(order_goods_id) {
  */
 export function getOrderStatusTotal(data) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.status.total'
-    },
-    data
+    data: {
+      method: 'get.order.status.total',
+      ...data
+    }
   })
 }
 
@@ -149,12 +141,12 @@ export function getOrderStatusTotal(data) {
  */
 export function changePriceOrderItem(data) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'change.price.order.item'
-    },
-    data
+    data: {
+      method: 'change.price.order.item',
+      ...data
+    }
   })
 }
 
@@ -165,12 +157,12 @@ export function changePriceOrderItem(data) {
  */
 export function remarkOrderItem(data) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'remark.order.item'
-    },
-    data
+    data: {
+      method: 'remark.order.item',
+      ...data
+    }
   })
 }
 
@@ -182,12 +174,10 @@ export function remarkOrderItem(data) {
  */
 export function pickingOrderList(order_no, is_picking) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'picking.order.list'
-    },
     data: {
+      method: 'picking.order.list',
       order_no,
       is_picking
     }
@@ -201,12 +191,12 @@ export function pickingOrderList(order_no, is_picking) {
  */
 export function deliveryOrderItem(data) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'delivery.order.item'
-    },
-    data
+    data: {
+      method: 'delivery.order.item',
+      ...data
+    }
   })
 }
 
@@ -217,12 +207,10 @@ export function deliveryOrderItem(data) {
  */
 export function completeOrderList(order_no) {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
-      method: 'complete.order.list'
-    },
     data: {
+      method: 'complete.order.list',
       order_no
     }
   })
@@ -234,9 +222,9 @@ export function completeOrderList(order_no) {
  */
 export function timeoutOrderCancel() {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'timeout.order.cancel'
     }
   })
@@ -248,9 +236,9 @@ export function timeoutOrderCancel() {
  */
 export function timeoutOrderComplete() {
   return request({
-    url: '/v1/order',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'timeout.order.complete'
     }
   })

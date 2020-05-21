@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/transaction.html'
+
 /**
  * 获取一笔交易结算
  * @param {Number} transaction_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getTransactionItem(transaction_id) {
   return request({
-    url: '/v1/transaction',
+    url,
     method: 'post',
-    params: {
-      method: 'get.transaction.item'
-    },
     data: {
+      method: 'get.transaction.item',
       transaction_id
     }
   })
@@ -25,11 +25,11 @@ export function getTransactionItem(transaction_id) {
  */
 export function getTransactionList(data) {
   return request({
-    url: '/v1/transaction',
+    url,
     method: 'post',
-    params: {
-      method: 'get.transaction.list'
-    },
-    data
+    data: {
+      method: 'get.transaction.list',
+      ...data
+    }
   })
 }

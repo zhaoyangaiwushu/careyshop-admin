@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/storage_style.html'
+
 /**
  * 添加一个资源样式
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addStorageStyleItem(data) {
   return request({
-    url: '/v1/storage_style',
+    url,
     method: 'post',
-    params: {
-      method: 'add.storage.style.item'
-    },
-    data
+    data: {
+      method: 'add.storage.style.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addStorageStyleItem(data) {
  */
 export function setStorageStyleItem(data) {
   return request({
-    url: '/v1/storage_style',
+    url,
     method: 'post',
-    params: {
-      method: 'set.storage.style.item'
-    },
-    data
+    data: {
+      method: 'set.storage.style.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setStorageStyleItem(data) {
  */
 export function getStorageStyleItem(storage_style_id) {
   return request({
-    url: '/v1/storage_style',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.style.item'
-    },
     data: {
+      method: 'get.storage.style.item',
       storage_style_id
     }
   })
@@ -57,12 +57,12 @@ export function getStorageStyleItem(storage_style_id) {
  */
 export function getStorageStyleList(data) {
   return request({
-    url: '/v1/storage_style',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.style.list'
-    },
-    data
+    data: {
+      method: 'get.storage.style.list',
+      ...data
+    }
   })
 }
 
@@ -73,12 +73,10 @@ export function getStorageStyleList(data) {
  */
 export function delStorageStyleList(storage_style_id) {
   return request({
-    url: '/v1/storage_style',
+    url,
     method: 'post',
-    params: {
-      method: 'del.storage.style.list'
-    },
     data: {
+      method: 'del.storage.style.list',
       storage_style_id
     }
   })
@@ -92,12 +90,10 @@ export function delStorageStyleList(storage_style_id) {
  */
 export function setStorageStyleStatus(storage_style_id, status) {
   return request({
-    url: '/v1/storage_style',
+    url,
     method: 'post',
-    params: {
-      method: 'set.storage.style.status'
-    },
     data: {
+      method: 'set.storage.style.status',
       storage_style_id,
       status
     }

@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/card_use.html'
+
 /**
  * 批量设置购物卡是否有效
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function setCardUseInvalid(data) {
   return request({
-    url: '/v1/card_use',
+    url,
     method: 'post',
-    params: {
-      method: 'set.card.use.invalid'
-    },
-    data
+    data: {
+      method: 'set.card.use.invalid',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,10 @@ export function setCardUseInvalid(data) {
  */
 export function getCardUseExport(card_id) {
   return request({
-    url: '/v1/card_use',
+    url,
     method: 'post',
-    params: {
-      method: 'get.card.use.export'
-    },
     data: {
+      method: 'get.card.use.export',
       card_id
     }
   })
@@ -41,11 +41,11 @@ export function getCardUseExport(card_id) {
  */
 export function getCardUseList(data) {
   return request({
-    url: '/v1/card_use',
+    url,
     method: 'post',
-    params: {
-      method: 'get.card.use.list'
-    },
-    data
+    data: {
+      method: 'get.card.use.list',
+      ...data
+    }
   })
 }

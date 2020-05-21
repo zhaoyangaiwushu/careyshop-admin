@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/delivery_area.html'
+
 /**
  * 添加一个配送区域
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addDeliveryAreaItem(data) {
   return request({
-    url: '/v1/delivery_area',
+    url,
     method: 'post',
-    params: {
-      method: 'add.delivery.area.item'
-    },
-    data
+    data: {
+      method: 'add.delivery.area.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addDeliveryAreaItem(data) {
  */
 export function setDeliveryAreaItem(data) {
   return request({
-    url: '/v1/delivery_area',
+    url,
     method: 'post',
-    params: {
-      method: 'set.delivery.area.item'
-    },
-    data
+    data: {
+      method: 'set.delivery.area.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setDeliveryAreaItem(data) {
  */
 export function delDeliveryAreaList(delivery_area_id) {
   return request({
-    url: '/v1/delivery_area',
+    url,
     method: 'post',
-    params: {
-      method: 'del.delivery.area.list'
-    },
     data: {
+      method: 'del.delivery.area.list',
       delivery_area_id
     }
   })
@@ -57,12 +57,10 @@ export function delDeliveryAreaList(delivery_area_id) {
  */
 export function getDeliveryAreaItem(delivery_area_id) {
   return request({
-    url: '/v1/delivery_area',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.area.item'
-    },
     data: {
+      method: 'get.delivery.area.item',
       delivery_area_id
     }
   })
@@ -75,11 +73,11 @@ export function getDeliveryAreaItem(delivery_area_id) {
  */
 export function getDeliveryAreaList(data) {
   return request({
-    url: '/v1/delivery_area',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.area.list'
-    },
-    data
+    data: {
+      method: 'get.delivery.area.list',
+      ...data
+    }
   })
 }

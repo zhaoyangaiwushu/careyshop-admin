@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/storage.html'
+
 /**
  * 添加一个资源目录
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addStorageDirectoryItem(data) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'add.storage.directory.item'
-    },
-    data
+    data: {
+      method: 'add.storage.directory.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addStorageDirectoryItem(data) {
  */
 export function setStorageDirectoryItem(data) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'set.storage.directory.item'
-    },
-    data
+    data: {
+      method: 'set.storage.directory.item',
+      ...data
+    }
   })
 }
 
@@ -40,12 +42,10 @@ export function setStorageDirectoryItem(data) {
  */
 export function getStorageDirectorySelect(order_type = 'desc', order_field = 'storage_id') {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.directory.select'
-    },
     data: {
+      method: 'get.storage.directory.select',
       order_type,
       order_field
     }
@@ -60,12 +60,10 @@ export function getStorageDirectorySelect(order_type = 'desc', order_field = 'st
  */
 export function setStorageDirectoryDefault(storage_id, is_default) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'set.storage.directory.default'
-    },
     data: {
+      method: 'set.storage.directory.default',
       storage_id,
       is_default
     }
@@ -79,12 +77,10 @@ export function setStorageDirectoryDefault(storage_id, is_default) {
  */
 export function getStorageItem(storage_id) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.item'
-    },
     data: {
+      method: 'get.storage.item',
       storage_id
     }
   })
@@ -97,12 +93,12 @@ export function getStorageItem(storage_id) {
  */
 export function getStorageList(data) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.list'
-    },
-    data
+    data: {
+      method: 'get.storage.list',
+      ...data
+    }
   })
 }
 
@@ -113,12 +109,12 @@ export function getStorageList(data) {
  */
 export function getStorageCollection(data) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.collection'
-    },
-    data
+    data: {
+      method: 'get.storage.collection',
+      ...data
+    }
   })
 }
 
@@ -130,12 +126,10 @@ export function getStorageCollection(data) {
  */
 export function getStorageNavi(storage_id, is_layer = 1) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.navi'
-    },
     data: {
+      method: 'get.storage.navi',
       storage_id,
       is_layer
     }
@@ -150,12 +144,10 @@ export function getStorageNavi(storage_id, is_layer = 1) {
  */
 export function renameStorageItem(storage_id, name) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'rename.storage.item'
-    },
     data: {
+      method: 'rename.storage.item',
       storage_id,
       name
     }
@@ -170,12 +162,10 @@ export function renameStorageItem(storage_id, name) {
  */
 export function setStorageCover(storage_id, parent_id) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'set.storage.cover'
-    },
     data: {
+      method: 'set.storage.cover',
       storage_id,
       parent_id
     }
@@ -189,12 +179,10 @@ export function setStorageCover(storage_id, parent_id) {
  */
 export function clearStorageCover(storage_id) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'clear.storage.cover'
-    },
     data: {
+      method: 'clear.storage.cover',
       storage_id
     }
   })
@@ -208,12 +196,10 @@ export function clearStorageCover(storage_id) {
  */
 export function moveStorageList(storage_id, parent_id) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'move.storage.list'
-    },
     data: {
+      method: 'move.storage.list',
       storage_id,
       parent_id
     }
@@ -227,12 +213,12 @@ export function moveStorageList(storage_id, parent_id) {
  */
 export function getStorageThumb(data) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.thumb'
-    },
-    data
+    data: {
+      method: 'get.storage.thumb',
+      ...data
+    }
   })
 }
 
@@ -243,12 +229,12 @@ export function getStorageThumb(data) {
  */
 export function getStorageThumbUrl(data) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.thumb.url'
-    },
-    data
+    data: {
+      method: 'get.storage.thumb.url',
+      ...data
+    }
   })
 }
 
@@ -260,12 +246,10 @@ export function getStorageThumbUrl(data) {
  */
 export function getStorageThumbInfo(url, source) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'get.storage.thumb.info'
-    },
     data: {
+      method: 'get.storage.thumb.info',
       url,
       source
     }
@@ -279,12 +263,10 @@ export function getStorageThumbInfo(url, source) {
  */
 export function delStorageList(storage_id) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'del.storage.list'
-    },
     data: {
+      method: 'del.storage.list',
       storage_id
     }
   })
@@ -297,12 +279,10 @@ export function delStorageList(storage_id) {
  */
 export function clearStorageThumb(storage_id) {
   return request({
-    url: '/v1/storage',
+    url,
     method: 'post',
-    params: {
-      method: 'clear.storage.thumb'
-    },
     data: {
+      method: 'clear.storage.thumb',
       storage_id
     }
   })

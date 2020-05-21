@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/delivery_item.html'
+
 /**
  * 添加一个快递公司
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addDeliveryCompanyItem(data) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'add.delivery.company.item'
-    },
-    data
+    data: {
+      method: 'add.delivery.company.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addDeliveryCompanyItem(data) {
  */
 export function setDeliveryCompanyItem(data) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'set.delivery.company.item'
-    },
-    data
+    data: {
+      method: 'set.delivery.company.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setDeliveryCompanyItem(data) {
  */
 export function delDeliveryCompanyList(delivery_item_id) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'del.delivery.company.list'
-    },
     data: {
+      method: 'del.delivery.company.list',
       delivery_item_id
     }
   })
@@ -57,12 +57,10 @@ export function delDeliveryCompanyList(delivery_item_id) {
  */
 export function getDeliveryCompanyItem(delivery_item_id) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.company.item'
-    },
     data: {
+      method: 'get.delivery.company.item',
       delivery_item_id
     }
   })
@@ -77,12 +75,10 @@ export function getDeliveryCompanyItem(delivery_item_id) {
  */
 export function uniqueDeliveryCompanyCode(code, type, exclude_id = null) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'unique.delivery.company.code'
-    },
     data: {
+      method: 'unique.delivery.company.code',
       code,
       type,
       exclude_id
@@ -97,12 +93,12 @@ export function uniqueDeliveryCompanyCode(code, type, exclude_id = null) {
  */
 export function getDeliveryCompanyList(data) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.company.list'
-    },
-    data
+    data: {
+      method: 'get.delivery.company.list',
+      ...data
+    }
   })
 }
 
@@ -113,12 +109,10 @@ export function getDeliveryCompanyList(data) {
  */
 export function getDeliveryCompanySelect(type = null) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.company.select'
-    },
     data: {
+      method: 'get.delivery.company.select',
       type
     }
   })
@@ -131,12 +125,10 @@ export function getDeliveryCompanySelect(type = null) {
  */
 export function getDeliveryCompanyRecognise(code) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.company.recognise'
-    },
     data: {
+      method: 'get.delivery.company.recognise',
       code
     }
   })
@@ -149,12 +141,10 @@ export function getDeliveryCompanyRecognise(code) {
  */
 export function copyDeliveryCompanyHot(delivery_item_id) {
   return request({
-    url: '/v1/delivery_item',
+    url,
     method: 'post',
-    params: {
-      method: 'copy.delivery.company.hot'
-    },
     data: {
+      method: 'copy.delivery.company.hot',
       delivery_item_id
     }
   })

@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/promotion.html'
+
 /**
  * 添加一个订单促销
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addPromotionItem(data) {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
-      method: 'add.promotion.item'
-    },
-    data
+    data: {
+      method: 'add.promotion.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addPromotionItem(data) {
  */
 export function setPromotionItem(data) {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
-      method: 'set.promotion.item'
-    },
-    data
+    data: {
+      method: 'set.promotion.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setPromotionItem(data) {
  */
 export function getPromotionItem(promotion_id) {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
-      method: 'get.promotion.item'
-    },
     data: {
+      method: 'get.promotion.item',
       promotion_id
     }
   })
@@ -58,12 +58,10 @@ export function getPromotionItem(promotion_id) {
  */
 export function setPromotionStatus(promotion_id, status) {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
-      method: 'set.promotion.status'
-    },
     data: {
+      method: 'set.promotion.status',
       promotion_id,
       status
     }
@@ -77,12 +75,10 @@ export function setPromotionStatus(promotion_id, status) {
  */
 export function delPromotionList(promotion_id) {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
-      method: 'del.promotion.list'
-    },
     data: {
+      method: 'del.promotion.list',
       promotion_id
     }
   })
@@ -95,12 +91,12 @@ export function delPromotionList(promotion_id) {
  */
 export function getPromotionList(data) {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
-      method: 'get.promotion.list'
-    },
-    data
+    data: {
+      method: 'get.promotion.list',
+      ...data
+    }
   })
 }
 
@@ -110,9 +106,9 @@ export function getPromotionList(data) {
  */
 export function getPromotionActive() {
   return request({
-    url: '/v1/promotion',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.promotion.active'
     }
   })

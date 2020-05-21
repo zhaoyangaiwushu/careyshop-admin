@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/user_money.html'
+
 /**
  * 获取指定账号资金信息
  * @param {Number} client_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getUserMoneyInfo(client_id) {
   return request({
-    url: '/v1/user_money',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.money.info'
-    },
     data: {
+      method: 'get.user.money.info',
       client_id
     }
   })

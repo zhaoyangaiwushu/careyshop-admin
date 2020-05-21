@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/message.html'
+
 /**
  * 添加一条消息
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addMessageItem(data) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'add.message.item'
-    },
-    data
+    data: {
+      method: 'add.message.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addMessageItem(data) {
  */
 export function setMessageItem(data) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'set.message.item'
-    },
-    data
+    data: {
+      method: 'set.message.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setMessageItem(data) {
  */
 export function delMessageList(message_id) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'del.message.list'
-    },
     data: {
+      method: 'del.message.list',
       message_id
     }
   })
@@ -57,12 +57,10 @@ export function delMessageList(message_id) {
  */
 export function setMessageStatus(message_id) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'set.message.status'
-    },
     data: {
+      method: 'set.message.status',
       message_id
     }
   })
@@ -75,12 +73,10 @@ export function setMessageStatus(message_id) {
  */
 export function getMessageItem(message_id) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'get.message.item'
-    },
     data: {
+      method: 'get.message.item',
       message_id
     }
   })
@@ -93,12 +89,12 @@ export function getMessageItem(message_id) {
  */
 export function getMessageList(data) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'get.message.list'
-    },
-    data
+    data: {
+      method: 'get.message.list',
+      ...data
+    }
   })
 }
 
@@ -109,12 +105,10 @@ export function getMessageList(data) {
  */
 export function getMessageUserItem(message_id) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'get.message.user.item'
-    },
     data: {
+      method: 'get.message.user.item',
       message_id
     }
   })
@@ -127,12 +121,12 @@ export function getMessageUserItem(message_id) {
  */
 export function getMessageUserList(data) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'get.message.user.list'
-    },
-    data
+    data: {
+      method: 'get.message.user.list',
+      ...data
+    }
   })
 }
 
@@ -143,12 +137,10 @@ export function getMessageUserList(data) {
  */
 export function getMessageUserUnread(type) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'get.message.user.unread'
-    },
     data: {
+      method: 'get.message.user.unread',
       type
     }
   })
@@ -162,12 +154,10 @@ export function getMessageUserUnread(type) {
  */
 export function setMessageUserRead(message_id, type = null) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'set.message.user.read'
-    },
     data: {
+      method: 'set.message.user.read',
       message_id,
       type
     }
@@ -181,12 +171,10 @@ export function setMessageUserRead(message_id, type = null) {
  */
 export function setMessageUserAllread(type = null) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'set.message.user.allread'
-    },
     data: {
+      method: 'set.message.user.allread',
       type
     }
   })
@@ -200,12 +188,10 @@ export function setMessageUserAllread(type = null) {
  */
 export function delMessageUserList(message_id, type = null) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'del.message.user.list'
-    },
     data: {
+      method: 'del.message.user.list',
       message_id,
       type
     }
@@ -219,12 +205,10 @@ export function delMessageUserList(message_id, type = null) {
  */
 export function delMessageUserAll(type = null) {
   return request({
-    url: '/v1/message',
+    url,
     method: 'post',
-    params: {
-      method: 'del.message.user.all'
-    },
     data: {
+      method: 'del.message.user.all',
       type
     }
   })

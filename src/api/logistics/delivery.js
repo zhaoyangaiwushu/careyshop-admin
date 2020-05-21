@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/delivery.html'
+
 /**
  * 添加一个配送方式
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addDeliveryItem(data) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'add.delivery.item'
-    },
-    data
+    data: {
+      method: 'add.delivery.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addDeliveryItem(data) {
  */
 export function setDeliveryItem(data) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'set.delivery.item'
-    },
-    data
+    data: {
+      method: 'set.delivery.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setDeliveryItem(data) {
  */
 export function delDeliveryList(delivery_id) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'del.delivery.list'
-    },
     data: {
+      method: 'del.delivery.list',
       delivery_id
     }
   })
@@ -57,12 +57,10 @@ export function delDeliveryList(delivery_id) {
  */
 export function getDeliveryItem(delivery_id) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.item'
-    },
     data: {
+      method: 'get.delivery.item',
       delivery_id
     }
   })
@@ -75,12 +73,12 @@ export function getDeliveryItem(delivery_id) {
  */
 export function getDeliveryList(data) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.list'
-    },
-    data
+    data: {
+      method: 'get.delivery.list',
+      ...data
+    }
   })
 }
 
@@ -90,9 +88,9 @@ export function getDeliveryList(data) {
  */
 export function getDeliverySelect() {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.delivery.select'
     }
   })
@@ -105,12 +103,12 @@ export function getDeliverySelect() {
  */
 export function getDeliveryFreight(data) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'get.delivery.freight'
-    },
-    data
+    data: {
+      method: 'get.delivery.freight',
+      ...data
+    }
   })
 }
 
@@ -122,12 +120,10 @@ export function getDeliveryFreight(data) {
  */
 export function setDeliveryStatus(delivery_id, status) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'set.delivery.status'
-    },
     data: {
+      method: 'set.delivery.status',
       delivery_id,
       status
     }
@@ -142,12 +138,10 @@ export function setDeliveryStatus(delivery_id, status) {
  */
 export function uniqueDeliveryItem(delivery_item_id, exclude_id) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'unique.delivery.item'
-    },
     data: {
+      method: 'unique.delivery.item',
       delivery_item_id,
       exclude_id
     }
@@ -162,12 +156,10 @@ export function uniqueDeliveryItem(delivery_item_id, exclude_id) {
  */
 export function setDeliverySort(delivery_id, sort) {
   return request({
-    url: '/v1/delivery',
+    url,
     method: 'post',
-    params: {
-      method: 'set.delivery.sort'
-    },
     data: {
+      method: 'set.delivery.sort',
       delivery_id,
       sort
     }

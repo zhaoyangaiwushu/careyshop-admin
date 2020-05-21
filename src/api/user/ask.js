@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/ask.html'
+
 /**
  * 删除一条记录
  * @param {Number} ask_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function delAskItem(ask_id) {
   return request({
-    url: '/v1/ask',
+    url,
     method: 'post',
-    params: {
-      method: 'del.ask.item'
-    },
     data: {
+      method: 'del.ask.item',
       ask_id
     }
   })
@@ -26,12 +26,10 @@ export function delAskItem(ask_id) {
  */
 export function replyAskItem(ask_id, answer) {
   return request({
-    url: '/v1/ask',
+    url,
     method: 'post',
-    params: {
-      method: 'reply.ask.item'
-    },
     data: {
+      method: 'reply.ask.item',
       ask_id,
       answer
     }
@@ -45,12 +43,10 @@ export function replyAskItem(ask_id, answer) {
  */
 export function getAskItem(ask_id) {
   return request({
-    url: '/v1/ask',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ask.item'
-    },
     data: {
+      method: 'get.ask.item',
       ask_id
     }
   })
@@ -63,11 +59,11 @@ export function getAskItem(ask_id) {
  */
 export function getAskList(data) {
   return request({
-    url: '/v1/ask',
+    url,
     method: 'post',
-    params: {
-      method: 'get.ask.list'
-    },
-    data
+    data: {
+      method: 'get.ask.list',
+      ...data
+    }
   })
 }

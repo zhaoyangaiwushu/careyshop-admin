@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/withdraw.html'
+
 /**
  * 获取一个提现请求
  * @param {String} withdraw_no
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getWithdrawItem(withdraw_no) {
   return request({
-    url: '/v1/withdraw',
+    url,
     method: 'post',
-    params: {
-      method: 'get.withdraw.item'
-    },
     data: {
+      method: 'get.withdraw.item',
       withdraw_no
     }
   })
@@ -25,12 +25,12 @@ export function getWithdrawItem(withdraw_no) {
  */
 export function getWithdrawList(data) {
   return request({
-    url: '/v1/withdraw',
+    url,
     method: 'post',
-    params: {
-      method: 'get.withdraw.list'
-    },
-    data
+    data: {
+      method: 'get.withdraw.list',
+      ...data
+    }
   })
 }
 
@@ -41,12 +41,10 @@ export function getWithdrawList(data) {
  */
 export function processWithdrawItem(withdraw_no) {
   return request({
-    url: '/v1/withdraw',
+    url,
     method: 'post',
-    params: {
-      method: 'process.withdraw.item'
-    },
     data: {
+      method: 'process.withdraw.item',
       withdraw_no
     }
   })
@@ -60,12 +58,10 @@ export function processWithdrawItem(withdraw_no) {
  */
 export function completeWithdrawItem(withdraw_no, remark) {
   return request({
-    url: '/v1/withdraw',
+    url,
     method: 'post',
-    params: {
-      method: 'complete.withdraw.item'
-    },
     data: {
+      method: 'complete.withdraw.item',
       withdraw_no,
       remark
     }
@@ -80,12 +76,10 @@ export function completeWithdrawItem(withdraw_no, remark) {
  */
 export function refuseWithdrawItem(withdraw_no, remark) {
   return request({
-    url: '/v1/withdraw',
+    url,
     method: 'post',
-    params: {
-      method: 'refuse.withdraw.item'
-    },
     data: {
+      method: 'refuse.withdraw.item',
       withdraw_no,
       remark
     }
@@ -98,9 +92,9 @@ export function refuseWithdrawItem(withdraw_no, remark) {
  */
 export function getWithdrawFee() {
   return request({
-    url: '/v1/withdraw',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.withdraw.fee'
     }
   })

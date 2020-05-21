@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/order_service.html'
+
 /**
  * 添加一条售后服务单留言
  * @param {String} service_no
@@ -8,12 +10,10 @@ import request from '@/plugin/axios/request'
  */
 export function addOrderServiceMessage(service_no, message) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'add.order.service.message'
-    },
     data: {
+      method: 'add.order.service.message',
       service_no,
       message
     }
@@ -27,12 +27,10 @@ export function addOrderServiceMessage(service_no, message) {
  */
 export function getOrderServiceItem(service_no) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.service.item'
-    },
     data: {
+      method: 'get.order.service.item',
       service_no
     }
   })
@@ -45,12 +43,12 @@ export function getOrderServiceItem(service_no) {
  */
 export function getOrderServiceList(data) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'get.order.service.list'
-    },
-    data
+    data: {
+      method: 'get.order.service.list',
+      ...data
+    }
   })
 }
 
@@ -61,12 +59,10 @@ export function getOrderServiceList(data) {
  */
 export function setOrderServiceAgree(service_no) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.agree'
-    },
     data: {
+      method: 'set.order.service.agree',
       service_no
     }
   })
@@ -80,12 +76,10 @@ export function setOrderServiceAgree(service_no) {
  */
 export function setOrderServiceRefused(service_no, result) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.refused'
-    },
     data: {
+      method: 'set.order.service.refused',
       service_no,
       result
     }
@@ -100,12 +94,10 @@ export function setOrderServiceRefused(service_no, result) {
  */
 export function setOrderServiceSendback(service_no, is_return) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.sendback'
-    },
     data: {
+      method: 'set.order.service.sendback',
       service_no,
       is_return
     }
@@ -119,12 +111,10 @@ export function setOrderServiceSendback(service_no, is_return) {
  */
 export function setOrderServiceAfter(service_no) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.after'
-    },
     data: {
+      method: 'set.order.service.after',
       service_no
     }
   })
@@ -137,12 +127,10 @@ export function setOrderServiceAfter(service_no) {
  */
 export function setOrderServiceCancel(service_no) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.cancel'
-    },
     data: {
+      method: 'set.order.service.cancel',
       service_no
     }
   })
@@ -155,12 +143,12 @@ export function setOrderServiceCancel(service_no) {
  */
 export function setOrderServiceComplete(data) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.complete'
-    },
-    data
+    data: {
+      method: 'set.order.service.complete',
+      ...data
+    }
   })
 }
 
@@ -171,11 +159,11 @@ export function setOrderServiceComplete(data) {
  */
 export function setOrderServiceRemark(data) {
   return request({
-    url: '/v1/order_service',
+    url,
     method: 'post',
-    params: {
-      method: 'set.order.service.remark'
-    },
-    data
+    data: {
+      method: 'set.order.service.remark',
+      ...data
+    }
   })
 }

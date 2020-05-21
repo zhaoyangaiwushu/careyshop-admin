@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/user_address.html'
+
 /**
  * 获取指定账号的收货地址列表
  * @param {Number} client_id
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getUserAddressList(client_id) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.address.list'
-    },
     data: {
+      method: 'get.user.address.list',
       client_id
     }
   })
@@ -26,12 +26,10 @@ export function getUserAddressList(client_id) {
  */
 export function getUserAddressItem(client_id, user_address_id) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.address.item'
-    },
     data: {
+      method: 'get.user.address.item',
       client_id,
       user_address_id
     }
@@ -45,12 +43,10 @@ export function getUserAddressItem(client_id, user_address_id) {
  */
 export function getUserAddressDefault(client_id) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'get.user.address.default'
-    },
     data: {
+      method: 'get.user.address.default',
       client_id
     }
   })
@@ -63,12 +59,12 @@ export function getUserAddressDefault(client_id) {
  */
 export function addUserAddressItem(data) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'add.user.address.item'
-    },
-    data
+    data: {
+      method: 'add.user.address.item',
+      ...data
+    }
   })
 }
 
@@ -79,12 +75,12 @@ export function addUserAddressItem(data) {
  */
 export function setUserAddressItem(data) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'set.user.address.item'
-    },
-    data
+    data: {
+      method: 'set.user.address.item',
+      ...data
+    }
   })
 }
 
@@ -96,12 +92,10 @@ export function setUserAddressItem(data) {
  */
 export function delUserAddressList(client_id, user_address_id) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'del.user.address.list'
-    },
     data: {
+      method: 'del.user.address.list',
       client_id,
       user_address_id
     }
@@ -115,12 +109,10 @@ export function delUserAddressList(client_id, user_address_id) {
  */
 export function setUserAddressDefault(user_address_id) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'set.user.address.default'
-    },
     data: {
+      method: 'set.user.address.default',
       user_address_id
     }
   })
@@ -133,12 +125,10 @@ export function setUserAddressDefault(user_address_id) {
  */
 export function isUserAddressMaximum(client_id) {
   return request({
-    url: '/v1/user_address',
+    url,
     method: 'post',
-    params: {
-      method: 'is.user.address.maximum'
-    },
     data: {
+      method: 'is.user.address.maximum',
       client_id
     }
   })

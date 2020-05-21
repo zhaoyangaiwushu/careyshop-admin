@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/notice.html'
+
 /**
  * 获取一个通知系统
  * @param {String} code
@@ -7,12 +9,10 @@ import request from '@/plugin/axios/request'
  */
 export function getNoticeItem(code) {
   return request({
-    url: '/v1/notice',
+    url,
     method: 'post',
-    params: {
-      method: 'get.notice.item'
-    },
     data: {
+      method: 'get.notice.item',
       code
     }
   })
@@ -24,9 +24,9 @@ export function getNoticeItem(code) {
  */
 export function getNoticeList() {
   return request({
-    url: '/v1/notice',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.notice.list'
     }
   })
@@ -40,12 +40,10 @@ export function getNoticeList() {
  */
 export function setNoticeStatus(code, status) {
   return request({
-    url: '/v1/notice',
+    url,
     method: 'post',
-    params: {
-      method: 'set.notice.status'
-    },
     data: {
+      method: 'set.notice.status',
       code,
       status
     }
@@ -59,11 +57,11 @@ export function setNoticeStatus(code, status) {
  */
 export function setNoticeItem(data) {
   return request({
-    url: '/v1/notice',
+    url,
     method: 'post',
-    params: {
-      method: 'set.notice.item'
-    },
-    data
+    data: {
+      method: 'set.notice.item',
+      ...data
+    }
   })
 }

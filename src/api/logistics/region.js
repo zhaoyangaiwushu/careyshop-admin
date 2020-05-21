@@ -1,5 +1,7 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/region.html'
+
 /**
  * 添加一个区域
  * @param {Object} data
@@ -7,12 +9,12 @@ import request from '@/plugin/axios/request'
  */
 export function addRegionItem(data) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'add.region.item'
-    },
-    data
+    data: {
+      method: 'add.region.item',
+      ...data
+    }
   })
 }
 
@@ -23,12 +25,12 @@ export function addRegionItem(data) {
  */
 export function setRegionItem(data) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'set.region.item'
-    },
-    data
+    data: {
+      method: 'set.region.item',
+      ...data
+    }
   })
 }
 
@@ -39,12 +41,10 @@ export function setRegionItem(data) {
  */
 export function delRegionList(region_id) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'del.region.list'
-    },
     data: {
+      method: 'del.region.list',
       region_id
     }
   })
@@ -58,12 +58,10 @@ export function delRegionList(region_id) {
  */
 export function getRegionItem(region_id, region_all = 0) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'get.region.item'
-    },
     data: {
+      method: 'get.region.item',
       region_id,
       region_all
     }
@@ -77,12 +75,12 @@ export function getRegionItem(region_id, region_all = 0) {
  */
 export function getRegionList(data = null) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'get.region.list'
-    },
-    data
+    data: {
+      method: 'get.region.list',
+      ...data
+    }
   })
 }
 
@@ -93,12 +91,12 @@ export function getRegionList(data = null) {
  */
 export function getRegionSonList(data = null) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'get.region.son.list'
-    },
-    data
+    data: {
+      method: 'get.region.son.list',
+      ...data
+    }
   })
 }
 
@@ -110,12 +108,10 @@ export function getRegionSonList(data = null) {
  */
 export function setRegionSort(region_id, sort) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'set.region.sort'
-    },
     data: {
+      method: 'set.region.sort',
       region_id,
       sort
     }
@@ -129,12 +125,10 @@ export function setRegionSort(region_id, sort) {
  */
 export function setRegionIndex(region_id) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'set.region.index'
-    },
     data: {
+      method: 'set.region.index',
       region_id
     }
   })
@@ -147,12 +141,10 @@ export function setRegionIndex(region_id) {
  */
 export function getRegionName(region_id) {
   return request({
-    url: '/v1/region',
+    url,
     method: 'post',
-    params: {
-      method: 'get.region.name'
-    },
     data: {
+      method: 'get.region.name',
       region_id
     }
   })

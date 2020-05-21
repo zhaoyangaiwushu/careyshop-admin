@@ -1,14 +1,16 @@
 import request from '@/plugin/axios/request'
 
+const url = '/v1/index.html'
+
 /**
  * 清空所有缓存
  * @returns
  */
 export function clearCacheAll() {
   return request({
-    url: '/v1/index',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'clear.cache.all'
     }
   })
@@ -20,9 +22,9 @@ export function clearCacheAll() {
  */
 export function setSystemOptimize() {
   return request({
-    url: '/v1/index',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'set.system.optimize'
     }
   })
@@ -34,9 +36,9 @@ export function setSystemOptimize() {
  */
 export function getKernelVersion() {
   return request({
-    url: '/v1/index',
+    url,
     method: 'post',
-    params: {
+    data: {
       method: 'get.system.version'
     }
   })
@@ -49,11 +51,8 @@ export function getKernelVersion() {
  */
 export function batchRequests(data) {
   return request({
-    url: '/batch',
+    url: '/batch.html',
     method: 'post',
-    params: {
-      method: null
-    },
     data: {
       batch: data
     }

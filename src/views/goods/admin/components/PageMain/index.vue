@@ -876,7 +876,7 @@ export default {
           this.dialogLoading = true
           const index = this.nameForm.index
 
-          setGoodsItem({ ...this.nameForm })
+          setGoodsItem(this.nameForm)
             .then(() => {
               this.currentTableData[index].name = this.nameForm.name
               this.nameFormVisible = false
@@ -912,7 +912,7 @@ export default {
           this.dialogLoading = true
           const index = this.productForm.index
 
-          setGoodsItem({ ...this.productForm })
+          setGoodsItem(this.productForm)
             .then(() => {
               this.currentTableData[index].product_name = this.productForm.product_name
               this.productFormVisible = false

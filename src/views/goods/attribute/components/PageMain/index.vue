@@ -757,7 +757,7 @@ export default {
           const data = this.currentTableData
 
           if (this.dialogStatus === 'create') {
-            addGoodsAttributeBodyItem({ ...this.form })
+            addGoodsAttributeBodyItem(this.form)
               .then(res => {
                 data.unshift({ ...res.data, get_attribute: [] })
                 this.dialogFormVisible = false
@@ -825,7 +825,7 @@ export default {
         if (valid) {
           this.dialogLoading = true
           if (this.dialogStatus === 'update') {
-            setGoodsAttributeBodyItem({ ...this.form })
+            setGoodsAttributeBodyItem(this.form)
               .then(res => {
                 const pos = this.currentTableData.findIndex(item => {
                   return item.goods_attribute_id === this.currentData.goods_attribute_id

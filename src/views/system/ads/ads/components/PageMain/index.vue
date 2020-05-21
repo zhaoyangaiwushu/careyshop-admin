@@ -806,7 +806,7 @@ export default {
           this.form.color = this.form.color || ''
           this.form.content = this.getFormContent()
 
-          addAdsItem({ ...this.form })
+          addAdsItem(this.form)
             .then(res => {
               this.currentTableData.unshift({
                 ...res.data,
@@ -868,7 +868,7 @@ export default {
           this.form.color = this.form.color || ''
           this.form.content = this.getFormContent()
 
-          setAdsItem({ ...this.form })
+          setAdsItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,

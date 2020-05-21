@@ -1285,7 +1285,7 @@ export default {
     },
     // 新增商品
     handleCreate() {
-      addGoodsItem({ ...this.currentForm })
+      addGoodsItem(this.currentForm)
         .then(res => {
           this.updateData({
             type: 'add',
@@ -1302,7 +1302,7 @@ export default {
     },
     // 更新商品
     handleUpdate() {
-      setGoodsItem({ ...this.currentForm })
+      setGoodsItem(this.currentForm)
         .then(res => {
           this.updateData({
             type: 'set',

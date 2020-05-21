@@ -12,7 +12,7 @@ export default {
      */
     async login({ dispatch }, { login, remember }) {
       // 请求登录
-      const res = await loginAdminUser({ ...login })
+      const res = await loginAdminUser(login)
 
       // 设置用户数据
       let cookieSetting = remember ? { expires: 365 } : { expires: null }

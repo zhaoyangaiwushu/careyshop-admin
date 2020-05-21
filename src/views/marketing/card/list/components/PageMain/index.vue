@@ -573,7 +573,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          addCardItem({ ...this.form })
+          addCardItem(this.form)
             .then(res => {
               this.currentTableData.unshift({
                 ...res.data,
@@ -594,7 +594,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          setCardItem({ ...this.form })
+          setCardItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,

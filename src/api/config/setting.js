@@ -14,7 +14,7 @@ function setRequest(data, method) {
     method: 'post',
     data: {
       method: method,
-      ...data
+      data
     }
   })
 }

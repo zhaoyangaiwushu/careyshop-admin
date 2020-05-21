@@ -210,7 +210,7 @@ export default {
     },
     // 新增专题
     handleCreate() {
-      addTopicItem({ ...this.currentForm })
+      addTopicItem(this.currentForm)
         .then(res => {
           this.updateData({
             type: 'add',
@@ -227,7 +227,7 @@ export default {
     },
     // 更新专题
     handleUpdate() {
-      setTopicItem({ ...this.currentForm })
+      setTopicItem(this.currentForm)
         .then(res => {
           this.updateData({
             type: 'set',

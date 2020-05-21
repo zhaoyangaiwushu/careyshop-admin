@@ -40,7 +40,7 @@ export default {
     // 确定查询
     handleSubmit(form) {
       this.loading = true
-      getPaymentList({ ...form })
+      getPaymentList(form)
         .then(res => {
           this.table = res.data || []
         })

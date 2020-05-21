@@ -697,7 +697,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          addGoodsCategoryItem({ ...this.form })
+          addGoodsCategoryItem(this.form)
             .then(res => {
               this.expanded = [res.data.parent_id || res.data.goods_category_id]
               this.$emit('refresh')
@@ -730,7 +730,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          setGoodsCategoryItem({ ...this.form })
+          setGoodsCategoryItem(this.form)
             .then(res => {
               this.expanded = [res.data.parent_id || res.data.goods_category_id]
               this.$emit('refresh')
@@ -774,7 +774,7 @@ export default {
         })
       }
 
-      setGoodsCategoryItem({ ...setCat })
+      setGoodsCategoryItem(setCat)
         .then(res => {
           draggingNode.data.parent_id = res.data.parent_id
         })

@@ -590,7 +590,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          addPromotionItem({ ...this.form })
+          addPromotionItem(this.form)
             .then(res => {
               this.currentTableData.unshift(res.data)
               this.dialogFormVisible = false
@@ -607,7 +607,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          setPromotionItem({ ...this.form })
+          setPromotionItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,

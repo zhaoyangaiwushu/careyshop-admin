@@ -395,7 +395,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          addArticleCatItem({ ...this.form })
+          addArticleCatItem(this.form)
             .then(res => {
               if (!this.isExpandAll) {
                 this.expanded = [res.data.parent_id || res.data.article_cat_id]
@@ -415,7 +415,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          setArticleCatItem({ ...this.form })
+          setArticleCatItem(this.form)
             .then(res => {
               if (!this.isExpandAll) {
                 this.expanded = [res.data.parent_id || res.data.article_cat_id]
@@ -484,7 +484,7 @@ export default {
         })
       }
 
-      setArticleCatItem({ ...setCat })
+      setArticleCatItem(setCat)
         .then(res => {
           draggingNode.data.parent_id = res.data.parent_id
         })

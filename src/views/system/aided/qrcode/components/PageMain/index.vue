@@ -525,7 +525,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          addQrcodeItem({ ...this.form })
+          addQrcodeItem(this.form)
             .then(res => {
               this.currentTableData.unshift(res.data)
               this.dialogFormVisible = false
@@ -586,7 +586,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          setQrcodeItem({ ...this.form })
+          setQrcodeItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,

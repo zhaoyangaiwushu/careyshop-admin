@@ -648,7 +648,7 @@ export default {
           this.formLoading = true
           this._getCheckedKeys()
 
-          addAuthRuleItem({ ...this.form })
+          addAuthRuleItem(this.form)
             .then(() => {
               this.$emit('refresh')
               this.$message.success('操作成功')
@@ -666,7 +666,7 @@ export default {
           this.formLoading = true
           this._getCheckedKeys()
 
-          setAuthRuleItem({ ...this.form })
+          setAuthRuleItem(this.form)
             .then(() => {
               this.$emit('refresh')
               this.$message.success('操作成功')

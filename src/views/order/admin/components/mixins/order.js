@@ -507,7 +507,7 @@ export default {
           this.formDelivery.loading = true
           this.formDelivery.request.order_goods_id = orderGoods
 
-          deliveryOrderItem({ ...request })
+          deliveryOrderItem(request)
             .then(res => {
               if (this.$options.name !== 'order-admin-info') {
                 let refreshTotal = true

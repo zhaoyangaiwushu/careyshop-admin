@@ -408,7 +408,7 @@ export default {
     },
     // 新增文章
     handleCreate() {
-      addArticleItem({ ...this.currentForm })
+      addArticleItem(this.currentForm)
         .then(res => {
           this.updateData({
             type: 'add',
@@ -431,7 +431,7 @@ export default {
     },
     // 更新文章
     handleUpdate() {
-      setArticleItem({ ...this.currentForm })
+      setArticleItem(this.currentForm)
         .then(res => {
           this.updateData({
             type: 'set',

@@ -521,7 +521,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          setMenuItem({ ...this.form })
+          setMenuItem(this.form)
             .then(res => {
               if (!this.isExpandAll) {
                 this.expanded = [res.data.parent_id || res.data.menu_id]
@@ -605,7 +605,7 @@ export default {
         })
       }
 
-      setMenuItem({ ...setMenu })
+      setMenuItem(setMenu)
         .then(res => {
           draggingNode.data.parent_id = res.data.parent_id
         })

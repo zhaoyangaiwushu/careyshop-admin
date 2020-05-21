@@ -41,7 +41,7 @@ export default {
     // 提交查询
     handleSubmit(form) {
       this.loading = true
-      getAppList({ ...form })
+      getAppList(form)
         .then(res => {
           this.table = res.data || []
         })

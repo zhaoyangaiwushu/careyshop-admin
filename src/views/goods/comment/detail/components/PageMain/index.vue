@@ -446,7 +446,7 @@ export default {
           this.submitLoading = true
           const comment_id = this.tableData.goods_comment_id
 
-          replyGoodsCommentItem({ ...this.form })
+          replyGoodsCommentItem(this.form)
             .then(res => {
               this.form.isShowReply = false
               this.$emit('reply', comment_id, res.data)

@@ -1085,7 +1085,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          addCouponItem({ ...this.form })
+          addCouponItem(this.form)
             .then(res => {
               this.currentTableData.unshift({
                 ...res.data,
@@ -1125,7 +1125,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          setCouponItem({ ...this.form })
+          setCouponItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,
@@ -1272,7 +1272,7 @@ export default {
       this.dialogGiveLoading = true
       let data = this.currentTableData[this.currentIndex]
 
-      giveCouponUser({ ...this.giveForm })
+      giveCouponUser(this.giveForm)
         .then(res => {
           this.$set(data, 'receive_num', data.receive_num + res.data)
           this.dialogGiveFormVisible = false

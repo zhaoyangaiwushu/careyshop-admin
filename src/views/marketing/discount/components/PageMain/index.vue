@@ -553,7 +553,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          addDiscountItem({ ...this.form })
+          addDiscountItem(this.form)
             .then(res => {
               this.currentTableData.unshift(res.data)
               this.dialogFormVisible = false
@@ -570,7 +570,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          setDiscountItem({ ...this.form })
+          setDiscountItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,

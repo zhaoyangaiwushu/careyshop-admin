@@ -1093,7 +1093,7 @@ export default {
       this.imageLoading = true
       this.imageResult.url_prefix = ''
 
-      getStorageThumbUrl({ ...data })
+      getStorageThumbUrl(data)
         .then(res => {
           this.imageResult = res.data || {}
         })

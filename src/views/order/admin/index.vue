@@ -108,7 +108,7 @@ export default {
     },
     // 统计标签数量
     handleTotal(form) {
-      getOrderStatusTotal({ ...form })
+      getOrderStatusTotal(form)
         .then(res => {
           this.total = res.data || {}
         })

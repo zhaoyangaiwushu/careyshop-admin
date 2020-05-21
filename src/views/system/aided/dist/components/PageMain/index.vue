@@ -306,7 +306,7 @@ export default {
       this.traceData = null
       this.traceLoading = true
 
-      getDeliveryDistTrace({ ...this.traceForm })
+      getDeliveryDistTrace(this.traceForm)
         .then(res => {
           this.traceData = res.data.trace
         })

@@ -607,7 +607,7 @@ export default {
         if (valid) {
           this.dialogLoading = true
           Promise.all([
-            addBrandItem({ ...this.form }),
+            addBrandItem(this.form),
             getGoodsCategoryItem(this.form.goods_category_id)
           ])
             .then(res => {
@@ -647,7 +647,7 @@ export default {
         if (valid) {
           this.dialogLoading = true
           Promise.all([
-            setBrandItem({ ...this.form }),
+            setBrandItem(this.form),
             getGoodsCategoryItem(this.form.goods_category_id)
           ])
             .then(res => {

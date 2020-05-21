@@ -395,7 +395,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          addNavigationItem({ ...this.form })
+          addNavigationItem(this.form)
             .then(res => {
               this.currentTableData.unshift(res.data)
               this.dialogFormVisible = false
@@ -522,7 +522,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
-          setNavigationItem({ ...this.form })
+          setNavigationItem(this.form)
             .then(res => {
               this.$set(
                 this.currentTableData,

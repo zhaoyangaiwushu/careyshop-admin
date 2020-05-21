@@ -316,7 +316,7 @@ export default {
       this.$refs.form.validate(valid => {
         if (valid) {
           this.formLoading = true
-          addRegionItem({ ...this.form })
+          addRegionItem(this.form)
             .then(res => {
               this.expanded = [res.data.parent_id || res.data.region_id]
               this.$emit('refresh')
@@ -335,7 +335,7 @@ export default {
           this.formLoading = true
           delete this.form.parent_id
 
-          setRegionItem({ ...this.form })
+          setRegionItem(this.form)
             .then(res => {
               this.expanded = [res.data.parent_id || res.data.region_id]
               this.$emit('refresh')

@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 import { mapActions } from 'vuex'
 import { getAppCaptcha } from '@/api/aided/app'
 
@@ -101,11 +102,8 @@ export default {
      * @description 获取验证码
      */
     refreshCode() {
-      let url = this.$baseConfig.BASE_API
-      url += '/v1/app/method/image.app.captcha'
-      url += '?session_id=' + this.sessionId
-      url += '&t=' + Math.random()
-
+      let url = util.getBaseApi('/v1/app.html')
+      url += `method=image.app.captcha&session_id=${this.sessionId}&t=${Math.random()}`
       this.codeUrl = url
     },
     /**

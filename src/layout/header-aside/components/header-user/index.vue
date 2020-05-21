@@ -196,7 +196,7 @@ export default {
      */
     checkUpdate() {
       let host = process.env.NODE_ENV === 'development'
-        ? this.$baseConfig.BASE_API + '/v1/app_install'
+        ? this.$baseConfig.BASE_API + '/v1/app_install.html'
         : 'https://careyshop.cn/api/v1/app.php'
 
       this.$axios({
@@ -207,10 +207,8 @@ export default {
         url: host,
         method: 'post',
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-        params: {
-          method: 'query.app.install.updated'
-        },
         data: {
+          method: 'query.app.install.updated',
           user_agent: 'careyshop-admin',
           ver: process.env.VUE_APP_VERSION
         }

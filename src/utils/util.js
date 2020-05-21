@@ -224,15 +224,27 @@ util.getSign = (params) => {
 }
 
 /**
+ * 返回API请求地址
+ * @param url
+ * @param host
+ * @returns {string}
+ */
+util.getBaseApi = (url, host) => {
+  const baseApi = host || serverConfig.BASE_API
+  const space = baseApi.includes('?') ? '&' : '?'
+
+  return baseApi + url + space
+}
+
+/**
  * 根据样式编码获取缩略图地址
  * @param url
  * @param code
  * @returns {string}
  */
 util.getImageCodeUrl = (url, code = '') => {
-  let data = serverConfig.BASE_API
-  data += '/v1/storage/method/get.storage.thumb/code/' + code
-  data += '?url=' + encodeURIComponent(url)
+  let data = util.getBaseApi('/v1/storage.html')
+  data += `method=get.storage.thumb&code=${code}&url=${encodeURIComponent(url)}`
 
   return data
 }
@@ -244,10 +256,10 @@ util.getImageCodeUrl = (url, code = '') => {
  * @returns {*}
  */
 util.getDownloadUrl = (file, code) => {
-  let data = serverConfig.BASE_API
-  data += '/v1/storage/method/get.storage.download/code/' + code
-  data += '?url=' + encodeURIComponent(file.url)
-  data += '&filename=' + encodeURI(file.name)
+  let data = util.getBaseApi('/v1/storage.html')
+  data += `method=get.storage.download&code=${code}`
+  data += `$url=${encodeURIComponent(file.url)}`
+  data += `&filename=${encodeURI(file.name)}`
 
   return data
 }
@@ -259,15 +271,14 @@ util.getDownloadUrl = (file, code) => {
  * @returns {string}
  */
 util.getImageStyleUrl = (url, style = '') => {
-  if (url) {
-    let data = serverConfig.BASE_API
-    data += '/v1/storage/method/get.storage.thumb' + '?url=' + encodeURIComponent(url)
-    data += style
-
-    return data
+  if (!url) {
+    return ''
   }
 
-  return ''
+  let data = util.getBaseApi('/v1/storage.html')
+  data += `method=get.storage.thumb&url=${encodeURIComponent(url)}${style}`
+
+  return data
 }
 
 /**
@@ -277,8 +288,7 @@ util.getImageStyleUrl = (url, style = '') => {
  * @returns {string}
  */
 util.getQrcodeUrl = (text, expand = {}) => {
-  let data = serverConfig.BASE_API
-  data += '/v1/qrcode/method/get.qrcode.item?text='
+  let data = util.getBaseApi('/v1/qrcode.html') + 'method=get.qrcode.item&text='
   data += encodeURI(Object.prototype.hasOwnProperty.call(expand, 'text') ? expand.text : text)
 
   for (const key in expand) {
@@ -304,8 +314,7 @@ util.getQrcodeUrl = (text, expand = {}) => {
  * @returns {string}
  */
 util.getBarcodeUrl = (text, expand = {}) => {
-  let data = serverConfig.BASE_API
-  data += '/v1/barcode/method/get.barcode.item?text='
+  let data = util.getBaseApi('/v1/barcode.html') + 'method=get.barcode.item&text='
   data += encodeURI(Object.prototype.hasOwnProperty.call(expand, 'text') ? expand.text : text)
 
   for (const key in expand) {

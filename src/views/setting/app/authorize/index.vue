@@ -93,13 +93,11 @@ export default {
 
       this.loading = true
       this.$axios({
-        url: 'https://careyshop.cn/api/v1/authorize',
+        url: 'https://careyshop.cn/api/v1/authorize.html',
         method: 'post',
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-        params: {
-          method: 'check.authorize.item'
-        },
         data: {
+          method: 'check.authorize.item',
           domain: document.location.host,
           version: 'professional'
         }

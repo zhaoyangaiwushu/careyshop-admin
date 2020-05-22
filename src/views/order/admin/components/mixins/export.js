@@ -60,7 +60,7 @@ export default {
       for (let value of data) {
         value.username = value.get_user.username
         value.nickname = value.get_user.nickname
-        value.delivery_id = value.get_delivery.alias
+        value.delivery_id = value.get_delivery && value.get_delivery.alias
         value.payment_code = this._getPaymentType(value.payment_code)
         value.goods = ''
 

@@ -110,7 +110,9 @@
                   <template v-if="item.zipcode">
                     邮编：{{item.zipcode}}
                   </template>
-                  配送方式：{{item.get_delivery.alias}}
+                  <template v-if="item.get_delivery">
+                    配送方式：{{item.get_delivery.alias}}
+                  </template>
                 </td>
               </tr>
               <tr v-if="item.invoice_type > 0">

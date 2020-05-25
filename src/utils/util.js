@@ -255,10 +255,10 @@ util.getImageCodeUrl = (url, code = '') => {
  * @param code
  * @returns {*}
  */
-util.getDownloadUrl = (file, code) => {
+util.getDownloadUrl = (file, code = '') => {
   let data = util.getBaseApi('/v1/storage.html')
   data += `method=get.storage.download&code=${code}`
-  data += `$url=${encodeURIComponent(file.url)}`
+  data += `&url=${encodeURIComponent(file.url)}`
   data += `&filename=${encodeURI(file.name)}`
 
   return data

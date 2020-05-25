@@ -95,9 +95,5 @@ CareyShop 原则上使用 AGPLv3 开源，请遵守 AGPLv3 的相关条款，或
 
 本项目包含的源码（包括第三方）和二进制文件存在版权信息另行标注的情况。
 
-证书号：软著登字第4396664号
-
-登记号：2019SR0975907
-
 #### 链接
 <a href="https://github.com/d2-projects/d2-admin" target="_blank"><img src="https://raw.githubusercontent.com/FairyEver/d2-admin/master/doc/image/d2-admin@2x.png" width="200"></a>

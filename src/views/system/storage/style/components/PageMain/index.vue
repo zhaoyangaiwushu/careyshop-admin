@@ -665,8 +665,8 @@ export default {
       dialogStatus: '',
       scaleTab: 'Pc',
       imageUrl: '',
-      imageResult: {},
       imageInfo: '',
+      imageResult: {},
       imageResultInfo: '',
       imageLoading: false,
       uploadModule: '',
@@ -977,8 +977,8 @@ export default {
 
       this.scaleTab = 'Pc'
       this.imageUrl = ''
-      this.imageResult = {}
       this.imageInfo = ''
+      this.imageResult = {}
       this.imageResultInfo = ''
       this.imageLoading = false
       this.uploadModule = ''
@@ -1155,8 +1155,8 @@ export default {
       // 其他数据
       this.scaleTab = 'Pc'
       this.imageUrl = ''
-      this.imageResult = {}
       this.imageInfo = ''
+      this.imageResult = {}
       this.imageResultInfo = ''
       this.imageLoading = false
       this.uploadModule = ''

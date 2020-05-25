@@ -240,17 +240,17 @@ export function getStorageThumbUrl(data) {
 
 /**
  * 获取资源缩略图信息
- * @param {String} url
+ * @param {String} image
  * @param {String} source
  * @returns
  */
-export function getStorageThumbInfo(url, source) {
+export function getStorageThumbInfo(image, source) {
   return request({
     url,
     method: 'post',
     data: {
       method: 'get.storage.thumb.info',
-      url,
+      url: image,
       source
     }
   })

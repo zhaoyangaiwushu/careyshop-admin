@@ -11,7 +11,7 @@
 
       <el-upload
         ref="upload"
-        list-type="text"
+        :list-type="listType"
         :action="uploadUrl"
         :data="params"
         :multiple="multiple"
@@ -69,6 +69,12 @@ export default {
       type: String,
       required: false,
       default: '请选择资源进行(支持拖拽)上传，'
+    },
+    // 文件列表的类型
+    listType: {
+      type: String,
+      required: false,
+      default: 'text'
     },
     // 是否支持多选
     multiple: {

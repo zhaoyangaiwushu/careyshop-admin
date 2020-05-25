@@ -1459,8 +1459,7 @@ export default {
       fileList.forEach(value => {
         this.currentForm.attachment.push({
           name: value.name,
-          source: value.url,
-          url: '//' + value.url
+          source: value.url
         })
       })
     },
@@ -1576,8 +1575,7 @@ export default {
       fileList.forEach(value => {
         this.specImage.push({
           name: value.name,
-          source: value.url,
-          url: '//' + value.url
+          source: value.url
         })
       })
     },

@@ -1,6 +1,6 @@
+import util from '@/utils/util'
 import { getUploadToken, replaceUploadItem } from '@/api/upload/upload'
 import { delStorageList, getStorageDirectorySelect } from '@/api/upload/storage'
-import util from '@/utils/util'
 
 export default {
   data() {

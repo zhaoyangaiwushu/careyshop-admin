@@ -442,7 +442,7 @@ export default {
           break
 
         case 1:
-          util.open(util.getDownloadUrl(storage, ''))
+          util.open(util.getDownloadUrl(storage))
           break
 
         case 2:

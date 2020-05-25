@@ -399,8 +399,7 @@ export default {
           if (response.data[0].type === 0) {
             insert.push({
               name: response.data[0].name,
-              source: response.data[0].url,
-              url: '//' + response.data[0].url
+              source: response.data[0].url
             })
           }
         }
@@ -415,8 +414,7 @@ export default {
         if (value.type === 0) {
           insert.push({
             name: value.name,
-            source: value.url,
-            url: '//' + value.url
+            source: value.url
           })
         }
       })

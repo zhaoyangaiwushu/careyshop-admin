@@ -201,7 +201,7 @@ export default {
               insert += `<img src="${util.getImageCodeUrl(file.url, this.code)}" alt=""/>`
               break
             case 1:
-              insert += `<p><a href="${util.getDownloadUrl(file, this.code)}">附件：${file.name}</a></p>`
+              insert += `<p><a href="${util.getDownloadUrl(file)}" target="_blank">附件：${file.name}</a></p>`
               break
             case 3: {
               const cover = file.cover ? util.getImageCodeUrl(file.cover) : ''
@@ -224,7 +224,7 @@ export default {
             insert += `<img src="${util.getImageCodeUrl(value.url, this.code)}" alt=""/>`
             break
           case 1:
-            insert += `<p><a href="${util.getDownloadUrl(value, this.code)}">附件：${value.name}</a></p>`
+            insert += `<p><a href="${util.getDownloadUrl(value)}" target="_blank">附件：${value.name}</a></p>`
             break
           case 3: {
             const cover = value.cover ? util.getImageCodeUrl(value.cover) : ''

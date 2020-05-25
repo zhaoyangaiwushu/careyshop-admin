@@ -118,8 +118,12 @@
 </template>
 
 <script>
-import storage from '@/views/system/storage/storage/components/mixins'
-import { getStorageNavi, getStorageList, getStorageCollection } from '@/api/upload/storage'
+import storage from './components/mixins/storage'
+import {
+  getStorageNavi,
+  getStorageList,
+  getStorageCollection
+} from '@/api/upload/storage'
 
 export default {
   name: 'cs-storage',

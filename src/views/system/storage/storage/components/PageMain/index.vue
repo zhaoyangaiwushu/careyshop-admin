@@ -277,8 +277,8 @@
 
 <script>
 import util from '@/utils/util'
-import storage from '../mixins'
 import * as clipboard from 'clipboard-polyfill'
+import storage from '@/components/cs-storage/components/mixins/storage'
 import {
   delStorageList,
   addStorageDirectoryItem,

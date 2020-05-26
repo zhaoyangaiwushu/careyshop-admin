@@ -410,7 +410,7 @@ export default {
 
 <style lang="scss" scoped>
   .tree-scroll {
-    max-height: 520px;
+    max-height: 495px;
     overflow: auto;
     padding-bottom: 1px;
   }

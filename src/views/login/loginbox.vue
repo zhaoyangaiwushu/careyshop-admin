@@ -130,6 +130,8 @@ export default {
               this.$router.replace(this.$route.query.redirect || '/')
             })
             .catch(() => {
+              util.cookies.remove('token')
+              util.cookies.remove('uuid')
               this.loading = false
             })
         }

@@ -197,7 +197,7 @@ export default {
     checkUpdate() {
       let host = process.env.NODE_ENV === 'development'
         ? this.$baseConfig.BASE_API + '/v1/app_install.html'
-        : 'https://careyshop.cn/api/v1/app.php'
+        : 'https://api.careyshop.cn/api/v1/app_install.html'
 
       this.$axios({
         /**

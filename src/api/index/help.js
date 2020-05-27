@@ -5,7 +5,7 @@ const url = '/v1/help.html'
 export function getHelpRouter(router) {
   let host = serverConfig.BASE_API
   if (process.env.NODE_ENV !== 'development') {
-    host = 'https://careyshop.cn/api'
+    host = 'https://api.careyshop.cn/api'
   }
 
   return new Promise(resolve => {

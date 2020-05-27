@@ -259,7 +259,9 @@
                   :show-checkbox="true"
                   ref="logTree">
                     <span class="custom-tree-node" slot-scope="{node, data}">
-                      <span class="brother-showing" :class="{'status-tree': !data.status}">
+                      <span
+                        class="brother-showing"
+                        :class="{'status-tree': !data.status, 'log-auth': !checkLogAuth(node)}">
                         <i v-if="data.icon" :class="`iconfont icon${data.icon}`"/>
                         <i v-else-if="data.children" :class="`el-icon-${node.expanded ? 'folder-opened' : 'folder'}`"/>
                         <i v-else class="el-icon-document"/>
@@ -676,6 +678,10 @@ export default {
             })
         }
       })
+    },
+    // 根据权限决定操作日志样式
+    checkLogAuth(node) {
+      return node.childNodes.length > 0 || this.form.menu_auth.includes(node.key)
     }
   }
 }
@@ -717,6 +723,10 @@ export default {
   .status-tree {
     color: $color-text-placehoder;
     text-decoration: line-through
+  }
+
+  .log-auth {
+    color: $color-text-placehoder;
   }
 
   .box-card {

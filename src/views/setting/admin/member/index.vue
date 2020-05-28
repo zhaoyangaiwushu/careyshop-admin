@@ -53,7 +53,7 @@ export default {
   },
   mounted() {
     Promise.all([
-      getAuthGroupList({ status: 1, exclude_id: [3, 4] }),
+      getAuthGroupList({ status: 1, module: 'admin' }),
       this.$store.dispatch('careyshop/db/databasePage', { user: true })
     ])
       .then(res => {

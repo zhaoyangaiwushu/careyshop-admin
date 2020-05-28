@@ -55,15 +55,21 @@
       <el-table-column
         label="描述"
         prop="description"
-        min-width="150"
+        min-width="200"
         :show-overflow-tooltip="true">
       </el-table-column>
 
       <el-table-column
-        label="所属类型"
-        align="center">
+        label="所属类型">
         <template slot-scope="scope">
           {{scope.row.system ? '系统保留' : '用户添加'}}
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        label="模块">
+        <template slot-scope="scope">
+          {{module[scope.row.module]}}
         </template>
       </el-table-column>
 
@@ -158,6 +164,20 @@
         </el-form-item>
 
         <el-form-item
+          label="模块"
+          prop="module">
+          <el-select
+            v-model="form.module"
+            placeholder="请选择">
+            <el-option
+              v-for="(item, index) in module"
+              :key="index"
+              :label="item"
+              :value="index"/>
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
           label="排序值"
           prop="sort">
           <el-input-number
@@ -212,11 +232,14 @@ import {
 
 export default {
   props: {
+    loading: {
+      default: false
+    },
     tableData: {
       default: () => []
     },
-    loading: {
-      default: false
+    module: {
+      default: () => {}
     }
   },
   data() {
@@ -256,6 +279,7 @@ export default {
         index: undefined,
         name: undefined,
         description: undefined,
+        module: undefined,
         sort: undefined,
         status: undefined
       },
@@ -277,6 +301,13 @@ export default {
             max: 255,
             message: '长度不能大于 255 个字符',
             trigger: 'blur'
+          }
+        ],
+        module: [
+          {
+            required: true,
+            message: '至少选择一项',
+            trigger: 'change'
           }
         ],
         sort: [
@@ -350,6 +381,7 @@ export default {
         index: undefined,
         name: '',
         description: '',
+        module: '',
         sort: 50,
         status: '1'
       }
@@ -419,13 +451,15 @@ export default {
     },
     // 弹出编辑对话框
     handleUpdate(index) {
+      const data = this.currentTableData[index]
       this.form = {
         index: index,
-        group_id: this.currentTableData[index].group_id,
-        name: this.currentTableData[index].name,
-        description: this.currentTableData[index].description,
-        sort: this.currentTableData[index].sort,
-        status: this.currentTableData[index].status.toString()
+        group_id: data.group_id,
+        name: data.name,
+        description: data.description,
+        module: data.module,
+        sort: data.sort,
+        status: data.status.toString()
       }
 
       this.$nextTick(() => {

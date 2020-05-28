@@ -3,18 +3,21 @@
     <page-header
       slot="header"
       :loading="loading"
+      :module="module"
       @submit="handleSubmit"
       ref="header"/>
 
     <page-main
       :loading="loading"
       :table-data="table"
+      :module="module"
       @sort="handleSort"/>
   </cs-container>
 </template>
 
 <script>
 import { getAuthGroupList } from '@/api/auth/group'
+import { getMenuModule } from '@/api/auth/menu'
 
 export default {
   name: 'setting-auth-group',
@@ -25,6 +28,7 @@ export default {
   data() {
     return {
       table: [],
+      module: {},
       loading: false,
       order: {
         order_type: undefined,
@@ -33,7 +37,11 @@ export default {
     }
   },
   mounted() {
-    this.handleSubmit()
+    getMenuModule()
+      .then(res => {
+        this.module = res
+        this.handleSubmit()
+      })
   },
   methods: {
     // 提交查询请求

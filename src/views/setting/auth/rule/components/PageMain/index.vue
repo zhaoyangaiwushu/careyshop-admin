@@ -237,7 +237,9 @@
                   :show-checkbox="true"
                   ref="menuTree">
                     <span class="custom-tree-node" slot-scope="{node, data}">
-                      <span class="brother-showing" :class="{'status-tree': !data.status}">
+                      <span
+                        class="brother-showing"
+                        :class="{'status-tree': !data.status, 'whitelist': checkWhitelist(node)}">
                         <i v-if="data.icon" :class="`iconfont icon${data.icon}`"/>
                         <i v-else-if="data.children" :class="`el-icon-${node.expanded ? 'folder-opened' : 'folder'}`"/>
                         <i v-else class="el-icon-document"/>
@@ -306,6 +308,9 @@ export default {
     },
     group: {
       default: () => {}
+    },
+    whitelist: {
+      default: () => []
     }
   },
   data() {
@@ -682,6 +687,14 @@ export default {
     // 根据权限决定操作日志样式
     checkLogAuth(node) {
       return node.childNodes.length > 0 || this.form.menu_auth.includes(node.key)
+    },
+    // 验证权限是否已在白名单中存在
+    checkWhitelist(node) {
+      if (node.childNodes.length > 0) {
+        return false
+      }
+
+      return this.whitelist.includes(node.key)
     }
   }
 }
@@ -722,11 +735,15 @@ export default {
 
   .status-tree {
     color: $color-text-placehoder;
-    text-decoration: line-through
+    text-decoration: line-through;
   }
 
   .log-auth {
     color: $color-text-placehoder;
+  }
+
+  .whitelist {
+    color: $color-success;
   }
 
   .box-card {

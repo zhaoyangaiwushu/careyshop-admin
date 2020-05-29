@@ -13,6 +13,7 @@
       :tree-data="tree"
       :module="module"
       :group="group"
+      :whitelist="whitelist"
       @refresh="handleRefresh"
       ref="rule"/>
   </cs-container>
@@ -34,7 +35,8 @@ export default {
       loading: false,
       tree: [],
       module: {},
-      group: {}
+      group: {},
+      whitelist: []
     }
   },
   mounted() {
@@ -94,6 +96,11 @@ export default {
           if (res.data) {
             res.data.forEach(value => {
               this.tree[mapModule[value.module] - 1].children.push(value)
+
+              // 从列表中获取游客(白名单)权限
+              if (value.group_id === 4 && value.module === 'api') {
+                this.whitelist = value.menu_auth
+              }
             })
           }
 

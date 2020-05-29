@@ -547,7 +547,7 @@
           prop="source_no">
           <el-input
             v-model="financeForm.source_no"
-            placeholder="可输入来源订单号"
+            placeholder="可输入来源订单号，留空则自动生成流水号"
             :clearable="true"/>
         </el-form-item>
 

@@ -99,7 +99,7 @@ export default {
 
               // 从列表中获取游客(白名单)权限
               if (value.group_id === 4 && value.module === 'api') {
-                this.whitelist = value.menu_auth
+                this.whitelist = this.whitelist.concat(value.menu_auth)
               }
             })
           }

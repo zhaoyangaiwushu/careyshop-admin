@@ -239,7 +239,7 @@
                     <span class="custom-tree-node" slot-scope="{node, data}">
                       <span
                         class="brother-showing"
-                        :class="{'status-tree': !data.status, 'whitelist': checkWhitelist(node)}">
+                        :class="{'status-tree': !data.status, 'whitelist': checkWhitelist(data)}">
                         <i v-if="data.icon" :class="`iconfont icon${data.icon}`"/>
                         <i v-else-if="data.children" :class="`el-icon-${node.expanded ? 'folder-opened' : 'folder'}`"/>
                         <i v-else class="el-icon-document"/>
@@ -689,12 +689,16 @@ export default {
       return node.childNodes.length > 0 || this.form.menu_auth.includes(node.key)
     },
     // 验证权限是否已在白名单中存在
-    checkWhitelist(node) {
-      if (node.childNodes.length > 0) {
+    checkWhitelist(data) {
+      if (this.form.group_id === 4) {
         return false
       }
 
-      return this.whitelist.includes(node.key)
+      if (data.module !== 'api' || data.children) {
+        return false
+      }
+
+      return this.whitelist.includes(data.menu_id)
     }
   }
 }

@@ -40,33 +40,6 @@
           @click="copyData(barcode.value)">复制</el-button>
       </el-form-item>
 
-      <el-form-item class="action" :label="alipay.notify.name">
-        <span>{{alipay.notify.value}}</span>
-        <el-button
-          class="form-button active"
-          type="text"
-          size="small"
-          @click="copyData(alipay.notify.value)">复制</el-button>
-      </el-form-item>
-
-      <el-form-item class="action" :label="alipay.return.name">
-        <span>{{alipay.return.value}}</span>
-        <el-button
-          class="form-button active"
-          type="text"
-          size="small"
-          @click="copyData(alipay.return.value)">复制</el-button>
-      </el-form-item>
-
-      <el-form-item class="action" :label="weixin.notify.name">
-        <span>{{weixin.notify.value}}</span>
-        <el-button
-          class="form-button active"
-          type="text"
-          size="small"
-          @click="copyData(weixin.notify.value)">复制</el-button>
-      </el-form-item>
-
       <el-form-item size="small">
         <el-button @click="getInfoData('操作成功')">刷新</el-button>
       </el-form-item>
@@ -97,22 +70,6 @@ export default {
       captcha: {
         name: '应用验证码调用URL',
         value: ''
-      },
-      alipay: {
-        notify: {
-          name: '支付宝异步URL',
-          value: ''
-        },
-        return: {
-          name: '支付宝同步URL',
-          value: ''
-        }
-      },
-      weixin: {
-        notify: {
-          name: '微信支付异步URL',
-          value: ''
-        }
       }
     }
   },
@@ -141,24 +98,6 @@ export default {
           version: 'v1',
           controller: 'app',
           method: 'get.app.captcha.callurl'
-        },
-        {
-          version: 'v1',
-          controller: 'payment',
-          method: 'get.payment.notify',
-          to_payment: 2
-        },
-        {
-          version: 'v1',
-          controller: 'payment',
-          method: 'get.payment.return',
-          to_payment: 2
-        },
-        {
-          version: 'v1',
-          controller: 'payment',
-          method: 'get.payment.notify',
-          to_payment: 3
         }
       ]
 
@@ -181,21 +120,6 @@ export default {
 
                 case 'get.barcode.callurl':
                   this.barcode.value = value.data.call_url
-                  break
-
-                case 'get.payment.notify':
-                  if (value.data.to_payment === 2) {
-                    this.alipay.notify.value = value.data.notify_url
-                  }
-                  if (value.data.to_payment === 3) {
-                    this.weixin.notify.value = value.data.notify_url
-                  }
-                  break
-
-                case 'get.payment.return':
-                  if (value.data.to_payment === 2) {
-                    this.alipay.return.value = value.data.return_url
-                  }
                   break
               }
             }

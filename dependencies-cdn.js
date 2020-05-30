@@ -14,7 +14,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'vue-router',
       library: 'VueRouter',
-      js: '//cdn.jsdelivr.net/npm/vue-router@3.3.0/dist/vue-router.min.js',
+      js: '//cdn.jsdelivr.net/npm/vue-router@3.3.2/dist/vue-router.min.js',
       css: ''
     },
     {
@@ -44,7 +44,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'dayjs',
       library: 'dayjs',
-      js: '//cdn.jsdelivr.net/npm/dayjs@1.8.27/dayjs.min.js',
+      js: '//cdn.jsdelivr.net/npm/dayjs@1.8.28/dayjs.min.js',
       css: ''
     },
     {

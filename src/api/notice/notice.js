@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/notice.html'
+const url = '/v1/notice'
 
 /**
  * 获取一个通知系统

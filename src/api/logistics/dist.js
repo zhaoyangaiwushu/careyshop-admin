@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/delivery_dist.html'
+const url = '/v1/delivery_dist'
 
 /**
  * 添加一条配送轨迹

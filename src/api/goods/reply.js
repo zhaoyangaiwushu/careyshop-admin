@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods_reply.html'
+const url = '/v1/goods_reply'
 
 /**
  * 批量删除商品评价的回复

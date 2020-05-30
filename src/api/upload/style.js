@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/storage_style.html'
+const url = '/v1/storage_style'
 
 /**
  * 添加一个资源样式

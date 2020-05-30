@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/delivery.html'
+const url = '/v1/delivery'
 
 /**
  * 添加一个配送方式

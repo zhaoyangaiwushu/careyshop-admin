@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/region.html'
+const url = '/v1/region'
 
 /**
  * 添加一个区域

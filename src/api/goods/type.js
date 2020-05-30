@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods_type.html'
+const url = '/v1/goods_type'
 
 /**
  * 添加一个商品模型

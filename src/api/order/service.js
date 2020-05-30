@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/order_service.html'
+const url = '/v1/order_service'
 
 /**
  * 添加一条售后服务单留言

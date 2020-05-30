@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/topic.html'
+const url = '/v1/topic'
 
 /**
  * 添加一个专题

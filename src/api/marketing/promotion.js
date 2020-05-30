@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/promotion.html'
+const url = '/v1/promotion'
 
 /**
  * 添加一个订单促销

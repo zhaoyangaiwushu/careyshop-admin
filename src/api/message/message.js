@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/message.html'
+const url = '/v1/message'
 
 /**
  * 添加一条消息

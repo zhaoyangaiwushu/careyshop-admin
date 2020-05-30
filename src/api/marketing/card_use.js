@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/card_use.html'
+const url = '/v1/card_use'
 
 /**
  * 批量设置购物卡是否有效

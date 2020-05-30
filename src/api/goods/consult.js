@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods_consult.html'
+const url = '/v1/goods_consult'
 
 /**
  * 批量删除商品咨询

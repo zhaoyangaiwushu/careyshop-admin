@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/card.html'
+const url = '/v1/card'
 
 /**
  * 添加一条购物卡

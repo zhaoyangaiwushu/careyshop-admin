@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/brand.html'
+const url = '/v1/brand'
 
 /**
  * 添加一个品牌

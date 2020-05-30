@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/discount.html'
+const url = '/v1/discount'
 
 /**
  * 添加一个商品折扣

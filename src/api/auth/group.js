@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/auth_group.html'
+const url = '/v1/auth_group'
 
 /**
  * 添加一个用户组

@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/spec.html'
+const url = '/v1/spec'
 
 /**
  * 添加一个商品规格

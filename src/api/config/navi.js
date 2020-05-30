@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/navigation.html'
+const url = '/v1/navigation'
 
 /**
  * 添加一个导航

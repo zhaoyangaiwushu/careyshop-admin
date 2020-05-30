@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/order.html'
+const url = '/v1/order'
 
 /**
  * 获取一个订单

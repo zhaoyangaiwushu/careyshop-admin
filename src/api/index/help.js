@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = '/v1/help.html'
+const url = '/v1/help'
 
 export function getHelpRouter(router) {
   let host = serverConfig.BASE_API

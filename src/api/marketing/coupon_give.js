@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/coupon_give.html'
+const url = '/v1/coupon_give'
 
 /**
  * 向指定用户发放优惠劵

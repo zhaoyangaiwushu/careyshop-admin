@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/index.html'
+const url = '/v1/index'
 
 /**
  * 清空所有缓存
@@ -51,7 +51,7 @@ export function getKernelVersion() {
  */
 export function batchRequests(data) {
   return request({
-    url: '/batch.html',
+    url: '/batch',
     method: 'post',
     data: {
       batch: data

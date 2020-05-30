@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/payment_log.html'
+const url = '/v1/payment_log'
 
 /**
  * 获取一笔充值记录

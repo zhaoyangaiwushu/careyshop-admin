@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/app_install.html'
+const url = '/v1/app_install'
 
 /**
  * 添加一个应用安装包

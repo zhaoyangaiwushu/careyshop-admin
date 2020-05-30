@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/article.html'
+const url = '/v1/article'
 
 /**
  * 添加一篇文章

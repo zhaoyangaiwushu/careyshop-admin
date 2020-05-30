@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/ask.html'
+const url = '/v1/ask'
 
 /**
  * 删除一条记录

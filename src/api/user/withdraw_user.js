@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/withdraw_user.html'
+const url = '/v1/withdraw_user'
 
 /**
  * 添加一个提现账号

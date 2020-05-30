@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods_comment.html'
+const url = '/v1/goods_comment'
 
 /**
  * 顾客对商品的评价管理组成员可对其进行回复，可回复多条（追加评价）。

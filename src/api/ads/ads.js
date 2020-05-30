@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/ads.html'
+const url = '/v1/ads'
 
 /**
  * 添加一个广告

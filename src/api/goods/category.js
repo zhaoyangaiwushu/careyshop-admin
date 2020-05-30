@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods_category.html'
+const url = '/v1/goods_category'
 
 /**
  * 添加一个商品分类

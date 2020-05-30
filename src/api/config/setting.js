@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/setting.html'
+const url = '/v1/setting'
 
 /**
  * 通用的接口设置

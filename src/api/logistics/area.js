@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/delivery_area.html'
+const url = '/v1/delivery_area'
 
 /**
  * 添加一个配送区域

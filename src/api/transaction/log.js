@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/transaction.html'
+const url = '/v1/transaction'
 
 /**
  * 获取一笔交易结算

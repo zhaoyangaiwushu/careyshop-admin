@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/friend_link.html'
+const url = '/v1/friend_link'
 
 /**
  * 添加一个友情链接

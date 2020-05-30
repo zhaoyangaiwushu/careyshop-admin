@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/menu.html'
+const url = '/v1/menu'
 
 /**
  * 获取菜单所属模块

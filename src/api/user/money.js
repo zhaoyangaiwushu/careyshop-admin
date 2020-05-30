@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/user_money.html'
+const url = '/v1/user_money'
 
 /**
  * 获取指定账号资金信息

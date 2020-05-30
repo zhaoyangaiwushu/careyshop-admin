@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/user_level.html'
+const url = '/v1/user_level'
 
 /**
  * 获取一个账号等级

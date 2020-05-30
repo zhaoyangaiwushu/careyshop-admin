@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/user.html'
+const url = '/v1/user'
 
 /**
  * 验证账号是否合法

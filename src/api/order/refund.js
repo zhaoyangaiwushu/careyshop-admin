@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/order_refund.html'
+const url = '/v1/order_refund'
 
 /**
  * 查询一笔退款信息

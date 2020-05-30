@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/support.html'
+const url = '/v1/support'
 
 /**
  * 添加一名客服

@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/admin.html'
+const url = '/v1/admin'
 
 /**
  * 账号登录，并且获取授权码

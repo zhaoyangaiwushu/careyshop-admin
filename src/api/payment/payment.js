@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/payment.html'
+const url = '/v1/payment'
 
 /**
  * 获取支付配置列表

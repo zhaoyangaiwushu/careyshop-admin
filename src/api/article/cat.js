@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/article_cat.html'
+const url = '/v1/article_cat'
 
 /**
  * 添加一个文章分类

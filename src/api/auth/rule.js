@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/auth_rule.html'
+const url = '/v1/auth_rule'
 
 /**
  * 添加一条规则

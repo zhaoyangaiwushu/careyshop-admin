@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/user_address.html'
+const url = '/v1/user_address'
 
 /**
  * 获取指定账号的收货地址列表

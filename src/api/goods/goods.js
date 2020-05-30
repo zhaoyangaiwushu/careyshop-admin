@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods.html'
+const url = '/v1/goods'
 
 /**
  * 检测商品货号是否唯一

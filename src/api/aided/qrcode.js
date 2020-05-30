@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/qrcode.html'
+const url = '/v1/qrcode'
 
 /**
  * 获取二维码调用地址

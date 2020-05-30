@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/goods_attribute.html'
+const url = '/v1/goods_attribute'
 
 /**
  * 添加一个商品属性主体

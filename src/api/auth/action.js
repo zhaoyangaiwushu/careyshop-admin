@@ -1,6 +1,6 @@
 import request from '@/plugin/axios/request'
 
-const url = '/v1/action_log.html'
+const url = '/v1/action_log'
 
 /**
  * 获取一条操作日志

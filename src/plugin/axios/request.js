@@ -149,7 +149,7 @@ function refreshToken(config) {
   if ((nowTime - 3600) > userInfo.token.token_expires && nowTime < userInfo.token.refresh_expires) {
     service({
       method: 'post',
-      url: '/v1/admin/',
+      url: '/v1/admin',
       data: {
         method: 'refresh.admin.token',
         refresh: userInfo.token.refresh

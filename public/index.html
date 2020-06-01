@@ -6,8 +6,8 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link href=//at.alicdn.com/t/font_1572507_y1smr5iq2g.css rel="preload" as="style">
-    <link href=//at.alicdn.com/t/font_1572507_y1smr5iq2g.css rel="stylesheet">
+    <link href=https://zh-static.oss-accelerate.aliyuncs.com/icon/iconfont.css rel="preload" as="style">
+    <link href=https://zh-static.oss-accelerate.aliyuncs.com/icon/iconfont.css rel="stylesheet">
     <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.css) { %>
     <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="preload" as="style">
     <link href="<%= htmlWebpackPlugin.options.cdn.css[i] %>" rel="stylesheet">
@@ -53,5 +53,6 @@
     <% for (var i in htmlWebpackPlugin.options.cdn&&htmlWebpackPlugin.options.cdn.js) { %>
     <script src="<%= htmlWebpackPlugin.options.cdn.js[i] %>"></script>
     <% } %>
+    <script src="https://hm.baidu.com/hm.js?e325e60ca4cd358f2b424f5aecb8021a"></script>
   </body>
 </html>

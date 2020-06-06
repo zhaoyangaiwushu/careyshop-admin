@@ -127,7 +127,7 @@ export default {
           })
             .then(() => {
               this.captcha = false
-              this.$router.replace(this.$route.query.redirect || '/')
+              this.$router.replace('/')
             })
             .catch(() => {
               util.cookies.remove('token')

@@ -62,7 +62,7 @@ export default {
 
             // 刷新页面
             loading && loading.close()
-            vm.$router.replace('/login')
+            location.reload()
           })
           .catch(() => {
           })

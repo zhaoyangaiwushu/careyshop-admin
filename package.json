@@ -11,9 +11,9 @@
     "inspect": "vue-cli-service inspect --mode production --verbose"
   },
   "dependencies": {
+    "@careyshop/stats": "^1.0.13",
     "@careyshop/vue-print": "^1.0.8",
     "@careyshop/vue-table-export": "^1.0.17",
-    "@careyshop/stats": "^1.0.13",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",
     "clipboard-polyfill": "^2.8.6",
@@ -21,7 +21,7 @@
     "dayjs": "^1.8.28",
     "element-ui": "^2.13.2",
     "flex.css": "^1.1.7",
-    "fuse.js": "^6.0.0",
+    "fuse.js": "^6.0.4",
     "highlight.js": "^10.0.3",
     "hotkeys-js": "^3.8.1",
     "js-cookie": "^2.2.1",
@@ -48,7 +48,7 @@
     "babel-eslint": "^10.1.0",
     "compression-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.2",
-    "eslint": "^7.1.0",
+    "eslint": "^7.2.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",

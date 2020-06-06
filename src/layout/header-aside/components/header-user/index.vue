@@ -370,9 +370,13 @@ export default {
     }
   },
   beforeDestroy() {
+    // 清理定时任务
     if (this.timer) {
       clearInterval(this.timer)
     }
+
+    // 清理当前账号未读消息数
+    this.$store.commit('careyshop/user/setMessage', 0)
   }
 }
 </script>

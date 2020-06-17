@@ -122,7 +122,7 @@
               <el-cascader
                 v-model="form.parent_id"
                 placeholder="不选择表示顶层分类 试试搜索：首页"
-                :key="form.parent_id"
+                :key="form.article_cat_id"
                 :options="treeData"
                 :props="cascaderProps"
                 style="width: 100%;"

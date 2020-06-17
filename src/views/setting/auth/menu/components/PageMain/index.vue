@@ -131,7 +131,7 @@
               <el-cascader
                 v-model="form.parent_id"
                 placeholder="不选择表示顶层菜单 试试搜索：首页"
-                :key="form.parent_id"
+                :key="form.menu_id"
                 :options="treeData"
                 :props="cascaderProps"
                 style="width: 100%;"

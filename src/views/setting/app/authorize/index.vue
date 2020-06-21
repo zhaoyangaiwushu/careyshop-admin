@@ -97,9 +97,8 @@ export default {
         method: 'post',
         headers: { 'Content-Type': 'text/plain; charset=utf-8' },
         data: {
-          method: 'check.authorize.item',
           domain: document.location.host,
-          version: 'professional'
+          version: 'careyshop-admin'
         }
       })
         .then(res => {

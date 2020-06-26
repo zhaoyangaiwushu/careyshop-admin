@@ -50,7 +50,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'fuse.js',
       library: 'Fuse',
-      js: 'https://cdn.jsdelivr.net/npm/fuse.js@6.2.0/dist/fuse.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/fuse.js@6.3.0/dist/fuse.min.js',
       css: ''
     },
     {

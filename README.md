@@ -2,20 +2,20 @@
     <img src="https://aliyun.oss.careyshop.cn/poster/banner.png" />
 </p>
 
-<h1 align="center">CareyShop 商城框架系统</h1>
+<h1 align="center">CareyShop 商城后台管理系统</h1>
 
 <p align="center">
     <a href="https://www.careyshop.cn">
         <img src="https://img.shields.io/badge/website-CareyShop-yellow.svg" />
     </a>
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/github/license/dnyz520/careyshop.svg" />
+        <img src="https://img.shields.io/github/license/dnyz520/careyshop-admin.svg" />
     </a>
     <a href="https://www.careyshop.cn/download.html">
-        <img src="https://img.shields.io/github/release/dnyz520/careyshop.svg" />
+        <img src="https://img.shields.io/github/release/dnyz520/careyshop-admin.svg" />
     </a>
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/github/last-commit/dnyz520/careyshop.svg" />
+        <img src="https://img.shields.io/github/last-commit/dnyz520/careyshop-admin.svg" />
     </a>
 </p>
 

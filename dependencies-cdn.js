@@ -20,7 +20,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'vuex',
       library: 'Vuex',
-      js: 'https://cdn.jsdelivr.net/npm/vuex@3.4.0/dist/vuex.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/vuex@3.5.1/dist/vuex.min.js',
       css: ''
     },
     {
@@ -50,7 +50,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'fuse.js',
       library: 'Fuse',
-      js: 'https://cdn.jsdelivr.net/npm/fuse.js@6.3.0/dist/fuse.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.0/dist/fuse.min.js',
       css: ''
     },
     {

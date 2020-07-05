@@ -6,8 +6,7 @@
       </el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input size="small" @keyup.enter.native="handleLogin()" :type="passwordType" v-model="loginForm.password" auto-complete="off" placeholder="请输入密码">
-        <i class="el-icon-view el-input__icon" slot="suffix" @click="showPassword"/>
+      <el-input size="small" @keyup.enter.native="handleLogin()" v-model="loginForm.password" show-password auto-complete="off" placeholder="请输入密码">
         <i slot="prefix" class="el-icon-key"/>
       </el-input>
     </el-form-item>
@@ -50,7 +49,6 @@ export default {
       remember: false,
       loading: false,
       captcha: false,
-      passwordType: 'password',
       codeUrl: '',
       sessionId: '',
       loginForm: {
@@ -105,12 +103,6 @@ export default {
       let url = util.getBaseApi('/v1/app.html')
       url += `method=image.app.captcha&session_id=${this.sessionId}&t=${Math.random()}`
       this.codeUrl = url
-    },
-    /**
-     * @description 是否显示实际密码
-     */
-    showPassword() {
-      this.passwordType = !this.passwordType ? 'password' : ''
     },
     /**
      * @description 正式登录

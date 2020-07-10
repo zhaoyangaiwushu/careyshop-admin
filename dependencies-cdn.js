@@ -44,7 +44,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'dayjs',
       library: 'dayjs',
-      js: 'https://cdn.jsdelivr.net/npm/dayjs@1.8.28/dayjs.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/dayjs@1.8.29/dayjs.min.js',
       css: ''
     },
     {
@@ -62,7 +62,7 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'lodash',
       library: '_',
-      js: 'https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/lodash@4.17.19/lodash.min.js',
       css: ''
     },
     {

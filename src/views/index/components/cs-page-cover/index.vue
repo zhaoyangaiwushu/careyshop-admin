@@ -6,7 +6,7 @@
     <p class="cs-page-cover__title">{{title}}</p>
     <p class="cs-page-cover__sub-title cs-mt-0">{{subTitle}} {{$version}}</p>
     <p class="cs-page-cover__contact">
-      <span class="cs-pr-10">CareyShop 交流一群（QQ）：<span class="link" @click="$open('shang.qq.com/wpa/qunwpa?idkey=3fe095a4a8c53953990860f53bbef1145f8c85658a55a0539066fd6d4f153417')">714593455</span></span>
+      <span class="cs-pr-10">CareyShop 交流群（QQ）：<span class="link" @click="$open('shang.qq.com/wpa/qunwpa?idkey=3fe095a4a8c53953990860f53bbef1145f8c85658a55a0539066fd6d4f153417')">714593455</span></span>
       <span>咨询QQ ：<span class="link" @click="$open('wpa.qq.com/msgrd?v=3&uin=252404501&site=qq&menu=yes')">252404501</span></span>
     </p>
     <slot name="footer"/>

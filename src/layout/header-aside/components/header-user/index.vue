@@ -11,6 +11,7 @@
       <el-dropdown-item @click.native="clearHistory" icon="el-icon-time">清空历史</el-dropdown-item>
       <el-dropdown-item v-if="auth.cache" @click.native="clearCache" icon="el-icon-delete">清除缓存</el-dropdown-item>
       <el-dropdown-item v-if="auth.optimize" @click.native="systemOptimize" icon="el-icon-finished">优化系统</el-dropdown-item>
+      <el-dropdown-item v-if="auth.restAPI" @click.native="openRestAPI" icon="el-icon-setting">API 调试</el-dropdown-item>
       <el-dropdown-item divided @click.native="handleCreate" icon="el-icon-key">修改密码</el-dropdown-item>
       <el-dropdown-item v-if="auth.unread" @click.native="handleMessage" icon="el-icon-bell">
         <span>未读消息</span>
@@ -84,6 +85,7 @@ import { clearCacheAll, setSystemOptimize } from '@/api/index'
 import { setAdminPassword } from '@/api/user/admin'
 import { getMessageUserUnread } from '@/api/message/message'
 import { getMenuAuthList } from '@/api/auth/menu'
+import { getSettingList } from '@/api/config/setting'
 
 export default {
   data() {
@@ -99,7 +101,8 @@ export default {
       auth: {
         cache: false,
         optimize: false,
-        unread: false
+        unread: false,
+        restAPI: false
       },
       rules: {
         password: [
@@ -167,6 +170,7 @@ export default {
       this.auth.cache = this.$permission('/index/help/cache')
       this.auth.optimize = this.$permission('/index/help/optimize')
       this.auth.unread = this.$permission('/system/message/unread')
+      this.auth.restAPI = this.$permission('/rest_api')
     },
     /**
      * 获取未读消息数
@@ -367,6 +371,19 @@ export default {
 
       await this.$router.replace('/refresh')
       this.$message.success('菜单(包括权限)已重新载入')
+    },
+    /**
+     * 打开Rest API调试
+     */
+    openRestAPI() {
+      getSettingList('system_info', ['open_api_rest'])
+        .then(res => {
+          if (res.data.open_api_rest.value) {
+            this.$open(this.$baseConfig.BASE_API)
+          } else {
+            this.$message.warning('"Rest API调试"已关闭')
+          }
+        })
     }
   },
   beforeDestroy() {

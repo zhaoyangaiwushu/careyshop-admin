@@ -293,6 +293,17 @@
       </el-form-item>
 
       <el-form-item
+        :label="form.open_api_rest.description"
+        prop="open_api_rest">
+        <el-switch
+          v-model="form.open_api_rest.value"
+          :active-value="1"
+          :inactive-value="0">
+        </el-switch>
+        <div class="help-block" v-html="form.open_api_rest.help_text"></div>
+      </el-form-item>
+
+      <el-form-item
         :label="form.open_api.description"
         prop="open_api">
         <el-switch

@@ -1,21 +1,21 @@
 <p align="center">
-    <img src="https://aliyun.oss.careyshop.cn/poster/banner.png" />
+    <img src="https://aliyun.oss.careyshop.cn/poster/banner.png"  alt="careyshop_banner"/>
 </p>
 
 <h1 align="center">CareyShop 商城后台管理系统</h1>
 
 <p align="center">
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/badge/website-CareyShop-yellow.svg" />
+        <img src="https://img.shields.io/badge/website-CareyShop-yellow.svg"  alt="careyshop"/>
     </a>
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/github/license/dnyz520/careyshop-admin.svg" />
+        <img src="https://img.shields.io/github/license/dnyz520/careyshop-admin.svg"  alt="careyshop"/>
     </a>
     <a href="https://www.careyshop.cn/download.html">
-        <img src="https://img.shields.io/github/release/dnyz520/careyshop-admin.svg" />
+        <img src="https://img.shields.io/github/release/dnyz520/careyshop-admin.svg"  alt="careyshop"/>
     </a>
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/github/last-commit/dnyz520/careyshop-admin.svg" />
+        <img src="https://img.shields.io/github/last-commit/dnyz520/careyshop-admin.svg"  alt="careyshop"/>
     </a>
 </p>
 
@@ -26,7 +26,7 @@
 ## 介绍
 CareyShop（简称 CS）是一套基于 ThinkPHP 框架开发的高性能开源商城框架系统，秉承极简、极速、极致的开发理念，采用前后端分离，支持分布式部署。框架内部使用面向对象模块化调用，在多终端、跨平台时采用 REST API 进行数据交互，可直接对接 PC、移动设备、小程序、云部署，构建 Android、IOS 的 APP。
 
-**CareyShop（QQ）交流一群：714593455**
+**CareyShop（QQ）交流群：714593455**
 
 ## 前言
 放眼移动热潮、新零售概念、各类<abbr title="泛指各类终端机器或各类平台，终端机有IOS与Android为代表，平台以“微信小程序”为代表">终端</abbr>的增多，服务端会与各类前端进行交互，和第三方相互协作也更加紧密、频繁。出于这样的整体环境，我们摒弃传统开发方向，直接以 REST API 架构为基础，将各类业务处理层模块化。

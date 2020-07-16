@@ -34,7 +34,7 @@ CareyShop（简称 CS）是一套基于 ThinkPHP 框架开发的高性能开源�
 框架所有的业务处理逻辑存放在公共模块目录中，对于框架内的其他模块可通过面向对象的方式调用公共模块，而外部则以 API 接口进行交互，如此真正做到业务处理层的入口路径统一。具体开发使用请参见[「CareyShop 完全开发手册」](https://doc.careyshop.cn/guide/)
 
 ## 预览
-[后台 Demo 预览](https://demo.careyshop.cn/admin "后台 Demo 预览") | [经典配套款](https://doc.careyshop.cn/guide/white/) | [深灰商务款](https://doc.careyshop.cn/guide/gray/)
+[后台 Demo 预览](https://demo.careyshop.cn/admin "后台 Demo 预览") | [Rest API接口调试](https://demo.careyshop.cn/api "Rest API接口调试") | [经典配套款](https://doc.careyshop.cn/guide/white/) | [深灰商务款](https://doc.careyshop.cn/guide/gray/)
 
 ## 文档
 [文档中心](https://doc.careyshop.cn "CareyShop文档中心")

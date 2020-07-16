@@ -9,13 +9,13 @@
         <img src="https://img.shields.io/badge/website-CareyShop-yellow.svg"  alt="careyshop"/>
     </a>
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/github/license/dnyz520/careyshop-admin.svg"  alt="careyshop"/>
+        <img src="https://img.shields.io/github/license/dnyz520/careyshop-admin.svg"  alt="careyshop_license"/>
     </a>
     <a href="https://www.careyshop.cn/download.html">
-        <img src="https://img.shields.io/github/release/dnyz520/careyshop-admin.svg"  alt="careyshop"/>
+        <img src="https://img.shields.io/github/release/dnyz520/careyshop-admin.svg"  alt="careyshop_release"/>
     </a>
     <a href="https://www.careyshop.cn">
-        <img src="https://img.shields.io/github/last-commit/dnyz520/careyshop-admin.svg"  alt="careyshop"/>
+        <img src="https://img.shields.io/github/last-commit/dnyz520/careyshop-admin.svg"  alt="careyshop_last-commit"/>
     </a>
 </p>
 

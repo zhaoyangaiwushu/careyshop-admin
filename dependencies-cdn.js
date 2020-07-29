@@ -44,13 +44,13 @@ if (process.env.VUE_APP_CDN === 'true') {
     {
       name: 'dayjs',
       library: 'dayjs',
-      js: 'https://cdn.jsdelivr.net/npm/dayjs@1.8.29/dayjs.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/dayjs@1.8.31/dayjs.min.js',
       css: ''
     },
     {
       name: 'fuse.js',
       library: 'Fuse',
-      js: 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.0/dist/fuse.min.js',
+      js: 'https://cdn.jsdelivr.net/npm/fuse.js@6.4.1/dist/fuse.min.js',
       css: ''
     },
     {

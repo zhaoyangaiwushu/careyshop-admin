@@ -137,10 +137,9 @@ export function getMessageUserList(data) {
  */
 export function getMessageUserUnread(type) {
   return request({
-    url,
+    url:"/auth/api/v1/message",
     method: 'post',
     data: {
-      method: 'get.message.user.unread',
       type
     }
   })

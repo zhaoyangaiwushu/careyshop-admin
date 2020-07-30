@@ -76,6 +76,7 @@ export default {
       basis = 'fullPath',
       user = false
     } = {}) {
+      //$page./setting/admin/member
       return getDatabase({
         path: `$page.${router.app.$route[basis]}`,
         user,
@@ -92,6 +93,7 @@ export default {
       basis = 'fullPath',
       user = false
     } = {}) {
+      console.log(1111111111111)
       return getDatabase({
         path: `$page.${router.app.$route[basis]}`,
         user,

@@ -47,7 +47,7 @@ const service = axios.create({
   timeout: 30000,
   // 默认使用简单请求,避免复杂请求(多一次OPTIONS请求)
   // 如有特殊需求或协议不同,可修改为例如"application/json; charset=utf-8"
-  headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+  headers: { 'Content-Type': 'application/json; charset=utf-8' }
   // 启用跨域访问携带Cookie
   // withCredentials: true
 })

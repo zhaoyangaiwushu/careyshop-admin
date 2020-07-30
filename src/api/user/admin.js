@@ -9,10 +9,9 @@ const url = '/v1/admin'
  */
 export function loginAdminUser(data) {
   return request({
-    url,
+    url:"/auth/api/v1/admin",
     method: 'post',
     data: {
-      method: 'login.admin.user',
       platform: 'admin',
       ...data
     }
@@ -186,10 +185,9 @@ export function getAdminItem(client_id) {
  */
 export function getAdminList(data) {
   return request({
-    url,
+    url:"/system/aleUser/list",
     method: 'post',
     data: {
-      method: 'get.admin.list',
       ...data
     }
   })

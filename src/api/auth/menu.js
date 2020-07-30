@@ -23,10 +23,9 @@ export function getMenuModule() {
  */
 export function getMenuAuthList(data) {
   return request({
-    url,
+    url:"/auth/api/v1/menu",
     method: 'post',
     data: {
-      method: 'get.menu.auth.list',
       module: 'admin',
       ...data
     }

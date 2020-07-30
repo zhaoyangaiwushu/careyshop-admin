@@ -73,10 +73,9 @@ export function delAuthGroupItem(group_id) {
  */
 export function getAuthGroupList(data) {
   return request({
-    url,
+    url:"/system/aleAuthGroup/list",
     method: 'post',
     data: {
-      method: 'get.auth.group.list',
       ...data
     }
   })

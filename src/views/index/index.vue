@@ -1,7 +1,7 @@
 <template>
   <cs-container :is-back="false">
     <cs-page-cover
-      title="CareyShop Admin"
+      title="Admin"
       sub-title="商城后台管理系统集成方案">
       <img src="~@/assets/image/logo@2x.png" alt="logo">
       <div slot="footer" class="index-btn-group">

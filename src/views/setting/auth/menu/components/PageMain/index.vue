@@ -24,30 +24,17 @@
             @click="checkedNodes(false)">收起</el-button>
         </el-button-group>
       </el-form-item>
-
-      <el-form-item label="过滤">
-        <el-input
-          v-model="filterText"
-          :disabled="loading"
-          placeholder="输入关键词进行过滤"
-          prefix-icon="el-icon-search"
-          style="width: 240px;"
-          :clearable="true">
-        </el-input>
-      </el-form-item>
-
       <cs-help
         :router="$route.path"
         style="padding-bottom: 19px;">
       </cs-help>
     </el-form>
-
     <el-row :gutter="20">
       <el-col :span="10">
         <el-tree
           v-if="hackReset"
           class="tree-scroll"
-          node-key="menu_id"
+          node-key="id"
           :data="treeData"
           :props="treeProps"
           :filter-node-method="filterNode"
@@ -144,9 +131,9 @@
               <el-col :span="12">
                 <el-form-item
                   label="名称"
-                  prop="name">
+                  prop="menuName">
                   <el-input
-                    v-model="form.name"
+                    v-model="form.menuName"
                     placeholder="请输入菜单名称"
                     :clearable="true"/>
                 </el-form-item>
@@ -276,356 +263,351 @@
 </template>
 
 <script>
-import {
-  getMenuModule,
-  delMenuItem,
-  addMenuItem,
-  setMenuItem,
-  setMenuStatus,
-  setMenuIndex
-} from '@/api/auth/menu'
+  import {
+    getMenuModule,
+    delMenuItem,
+    addMenuItem,
+    setMenuItem,
+    setMenuStatus,
+    setMenuIndex
+  } from '@/api/auth/menu'
 
-export default {
-  props: {
-    treeData: {
-      default: () => []
-    },
-    loading: {
-      default: false
-    },
-    module: {
-      default: ''
-    }
-  },
-  data() {
-    return {
-      hackReset: true,
-      isExpandAll: false,
-      expanded: [],
-      filterText: '',
-      treeModule: {},
-      treeProps: {
-        label: 'name',
-        children: 'children'
+  export default {
+    props: {
+      treeData: {
+        default: () => []
       },
-      cascaderProps: {
-        value: 'menu_id',
-        label: 'name',
-        children: 'children',
-        checkStrictly: true,
-        emitPath: false
+      loading: {
+        default: false
       },
-      auth: {
-        add: false,
-        del: false,
-        set: false,
-        status: false,
-        move: false
-      },
-      form: {
-        parent_id: undefined,
-        name: undefined,
-        alias: undefined,
-        icon: undefined,
-        remark: undefined,
-        type: '0',
-        url: undefined,
-        params: undefined,
-        target: '_self',
-        is_navi: '0',
-        sort: 50
-      },
-      rules: {
-        name: [
-          {
-            required: true,
-            message: '名称不能为空',
-            trigger: 'blur'
-          },
-          {
-            max: 32,
-            message: '长度不能大于 32 个字符',
-            trigger: 'blur'
-          }
-        ],
-        alias: [
-          {
-            max: 16,
-            message: '长度不能大于 16 个字符',
-            trigger: 'blur'
-          }
-        ],
-        sort: [
-          {
-            type: 'number',
-            message: '必须为数字值',
-            trigger: 'blur'
-          }
-        ],
-        type: [
-          {
-            required: true,
-            message: '链接类型不能为空',
-            trigger: 'blur'
-          }
-        ],
-        url: [
-          {
-            max: 255,
-            message: '长度不能大于 255 个字符',
-            trigger: 'blur'
-          }
-        ],
-        params: [
-          {
-            max: 255,
-            message: '长度不能大于 255 个字符',
-            trigger: 'blur'
-          }
-        ],
-        remark: [
-          {
-            max: 255,
-            message: '长度不能大于 255 个字符',
-            trigger: 'blur'
-          }
-        ]
-      },
-      formStatus: 'create',
-      formLoading: false,
-      textMap: {
-        create: '新增菜单',
-        update: '编辑菜单'
-      }
-    }
-  },
-  watch: {
-    filterText(val) {
-      this.$refs.tree.filter(val)
-    }
-  },
-  mounted() {
-    getMenuModule()
-      .then(res => {
-        this.treeModule = res || {}
-      })
-      .then(() => {
-        this._validationAuth()
-      })
-  },
-  methods: {
-    // 验证权限
-    _validationAuth() {
-      this.auth.add = this.$permission('/setting/auth/menu/add')
-      this.auth.del = this.$permission('/setting/auth/menu/del')
-      this.auth.set = this.$permission('/setting/auth/menu/set')
-      this.auth.status = this.$permission('/setting/auth/menu/status')
-      this.auth.move = this.$permission('/setting/auth/menu/move')
-    },
-    // 过滤菜单
-    filterNode(value, data) {
-      if (!value) { return true }
-      return data.name.indexOf(value) !== -1
-    },
-    // 展开或收起节点
-    checkedNodes(isExpand) {
-      this.filterText = ''
-      this.expanded = []
-      this.hackReset = false
-
-      this.$nextTick(() => {
-        this.isExpandAll = isExpand
-        this.hackReset = true
-      })
-    },
-    // 重置表单
-    resetForm() {
-      this.form = {
-        parent_id: 0,
-        name: '',
-        alias: '',
-        icon: '',
-        remark: '',
-        type: '0',
-        url: '',
-        params: '',
-        target: '_self',
-        is_navi: '0',
-        sort: 50
+      module: {
+        default: ''
       }
     },
-    // 重置元素
-    resetElements(val = 'create') {
-      this.$nextTick(() => {
-        this.$refs.form.clearValidate()
-      })
-
-      this.formStatus = val
-      this.formLoading = false
-    },
-    // 点击树节点事件
-    handleNodeClick(data) {
-      if (!this.auth.add && !this.auth.set) {
-        return
-      }
-
-      this.resetForm()
-      this.resetElements('update')
-
-      this.form = {
-        ...data,
-        type: data.type.toString(),
-        is_navi: data.is_navi.toString()
-      }
-    },
-    // 新增菜单表单初始化
-    handleCreate(status) {
-      this.resetForm()
-      this.resetElements(status)
-
-      if (this.$refs.tree.getCurrentKey()) {
-        this.$refs.tree.setCurrentKey(null)
-      }
-    },
-    // 追加菜单
-    handleAppend(key) {
-      this.handleCreate('create')
-      this.$refs.tree.setCurrentKey(key)
-      this.form.parent_id = key
-    },
-    // 新增菜单
-    create() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.formLoading = true
-          addMenuItem({
-            ...this.form,
-            module: this.module
-          })
-            .then(res => {
-              if (!this.isExpandAll) {
-                this.expanded = [res.data.parent_id || res.data.menu_id]
-              }
-
-              this.$emit('refresh')
-              this.$message.success('操作成功')
-            })
-            .catch(() => {
-              this.formLoading = false
-            })
+    data() {
+      return {
+        hackReset: true,
+        isExpandAll: false,
+        expanded: [],
+        filterText: '',
+        treeModule: {},
+        treeProps: {
+          label: 'menuName',
+          children: 'children'
+        },
+        cascaderProps: {
+          value: 'id',
+          label: 'menuName',
+          children: 'children',
+          checkStrictly: true,
+          emitPath: false
+        },
+        auth: {
+          add: false,
+          del: false,
+          set: false,
+          status: false,
+          move: false
+        },
+        form: {
+          parent_id: undefined,
+          name: undefined,
+          alias: undefined,
+          icon: undefined,
+          remark: undefined,
+          type: '0',
+          url: undefined,
+          params: undefined,
+          target: '_self',
+          is_navi: '0',
+          sort: 50
+        },
+        rules: {
+          name: [
+            {
+              required: true,
+              message: '名称不能为空',
+              trigger: 'blur'
+            },
+            {
+              max: 32,
+              message: '长度不能大于 32 个字符',
+              trigger: 'blur'
+            }
+          ],
+          alias: [
+            {
+              max: 16,
+              message: '长度不能大于 16 个字符',
+              trigger: 'blur'
+            }
+          ],
+          sort: [
+            {
+              type: 'number',
+              message: '必须为数字值',
+              trigger: 'blur'
+            }
+          ],
+          type: [
+            {
+              required: true,
+              message: '链接类型不能为空',
+              trigger: 'blur'
+            }
+          ],
+          url: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          params: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ],
+          remark: [
+            {
+              max: 255,
+              message: '长度不能大于 255 个字符',
+              trigger: 'blur'
+            }
+          ]
+        },
+        formStatus: 'create',
+        formLoading: false,
+        textMap: {
+          create: '新增菜单',
+          update: '编辑菜单'
         }
-      })
-    },
-    // 更新菜单
-    update() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.formLoading = true
-          setMenuItem(this.form)
-            .then(res => {
-              if (!this.isExpandAll) {
-                this.expanded = [res.data.parent_id || res.data.menu_id]
-              }
-
-              this.$emit('refresh')
-              this.$message.success('操作成功')
-            })
-            .catch(() => {
-              this.formLoading = false
-            })
-        }
-      })
-    },
-    // 删除菜单
-    remove(key) {
-      this.$confirm('确定要执行该操作吗?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        closeOnClickModal: false
-      })
-        .then(() => {
-          delMenuItem(key)
-            .then(() => {
-              this.$refs.tree.remove(this.$refs.tree.getNode(key))
-              this.handleCreate('create')
-              this.$message.success('操作成功')
-            })
-        })
-        .catch(() => {
-        })
-    },
-    // 启用与禁用的切换
-    enable(key, val) {
-      this.$confirm('状态的切换会影响上下级菜单，是否确认操作?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning',
-        closeOnClickModal: false
-      })
-        .then(() => {
-          setMenuStatus(key, val ? 0 : 1)
-            .then(() => {
-              if (!this.isExpandAll) {
-                this.expanded = [this.$refs.tree.getNode(key).data.parent_id || key]
-              }
-
-              this.$emit('refresh')
-              this.$message.success('操作成功')
-            })
-        })
-        .catch(() => {
-        })
-    },
-    /**
-     * 拖拽成功后操作
-     * @param draggingNode  被拖拽节点对应的 Node
-     * @param dropNode      结束拖拽时最后进入的节点
-     * @param dropType      被拖拽节点的放置位置（before、after、inner）
-     * @param ev            event
-     */
-    handleDrop(draggingNode, dropNode, dropType, ev) {
-      // 获取原始数据
-      let setMenu = {
-        menu_id: draggingNode.data.menu_id,
-        parent_id: draggingNode.data.parent_id
       }
-
-      // 待排序编号
-      let indexMenu = []
-
-      // 处理插入到其他菜单中
-      if (dropType === 'inner') {
-        setMenu.parent_id = dropNode.key
-      } else {
-        setMenu.parent_id = dropNode.data.parent_id
-        dropNode.parent.childNodes.forEach((value, index) => {
-          indexMenu.push(value.key)
-          value.data.sort = index + 1
-        })
-      }
-
-      setMenuItem(setMenu)
+    },
+    mounted() {
+      getMenuModule()
         .then(res => {
-          draggingNode.data.parent_id = res.data.parent_id
+          this.treeModule = res || {}
         })
-        .catch(() => {
-          this.$emit('refresh')
+        .then(() => {
+          this._validationAuth()
+        })
+    },
+    methods: {
+      // 验证权限
+      _validationAuth() {
+        this.auth.add = this.$permission('/setting/auth/menu/add')
+        this.auth.del = this.$permission('/setting/auth/menu/del')
+        this.auth.set = this.$permission('/setting/auth/menu/set')
+        this.auth.status = this.$permission('/setting/auth/menu/status')
+        this.auth.move = this.$permission('/setting/auth/menu/move')
+      },
+      // 过滤菜单
+      filterNode(value, data) {
+        if (!value) { return true }
+        return data.name.indexOf(value) !== -1
+      },
+      // 展开或收起节点
+      checkedNodes(isExpand) {
+        this.filterText = ''
+        this.expanded = []
+        this.hackReset = false
+
+        this.$nextTick(() => {
+          this.isExpandAll = isExpand
+          this.hackReset = true
+        })
+      },
+      // 重置表单
+      resetForm() {
+        this.form = {
+          parent_id: 0,
+          name: '',
+          alias: '',
+          icon: '',
+          remark: '',
+          type: '0',
+          url: '',
+          params: '',
+          target: '_self',
+          is_navi: '0',
+          sort: 50
+        }
+      },
+      // 重置元素
+      resetElements(val = 'create') {
+        this.$nextTick(() => {
+          this.$refs.form.clearValidate()
         })
 
-      if (indexMenu.length > 0) {
-        setMenuIndex(indexMenu)
+        this.formStatus = val
+        this.formLoading = false
+      },
+      // 点击树节点事件
+      handleNodeClick(data) {
+        if (!this.auth.add && !this.auth.set) {
+          return
+        }
+
+        this.resetForm()
+        this.resetElements('update')
+
+        this.form = {
+          ...data,
+          type: data.type.toString(),
+          is_navi: data.is_navi.toString()
+        }
+      },
+      // 新增菜单表单初始化
+      handleCreate(status) {
+        this.resetForm()
+        this.resetElements(status)
+
+        if (this.$refs.tree.getCurrentKey()) {
+          this.$refs.tree.setCurrentKey(null)
+        }
+      },
+      // 追加菜单
+      handleAppend(key) {
+        this.handleCreate('create')
+        this.$refs.tree.setCurrentKey(key)
+        this.form.parent_id = key
+      },
+      // 新增菜单
+      create() {
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            this.formLoading = true
+            addMenuItem({
+              ...this.form,
+              module: this.module
+            })
+              .then(res => {
+                if (!this.isExpandAll) {
+                  this.expanded = [res.data.parent_id || res.data.menu_id]
+                }
+
+                this.$emit('refresh')
+                this.$message.success('操作成功')
+              })
+              .catch(() => {
+                this.formLoading = false
+              })
+          }
+        })
+      },
+      // 更新菜单
+      update() {
+        this.$refs.form.validate(valid => {
+          if (valid) {
+            this.formLoading = true
+            setMenuItem(this.form)
+              .then(res => {
+                if (!this.isExpandAll) {
+                  this.expanded = [res.data.parent_id || res.data.menu_id]
+                }
+
+                this.$emit('refresh')
+                this.$message.success('操作成功')
+              })
+              .catch(() => {
+                this.formLoading = false
+              })
+          }
+        })
+      },
+      // 删除菜单
+      remove(key) {
+        this.$confirm('确定要执行该操作吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          closeOnClickModal: false
+        })
+          .then(() => {
+            delMenuItem(key)
+              .then(() => {
+                this.$refs.tree.remove(this.$refs.tree.getNode(key))
+                this.handleCreate('create')
+                this.$message.success('操作成功')
+              })
+          })
+          .catch(() => {
+          })
+      },
+      // 启用与禁用的切换
+      enable(key, val) {
+        this.$confirm('状态的切换会影响上下级菜单，是否确认操作?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          closeOnClickModal: false
+        })
+          .then(() => {
+            setMenuStatus(key, val ? 0 : 1)
+              .then(() => {
+                if (!this.isExpandAll) {
+                  this.expanded = [this.$refs.tree.getNode(key).data.parent_id || key]
+                }
+
+                this.$emit('refresh')
+                this.$message.success('操作成功')
+              })
+          })
+          .catch(() => {
+          })
+      },
+      /**
+       * 拖拽成功后操作
+       * @param draggingNode  被拖拽节点对应的 Node
+       * @param dropNode      结束拖拽时最后进入的节点
+       * @param dropType      被拖拽节点的放置位置（before、after、inner）
+       * @param ev            event
+       */
+      handleDrop(draggingNode, dropNode, dropType, ev) {
+        // 获取原始数据
+        let setMenu = {
+          menu_id: draggingNode.data.menu_id,
+          parent_id: draggingNode.data.parent_id
+        }
+
+        // 待排序编号
+        let indexMenu = []
+
+        // 处理插入到其他菜单中
+        if (dropType === 'inner') {
+          setMenu.parent_id = dropNode.key
+        } else {
+          setMenu.parent_id = dropNode.data.parent_id
+          dropNode.parent.childNodes.forEach((value, index) => {
+            indexMenu.push(value.key)
+            value.data.sort = index + 1
+          })
+        }
+
+        setMenuItem(setMenu)
+          .then(res => {
+            draggingNode.data.parent_id = res.data.parent_id
+          })
           .catch(() => {
             this.$emit('refresh')
           })
+
+        if (indexMenu.length > 0) {
+          setMenuIndex(indexMenu)
+            .catch(() => {
+              this.$emit('refresh')
+            })
+        }
+      },
+      // 判断节点是否可移动
+      allowDrag() {
+        return this.auth.move
       }
-    },
-    // 判断节点是否可移动
-    allowDrag() {
-      return this.auth.move
     }
   }
-}
 </script>
 
 <style lang="scss" scoped>

@@ -62,7 +62,6 @@ export default {
     },
     // 排序刷新
     handleSort(val) {
-      console.log("111")
       this.order = val
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit()

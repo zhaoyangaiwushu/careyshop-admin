@@ -55,10 +55,9 @@ export function getMenuItem(menu_id) {
  */
 export function addMenuItem(data) {
   return request({
-    url,
+    url:"/system/aleMenu/insert",
     method: 'post',
     data: {
-      method: 'add.menu.item',
       ...data
     }
   })
@@ -103,10 +102,9 @@ export function delMenuItem(menu_id) {
  */
 export function getMenuList(data) {
   return request({
-    url,
+    url:"/system/aleMenu/list",
     method: 'post',
     data: {
-      method: 'get.menu.list',
       ...data
     }
   })

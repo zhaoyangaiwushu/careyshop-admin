@@ -420,10 +420,10 @@ export default {
     // 批量设置状态
     handleState(state) {
       let group_list = []
-      this.multipleSelection.forEach(value => {
-        group_list.push(value.group_id)
-      })
 
+      this.multipleSelection.forEach(value => {
+        group_list.push(value.id)
+      })
       if (group_list.length === 0) {
         this.$message.error('请选择要操作的数据')
         return
@@ -436,18 +436,15 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          setAuthGroupStatus(group_list, state)
-            .then(() => {
-              this.currentTableData.forEach((value, index) => {
-                if (group_list.indexOf(value.group_id) !== -1) {
-                  this.$set(this.currentTableData, index, {
-                    ...value,
-                    status: state
-                  })
-                }
-              })
-
-              this.$message.success('操作成功')
+          setAuthGroupStatus(group_list.join(","), state)
+            .then((res) => {
+              if(res.code != 200){
+                this.$message.error(res.msg)
+              }else{
+                this.$emit('submit')
+                this.dialogFormVisible = false
+                this.$message.success(res.msg)
+              }
             })
         })
         .catch(() => {
@@ -458,7 +455,7 @@ export default {
       const data = this.currentTableData[index]
       this.form = {
         index: index,
-        group_id: data.group_id,
+        id: data.id,
         name: data.name,
         description: data.description,
         module: data.module,
@@ -483,13 +480,13 @@ export default {
           this.dialogLoading = true
           setAuthGroupItem(this.form)
             .then(res => {
-              this.$set(this.currentTableData, index, {
-                ...this.currentTableData[index],
-                ...res.data
-              })
-
-              this.dialogFormVisible = false
-              this.$message.success('操作成功')
+              if(res.code != 200){
+                this.$message.error(res.msg)
+              }else{
+                this.$emit('submit')
+                this.dialogFormVisible = false
+                this.$message.success(res.msg)
+              }
             })
             .catch(() => {
               this.dialogLoading = false
@@ -506,7 +503,7 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          delAuthGroupItem(this.currentTableData[index].group_id)
+          delAuthGroupItem(this.currentTableData[index].id)
             .then(() => {
               this.currentTableData.splice(index, 1)
               this.$message.success('操作成功')
@@ -518,7 +515,7 @@ export default {
     // 请求修改排序值
     handleSort(index) {
       setAuthGroupSort(
-        this.currentTableData[index].group_id,
+        this.currentTableData[index].id,
         this.currentTableData[index].sort
       )
     },

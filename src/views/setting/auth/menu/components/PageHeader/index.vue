@@ -27,23 +27,15 @@
       </el-select>
     </el-form-item>
 
-    <el-form-item label="导航属性" prop="is_navi">
+    <el-form-item label="导航属性" prop="isNavi">
       <el-select
-        v-model="form.is_navi"
+        v-model="form.isNavi"
         placeholder="请选择"
         style="width: 120px;"
         clearable>
         <el-option label="可见" value="1"/>
         <el-option label="隐藏" value="0"/>
       </el-select>
-    </el-form-item>
-
-    <el-form-item label="菜单深度" prop="level">
-      <el-input-number
-        v-model="form.level"
-        controls-position="right"
-        :min="0"
-        style="width: 100px;"/>
     </el-form-item>
 
     <el-form-item>
@@ -74,7 +66,7 @@ export default {
       form: {
         module: 'admin',
         status: undefined,
-        is_navi: undefined,
+        isNavi: undefined,
         level: 0
       }
     }
@@ -83,12 +75,12 @@ export default {
     handleFormSubmit() {
       // 对深度进行特殊处理
       this.$emit('submit', {
-        ...this.form,
-        level: this.form.level <= 0 ? undefined : this.form.level - 1
+        ...this.form
       })
     },
     handleFormReset() {
       this.$refs.form.resetFields()
+      this.handleFormSubmit()
     }
   }
 }

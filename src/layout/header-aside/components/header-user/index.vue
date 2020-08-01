@@ -233,7 +233,7 @@ export default {
               onClick: () => { this.$open(data.url) }
             })
 
-            this.$log.capsule('CareyShop Admin', `New version ${data.ver}`)
+            this.$log.capsule('Admin', `New version ${data.ver}`)
             console.log(`版本号: ${data.ver} | 详情 ${data.url}`)
           }
         })

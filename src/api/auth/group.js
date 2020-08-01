@@ -24,10 +24,9 @@ export function addAuthGroupItem(data) {
  */
 export function setAuthGroupItem(data) {
   return request({
-    url,
-    method: 'post',
+    url:"/system/aleAuthGroup/update",
+    method: 'put',
     data: {
-      method: 'set.auth.group.item',
       ...data
     }
   })
@@ -56,12 +55,8 @@ export function getAuthGroupItem(group_id) {
  */
 export function delAuthGroupItem(group_id) {
   return request({
-    url,
-    method: 'post',
-    data: {
-      method: 'del.auth.group.item',
-      group_id
-    }
+    url:`/system/aleAuthGroup/remove/${group_id}`,
+    method: 'delete',
   })
 }
 
@@ -86,13 +81,12 @@ export function getAuthGroupList(data) {
  * @param {Number} status
  * @returns
  */
-export function setAuthGroupStatus(group_id, status) {
+export function setAuthGroupStatus(ids, status) {
   return request({
-    url,
-    method: 'post',
+    url:"/system/aleAuthGroup/updateStatus",
+    method: 'put',
     data: {
-      method: 'set.auth.group.status',
-      group_id,
+      ids,
       status
     }
   })
@@ -104,13 +98,12 @@ export function setAuthGroupStatus(group_id, status) {
  * @param {Number} sort
  * @returns
  */
-export function setAuthGroupSort(group_id, sort) {
+export function setAuthGroupSort(id, sort) {
   return request({
-    url,
-    method: 'post',
+    url:"/system/aleAuthGroup/update",
+    method: 'put',
     data: {
-      method: 'set.auth.group.sort',
-      group_id,
+      id,
       sort
     }
   })

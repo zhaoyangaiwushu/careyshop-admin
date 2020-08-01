@@ -9,7 +9,7 @@
 
     <page-main
       :loading="loading"
-      :table-data="table"
+      :tableData="table"
       :group="group"
       @sort="handleSort"
       @refresh="handleRefresh"/>
@@ -99,8 +99,8 @@ export default {
       getAdminList({
         ...form,
         ...this.order,
-        page_no: this.page.current,
-        page_size: this.page.size
+        pageNum: this.page.current,
+        pageSize: this.page.size
       })
         .then(res => {
           this.table = res.rows || []

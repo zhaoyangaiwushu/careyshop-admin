@@ -403,9 +403,13 @@ export default {
           this.dialogLoading = true
           addAuthGroupItem(this.form)
             .then(res => {
-              this.currentTableData.unshift(res.data)
-              this.dialogFormVisible = false
-              this.$message.success('操作成功')
+              if(res.code != 200){
+                this.$message.error(res.msg)
+              }else{
+                this.$emit('submit')
+                this.dialogFormVisible = false
+                this.$message.success(res.msg)
+              }
             })
             .catch(() => {
               this.dialogLoading = false

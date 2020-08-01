@@ -1,227 +1,90 @@
 <template>
   <div class="cs-p">
-    <el-form
-      :inline="true"
-      size="small">
+    <el-form :inline="true" size="small">
 
       <el-form-item v-if="auth.add">
-        <el-button
-          icon="el-icon-plus"
-          :disabled="loading"
-          @click="handleCreate">新增用户</el-button>
+        <el-button icon="el-icon-plus" :disabled="loading" @click="handleCreate">新增用户</el-button>
       </el-form-item>
 
       <el-form-item v-if="auth.enable || auth.disable">
         <el-button-group>
-          <el-button
-            v-if="auth.enable"
-            icon="el-icon-check"
-            :disabled="loading"
-            @click="handleState(1)">启用</el-button>
-
-          <el-button
-            v-if="auth.disable"
-            icon="el-icon-close"
-            :disabled="loading"
-            @click="handleState(0)">禁用</el-button>
+          <el-button v-if="auth.enable" icon="el-icon-check" :disabled="loading" @click="handleState(1)">启用</el-button>
+          <el-button v-if="auth.disable" icon="el-icon-close" :disabled="loading" @click="handleState(0)">禁用</el-button>
         </el-button-group>
       </el-form-item>
 
       <el-form-item v-if="auth.del">
-        <el-button
-          icon="el-icon-delete"
-          :disabled="loading"
-          @click="handleDelete(multipleSelection)">删除</el-button>
+        <el-button icon="el-icon-delete" :disabled="loading" @click="handleDelete(multipleSelection)">删除</el-button>
       </el-form-item>
 
-      <cs-help
-        :router="$route.path"
-        style="padding-bottom: 19px;">
-      </cs-help>
+      <cs-help :router="$route.path" style="padding-bottom: 19px;"></cs-help>
     </el-form>
 
-    <el-table
-      :data="currentTableData"
-      :highlight-current-row="true"
-      @selection-change="handleSelectionChange"
-      @sort-change="sortChange">
+    <el-table :data="currentTableData" :highlight-current-row="true" @selection-change="handleSelectionChange" @sort-change="sortChange">
       <el-table-column align="center" type="selection" width="55"/>
 
-      <el-table-column
-        label="账号"
-        prop="username"
-        sortable="custom"
-        :show-overflow-tooltip="true">
+      <el-table-column label="账号"  prop="username" sortable="custom" :show-overflow-tooltip="true" />
+
+      <el-table-column label="昵称" prop="adminUserExt.nickname" :show-overflow-tooltip="true" />
+
+      <el-table-column label="用户组" prop="group_id" sortable="custom" :show-overflow-tooltip="true">
+        <template slot-scope="scope">{{scope.row.groupName}}</template>
       </el-table-column>
 
-      <el-table-column
-        label="昵称"
-        prop="nickname"
-        sortable="custom"
-        :show-overflow-tooltip="true">
-      </el-table-column>
-
-      <el-table-column
-        label="用户组"
-        prop="group_id"
-        sortable="custom"
-        :show-overflow-tooltip="true">
+      <el-table-column label="登陆IP" show-overflow-tooltip>
         <template slot-scope="scope">
-          {{scope.row.get_auth_group.name}}
+          <el-tooltip v-if="scope.row.lastIp" :content="scope.row.lastIp" placement="top"><i class="el-icon-location"/></el-tooltip>内网IP 内网IP
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="登陆IP"
-        show-overflow-tooltip>
-        <template slot-scope="scope">
-          <el-tooltip
-            v-if="scope.row.last_ip"
-            :content="scope.row.last_ip"
-            placement="top">
-            <i class="el-icon-location"/>
-          </el-tooltip>
-          {{scope.row.last_ip_region}}
-        </template>
-      </el-table-column>
+      <el-table-column label="最后登陆" prop="lastLoginTime" sortable="custom" align="center" width="160" />
 
-      <el-table-column
-        label="最后登陆"
-        prop="last_login"
-        sortable="custom"
-        align="center"
-        width="160">
-      </el-table-column>
-
-      <el-table-column
-        label="状态"
-        prop="status"
-        sortable="custom"
-        align="center"
-        width="100">
+      <el-table-column label="状态"  prop="status"  sortable="custom"  align="center"  width="100">
         <template slot-scope="scope">
-          <el-tag
-            size="mini"
-            :type="statusMap[scope.row.status].type"
-            :style="auth.enable || auth.disable ? 'cursor: pointer;' : ''"
-            :effect="auth.enable || auth.disable ? 'light' : 'plain'"
-            @click.native="switchStatus(scope.$index)">
+          <el-tag size="mini" :type="statusMap[scope.row.status].type" :style="auth.enable || auth.disable ? 'cursor: pointer;' : ''" :effect="auth.enable || auth.disable ? 'light' : 'plain'" @click.native="switchStatus(scope.$index)">
             {{statusMap[scope.row.status].text}}
           </el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column
-        label="操作"
-        align="center"
-        min-width="140">
+      <el-table-column label="操作" align="center" min-width="140">
         <template slot-scope="scope">
-          <el-button
-            v-if="auth.set"
-            size="small"
-            @click="handleUpdate(scope.$index)"
-            type="text">编辑</el-button>
-
-          <el-button
-            v-if="auth.del"
-            size="small"
-            @click="handleDelete(scope.$index)"
-            type="text">删除</el-button>
-
-          <el-button
-            v-if="auth.reset"
-            size="small"
-            @click="reset(scope.$index)"
-            type="text">重置密码</el-button>
+          <el-button v-if="auth.set" size="small" @click="handleUpdate(scope.$index)" type="text">编辑</el-button>
+          <el-button v-if="auth.del" size="small" @click="handleDelete(scope.$index)" type="text">删除</el-button>
+          <el-button v-if="auth.reset" size="small" @click="reset(scope.$index)" type="text">重置密码</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <el-dialog
-      :title="textMap[dialogStatus]"
-      :visible.sync="dialogFormVisible"
-      :append-to-body="true"
-      :close-on-click-modal="false"
-      width="600px">
-      <el-form
-        :model="form"
-        :rules="rules"
-        ref="form"
-        label-width="80px">
-        <el-form-item
-          label="账号"
-          prop="username">
-          <el-input
-            v-model="form.username"
-            :disabled="dialogStatus !== 'create'"
-            placeholder="请输入账号"
-            :clearable="true"/>
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :append-to-body="true" :close-on-click-modal="false" width="600px">
+      <el-form :model="form" :rules="rules" ref="form" label-width="80px">
+        <el-form-item label="账号" prop="username">
+          <el-input v-model="form.username" :disabled="dialogStatus !== 'create'" placeholder="请输入账号" :clearable="true"/>
         </el-form-item>
 
-        <el-form-item
-          v-if="dialogStatus === 'create'"
-          label="密码"
-          prop="password">
-          <el-input
-            type="password"
-            v-model="form.password"
-            placeholder="请输入密码"
-            :clearable="true"/>
+        <el-form-item v-if="dialogStatus === 'create'" label="密码" prop="password">
+          <el-input type="password" v-model="form.password" placeholder="请输入密码" :clearable="true"/>
         </el-form-item>
 
-        <el-form-item
-          v-if="dialogStatus === 'create'"
-          label="确认密码"
-          prop="password_confirm">
-          <el-input
-            type="password"
-            v-model="form.password_confirm"
-            placeholder="请再次输入密码"
-            :clearable="true"/>
+        <el-form-item v-if="dialogStatus === 'create'" label="确认密码" prop="password_confirm">
+          <el-input type="password" v-model="form.password_confirm" placeholder="请再次输入密码" :clearable="true"/>
         </el-form-item>
 
-        <el-form-item
-          label="昵称"
-          prop="nickname">
-          <el-input
-            v-model="form.nickname"
-            placeholder="请输入昵称"
-            :clearable="true"/>
+        <el-form-item label="昵称" prop="nickname">
+          <el-input v-model="form.nickname" placeholder="请输入昵称" :clearable="true"/>
         </el-form-item>
 
-        <el-form-item
-          label="用户组"
-          prop="group_id">
-          <el-select
-            v-model="form.group_id"
-            placeholder="请选择"
-            style="width: 100%;">
-            <el-option
-              v-for="item in group"
-              :key="item.group_id"
-              :label="item.name"
-              :value="item.group_id"/>
+        <el-form-item label="用户组" prop="groupId">
+          <el-select v-model="form.groupId" placeholder="请选择" style="width: 100%;">
+            <el-option v-for="item in group" :key="item.id" :label="item.name" :value="item.id"/>
           </el-select>
         </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
-        <el-button
-          @click="dialogFormVisible = false"
-          size="small">取消</el-button>
-
-        <el-button
-          v-if="dialogStatus === 'create'"
-          type="primary"
-          :loading="dialogLoading"
-          @click="create"
-          size="small">确定</el-button>
-
-        <el-button
-          v-else type="primary"
-          :loading="dialogLoading"
-          @click="update(form.index)"
-          size="small">修改</el-button>
+        <el-button @click="dialogFormVisible = false" size="small">取消</el-button>
+        <el-button v-if="dialogStatus === 'create'" type="primary" :loading="dialogLoading" @click="create" size="small">确定</el-button>
+        <el-button v-else type="primary" :loading="dialogLoading" @click="update(form.index)" size="small">修改</el-button>
       </div>
     </el-dialog>
   </div>
@@ -288,8 +151,9 @@ export default {
         username: undefined,
         password: undefined,
         password_confirm: undefined,
-        group_id: undefined,
-        nickname: undefined
+        groupId: undefined,
+        nickname: undefined,
+        model:"admin"
       },
       rules: {
         username: [
@@ -341,7 +205,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        group_id: [
+        groupId: [
           {
             required: true,
             message: '至少选择一项',
@@ -377,10 +241,10 @@ export default {
       let clients = []
       if (Array.isArray(val)) {
         val.forEach(value => {
-          clients.push(value.admin_id)
+          clients.push(value.id)
         })
       } else {
-        clients.push(this.currentTableData[val].admin_id)
+        clients.push(this.currentTableData[val].id)
       }
 
       return clients
@@ -391,14 +255,14 @@ export default {
     },
     // 获取排序字段
     sortChange({ column, prop, order }) {
-      let sort = {
-        order_type: undefined,
-        order_field: undefined
-      }
 
+      let sort = {
+        isAsc: undefined,
+        orderByColumn: undefined
+      }
       if (column && order) {
-        sort.order_type = order === 'ascending' ? 'asc' : 'desc'
-        sort.order_field = prop
+        sort.isAsc = order === 'ascending' ? 'asc' : 'desc'
+        sort.orderByColumn = prop.replace(/([A-Z])/g,"_$1").toLowerCase()
       }
 
       this.$emit('sort', sort)
@@ -410,30 +274,23 @@ export default {
         this.$message.error('请选择要操作的数据')
         return
       }
-
       this.$confirm('确定要执行该操作吗?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
         closeOnClickModal: false
-      })
-        .then(() => {
-          setAdminStatus(clients, state)
-            .then(() => {
-              this.currentTableData.forEach((value, index) => {
-                if (clients.indexOf(value.admin_id) !== -1) {
-                  // value.status = enable // 此修改可保持勾选状态
-                  this.$set(this.currentTableData, index, {
-                    ...value,
-                    status: state
-                  })
-                }
-              })
-
-              this.$message.success('操作成功')
+      }).then(() => {
+          setAdminStatus(clients.join(","), state)
+            .then(res => {
+              if(res.code == 200){
+                this.$emit('refresh')
+                this.dialogFormVisible = false
+                this.$message.success('操作成功')
+              }else{
+                this.$message.error(res.msg)
+              }
             })
-        })
-        .catch(() => {
+        }).catch(() => {
         })
     },
     // 批量删除
@@ -451,14 +308,15 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          delAdminList(clients)
-            .then(() => {
-              util.deleteDataList(this.currentTableData, clients, 'admin_id')
-              if (this.currentTableData.length <= 0) {
-                this.$emit('refresh', true)
+          delAdminList(clients.join(","))
+            .then(res => {
+              if(res.code == 200){
+                this.$emit('refresh')
+                this.dialogFormVisible = false
+                this.$message.success('操作成功')
+              }else{
+                this.$message.error(res.msg)
               }
-
-              this.$message.success('操作成功')
             })
         })
         .catch(() => {
@@ -470,8 +328,12 @@ export default {
         username: undefined,
         password: undefined,
         password_confirm: undefined,
-        group_id: undefined,
-        nickname: undefined
+        groupId: undefined,
+        nickname: undefined,
+        model:"admin",
+        adminUserExt:{
+          nickname:undefined
+        }
       }
 
       this.$nextTick(() => {
@@ -486,21 +348,20 @@ export default {
     },
     // 请求新建用户
     create() {
+      this.form.adminUserExt.nickname = this.form.nickname
       this.$refs.form.validate(valid => {
+        // 判断两次密码是否一致
         if (valid) {
           this.dialogLoading = true
           addAdminItem(this.form)
             .then(res => {
-              this.currentTableData.unshift({
-                ...res.data,
-                status: 1,
-                get_auth_group: {
-                  ...this.group.find(item => item.group_id === res.data.group_id)
-                }
-              })
-
-              this.dialogFormVisible = false
-              this.$message.success('操作成功')
+              if(res.code != 200){
+                this.$message.error(res.msg)
+              }else{
+                this.$emit('refresh')
+                this.dialogFormVisible = false
+                this.$message.success('操作成功')
+              }
             })
             .catch(() => {
               this.dialogLoading = false
@@ -512,15 +373,17 @@ export default {
     handleUpdate(index) {
       this.form = {
         index: index,
-        client_id: this.currentTableData[index].admin_id,
+        id: this.currentTableData[index].id,
         username: this.currentTableData[index].username,
-        group_id: this.currentTableData[index].group_id,
-        nickname: this.currentTableData[index].nickname
+        groupId: this.currentTableData[index].groupId,
+        adminUserExt:{
+          nickname:this.currentTableData[index].adminUserExt.nickname
+        },
+        nickname: this.currentTableData[index].adminUserExt.nickname
       }
-
       // 处理el-select项不存在的bug
-      if (!this.group.find(item => item.group_id === this.form.group_id)) {
-        this.form.group_id = undefined
+      if (!this.group.find(item => item.groupId === this.form.groupId)) {
+        this.form.groupId = undefined
       }
 
       this.$nextTick(() => {
@@ -535,19 +398,19 @@ export default {
     },
     // 请求修改用户
     update(index) {
+      this.form.adminUserExt.nickname = this.form.nickname
       this.$refs.form.validate(valid => {
         if (valid) {
           this.dialogLoading = true
           setAdminItem(this.form)
             .then(res => {
-              this.$set(this.currentTableData, index, {
-                ...this.currentTableData[index],
-                ...res.data,
-                get_auth_group: this.group.find(item => item.group_id === this.form.group_id)
-              })
-
-              this.dialogFormVisible = false
-              this.$message.success('操作成功')
+              if(res.code != 200){
+                this.$message.error(res.msg)
+              }else{
+                this.$emit('refresh')
+                this.dialogFormVisible = false
+                this.$message.success('操作成功')
+              }
             })
             .catch(() => {
               this.dialogLoading = false
@@ -565,7 +428,7 @@ export default {
         closeOnClickModal: false
       })
         .then(() => {
-          resetAdminItem(admin.admin_id)
+          resetAdminItem(admin.id)
             .then(res => {
               this.$notify({
                 title: '重置密码',

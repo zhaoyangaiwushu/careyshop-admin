@@ -5,9 +5,9 @@
     ref="form"
     size="mini"
     style="margin-bottom: -18px;">
-    <el-form-item label="账号" prop="account">
+    <el-form-item label="账号" prop="username">
       <el-input
-        v-model="form.account"
+        v-model="form.username"
         prefix-icon="el-icon-search"
         placeholder="可输入账号/昵称"
         @keyup.enter.native="handleFormSubmit(true)"
@@ -15,17 +15,17 @@
         :clearable="true"/>
     </el-form-item>
 
-    <el-form-item label="用户组" prop="group_id">
+    <el-form-item label="用户组" prop="groupId">
       <el-select
-        v-model="form.group_id"
+        v-model="form.groupId"
         placeholder="请选择"
         style="width: 120px;"
         clearable>
         <el-option
           v-for="item in group"
-          :key="item.group_id"
+          :key="item.id"
           :label="item.name"
-          :value="item.group_id"/>
+          :value="item.id"/>
       </el-select>
     </el-form-item>
 
@@ -70,9 +70,9 @@ export default {
   data() {
     return {
       form: {
-        account: undefined,
+        username: undefined,
         status: undefined,
-        group_id: undefined
+        groupId: undefined
       }
     }
   },
@@ -82,6 +82,7 @@ export default {
     },
     handleFormReset() {
       this.$refs.form.resetFields()
+      this.handleFormSubmit(true);
     }
   }
 }

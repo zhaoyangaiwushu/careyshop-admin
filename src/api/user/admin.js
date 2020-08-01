@@ -87,10 +87,9 @@ export function checkAdminNickname(nickname) {
  */
 export function addAdminItem(data) {
   return request({
-    url,
+    url:"/system/aleUser/add",
     method: 'post',
     data: {
-      method: 'add.admin.item',
       ...data
     }
   })
@@ -103,10 +102,9 @@ export function addAdminItem(data) {
  */
 export function setAdminItem(data) {
   return request({
-    url,
-    method: 'post',
+    url:"/system/aleUser/update",
+    method: 'put',
     data: {
-      method: 'set.admin.item',
       ...data
     }
   })
@@ -118,13 +116,12 @@ export function setAdminItem(data) {
  * @param {Number} status
  * @returns
  */
-export function setAdminStatus(client_id, status) {
+export function setAdminStatus(ids, status) {
   return request({
-    url,
-    method: 'post',
+    url:"/system/aleUser/updateStatus",
+    method: 'PUT',
     data: {
-      method: 'set.admin.status',
-      client_id,
+      ids,
       status
     }
   })
@@ -137,12 +134,8 @@ export function setAdminStatus(client_id, status) {
  */
 export function resetAdminItem(client_id) {
   return request({
-    url,
-    method: 'post',
-    data: {
-      method: 'reset.admin.item',
-      client_id
-    }
+    url:`/system/aleUser/resetUser/${client_id}`,
+    method: 'put',
   })
 }
 
@@ -151,13 +144,12 @@ export function resetAdminItem(client_id) {
  * @param {Array} client_id
  * @returns
  */
-export function delAdminList(client_id) {
+export function delAdminList(ids) {
   return request({
-    url,
-    method: 'post',
+    url:`/system/aleUser/remove/${ids}`,
+    method: 'delete',
     data: {
-      method: 'del.admin.list',
-      client_id
+      ids
     }
   })
 }

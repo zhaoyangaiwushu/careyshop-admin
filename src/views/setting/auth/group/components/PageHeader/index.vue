@@ -71,6 +71,7 @@ export default {
     },
     handleFormReset() {
       this.$refs.form.resetFields()
+      this.handleFormSubmit()
     }
   }
 }

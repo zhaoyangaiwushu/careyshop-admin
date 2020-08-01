@@ -9,10 +9,9 @@ const url = '/v1/auth_group'
  */
 export function addAuthGroupItem(data) {
   return request({
-    url,
+    url:"/system/aleAuthGroup/add",
     method: 'post',
     data: {
-      method: 'add.auth.group.item',
       ...data
     }
   })

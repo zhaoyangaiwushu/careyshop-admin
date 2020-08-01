@@ -11,7 +11,9 @@
       :loading="loading"
       :table-data="table"
       :module="module"
-      @sort="handleSort"/>
+      @sort="handleSort"
+      @submit="handleSubmit"
+    />
   </cs-container>
 </template>
 
@@ -52,7 +54,7 @@ export default {
         ...this.order
       })
         .then(res => {
-          this.table = res.data || []
+          this.table = res.rows || []
         })
         .finally(() => {
           this.loading = false
@@ -60,6 +62,7 @@ export default {
     },
     // 排序刷新
     handleSort(val) {
+      console.log("111")
       this.order = val
       this.$nextTick(() => {
         this.$refs.header.handleFormSubmit()

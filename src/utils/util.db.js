@@ -34,7 +34,6 @@ export function pathInit({
   const uuid = util.cookies.get('uuid') || 'ghost-uuid'
   const currentPath = `${dbName}.${user ? `user.${uuid}` : 'public'}${path ? `.${path}` : ''}`
   const value = db.get(currentPath).value()
-  console.log(!(value !== undefined && validator(value)))
   if (!(value !== undefined && validator(value))) {
     db
       .set(currentPath, defaultValue)

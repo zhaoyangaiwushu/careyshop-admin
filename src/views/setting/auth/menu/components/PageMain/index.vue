@@ -1,27 +1,15 @@
 <template>
   <div class="cs-p">
-    <el-form
-      :inline="true"
-      size="small"
-      @submit.native.prevent>
+    <el-form :inline="true" size="small" @submit.native.prevent>
       <el-form-item v-if="auth.add">
-        <el-button
-          icon="el-icon-plus"
-          :disabled="loading"
-          @click="handleCreate('create')">新增顶层菜单</el-button>
+        <el-button icon="el-icon-plus" :disabled="loading" @click="handleCreate('create')">新增顶层菜单</el-button>
       </el-form-item>
 
       <el-form-item>
         <el-button-group>
-          <el-button
-            icon="el-icon-circle-plus-outline"
-            :disabled="loading"
-            @click="checkedNodes(true)">展开</el-button>
+          <el-button icon="el-icon-circle-plus-outline" :disabled="loading" @click="checkedNodes(true)">展开</el-button>
 
-          <el-button
-            icon="el-icon-remove-outline"
-            :disabled="loading"
-            @click="checkedNodes(false)">收起</el-button>
+          <el-button icon="el-icon-remove-outline" :disabled="loading" @click="checkedNodes(false)">收起</el-button>
         </el-button-group>
       </el-form-item>
       <cs-help
@@ -86,37 +74,22 @@
 
       <el-col :span="14">
         <el-card
-          v-show="auth.add || auth.set"
-          class="box-card"
-          shadow="never">
+          v-show="auth.add || auth.set" class="box-card" shadow="never">
 
           <div slot="header">
             <span>{{textMap[formStatus]}}</span>
-            <el-button
-              v-if="formStatus === 'create' && auth.add"
-              type="text"
-              :loading="formLoading"
-              style="float: right; padding: 3px 0;"
-              @click="create">确定</el-button>
-
-            <el-button
-              v-else-if="formStatus === 'update' && auth.set"
-              type="text"
-              :loading="formLoading"
-              style="float: right; padding: 3px 0;"
-              @click="update">修改</el-button>
+            <el-button v-if="formStatus === 'create' && auth.add" type="text" :loading="formLoading"
+                       style="float: right; padding: 3px 0;" @click="create">确定
+            </el-button>
+            <el-button v-else-if="formStatus === 'update' && auth.set" type="text" :loading="formLoading"
+                       style="float: right; padding: 3px 0;" @click="update">修改
+            </el-button>
           </div>
 
-          <el-form
-            :model="form"
-            :rules="rules"
-            ref="form"
-            label-width="80px">
-            <el-form-item
-              label="上级菜单"
-              prop="parent_id">
+          <el-form :model="form" :rules="rules" ref="form" label-width="80px">
+            <el-form-item label="上级菜单" prop="parentId">
               <el-cascader
-                v-model="form.parent_id"
+                v-model="form.parentId"
                 placeholder="不选择表示顶层菜单 试试搜索：首页"
                 :key="form.menu_id"
                 :options="treeData"
@@ -142,9 +115,9 @@
               <el-col :span="12">
                 <el-form-item
                   label="别名"
-                  prop="alias">
+                  prop="menuAlias">
                   <el-input
-                    v-model="form.alias"
+                    v-model="form.menuAlias"
                     placeholder="可输入菜单别名"
                     :clearable="true"/>
                 </el-form-item>
@@ -186,7 +159,8 @@
                       v-for="(name, index) in treeModule"
                       :key="index"
                       :label="index"
-                      :disabled="module !== index">{{name}}</el-radio-button>
+                      :disabled="module !== index">{{name}}
+                    </el-radio-button>
                   </el-radio-group>
                 </el-form-item>
               </el-col>
@@ -194,9 +168,9 @@
               <el-col :span="12">
                 <el-form-item
                   label="导航"
-                  prop="is_navi">
+                  prop="isNavi">
                   <el-switch
-                    v-model="form.is_navi"
+                    v-model="form.isNavi"
                     active-value="1"
                     inactive-value="0">
                   </el-switch>
@@ -310,16 +284,16 @@
           move: false
         },
         form: {
-          parent_id: undefined,
+          parentId: undefined,
           name: undefined,
-          alias: undefined,
+          menuAlias: undefined,
           icon: undefined,
           remark: undefined,
           type: '0',
           url: undefined,
           params: undefined,
           target: '_self',
-          is_navi: '0',
+          isNavi: '0',
           sort: 50
         },
         rules: {
@@ -335,7 +309,7 @@
               trigger: 'blur'
             }
           ],
-          alias: [
+          menuAlias: [
             {
               max: 16,
               message: '长度不能大于 16 个字符',
@@ -406,7 +380,9 @@
       },
       // 过滤菜单
       filterNode(value, data) {
-        if (!value) { return true }
+        if (!value) {
+          return true
+        }
         return data.name.indexOf(value) !== -1
       },
       // 展开或收起节点
@@ -423,16 +399,16 @@
       // 重置表单
       resetForm() {
         this.form = {
-          parent_id: 0,
+          parentId: 0,
           name: '',
-          alias: '',
+          menuAlias: '',
           icon: '',
           remark: '',
           type: '0',
           url: '',
           params: '',
           target: '_self',
-          is_navi: '0',
+          isNavi: '0',
           sort: 50
         }
       },
@@ -457,7 +433,7 @@
         this.form = {
           ...data,
           type: data.type.toString(),
-          is_navi: data.is_navi.toString()
+          isNavi: data.isNavi.toString()
         }
       },
       // 新增菜单表单初始化
@@ -473,7 +449,7 @@
       handleAppend(key) {
         this.handleCreate('create')
         this.$refs.tree.setCurrentKey(key)
-        this.form.parent_id = key
+        this.form.parentId = key
       },
       // 新增菜单
       create() {
@@ -483,16 +459,14 @@
             addMenuItem({
               ...this.form,
               module: this.module
-            })
-              .then(res => {
-                if (!this.isExpandAll) {
-                  this.expanded = [res.data.parent_id || res.data.menu_id]
+            }).then(res => {
+                if(res.code != 200){
+                  this.$message.error(res.msg)
+                }else{
+                  this.$emit('refresh')
+                  this.$message.success('操作成功')
                 }
-
-                this.$emit('refresh')
-                this.$message.success('操作成功')
-              })
-              .catch(() => {
+              }).catch(() => {
                 this.formLoading = false
               })
           }
@@ -506,7 +480,7 @@
             setMenuItem(this.form)
               .then(res => {
                 if (!this.isExpandAll) {
-                  this.expanded = [res.data.parent_id || res.data.menu_id]
+                  this.expanded = [res.data.parentId || res.data.menu_id]
                 }
 
                 this.$emit('refresh')
@@ -549,7 +523,7 @@
             setMenuStatus(key, val ? 0 : 1)
               .then(() => {
                 if (!this.isExpandAll) {
-                  this.expanded = [this.$refs.tree.getNode(key).data.parent_id || key]
+                  this.expanded = [this.$refs.tree.getNode(key).data.parentId || key]
                 }
 
                 this.$emit('refresh')
@@ -570,7 +544,7 @@
         // 获取原始数据
         let setMenu = {
           menu_id: draggingNode.data.menu_id,
-          parent_id: draggingNode.data.parent_id
+          parentId: draggingNode.data.parentId
         }
 
         // 待排序编号
@@ -578,9 +552,9 @@
 
         // 处理插入到其他菜单中
         if (dropType === 'inner') {
-          setMenu.parent_id = dropNode.key
+          setMenu.parentId = dropNode.key
         } else {
-          setMenu.parent_id = dropNode.data.parent_id
+          setMenu.parentId = dropNode.data.parentId
           dropNode.parent.childNodes.forEach((value, index) => {
             indexMenu.push(value.key)
             value.data.sort = index + 1
@@ -589,7 +563,7 @@
 
         setMenuItem(setMenu)
           .then(res => {
-            draggingNode.data.parent_id = res.data.parent_id
+            draggingNode.data.parentId = res.data.parentId
           })
           .catch(() => {
             this.$emit('refresh')
